@@ -1,0 +1,79 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-a33fc1f1bd1c80e372a4.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "MatfHub",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "MatfHub::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-MatfHub-Debug-f852b19500725676f12b.json",
+					"name" : "MatfHub",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "MatfHub_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-MatfHub_autogen-Debug-3d416e8497496c325782.json",
+					"name" : "MatfHub_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "MatfHub_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-MatfHub_autogen_timestamp_deps-Debug-f03f0b11d03d72384b6f.json",
+					"name" : "MatfHub_autogen_timestamp_deps",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/wei/Desktop/matfHub/matfHub/build-MatfHub-Desktop-Debug",
+		"source" : "/home/wei/Desktop/matfHub/matfHub/MatfHub"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 4
+	}
+}
