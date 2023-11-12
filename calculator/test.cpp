@@ -1,5 +1,6 @@
 #include <iostream>
 #include <armadillo>
+#include <Eigen/Dense>
  
 int main(int argc, const char **argv) {
     // Initialize the random generator
@@ -26,6 +27,16 @@ int main(int argc, const char **argv) {
     // Save matrices A and B:
     A.save("A_mat.txt", arma::arma_ascii);
     B.save("B_mat.txt", arma::arma_ascii);
+
+   // Create a new 2x2 Eigen matrix and insert values
+    Eigen::MatrixXd m(2,2);
+    m(0,0) = 3;
+    m(1,0) = 2.5;
+    m(0,1) = -1;
+    m(1,1) = m(1,0) + (0,1);
+
+   // Print Eigen matrix
+    std::cout << m << std::endl;
 
     return 0;
      }
