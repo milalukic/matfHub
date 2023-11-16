@@ -11,21 +11,27 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    QFileSystemModel *model = new QFileSystemModel;
-    model->setRootPath(QDir::currentPath());
-    ui->treeView ->setModel(model);
+    QString sPath = ""; //ovde kasnije dodati path i gurnuti ga u setRootPath
+    dirModel = new QFileSystemModel(this);
+    dirModel->setRootPath(QDir::rootPath());
+    dirModel->setFilter(QDir::AllDirs | QDir::NoDotAndDotDot);
+    ui->treeView->setModel(dirModel);
 
-    model->setRootPath(QDir::rootPath());
-    model->setFilter(QDir::AllEntries | QDir::NoDotAndDotDot);
-    ui->tableView ->setModel(model);
-    QObject::connect(ui->tableView, &QTableView::doubleClicked, ui->tableView, &QTableView::setRootIndex);
-    ui->tableView->show();
-
-
+    fileModel = new QFileSystemModel(this);
+    fileModel->setRootPath(QDir::rootPath());
+    fileModel->setFilter(QDir::Files | QDir::NoDotAndDotDot);
+    ui->listView->setModel(fileModel);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+
+void MainWindow::on_treeView_clicked(const QModelIndex &index)
+{
+    QString sPath = dirModel->fileInfo(index).absoluteFilePath();
+    ui->listView->setRootIndex(fileModel->setRootPath(sPath));
 }
 
