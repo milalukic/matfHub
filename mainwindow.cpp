@@ -3,7 +3,8 @@
 
 #include <QSplitter>
 #include <QFileSystemModel>
-
+#include <stack>
+#include <iostream>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -21,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
     fileModel->setRootPath(QDir::rootPath());
     fileModel->setFilter(QDir::Files | QDir::NoDotAndDotDot);
     ui->listView->setModel(fileModel);
+
 }
 
 MainWindow::~MainWindow()
@@ -33,12 +35,19 @@ void MainWindow::on_treeView_clicked(const QModelIndex &index)
 {
     QString sPath = dirModel->fileInfo(index).absoluteFilePath();
     ui->listView->setRootIndex(fileModel->setRootPath(sPath));
+
+    navigationBefore.push(dirModel->fileInfo(index).absoluteFilePath());
 }
 
 
 void MainWindow::on_pushButton_clicked()
 {
-    //Ovde za back
+    if (!navigationBefore.empty()){
+        QString sBack = navigationBefore.top();
+        navigationBefore.pop();
+        fileModel->setRootPath(sBack);
+        dirModel->setRootPath(sBack);
+    }
 }
 
 

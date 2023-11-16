@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QtCore>
 #include <QtGui>
+#include <stack>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -20,9 +21,17 @@ public:
 private slots:
     void on_treeView_clicked(const QModelIndex &index);
 
+    void on_pushButton_clicked();
+
+    void on_pushButton_2_clicked();
+
+    void on_pushButton_3_clicked();
+
 private:
     Ui::MainWindow *ui;
     QFileSystemModel *dirModel;
     QFileSystemModel *fileModel;
+    std::stack<QString> navigationBefore;
+    std::stack<QString> navigationAfter;
 };
 #endif // MAINWINDOW_HPP
