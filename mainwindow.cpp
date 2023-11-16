@@ -35,3 +35,21 @@ void MainWindow::on_treeView_clicked(const QModelIndex &index)
     ui->listView->setRootIndex(fileModel->setRootPath(sPath));
 }
 
+
+void MainWindow::on_pushButton_clicked()
+{
+    //Ovde za back
+}
+
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    //Ovde za forward
+}
+
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    //Ovde za return to home
+}
+
