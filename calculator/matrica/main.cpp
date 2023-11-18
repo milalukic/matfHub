@@ -3,7 +3,10 @@
 
 int main(){
 
-    Matrica *m1 = new Matrica(5, 5, "ddd");
+    Matrica *m1 = new Matrica(3, 2, "ddd");
+    std::cout << m1->sadrzaj() << std::endl;
+    m1->transpose();
+    std::cout << m1->sadrzaj() << std::endl;
 
     delete m1; m1 = nullptr;
 
