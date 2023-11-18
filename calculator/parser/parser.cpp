@@ -249,4 +249,12 @@ void Parser::get_token()
         strcpy(errormsg, "Only first letter of variables is considered");
 }
 
+void calculate(){
+
+}
+
+// std::ostream &operator<<(std::ostream &out, const Parser &value){
+//     return << out << 
+// }
+
 
