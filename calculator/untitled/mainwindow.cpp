@@ -21,13 +21,20 @@ void MainWindow::onClick(){
     Parser *parser = new Parser();
 
     //TODO so it works with char*
-    char *text = ui->leParser->text().toStdString().data();
-    parser->eval_exp(text);
-    double res = parser->eval_exp(text);
+    char *expr = ui->leParser->text().toStdString().data();
+    parser->eval_exp(expr);
+    double res = parser->eval_exp(expr);
     QString qres = QString::number(res);
 
+    QString history = ui->tbParser->toPlainText();
+
+    history += expr;
+    history += "\n";
+    history += qres;
+    history += "\n--------------\n";
+
     ui->leParser->setText(qres);
-    ui->tbParser->setText(qres);
+    ui->tbParser->setText(history);
 
     delete parser; parser = nullptr;
 }
