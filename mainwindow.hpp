@@ -19,16 +19,27 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_treeView_clicked(const QModelIndex &index);
+    void on_dirView_doubleClicked(const QModelIndex &index);
 
-    void on_pushButton_clicked();
+    void on_backButton_clicked();
 
-    void on_pushButton_2_clicked();
+    void on_forwardButton_clicked();
 
-    void on_pushButton_3_clicked();
+    void on_homeButton_clicked();
+
+    void on_fileView_doubleClicked(const QModelIndex &index);
+
+    void on_dirView_clicked(const QModelIndex &index);
+
+    void on_currentFilePath_editingFinished();
+
+    void on_dotDotButton_clicked();
 
 private:
     Ui::MainWindow *ui;
+    QString appPath;
+    QString hubPath;
+    QString currPath;
     QFileSystemModel *dirModel;
     QFileSystemModel *fileModel;
     std::stack<QString> navigationBefore;
