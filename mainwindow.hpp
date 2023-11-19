@@ -35,6 +35,8 @@ private slots:
 
     void on_dotDotButton_clicked();
 
+    void on_pushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     QString oldPath;

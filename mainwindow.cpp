@@ -6,6 +6,7 @@
 #include <stack>
 #include <iostream>
 #include <QDebug>
+#include <string>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -199,4 +200,12 @@ void MainWindow::changeDir(QString path){
 
     currPath = newPath;
     ui->currentFilePath->setText(currPath);
+}
+
+void MainWindow::on_pushButton_clicked() //ovo je za newFolder dugme u UI-u
+{
+
+//    QDir(path).exists();              ovo vraca true ako path postoji, mozes da joj prosledis sta_god/New Folder 1 i ako postoji vraca true, false u suprotnom
+//    QDir(path).mkdir(name);           ovo pravi direktorijum sa nazivom name na pathu
+    //pa odradi ti ovo Spero uz pomoc ove dve funkcije gore da to bude kako valja jer ja kad vidim string meni muka bude odmah
 }
