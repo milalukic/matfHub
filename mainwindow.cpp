@@ -62,14 +62,18 @@ void MainWindow::on_dirView_doubleClicked(const QModelIndex &index)
 
     //ui->dirView->expand(index);  //ovo je podrazumevana akcija, a ako je expanded onda collapsuje
 
-    QString oldPath = currPath;
+    changeDir(dirModel->fileInfo(index).absoluteFilePath());
+    navigationBefore.push(oldPath);
+
+    /*QString oldPath = currPath;
     QString newPath = dirModel->fileInfo(index).absoluteFilePath();
 
     ui->fileView->setRootIndex(fileModel->setRootPath(newPath));
     navigationBefore.push(oldPath);
 
     currPath = newPath;
-    ui->currentFilePath->setText(currPath); //Bojane molim te smisli kako ovo pametnije da se uradi bas ne mogu sad da razmisljam, hvala puno :*
+    ui->currentFilePath->setText(currPath);*/
+    //Bojane molim te smisli kako ovo pametnije da se uradi bas ne mogu sad da razmisljam, hvala puno :*
     //mozda nesto tipa nmp da imamo klasu singlton CurrPath gde se na currPath.set(QString newPath) pored promene polja objketa takodje menja i sadrzaj labele u guiu koju ova klasa vidi iz nekog razloga itd
 
 }
@@ -79,14 +83,17 @@ void MainWindow::on_fileView_doubleClicked(const QModelIndex &index)
 {
 
     if(fileModel->fileInfo(index).isDir()){
-        QString oldPath = currPath;
-        QString newPath = fileModel->fileInfo(index).absoluteFilePath();
-
-        ui->fileView->setRootIndex(fileModel->setRootPath(newPath));
+        changeDir(fileModel->fileInfo(index).absoluteFilePath());
         navigationBefore.push(oldPath);
 
-        currPath = newPath;
-        ui->currentFilePath->setText(currPath);
+//        QString oldPath = currPath;
+//        QString newPath = fileModel->fileInfo(index).absoluteFilePath();
+
+//        ui->fileView->setRootIndex(fileModel->setRootPath(newPath));
+//        navigationBefore.push(oldPath);
+
+//        currPath = newPath;
+//        ui->currentFilePath->setText(currPath);
         //ovo je bukvalno kopiran kod iz on_dirView_doubleClicked, vrv treba izdvojiti u funkciju tipa sutra ili tako nekad
     }else{
         //if(podrzan tip fajla){
@@ -102,26 +109,34 @@ void MainWindow::on_fileView_doubleClicked(const QModelIndex &index)
 void MainWindow::on_backButton_clicked()
 {
     if (!navigationBefore.empty()){
-        QString newPath = navigationBefore.top();
+        changeDir(navigationBefore.top());
+        navigationBefore.pop();
+        navigationAfter.push(oldPath);
+
+        /*QString newPath = navigationBefore.top();
         QString oldPath = currPath;
         navigationBefore.pop();
         ui->fileView->setRootIndex(fileModel->setRootPath(newPath));
         navigationAfter.push(oldPath);
         currPath = newPath;
-        ui->currentFilePath->setText(currPath);//opet ovo :)
+        ui->currentFilePath->setText(currPath);*///opet ovo :)
     }
 }
 
 void MainWindow::on_forwardButton_clicked()
 {
     if(!navigationAfter.empty()){
-        QString newPath = navigationAfter.top();
+        changeDir(navigationAfter.top());
+        navigationAfter.pop();
+        navigationBefore.push(oldPath);
+
+        /*QString newPath = navigationAfter.top();
         QString oldPath = currPath;
         navigationAfter.pop();
         ui->fileView->setRootIndex(fileModel->setRootPath(newPath));
         navigationBefore.push(oldPath);
         currPath = newPath;
-        ui->currentFilePath->setText(currPath);// (:
+        ui->currentFilePath->setText(currPath);*/// (:
     }
 }
 
@@ -160,18 +175,28 @@ void MainWindow::on_currentFilePath_editingFinished()
         const QFileInfo inputFpath(newPath);
 
         if(inputFpath.exists() && inputFpath.isDir()){
-            QString oldPath = currPath;
-            QString newPath = ui->currentFilePath->text();
-
-            ui->fileView->setRootIndex(fileModel->setRootPath(newPath));
+            changeDir(ui->currentFilePath->text());
             navigationBefore.push(oldPath);
 
-            currPath = newPath;
-            ui->currentFilePath->setText(currPath);
+//            QString oldPath = currPath;
+//            QString newPath = ui->currentFilePath->text();
+
+//            ui->fileView->setRootIndex(fileModel->setRootPath(newPath));
+//            navigationBefore.push(oldPath);
+
+//            currPath = newPath;
+//            ui->currentFilePath->setText(currPath);
             //zaboga miloga opet ovaj kod kopiran covek je coveku najveci neprijatelj a ja sam sebi
         }
     }
 }
 
+void MainWindow::changeDir(QString path){
+    oldPath = currPath;
+    newPath = path;
 
+    ui->fileView->setRootIndex(fileModel->setRootPath(newPath));
 
+    currPath = newPath;
+    ui->currentFilePath->setText(currPath);
+}

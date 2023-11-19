@@ -37,6 +37,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    QString oldPath;
+    QString newPath;
     QString appPath;
     QString hubPath;
     QString currPath;
@@ -44,5 +46,7 @@ private:
     QFileSystemModel *fileModel;
     std::stack<QString> navigationBefore;
     std::stack<QString> navigationAfter;
+
+    void changeDir(QString path);
 };
 #endif // MAINWINDOW_HPP
