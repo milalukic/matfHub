@@ -15,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     appPath = QDir::currentPath();
 
+    // ako ne postoji dir MATF, pravimo ga
     if(!QDir("MATF").exists()){
         QDir().mkdir("MATF");
     }
@@ -47,17 +48,19 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_dirView_clicked(const QModelIndex &index)
 {
-    if(ui->dirView->isExpanded(index)){
-        ui->dirView->collapse(index);
-    }else{
-        ui->dirView->expand(index);
-    }
+    //ceo ovaj slot nam samo pravi probleme
+
+//    if(ui->dirView->isExpanded(index)){
+//        ui->dirView->collapse(index);
+//    }else{
+//        ui->dirView->expand(index);
+//    }
 }
 
 void MainWindow::on_dirView_doubleClicked(const QModelIndex &index)
 {//nervira me mnogo on ga i klikne i dabl klikne pa se iz prethodne funkcije i otvori i zatvori ne znam kako da ga sprecim
 
-    ui->dirView->expand(index);
+    //ui->dirView->expand(index);  //ovo je podrazumevana akcija, a ako je expanded onda collapsuje
 
     QString oldPath = currPath;
     QString newPath = dirModel->fileInfo(index).absoluteFilePath();
