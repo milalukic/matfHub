@@ -65,18 +65,6 @@ void MainWindow::on_dirView_doubleClicked(const QModelIndex &index)
 
     changeDir(dirModel->fileInfo(index).absoluteFilePath());
     navigationBefore.push(oldPath);
-
-    /*QString oldPath = currPath;
-    QString newPath = dirModel->fileInfo(index).absoluteFilePath();
-
-    ui->fileView->setRootIndex(fileModel->setRootPath(newPath));
-    navigationBefore.push(oldPath);
-
-    currPath = newPath;
-    ui->currentFilePath->setText(currPath);*/
-    //Bojane molim te smisli kako ovo pametnije da se uradi bas ne mogu sad da razmisljam, hvala puno :*
-    //mozda nesto tipa nmp da imamo klasu singlton CurrPath gde se na currPath.set(QString newPath) pored promene polja objketa takodje menja i sadrzaj labele u guiu koju ova klasa vidi iz nekog razloga itd
-
 }
 
 
@@ -87,15 +75,6 @@ void MainWindow::on_fileView_doubleClicked(const QModelIndex &index)
         changeDir(fileModel->fileInfo(index).absoluteFilePath());
         navigationBefore.push(oldPath);
 
-//        QString oldPath = currPath;
-//        QString newPath = fileModel->fileInfo(index).absoluteFilePath();
-
-//        ui->fileView->setRootIndex(fileModel->setRootPath(newPath));
-//        navigationBefore.push(oldPath);
-
-//        currPath = newPath;
-//        ui->currentFilePath->setText(currPath);
-        //ovo je bukvalno kopiran kod iz on_dirView_doubleClicked, vrv treba izdvojiti u funkciju tipa sutra ili tako nekad
     }else{
         //if(podrzan tip fajla){
         //    otvori u odgovarajucem tabu
@@ -113,14 +92,6 @@ void MainWindow::on_backButton_clicked()
         changeDir(navigationBefore.top());
         navigationBefore.pop();
         navigationAfter.push(oldPath);
-
-        /*QString newPath = navigationBefore.top();
-        QString oldPath = currPath;
-        navigationBefore.pop();
-        ui->fileView->setRootIndex(fileModel->setRootPath(newPath));
-        navigationAfter.push(oldPath);
-        currPath = newPath;
-        ui->currentFilePath->setText(currPath);*///opet ovo :)
     }
 }
 
@@ -130,14 +101,6 @@ void MainWindow::on_forwardButton_clicked()
         changeDir(navigationAfter.top());
         navigationAfter.pop();
         navigationBefore.push(oldPath);
-
-        /*QString newPath = navigationAfter.top();
-        QString oldPath = currPath;
-        navigationAfter.pop();
-        ui->fileView->setRootIndex(fileModel->setRootPath(newPath));
-        navigationBefore.push(oldPath);
-        currPath = newPath;
-        ui->currentFilePath->setText(currPath);*/// (:
     }
 }
 
@@ -147,7 +110,7 @@ void MainWindow::on_homeButton_clicked()
         navigationBefore.push(currPath);
         ui->fileView->setRootIndex(fileModel->setRootPath(hubPath));
         currPath = hubPath;
-        ui->currentFilePath->setText(currPath); // zadavicu se crevom od tusa ovo je pretnja
+        ui->currentFilePath->setText(currPath);
     }
 }
 
@@ -158,17 +121,6 @@ void MainWindow::on_dotDotButton_clicked()
         QString parentDirPath = currPath.left(found);
         changeDir(parentDirPath);
         navigationBefore.push(oldPath);
-
-        //QDir::cdUp radi nesto pametno
-        //zapravo generalno QDir mislim da bi hahaha bilo pametno da vise koristimo al ok
-//        QDir dir(currPath);
-//        dir.cdUp();
-//        const QString oldPath = currPath;
-//        currPath = dir.absolutePath();
-//        ui->fileView->setRootIndex(fileModel->setRootPath(currPath));
-//        ui->currentFilePath->setText(currPath);
-//        navigationBefore.push(oldPath);
-        //a sta mi tesko da kopiram isti kod deset puta nije cak ni kopiran nego prekucan dobicu histericni napad
     }
 }
 
@@ -183,16 +135,6 @@ void MainWindow::on_currentFilePath_editingFinished()
         if(inputFpath.exists() && inputFpath.isDir()){
             changeDir(ui->currentFilePath->text());
             navigationBefore.push(oldPath);
-
-//            QString oldPath = currPath;
-//            QString newPath = ui->currentFilePath->text();
-
-//            ui->fileView->setRootIndex(fileModel->setRootPath(newPath));
-//            navigationBefore.push(oldPath);
-
-//            currPath = newPath;
-//            ui->currentFilePath->setText(currPath);
-            //zaboga miloga opet ovaj kod kopiran covek je coveku najveci neprijatelj a ja sam sebi
         }
     }
 }
@@ -209,6 +151,13 @@ void MainWindow::changeDir(QString path){
 
 void MainWindow::on_pushButton_clicked() //ovo je za newFolder dugme u UI-u
 {
+    //ovo trenutno samo pravi new folder, treba dodati da korisnik moze da ukuca ime foldera
+    // postoji funkcija path.rename("ime") koja na nas path tipa nestonesto/NewFolder taj new folder
+    // promeni u ime, a path promeni u nestonesto/ime
+    // to treba da se napravi da bude interaktivno doduse
+
+    //nesto u fazonu kad se klikne newfolder dugme da se pojavi novi folder sa ponudjenom opcijum a upises ime foldera
+    // ili ako ostavis prazno da samo napise New Folder (broj) sto kod ispod vec radi
     QString name = "New Folder";
     QString path = currPath;
     path.append("/");
