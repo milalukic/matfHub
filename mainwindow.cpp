@@ -153,16 +153,21 @@ void MainWindow::on_homeButton_clicked()
 
 void MainWindow::on_dotDotButton_clicked()
 {
-    if(!currPath.isEmpty() && currPath != QString::fromStdString("/")){//vrv treba uraditi da se pri menjanju trenutne putanje uvek trimuje poslednji slesh jer mogu zamisliti da ovo vrlo lako i brzo postane nepodnosljiva kombinatorna eksplozija provera a da mi se radilo sa stringovima do kraja zivota ne bih polozio p2
+    int found = currPath.lastIndexOf("/");
+    if(found != -1){
+        QString parentDirPath = currPath.left(found);
+        changeDir(parentDirPath);
+        navigationBefore.push(oldPath);
+
         //QDir::cdUp radi nesto pametno
         //zapravo generalno QDir mislim da bi hahaha bilo pametno da vise koristimo al ok
-        QDir dir(currPath);
-        dir.cdUp();
-        const QString oldPath = currPath;
-        currPath = dir.absolutePath();
-        ui->fileView->setRootIndex(fileModel->setRootPath(currPath));
-        ui->currentFilePath->setText(currPath);
-        navigationBefore.push(oldPath);
+//        QDir dir(currPath);
+//        dir.cdUp();
+//        const QString oldPath = currPath;
+//        currPath = dir.absolutePath();
+//        ui->fileView->setRootIndex(fileModel->setRootPath(currPath));
+//        ui->currentFilePath->setText(currPath);
+//        navigationBefore.push(oldPath);
         //a sta mi tesko da kopiram isti kod deset puta nije cak ni kopiran nego prekucan dobicu histericni napad
     }
 }
@@ -204,8 +209,21 @@ void MainWindow::changeDir(QString path){
 
 void MainWindow::on_pushButton_clicked() //ovo je za newFolder dugme u UI-u
 {
+    QString name = "New Folder";
+    QString path = currPath;
+    path.append("/");
+    path.append(name);
+    int i = 1;
+    while(QDir(path).exists()){
+        int foundSpace = name.lastIndexOf("r");
+        name = name.left(foundSpace+1);
+        name.append(" ");
+        name.append(QString::number(i));
+        i++;
 
-//    QDir(path).exists();              ovo vraca true ako path postoji, mozes da joj prosledis sta_god/New Folder 1 i ako postoji vraca true, false u suprotnom
-//    QDir(path).mkdir(name);           ovo pravi direktorijum sa nazivom name na pathu
-    //pa odradi ti ovo Spero uz pomoc ove dve funkcije gore da to bude kako valja jer ja kad vidim string meni muka bude odmah
+        int foundSlash = path.lastIndexOf("/");
+        path = path.left(foundSlash+1);
+        path.append(name);
+    }
+    QDir(currPath).mkdir(name);
 }
