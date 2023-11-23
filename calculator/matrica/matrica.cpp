@@ -149,3 +149,12 @@ void Matrica::transpose() {
 // void Matrica::inverse(){
 //     (*this->_sadrzaj) = arma::inv(*(this->_sadrzaj));
 // }
+
+    //formatting
+std::ostream &operator<<(std::ostream &out, const Matrica &value){
+    return out << "\t\t" << value.imeMatrice() << "\n" << value.sadrzaj();
+}
+//TODO make this work
+std::istream &operator>>(std::istream &in, Matrica &value){
+
+}

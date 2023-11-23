@@ -17,9 +17,9 @@ int main(){
     kopija(0, 1) = 6;
     m2->sadrzaj(kopija);
 
-    std::cout << m1->sadrzaj() << std::endl;
+    std::cout << *m1 << std::endl;
     m1->transpose();
-    std::cout << m1->sadrzaj() << std::endl;
+    std::cout << *m1 << std::endl;
 
     delete m1; m1 = nullptr; 
     std::cout << "Kraj programa" << std::endl;

@@ -49,4 +49,7 @@ private:
     arma::mat *_sadrzaj;
 };
 
+std::ostream &operator<<(std::ostream &out, const Matrica &value);
+std::istream &operator>>(std::istream &in, Matrica &value);
+
 #endif //MATRIX_HPP
