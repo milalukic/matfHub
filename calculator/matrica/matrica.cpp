@@ -30,11 +30,29 @@ unsigned Matrica::dimenzija2() const{
     return _dimenzija2;
 }
 
-arma::mat Matrica::sadrzaj() {
+arma::mat Matrica::sadrzaj() const{
     return *_sadrzaj;
 }
     // setteri TODO
 
+void Matrica::dimenzija1(unsigned u){
+    this->_dimenzija1 = u;
+}
+
+void Matrica::dimenzija2(unsigned u){
+    this->_dimenzija2 = u;
+}
+
+void Matrica::imeMatrice(std::string name){
+    this->_imeMatrice = name;
+}
+
+void Matrica::sadrzaj(arma::mat matrica){
+    *(this->_sadrzaj) = matrica;
+}
+
+
+    //functions
 void Matrica::transpose() {
     *(this->_sadrzaj) = arma::trans(*(this->_sadrzaj));
 }

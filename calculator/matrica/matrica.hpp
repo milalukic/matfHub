@@ -13,13 +13,21 @@ public:
     Matrica(unsigned dimenzija1 = 1, unsigned dimenzija2 = 1, std::string imeMatrice = "ime matrice");
     //destruktor                                      
     ~Matrica();
-    //getteri
+
+    //get
     unsigned dimenzija1() const;
     unsigned dimenzija2() const;
     std::string imeMatrice() const;
-    arma::mat sadrzaj();
-    void transpose();
+    arma::mat sadrzaj() const;
 
+    //set
+    void dimenzija1(unsigned u);
+    void dimenzija2(unsigned u);
+    void imeMatrice(std::string name);
+    void sadrzaj(arma::mat matrica);
+
+    //functions
+    void transpose();
 private:
     unsigned _dimenzija1;
     unsigned _dimenzija2;
