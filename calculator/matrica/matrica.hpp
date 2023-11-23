@@ -28,6 +28,7 @@ public:
 
     //functions
     void transpose();
+    void inverse();
 
     //operators
     Matrica operator + (const Matrica &other) const;

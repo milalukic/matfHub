@@ -141,5 +141,11 @@ bool Matrica::operator != (const Matrica &other) const{
 
     //functions
 void Matrica::transpose() {
-    *(this->_sadrzaj) = arma::trans(*(this->_sadrzaj));
+    // *(this->_sadrzaj) = arma::trans(*(this->_sadrzaj));
+    sadrzaj(arma::trans((this->sadrzaj())));
 }
+
+//TODO make this work
+// void Matrica::inverse(){
+//     (*this->_sadrzaj) = arma::inv(*(this->_sadrzaj));
+// }
