@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1120</width>
-    <height>630</height>
+    <height>682</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -988,6 +988,9 @@
           <height>491</height>
          </rect>
         </property>
+        <property name="contextMenuPolicy">
+         <enum>Qt::CustomContextMenu</enum>
+        </property>
        </widget>
        <widget class="QPushButton" name="homeButton">
         <property name="geometry">
@@ -1917,7 +1920,7 @@
           <normaloff>.</normaloff>.</iconset>
         </property>
        </widget>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="newFolderButton">
         <property name="geometry">
          <rect>
           <x>140</x>
@@ -1930,7 +1933,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="folder-new"/>
+         <iconset theme="folder-new">
+          <normaloff>.</normaloff>.</iconset>
         </property>
        </widget>
       </widget>
@@ -1958,7 +1962,8 @@
     </item>
    </layout>
   </widget>
-  <widget class="QMenuBar" name="menubar">
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -1967,19 +1972,29 @@
      <height>22</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
+    <addaction name="actionChangeHubLocation"/>
+   </widget>
+   <addaction name="menuFile"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
-  <widget class="QToolBar" name="toolBar">
-   <property name="windowTitle">
-    <string>toolBar</string>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
    </property>
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-  </widget>
+  </action>
+  <action name="actionChangeHubLocation">
+   <property name="text">
+    <string>Change Hub Location</string>
+   </property>
+   <property name="toolTip">
+    <string>Change Hub Location</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

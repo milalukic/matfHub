@@ -35,12 +35,21 @@ private slots:
 
     void on_dotDotButton_clicked();
 
-    void on_pushButton_clicked();
+    void on_newFolderButton_clicked();
+
+    void createNewFolder();
+
+    void on_fileView_customContextMenuRequested(const QPoint &pos);
+
+    void on_actionExit_triggered();
+
+
+    void on_actionChangeHubLocation_triggered();
 
 private:
     Ui::MainWindow *ui;
     QString oldPath;
-    QString newPath;
+    QString newPath; //ja mislim da je ovo polje klase nepotrebno, imamo curr koji je bitan i old koji se gura u stek a new koristi samo f-ja changeDir ako ne gresim, ekvivalentan je sa njenim lokalnim argumentom 'path'
     QString appPath;
     QString hubPath;
     QString currPath;
