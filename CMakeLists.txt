@@ -15,8 +15,8 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 set(PROJECT_SOURCES
         matfHub/src/main.cpp
 	matfHub/src/mainwindow.cpp
-	matfHub/src/mainwindow.hpp
-	matfHub/src/mainwindow.ui
+	matfHub/include/mainwindow.hpp
+	matfHub/mainwindow.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
