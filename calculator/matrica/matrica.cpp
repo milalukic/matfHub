@@ -51,7 +51,77 @@ void Matrica::sadrzaj(arma::mat matrica){
     *(this->_sadrzaj) = matrica;
 }
 
+    //operators
+//TODO make this dynamic (new doens't work)
+Matrica Matrica::operator + (const Matrica &other) const{
+    if(!(other.dimenzija1() == dimenzija1() && other.dimenzija2() == dimenzija2()))
+        throw new std::string("Matrices are not the same dimension");
+    
+    arma::mat new_data = sadrzaj() + other.sadrzaj();
+    Matrica new_mat = Matrica(dimenzija1(), dimenzija2(), "zbir");
+    new_mat.sadrzaj(new_data);
 
+    return new_mat;
+}
+Matrica Matrica::operator -(const Matrica &other) const{
+    if(!(other.dimenzija1() == dimenzija1() && other.dimenzija2() == dimenzija2()))
+        throw new std::string("Matrices are not the same dimension");
+    
+    arma::mat new_data = sadrzaj() - other.sadrzaj();
+    Matrica *new_mat = new Matrica(dimenzija1(), dimenzija2(), "razlika");
+    new_mat->sadrzaj(new_data);
+
+    return *new_mat;
+}
+//TODO make this work
+// Matrica Matrica::operator *(const Matrica &other) const{
+
+//     if(dimenzija2() != other.dimenzija1())
+//         throw new std::string("Matrices are not the right dimension");
+    
+//     arma::mat new_data = arma::affmul(sadrzaj(), other.sadrzaj());
+//     Matrica *new_mat = new Matrica(dimenzija1(), dimenzija2(), "zbir");
+//     new_mat->sadrzaj(new_data);
+
+//     return *new_mat;
+// }
+// TODO make this work
+// Matrica Matrica::operator /(const Matrica &other) const{
+//     if(dimenzija2() != other.dimenzija1())
+//         throw new std::string("Matrices are not the right dimension");
+    
+//     arma::mat new_data = arma::affmul(sadrzaj(), other.sadrzaj().i());
+//     Matrica *new_mat = new Matrica(dimenzija1(), dimenzija2(), "zbir");
+//     new_mat->sadrzaj(new_data);
+
+//     return *new_mat;
+// }
+// TODO make this work
+Matrica &Matrica::operator ++(){
+    
+    sadrzaj(sadrzaj() + 1);
+
+    return *this;
+}
+//TODO make this dynamic AND make it work...
+Matrica Matrica::operator ++(int){
+    Matrica tmp = Matrica(dimenzija1(), dimenzija2(), "postfiksno");
+    ++(*this);
+    return tmp;
+}  //postfiksno mora imati tip argumenta?
+
+Matrica Matrica::operator -() const{
+    arma::mat new_data = sadrzaj();
+    Matrica *new_mat = new Matrica(dimenzija1(), dimenzija2(), "unarni minus");
+    //TODO algorithm this
+    for(unsigned i = 0; i<dimenzija1(); i++)
+        for(unsigned j = 0; j<dimenzija2(); j++)
+            new_data(i, j) = -new_data(i, j);
+
+    new_mat->sadrzaj(new_data);
+
+    return *new_mat;
+}
     //functions
 void Matrica::transpose() {
     *(this->_sadrzaj) = arma::trans(*(this->_sadrzaj));

@@ -28,6 +28,18 @@ public:
 
     //functions
     void transpose();
+
+    //operators
+    Matrica operator + (const Matrica &other) const;
+    Matrica operator - (const Matrica &other) const;
+    Matrica operator *(const Matrica &other) const;
+    Matrica operator /(const Matrica &other) const;
+    Matrica &operator ++();
+    Matrica operator ++(int);  //postfiksno mora imati tip argumenta?
+    Matrica operator-() const; //unarni operator
+
+    
+    
 private:
     unsigned _dimenzija1;
     unsigned _dimenzija2;
