@@ -108,7 +108,7 @@ Matrica Matrica::operator ++(int){
     Matrica tmp = Matrica(dimenzija1(), dimenzija2(), "postfiksno");
     ++(*this);
     return tmp;
-}  //postfiksno mora imati tip argumenta?
+} 
 
 Matrica Matrica::operator -() const{
     arma::mat new_data = sadrzaj();
@@ -122,6 +122,23 @@ Matrica Matrica::operator -() const{
 
     return *new_mat;
 }
+
+bool Matrica::operator == (const Matrica &other) const{
+        if(!(other.dimenzija1() == dimenzija1() && other.dimenzija2() == dimenzija2()))
+            return false;
+        
+        //TODO algorithm this
+        for(unsigned i = 0; i<dimenzija1(); i++)
+            for(unsigned j = 0; j<dimenzija2(); j++)
+                if(sadrzaj()(i, j) != other.sadrzaj()(i, j))
+                    return false;
+        return true;
+    }
+    
+bool Matrica::operator != (const Matrica &other) const{
+        return !(*this == other);
+    }
+
     //functions
 void Matrica::transpose() {
     *(this->_sadrzaj) = arma::trans(*(this->_sadrzaj));

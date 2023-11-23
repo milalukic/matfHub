@@ -35,10 +35,11 @@ public:
     Matrica operator *(const Matrica &other) const;
     Matrica operator /(const Matrica &other) const;
     Matrica &operator ++();
-    Matrica operator ++(int);  //postfiksno mora imati tip argumenta?
-    Matrica operator-() const; //unarni operator
+    Matrica operator ++(int);  
+    Matrica operator-() const;
 
-    
+    bool operator == (const Matrica &other) const;
+    bool operator != (const Matrica &other) const;
     
 private:
     unsigned _dimenzija1;
