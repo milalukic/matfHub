@@ -133,10 +133,13 @@ void MainWindow::on_currentFilePath_editingFinished()
     //trimujemo poslednje kose crte
     int lastSlashFound = newPath.lastIndexOf("/");
     int lastCharInPath = newPath.length() - 1;
+    newPath = newPath.left(lastSlashFound);
     if(lastSlashFound == lastCharInPath){
         while(newPath.at(lastSlashFound--) == '/'){
             newPath.chop(1);
-        }//ovo se sigurno moze lepse uraditi?
+        }//ovo se sigurno moze lepse uraditi?  //uvek moze bolje, samo ne kapiram sta se desava
+        //imas one funckije newPath.left(index) i newPath.right(index) koji ti vracaju substring svega na levoj/desnoj strani indeksa (bez indeksa)
+        //mozda ti to znaci nesto, necu ja ovo da diram jer ne kapiram ni koje je dugme ni sta treba da uradi
     }
     ui->currentFilePath->setText(newPath);
 
@@ -154,11 +157,10 @@ void MainWindow::on_currentFilePath_editingFinished()
 //na pozivacu je da staru putanju smesti u odgovarajuci stek istorije
 void MainWindow::changeDir(QString path){
     oldPath = currPath;
-    newPath = path; //ja mislim da je ovo polje klase nepotrebno, imamo curr koji je bitan i old koji se gura u stek a new koristi samo ova f-ja ako ne gresim, ekvivalentan je sa lokalnim argumentom 'path'
 
-    ui->fileView->setRootIndex(fileModel->setRootPath(newPath));
+    ui->fileView->setRootIndex(fileModel->setRootPath(path));
 
-    currPath = newPath;
+    currPath = path;
     ui->currentFilePath->setText(currPath);
 }
 
@@ -211,6 +213,16 @@ void MainWindow::on_fileView_customContextMenuRequested(const QPoint &pos)
     connect(selectAllAction, &QAction::triggered, [=](){
         ui->fileView->clearSelection();
         ui->fileView->selectAll();//ovo ne radi kako sam zamislio i blago je reci da mi ide na zivce :)
+        //mozda i radi nego ne prikazuje sve kao plavo, to plavo mozda nije select kako ga mi shvatamo
+    });
+    //svakako za ovo ispod nam treba neki currentlySelected u kom cemo da cuvamo sta je trenutno selectovano da bi moglo ime da se menja
+    //qdir rename menja ime necega u trenutnoj putanji, a mi ne zelimo da ulazimo u nas new folder da bi se on dodao na putanju i onda tek da mozemo da mu menjamo ime
+    //pakao brate moj
+    QAction* renameAction = new QAction("Rename", this);
+    menu->addAction(renameAction);
+    connect(renameAction, &QAction::triggered, [=](){
+    //    int foundSlash =
+    //    QDir::rename();
     });
 
 
@@ -230,6 +242,8 @@ void MainWindow::on_actionChangeHubLocation_triggered()
 {
     //ovde treba otvoriti fajl eksplorer u novom prozoru u kome bi se birao novi hubPath
     //sada bi bio <del>pravi</del> poslednji trenutak da fMenadzer izdvojimo kao svoju klasu iz glavnog prozora jer nam je potreban 1) u tabu fMngr, 2) pri menjanju hubPath, 3) pri odabiru Save As, 4) itd itd
+
+    //o ovome iznad ramisljam vec danima
 //    QWidget *wdg = new QWidget;
 //    wdg->show();
 
