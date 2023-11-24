@@ -38,8 +38,6 @@ private slots:
 
     void on_newFolderButton_clicked();
 
-    void createNewFolder();
-
     void on_fileView_customContextMenuRequested(const QPoint &pos);
 
     void on_actionExit_triggered();
