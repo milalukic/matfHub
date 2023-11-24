@@ -76,18 +76,18 @@ Matrix *Matrix::operator -(const Matrix &other) const{
     return new_mat;
 }
 
-//TODO make this work
-// Matrix Matrix::operator *(const Matrix &other) const{
+// TODO make this work
+Matrix Matrix::operator *(const Matrix &other) const{
 
-//     if(dimension2() != other.dimension1())
-//         throw new std::string("Matrices are not the right dimension");
-    
-//     arma::mat new_data = arma::affmul(data(), other.data());
-//     Matrix *new_mat = new Matrix(dimension1(), dimension2(), "zbir");
-//     new_mat->data(new_data);
+    if(dimension2() != other.dimension1())
+        throw new std::string("Matrices are not the right dimension");
 
-//     return *new_mat;
-// }
+    arma::mat new_data = data() * other.data();
+    Matrix *new_mat = new Matrix(other.dimension1(), dimension2(), "proizvod");
+    new_mat->data(new_data);
+
+    return *new_mat;
+}
 
 // TODO make this work
 // Matrix Matrix::operator /(const Matrix &other) const{
