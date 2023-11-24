@@ -1,5 +1,5 @@
-#include "mainwindow.hpp"
-#include "./ui_mainwindow.h"
+#include "../include/mainwindow.hpp"
+#include "../ui_mainwindow.h"
 
 #include <QSplitter>
 #include <QFileSystemModel>
