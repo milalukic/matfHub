@@ -34,8 +34,8 @@ int main(){
     m2->data(kopija);
 
     Matrix *m3 = ++m2;
-    std::cout << *m3 << std::endl;
-    std::cout << *m3 << std::endl;
+    std::cout << m3 << std::endl;
+    std::cout << m3 << std::endl;
 
 
     std::cout << "\tDeleting block start" << std::endl;

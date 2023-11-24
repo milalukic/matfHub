@@ -27,18 +27,22 @@ public:
     void data(arma::mat Matrix);
 
     //functions
-    void transpose();
-    void inverse();
+    Matrix *transpose();
+    Matrix *inverse();
     Matrix *ones();
     Matrix *diag();
 
     //operators
     Matrix *operator + (const Matrix &other) const;
+    Matrix *operator + (const double &number) const;
     Matrix *operator - (const Matrix &other) const;
-    Matrix operator *(const Matrix &other) const;
-    Matrix operator /(const Matrix &other) const;
-    Matrix &operator ++();
-    Matrix *operator ++(int);  
+    Matrix *operator - (const double &number) const;
+    Matrix *operator *(const Matrix &other) const;
+    Matrix *operator /(const Matrix &other) const;
+    Matrix *operator ++();
+    Matrix *operator ++(int);
+    Matrix *operator --();
+    Matrix *operator --(int);  
     Matrix *operator-() const;
 
     bool operator == (const Matrix &other) const;
@@ -52,7 +56,7 @@ private:
     arma::mat *_data;
 };
 
-std::ostream &operator<<(std::ostream &out, const Matrix &value);
+std::ostream &operator<<(std::ostream &out, const Matrix *value);
 std::istream &operator>>(std::istream &in, Matrix &value);
 
 #endif //MATRIX_HPP

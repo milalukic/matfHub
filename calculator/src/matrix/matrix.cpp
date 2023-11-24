@@ -65,6 +65,14 @@ Matrix *Matrix::operator + (const Matrix &other) const{
     return new_mat;
 }
 
+Matrix *Matrix::operator + (const double &number) const{
+    arma::mat new_data = data() + number;
+    Matrix *new_mat = new Matrix(dimension1(), dimension2(), "zbir");
+    new_mat->data(new_data);
+
+    return new_mat;
+}
+
 Matrix *Matrix::operator -(const Matrix &other) const{
     if(!(other.dimension1() == dimension1() && other.dimension2() == dimension2()))
         throw new std::string("Matrices are not the same dimension");
@@ -76,8 +84,16 @@ Matrix *Matrix::operator -(const Matrix &other) const{
     return new_mat;
 }
 
+Matrix *Matrix::operator - (const double &number) const {
+    arma::mat new_data = data() - number;
+    Matrix *new_mat = new Matrix(dimension1(), dimension2(), "razlika");
+    new_mat->data(new_data);
+
+    return new_mat;
+}
+
 // TODO make this work
-Matrix Matrix::operator *(const Matrix &other) const{
+Matrix *Matrix::operator *(const Matrix &other) const{
 
     if(dimension2() != other.dimension1())
         throw new std::string("Matrices are not the right dimension");
@@ -86,11 +102,11 @@ Matrix Matrix::operator *(const Matrix &other) const{
     Matrix *new_mat = new Matrix(other.dimension1(), dimension2(), "proizvod");
     new_mat->data(new_data);
 
-    return *new_mat;
+    return new_mat;
 }
 
 // TODO make this work
-// Matrix Matrix::operator /(const Matrix &other) const{
+Matrix *Matrix::operator /(const Matrix &other) const{
 //     if(dimension2() != other.dimension1())
 //         throw new std::string("Matrices are not the right dimension");
     
@@ -99,22 +115,46 @@ Matrix Matrix::operator *(const Matrix &other) const{
 //     new_mat->data(new_data);
 
 //     return *new_mat;
-// }
+
+    if(dimension2() != other.dimension1())
+        throw new std::string("Matrices are not the right dimension");
+
+    if(other.dimension1() != other.dimension2())
+        throw new std::string("A sqaure matrix is required");
+
+    arma::mat inverse_mat = arma::inv(other.data());
+    arma::mat new_data = data() * inverse_mat;
+    Matrix *new_mat = new Matrix(other.dimension1(), dimension2(), "kolicnik");
+    new_mat->data(new_data);
+    return new_mat;
+
+
+}
 
 //TODO make this dynamic
-Matrix &Matrix::operator ++(){
-    
+Matrix *Matrix::operator ++(){
     data(data() + 1);
-
-    return *this;
+    matrixName("inkrement");
+    return this;
 }
 
 //TODO make this dynamic AND make it work...
 Matrix *Matrix::operator ++(int){
-    Matrix *tmp = new Matrix(dimension1(), dimension2(), "postfix");
-    ++(*this);
-    return tmp;
+    data(data() + 1);
+    matrixName("inkrement");
+    return this;
 } 
+
+Matrix *Matrix::operator --() {
+    data(data() - 1);
+    matrixName("umanjenje");
+    return this;
+}
+Matrix *Matrix::operator --(int) {
+    data(data() - 1);
+    matrixName("umanjenje");
+    return this;
+}
 
 Matrix *Matrix::operator -() const{
     arma::mat new_data = data();
@@ -146,9 +186,11 @@ bool Matrix::operator != (const Matrix &other) const{
     }
 
     //functions
-void Matrix::transpose() {
-    // *(this->_data) = arma::trans(*(this->_data));
-    data(arma::trans((this->data())));
+Matrix *Matrix::transpose() {
+    arma::mat new_data = arma::trans(data());
+    Matrix *new_mat = new Matrix(dimension2(), dimension1(), "transponovana");
+    new_mat->data(new_data);
+    return new_mat;
 }
 
 Matrix *Matrix::ones(){
@@ -171,13 +213,19 @@ Matrix *Matrix::diag(){
 }
 
 //TODO make this work
-// void Matrix::inverse(){
-//     (*this->_data) = arma::inv(*(this->_data));
-// }
+Matrix *Matrix::inverse(){
+    if(dimension1() != dimension2())
+        throw new std::string("A sqaure matrix is required");
+
+    arma::mat new_data = inv(data());
+    Matrix *new_mat = new Matrix(dimension1(), dimension2(), "inverz");
+    new_mat->data(new_data);
+    return new_mat;
+}
 
     //formatting
-std::ostream &operator<<(std::ostream &out, const Matrix &value){
-    return out << "\t\t" << value.matrixName() << "\n" << value.data();
+std::ostream &operator<<(std::ostream &out, const Matrix *value){
+    return out << "\t\t" << value->matrixName() << "\n" << value->data();
 }
 
 //TODO make this work

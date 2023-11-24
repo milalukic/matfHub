@@ -7,5 +7,8 @@ int main() {
 
     std::cout << A << std::endl << B << std::endl;
 
+
     std::cout << A*B << std::endl;
+
+    std::cout << A + 1 << std::endl;
 }
