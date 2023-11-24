@@ -16,7 +16,7 @@ set(PROJECT_SOURCES
         matfHub/src/main.cpp
 	matfHub/src/mainwindow.cpp
 	matfHub/include/mainwindow.hpp
-	matfHub/mainwindow.ui
+	matfHub/forms/mainwindow.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
