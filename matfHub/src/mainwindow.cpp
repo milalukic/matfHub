@@ -113,8 +113,7 @@ void MainWindow::on_fileView_customContextMenuRequested(const QPoint &pos)// !!!
     QAction* renameAction = new QAction("Rename", this);
     menu->addAction(renameAction);
     connect(renameAction, &QAction::triggered, [=](){
-    //    int foundSlash =
-    //    QDir::rename();
+        QDir(m_fileManager->currPath).rename(m_fileManager->currentlySelected, "novo ime");
     });
 
 
@@ -153,4 +152,9 @@ void MainWindow::currentFilePathSetPath(const QString path){
 }
 QString MainWindow::currentFilePathGetPath(){
     return ui->currentFilePath->text();
+}
+
+void MainWindow::on_fileView_clicked(const QModelIndex &index)
+{
+    m_fileManager->currentlySelected = m_fileManager->fileModel->fileInfo(index).fileName();
 }

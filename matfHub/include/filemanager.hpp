@@ -15,6 +15,7 @@ public:
     QString appPath;
     QString hubPath;
     QString currPath;
+    QString currentlySelected;
 
     QFileSystemModel *dirModel;
     QFileSystemModel *fileModel;

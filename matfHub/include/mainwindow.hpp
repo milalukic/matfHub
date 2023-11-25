@@ -48,6 +48,8 @@ private slots:
 
     void on_actionChangeHubLocation_triggered();
 
+    void on_fileView_clicked(const QModelIndex &index);
+
 private:
     Ui::MainWindow *ui;
     FileManager* m_fileManager;
