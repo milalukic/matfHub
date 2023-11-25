@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->dirView->hideColumn(1);
     ui->dirView->hideColumn(2);
     ui->dirView->setColumnWidth(0, 200);
-    /*/ ui->dirView->setRootIndex(dirModel->setRootPath(hubPath));/**/
+    //ui->dirView->setRootIndex(dirModel->setRootPath(hubPath));
     ui->fileView->setModel(m_fileManager->fileModel);
     ui->fileView->setRootIndex(m_fileManager->fileModel->setRootPath(m_fileManager->hubPath));
     ui->currentFilePath->setText(m_fileManager->currPath);

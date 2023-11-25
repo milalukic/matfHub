@@ -10,14 +10,18 @@ class FileManager
 {
 public:
     FileManager(MainWindow* mw);
+
     QString oldPath;
     QString appPath;
     QString hubPath;
     QString currPath;
+
     QFileSystemModel *dirModel;
     QFileSystemModel *fileModel;
+
     std::stack<QString> navigationBefore;
     std::stack<QString> navigationAfter;
+
 
     void changeDir(const QString path);
     void createNewFolder();
@@ -30,7 +34,6 @@ public:
     void dotDotButtonClicked();
     void currentFilePathEditingFinished();
     void fileViewCustomContextMenuRequested(const QPoint &pos);
-
 
 private:
     MainWindow *m_mainWindow;
