@@ -5,11 +5,11 @@
 #include <QFileSystemModel>
 #include <stack>
 
-
-class fileManager
+class MainWindow;
+class FileManager
 {
 public:
-    fileManager();
+    FileManager(MainWindow* mw);
     QString oldPath;
     QString appPath;
     QString hubPath;
@@ -19,10 +19,21 @@ public:
     std::stack<QString> navigationBefore;
     std::stack<QString> navigationAfter;
 
+    void changeDir(const QString path);
     void createNewFolder();
 
-private:
+    void dirViewDoubleClicked(const QModelIndex &index);
+    void fileViewDoubleClicked(const QModelIndex &index);
+    void backButtonClicked();
+    void forwardButtonClicked();
+    void homeButtonClicked();
+    void dotDotButtonClicked();
+    void currentFilePathEditingFinished();
+    void fileViewCustomContextMenuRequested(const QPoint &pos);
 
+
+private:
+    MainWindow *m_mainWindow;
 
 };
 

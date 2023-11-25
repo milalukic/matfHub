@@ -5,12 +5,12 @@
 #include <QtCore>
 #include <QtGui>
 #include <stack>
-#include "filemanager.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
+class FileManager;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -19,6 +19,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void fileViewSetPath(const QString path);
+    void currentFilePathSetPath(const QString path);
+    QString currentFilePathGetPath();
+
 
 private slots:
     void on_dirView_doubleClicked(const QModelIndex &index);
@@ -47,9 +50,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    fileManager *filemanager;
-
-    void changeDir(QString path, fileManager *filemanager);
+    FileManager* m_fileManager;
 
 
 };

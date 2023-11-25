@@ -1,4 +1,5 @@
 #include "../include/mainwindow.hpp"
+#include "../include/filemanager.hpp"
 #include "../ui_mainwindow.h"
 
 #include <QSplitter>
@@ -13,21 +14,21 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    filemanager = new fileManager();
+    m_fileManager = new FileManager(this);
 
     // ako ne postoji dir MATF, pravimo ga
     if(!QDir("MATF").exists()){
         QDir().mkdir("MATF");
     }
 
-    ui->dirView->setModel(filemanager->dirModel);
+    ui->dirView->setModel(m_fileManager->dirModel);
     ui->dirView->hideColumn(1);
     ui->dirView->hideColumn(2);
     ui->dirView->setColumnWidth(0, 200);
     /*/ ui->dirView->setRootIndex(dirModel->setRootPath(hubPath));/**/
-    ui->fileView->setModel(filemanager->fileModel);
-    ui->fileView->setRootIndex(filemanager->fileModel->setRootPath(filemanager->hubPath));
-    ui->currentFilePath->setText(filemanager->currPath);
+    ui->fileView->setModel(m_fileManager->fileModel);
+    ui->fileView->setRootIndex(m_fileManager->fileModel->setRootPath(m_fileManager->hubPath));
+    ui->currentFilePath->setText(m_fileManager->currPath);
 }
 
 MainWindow::~MainWindow()
@@ -37,109 +38,66 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_dirView_clicked(const QModelIndex &index)
 {
-
+//ovo nam vr ne treba
 }
 
 //u levom pogledu dupli klik na folder smesta desni pogled u njega
 void MainWindow::on_dirView_doubleClicked(const QModelIndex &index)
 {
-    changeDir(filemanager->dirModel->fileInfo(index).absoluteFilePath(), filemanager);
-    filemanager->navigationBefore.push(filemanager->oldPath);
+    m_fileManager->dirViewDoubleClicked(index);
 }
 
 //u desnom pogledu dupli klik na stavku vrsi odgovarajucu akciju
 void MainWindow::on_fileView_doubleClicked(const QModelIndex &index)
 {
-    if(filemanager->fileModel->fileInfo(index).isDir()){
-        changeDir(filemanager->fileModel->fileInfo(index).absoluteFilePath(), filemanager);
-        filemanager->navigationBefore.push(filemanager->oldPath);
-
-    }else{
-        //if(podrzan tip fajla){
-        //    otvori u odgovarajucem tabu
-        //}else{
-        QDesktopServices::openUrl(filemanager->fileModel->fileInfo(index).absoluteFilePath());
-        //}
-    }
+    m_fileManager->fileViewDoubleClicked(index);
 }
 
-
+//navigacija u prethodno prikazani folder
 void MainWindow::on_backButton_clicked()
 {
-    if (!filemanager->navigationBefore.empty()){
-        changeDir(filemanager->navigationBefore.top(), filemanager);
-        filemanager->navigationBefore.pop();
-        filemanager->navigationAfter.push(filemanager->oldPath);
-    }
+    m_fileManager->backButtonClicked();
 }
 
+//navigacija u sledece prikazan folder
 void MainWindow::on_forwardButton_clicked()
 {
-    if(!filemanager->navigationAfter.empty()){
-        changeDir(filemanager->navigationAfter.top(), filemanager);
-        filemanager->navigationAfter.pop();
-        filemanager->navigationBefore.push(filemanager->oldPath);
-    }
+    m_fileManager->forwardButtonClicked();
 }
 
+//navigacija u glavni hab folder
 void MainWindow::on_homeButton_clicked()
 {
-    if(filemanager->currPath != filemanager->hubPath){
-        filemanager->navigationBefore.push(filemanager->currPath);
-        ui->fileView->setRootIndex(filemanager->fileModel->setRootPath(filemanager->hubPath));
-        filemanager->currPath = filemanager->hubPath;
-        ui->currentFilePath->setText(filemanager->currPath);
-    }
+    m_fileManager->homeButtonClicked();
 }
 
+//navigacija u roditeljski folder
 void MainWindow::on_dotDotButton_clicked()
 {
-    int lastSlashFound = filemanager->currPath.lastIndexOf("/");
-    QString parentDirPath = filemanager->currPath.left(lastSlashFound);
-    changeDir(parentDirPath, filemanager);
-    filemanager->navigationBefore.push(filemanager->oldPath);
+    m_fileManager->dotDotButtonClicked();
 }
 
-
+//navigacija ka unesenoj putanji, ako postoji folder na tom mestu
 void MainWindow::on_currentFilePath_editingFinished()
 {
-
-    QString newPath = ui->currentFilePath->text();
-
-    //trimujemo kose crte s kraja
-    int lastSlashFound = newPath.lastIndexOf("/");
-    int lastCharInPath = newPath.length() -1;
-    if(lastSlashFound == lastCharInPath){
-        while(newPath.at(lastSlashFound--) == '/'){
-            newPath.chop(1);
-        }
-    }
-    ui->currentFilePath->setText(newPath);
-
-    if(newPath != filemanager->currPath){
-
-        const QFileInfo inputFpath(newPath);
-        if(inputFpath.exists() && inputFpath.isDir()){
-            changeDir(ui->currentFilePath->text(), filemanager);
-            filemanager->navigationBefore.push(filemanager->oldPath);
-        }
-    }
+    m_fileManager->currentFilePathEditingFinished();
 }
 
-
-void MainWindow::on_newFolderButton_clicked() //ovo je za newFolder dugme u UI-u
+//kreiranje novog foldera unutar trenutnog
+void MainWindow::on_newFolderButton_clicked()
 {
-    filemanager->createNewFolder();
+    m_fileManager->createNewFolder();
 }
 
-void MainWindow::on_fileView_customContextMenuRequested(const QPoint &pos)
+//kreiranje popapa sa kontekst menijem u desnom pogledu
+void MainWindow::on_fileView_customContextMenuRequested(const QPoint &pos)// !!!!!! ovo bi bilo lepo takodje izmestiti u filemanager.cpp ali prvo connect je iz QObject ili tako necega treba to nasledjivanje srediti drugo poslednja linija funkcije (i jos neke) zove privatne metode privatnih polja iz ui pa bi i to trebalo prebroditi nekako nekim seterom
 {
     QMenu* menu = new QMenu(this);
 
     QAction* newFolderAction = new QAction("New Folder", this);
     menu->addAction(newFolderAction);
     connect(newFolderAction, &QAction::triggered, [=]() {//jednakost u prvim zagradama hvata sve promenjive iz pozivajuce funkcije u pozvanu, ne pitaj koja magija niti zasto je to potrebno..
-        filemanager->createNewFolder();
+        m_fileManager->createNewFolder();
     });
 
     QAction* selectAllAction = new QAction("Select All", this);
@@ -166,40 +124,33 @@ void MainWindow::on_fileView_customContextMenuRequested(const QPoint &pos)
 }
 
 
+//naredne dve funkcije mozda treba pomeriti u filemanager klasu ali mislim da je to pametnije uraditi kada krenemo da spajamo grane u zavisnosti od toga sta odlucimo kako ce se ponasati meni bar glavnog prozora
+
+//izlazak iz aplikacije, logicno
 void MainWindow::on_actionExit_triggered()
 {
     QApplication::quit();
 }
 
-
+//promena glavnog hab foldera
 void MainWindow::on_actionChangeHubLocation_triggered()
 {
-    //ovde treba otvoriti fajl eksplorer u novom prozoru u kome bi se birao novi hubPath
-    //sada bi bio <del>pravi</del> poslednji trenutak da fMenadzer izdvojimo kao svoju klasu iz glavnog prozora jer nam je potreban 1) u tabu fMngr, 2) pri menjanju hubPath, 3) pri odabiru Save As, 4) itd itd
-
-    //o ovome iznad ramisljam vec danima
-//    QWidget *wdg = new QWidget;
-//    wdg->show();
-
     QString newHubPath = QFileDialog::getExistingDirectory(this, "Odaberi direktorijum");
-    filemanager->hubPath = newHubPath;   //hubPath treba uciniti trajnim nakon zatvaranja programa
-    filemanager->currPath = filemanager->hubPath;
-    ui->currentFilePath->setText(filemanager->currPath);
-    ui->fileView->setRootIndex(filemanager->fileModel->setRootPath(filemanager->currPath));
-}
-
-void MainWindow::changeDir(QString path, fileManager *filemanager){
-    filemanager->oldPath = filemanager->currPath;
-
-    ui->fileView->setRootIndex(filemanager->fileModel->setRootPath(path));
-
-    filemanager->currPath = path;
-    ui->currentFilePath->setText(filemanager->currPath);
+    m_fileManager->hubPath = newHubPath;   //hubPath treba uciniti trajnim nakon zatvaranja programa
+    m_fileManager->currPath = m_fileManager->hubPath;
+    ui->currentFilePath->setText(m_fileManager->currPath);
+    ui->fileView->setRootIndex(m_fileManager->fileModel->setRootPath(m_fileManager->currPath));
 }
 
 
+
+//geteri seteri i ostala narusavanja mejnovih privatnosti
 void MainWindow::fileViewSetPath(const QString path){
-    ui->fileView->setRootIndex(filemanager->fileModel->setRootPath(path));
+    ui->fileView->setRootIndex(m_fileManager->fileModel->setRootPath(path));
 }
-
-
+void MainWindow::currentFilePathSetPath(const QString path){
+    ui->currentFilePath->setText(path);
+}
+QString MainWindow::currentFilePathGetPath(){
+    return ui->currentFilePath->text();
+}
