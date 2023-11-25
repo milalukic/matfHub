@@ -106,16 +106,13 @@ void MainWindow::on_currentFilePath_editingFinished()
 
     QString newPath = ui->currentFilePath->text();
 
-    //trimujemo poslednje kose crte
+    //trimujemo kose crte s kraja
     int lastSlashFound = newPath.lastIndexOf("/");
-    int lastCharInPath = newPath.length() - 1;
-    newPath = newPath.left(lastSlashFound);
+    int lastCharInPath = newPath.length() -1;
     if(lastSlashFound == lastCharInPath){
         while(newPath.at(lastSlashFound--) == '/'){
             newPath.chop(1);
-        }//ovo se sigurno moze lepse uraditi?  //uvek moze bolje, samo ne kapiram sta se desava
-        //imas one funckije newPath.left(index) i newPath.right(index) koji ti vracaju substring svega na levoj/desnoj strani indeksa (bez indeksa)
-        //mozda ti to znaci nesto, necu ja ovo da diram jer ne kapiram ni koje je dugme ni sta treba da uradi
+        }
     }
     ui->currentFilePath->setText(newPath);
 
@@ -199,4 +196,10 @@ void MainWindow::changeDir(QString path, fileManager *filemanager){
     filemanager->currPath = path;
     ui->currentFilePath->setText(filemanager->currPath);
 }
+
+
+void MainWindow::fileViewSetPath(const QString path){
+    ui->fileView->setRootIndex(filemanager->fileModel->setRootPath(path));
+}
+
 

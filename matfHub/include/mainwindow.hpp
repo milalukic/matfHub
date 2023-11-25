@@ -18,6 +18,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void fileViewSetPath(const QString path);
 
 private slots:
     void on_dirView_doubleClicked(const QModelIndex &index);
