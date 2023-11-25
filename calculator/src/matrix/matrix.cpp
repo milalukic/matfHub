@@ -1,5 +1,6 @@
 #include "matrix.hpp"
 //TODO throw, string doens't do the job
+//TODO use camelCase
 
 //konstruktori
 Matrix::Matrix(unsigned dimension1, unsigned dimension2, std::string matrixName)
@@ -224,6 +225,7 @@ Matrix *Matrix::inverse(){
 }
 
     //formatting
+    //TODO ask about & or *
 std::ostream &operator<<(std::ostream &out, const Matrix *value){
     return out << "\t\t" << value->matrixName() << "\n" << value->data();
 }
