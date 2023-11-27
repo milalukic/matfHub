@@ -5,6 +5,8 @@
 #include <QtCore>
 #include <QtGui>
 #include <stack>
+#include "notes.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -43,6 +45,24 @@ private slots:
 
     void on_actionRedo_triggered();
 
+    void on_pushButton_5_clicked();
+
+    void on_pushButton_6_clicked();
+
+    void on_pushButton_8_clicked();
+
+    void on_pushButton_7_clicked();
+
+    void on_pushButton_11_clicked();
+
+    void on_pushButton_9_clicked();
+
+    void on_pushButton_10_clicked();
+
+    void on_pushButton_4_clicked();
+
+    void on_toolButton_10_triggered(QAction *arg1);
+
 private:
     Ui::MainWindow *ui;
     QFileSystemModel *dirModel;
@@ -51,6 +71,6 @@ private:
     std::stack<QString> navigationAfter;
 
     // Notes
-    QString currentFile = "";
+    notes *notes;
 };
 #endif // MAINWINDOW_HPP

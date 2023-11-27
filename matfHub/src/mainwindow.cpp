@@ -6,7 +6,8 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <stack>
-#include <iostream>
+// #include <iostream>
+// #include "../include/notes.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -14,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    notes = new class notes();
     QString sPath = ""; //ovde kasnije dodati path i gurnuti ga u setRootPath
     dirModel = new QFileSystemModel(this);
     dirModel->setRootPath(QDir::rootPath());
@@ -65,21 +67,20 @@ void MainWindow::on_pushButton_3_clicked()
 }
 
 
-void MainWindow::on_actionNew_triggered()
+void MainWindow::on_pushButton_5_clicked()
 {
-    currentFile.clear();
+    notes->currentFile.clear();
     ui->textEdit->setText(QString());
 }
 
 
-void MainWindow::on_actionOpen_triggered()
+void MainWindow::on_pushButton_6_clicked()
 {
     QString fileName = QFileDialog::getOpenFileName(this, "Otvori novu datoteku");
     QFile file(fileName);
-    currentFile = fileName;
+    notes->currentFile = fileName;
 
     if(!file.open(QIODevice::ReadOnly | QFile::Text)){
-        QMessageBox::warning(this, "Upozorenje!", "Datoteka ne moze biti otvorena: " + file.errorString());
         return;
     }
 
@@ -92,17 +93,16 @@ void MainWindow::on_actionOpen_triggered()
 }
 
 
-void MainWindow::on_actionSave_triggered()
+void MainWindow::on_pushButton_8_clicked()
 {
     QString fileName = QFileDialog::getSaveFileName(this, "Sacuvaj.");
     QFile file(fileName);
 
     if(!file.open(QFile::WriteOnly | QFile::Text)){
-        QMessageBox::warning(this, "Upozorenje!", "Datoteka ne moze biti sacuvana: " + file.errorString());
         return;
     }
 
-    currentFile = fileName;
+    notes->currentFile = fileName;
     setWindowTitle(fileName);
 
     QTextStream out(&file);
@@ -112,34 +112,33 @@ void MainWindow::on_actionSave_triggered()
 }
 
 
-void MainWindow::on_actionCopy_triggered()
+void MainWindow::on_pushButton_7_clicked()
 {
     ui->textEdit->copy();
 }
 
 
-void MainWindow::on_actionPaste_triggered()
+void MainWindow::on_pushButton_11_clicked()
 {
     ui->textEdit->paste();
-
 }
 
 
-void MainWindow::on_actionCut_triggered()
+void MainWindow::on_pushButton_9_clicked()
 {
     ui->textEdit->cut();
-
 }
 
-
-void MainWindow::on_actionUndo_triggered()
+void MainWindow::on_pushButton_10_clicked()
 {
     ui->textEdit->undo();
 }
 
 
-void MainWindow::on_actionRedo_triggered()
+void MainWindow::on_pushButton_4_clicked()
 {
     ui->textEdit->redo();
 }
+
+
 
