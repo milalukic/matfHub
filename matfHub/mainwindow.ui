@@ -1044,56 +1044,94 @@
             <string notr="true"/>
            </property>
            <property name="text">
-            <string>Novo</string>
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>icons/new.png</normaloff>icons/new.png</iconset>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="pushButton_8">
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
            <property name="text">
-            <string>Sacuvaj</string>
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>icons/save.png</normaloff>icons/save.png</iconset>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="pushButton_6">
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
            <property name="text">
-            <string>Otvori</string>
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>icons/open.jpg</normaloff>icons/open.jpg</iconset>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="pushButton_7">
            <property name="text">
-            <string>Kopiraj</string>
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>icons/copy.png</normaloff>icons/copy.png</iconset>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="pushButton_11">
            <property name="text">
-            <string>Nalepi</string>
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>icons/paste.png</normaloff>icons/paste.png</iconset>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="pushButton_9">
            <property name="text">
-            <string>Iseci</string>
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>icons/cut.png</normaloff>icons/cut.png</iconset>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="pushButton_10">
            <property name="text">
-            <string>Nazad</string>
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>icons/undo.png</normaloff>icons/undo.png</iconset>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="pushButton_4">
            <property name="text">
-            <string>Napred</string>
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>icons/redo.png</normaloff>icons/redo.png</iconset>
            </property>
           </widget>
          </item>
