@@ -1016,10 +1016,10 @@
        <widget class="QWidget" name="verticalLayoutWidget">
         <property name="geometry">
          <rect>
-          <x>9</x>
-          <y>9</y>
-          <width>561</width>
-          <height>421</height>
+          <x>20</x>
+          <y>60</y>
+          <width>691</width>
+          <height>471</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout">
@@ -1028,30 +1028,23 @@
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="verticalLayoutWidget_2">
+       <widget class="QWidget" name="horizontalLayoutWidget">
         <property name="geometry">
          <rect>
-          <x>590</x>
-          <y>90</y>
-          <width>151</width>
-          <height>221</height>
+          <x>20</x>
+          <y>20</y>
+          <width>691</width>
+          <height>31</height>
          </rect>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout_2">
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
           <widget class="QPushButton" name="pushButton_5">
            <property name="styleSheet">
             <string notr="true"/>
            </property>
            <property name="text">
-            <string>Nova Datoteka</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="pushButton_6">
-           <property name="text">
-            <string>Otvori</string>
+            <string>Novo</string>
            </property>
           </widget>
          </item>
@@ -1059,6 +1052,13 @@
           <widget class="QPushButton" name="pushButton_8">
            <property name="text">
             <string>Sacuvaj</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_6">
+           <property name="text">
+            <string>Otvori</string>
            </property>
           </widget>
          </item>
@@ -1086,14 +1086,14 @@
          <item>
           <widget class="QPushButton" name="pushButton_10">
            <property name="text">
-            <string>Korak nazad</string>
+            <string>Nazad</string>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="pushButton_4">
            <property name="text">
-            <string>Korak napred</string>
+            <string>Napred</string>
            </property>
           </widget>
          </item>
