@@ -29,22 +29,6 @@ private slots:
 
     void on_pushButton_3_clicked();
 
-    void on_actionNew_triggered();
-
-    void on_actionOpen_triggered();
-
-    void on_actionSave_triggered();
-
-    void on_actionCopy_triggered();
-
-    void on_actionPaste_triggered();
-
-    void on_actionCut_triggered();
-
-    void on_actionUndo_triggered();
-
-    void on_actionRedo_triggered();
-
     void on_pushButton_5_clicked();
 
     void on_pushButton_6_clicked();
@@ -61,7 +45,6 @@ private slots:
 
     void on_pushButton_4_clicked();
 
-    void on_toolButton_10_triggered(QAction *arg1);
 
 private:
     Ui::MainWindow *ui;

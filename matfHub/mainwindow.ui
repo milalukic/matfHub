@@ -1033,13 +1033,16 @@
          <rect>
           <x>590</x>
           <y>90</y>
-          <width>111</width>
-          <height>236</height>
+          <width>151</width>
+          <height>221</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
           <widget class="QPushButton" name="pushButton_5">
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
            <property name="text">
             <string>Nova Datoteka</string>
            </property>
