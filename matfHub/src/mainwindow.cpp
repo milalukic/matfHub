@@ -67,78 +67,43 @@ void MainWindow::on_pushButton_3_clicked()
 }
 
 
+// Funkcionalnosti Notes toolbara
 void MainWindow::on_pushButton_5_clicked()
 {
-    notes->currentFile.clear();
-    ui->textEdit->setText(QString());
+    notes->new_clicked(ui);
 }
-
 
 void MainWindow::on_pushButton_6_clicked()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, "Otvori novu datoteku");
-    QFile file(fileName);
-    notes->currentFile = fileName;
-
-    if(!file.open(QIODevice::ReadOnly | QFile::Text)){
-        return;
-    }
-
-    setWindowTitle(fileName);
-    QTextStream in(&file);
-    QString text = in.readAll();
-
-    ui->textEdit->setText(text);
-    file.close();
+    notes->open_clicked(ui, this);
 }
-
 
 void MainWindow::on_pushButton_8_clicked()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, "Sacuvaj.");
-    QFile file(fileName);
-
-    if(!file.open(QFile::WriteOnly | QFile::Text)){
-        return;
-    }
-
-    notes->currentFile = fileName;
-    setWindowTitle(fileName);
-
-    QTextStream out(&file);
-    QString text = ui->textEdit->toPlainText();
-    out << text;
-    file.close();
+    notes->save_clicked(ui, this);
 }
-
 
 void MainWindow::on_pushButton_7_clicked()
 {
-    ui->textEdit->copy();
+    notes->copy_clicked(ui);
 }
-
 
 void MainWindow::on_pushButton_11_clicked()
 {
-    ui->textEdit->paste();
+    notes->paste_clicked(ui);
 }
-
 
 void MainWindow::on_pushButton_9_clicked()
 {
-    ui->textEdit->cut();
+    notes->cut_clicked(ui);
 }
 
 void MainWindow::on_pushButton_10_clicked()
 {
-    ui->textEdit->undo();
+    notes->undo_clicked(ui);
 }
-
 
 void MainWindow::on_pushButton_4_clicked()
 {
-    ui->textEdit->redo();
+    notes->redo_clicked(ui);
 }
-
-
-
