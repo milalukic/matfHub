@@ -25,6 +25,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ${PROJECT_SOURCES}
         matfHub/include/notes.h
         matfHub/src/notes.cpp
+        matfHub/resources.qrc
 
 
     )

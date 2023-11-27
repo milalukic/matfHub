@@ -1047,8 +1047,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset>
-             <normaloff>icons/new.png</normaloff>icons/new.png</iconset>
+            <iconset resource="resources.qrc">
+             <normaloff>:/icons/icons/new.png</normaloff>:/icons/icons/new.png</iconset>
            </property>
           </widget>
          </item>
@@ -1061,8 +1061,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset>
-             <normaloff>icons/save.png</normaloff>icons/save.png</iconset>
+            <iconset resource="resources.qrc">
+             <normaloff>:/icons/icons/save.png</normaloff>:/icons/icons/save.png</iconset>
            </property>
           </widget>
          </item>
@@ -1075,8 +1075,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset>
-             <normaloff>icons/open.jpg</normaloff>icons/open.jpg</iconset>
+            <iconset resource="resources.qrc">
+             <normaloff>:/icons/icons/open.jpg</normaloff>:/icons/icons/open.jpg</iconset>
            </property>
           </widget>
          </item>
@@ -1086,8 +1086,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset>
-             <normaloff>icons/copy.png</normaloff>icons/copy.png</iconset>
+            <iconset resource="resources.qrc">
+             <normaloff>:/icons/icons/copy.png</normaloff>:/icons/icons/copy.png</iconset>
            </property>
           </widget>
          </item>
@@ -1097,8 +1097,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset>
-             <normaloff>icons/paste.png</normaloff>icons/paste.png</iconset>
+            <iconset resource="resources.qrc">
+             <normaloff>:/icons/icons/paste.png</normaloff>:/icons/icons/paste.png</iconset>
            </property>
           </widget>
          </item>
@@ -1108,8 +1108,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset>
-             <normaloff>icons/cut.png</normaloff>icons/cut.png</iconset>
+            <iconset resource="resources.qrc">
+             <normaloff>:/icons/icons/cut.png</normaloff>:/icons/icons/cut.png</iconset>
            </property>
           </widget>
          </item>
@@ -1119,8 +1119,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset>
-             <normaloff>icons/undo.png</normaloff>icons/undo.png</iconset>
+            <iconset resource="resources.qrc">
+             <normaloff>:/icons/icons/undo.png</normaloff>:/icons/icons/undo.png</iconset>
            </property>
           </widget>
          </item>
@@ -1130,8 +1130,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset>
-             <normaloff>icons/redo.png</normaloff>icons/redo.png</iconset>
+            <iconset resource="resources.qrc">
+             <normaloff>:/icons/icons/redo.png</normaloff>:/icons/icons/redo.png</iconset>
            </property>
           </widget>
          </item>
@@ -1176,6 +1176,8 @@
    <addaction name="separator"/>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
