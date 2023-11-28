@@ -1,8 +1,9 @@
-﻿Specifikacija - Slucajevi upotrebe
+Specifikacija - Slucajevi upotrebe
 
 
 Slucajevi upotrebe:
 - Pravljenje licnog planera
+- Pisanje beleski
 - Koriscenje fajl sistema
 - Generisanje rasporeda casova
 - Generisanje rasporeda ispita
