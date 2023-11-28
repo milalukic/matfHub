@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    notes = new class notes();
+    notes = new class Notes();
     QString sPath = ""; //ovde kasnije dodati path i gurnuti ga u setRootPath
     dirModel = new QFileSystemModel(this);
     dirModel->setRootPath(QDir::rootPath());

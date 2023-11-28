@@ -5,10 +5,10 @@
 #include "../ui_mainwindow.h"
 
 
-class notes
+class Notes
 {
 public:
-    notes();
+    Notes();
     QString currentFile = "";
 
     void new_clicked(Ui::MainWindow *ui);

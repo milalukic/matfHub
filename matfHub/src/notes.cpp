@@ -4,15 +4,15 @@
 #include <QFileDialog>
 
 
-notes::notes() {
+Notes::Notes() {
 }
 
-void notes::new_clicked(Ui::MainWindow *ui){
+void Notes::new_clicked(Ui::MainWindow *ui){
     currentFile.clear();
     ui->textEdit->setText(QString());
 }
 
-void notes::open_clicked(Ui::MainWindow *ui, QWidget *parent){
+void Notes::open_clicked(Ui::MainWindow *ui, QWidget *parent){
     QString fileName = QFileDialog::getOpenFileName(parent, "Otvori novu datoteku");
     QFile file(fileName);
     currentFile = fileName;
@@ -29,7 +29,7 @@ void notes::open_clicked(Ui::MainWindow *ui, QWidget *parent){
     file.close();
 }
 
-void notes::save_clicked(Ui::MainWindow *ui, QWidget *parent){
+void Notes::save_clicked(Ui::MainWindow *ui, QWidget *parent){
     QString fileName = QFileDialog::getSaveFileName(parent, "Sacuvaj.");
     QFile file(fileName);
 
@@ -46,19 +46,19 @@ void notes::save_clicked(Ui::MainWindow *ui, QWidget *parent){
     file.close();
 }
 
-void notes::copy_clicked(Ui::MainWindow *ui){
+void Notes::copy_clicked(Ui::MainWindow *ui){
     ui->textEdit->copy();
 }
-void notes::paste_clicked(Ui::MainWindow *ui){
+void Notes::paste_clicked(Ui::MainWindow *ui){
     ui->textEdit->paste();
 }
-void notes::cut_clicked(Ui::MainWindow *ui){
+void Notes::cut_clicked(Ui::MainWindow *ui){
     ui->textEdit->cut();
 }
 
-void notes::undo_clicked(Ui::MainWindow *ui){
+void Notes::undo_clicked(Ui::MainWindow *ui){
     ui->textEdit->undo();
 }
-void notes::redo_clicked(Ui::MainWindow *ui){
+void Notes::redo_clicked(Ui::MainWindow *ui){
     ui->textEdit->redo();
 }

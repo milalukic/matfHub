@@ -54,6 +54,6 @@ private:
     std::stack<QString> navigationAfter;
 
     // Notes
-    notes *notes;
+    Notes *notes;
 };
 #endif // MAINWINDOW_HPP
