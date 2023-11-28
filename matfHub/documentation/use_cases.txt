@@ -1,0 +1,138 @@
+﻿Specifikacija - Slucajevi upotrebe
+
+
+Slucajevi upotrebe:
+- Pravljenje licnog planera
+- Koriscenje fajl sistema
+- Generisanje rasporeda casova
+- Generisanje rasporeda ispita
+- Racunanje matematickog zahteva
+- Crtanje grafika
+
+
+Akteri:
+- Korisnik(Student)
+
+
+---------------------------------------------------------------------------
+SLUCAJEVI UPOTREBE
+
+
+Naziv: "Koriscenje kalkulatora"
+
+
+Kratak opis: "Korisnik klikom na TAB "kalkulator" dobija pristup matematickom kalkulatoru, unutar njega moze odabrati koji tip operacije mu je potreban (matrice, statistika, itd.). Korisnik potom unosi podatke neophodne za dato izracunavanje, aplikacija ispisuje trazeni rezultat. Korisnik moze odabrati da datu istoriju rezultata sacuva u odgovarajucem formatu, ili moze odabrati da uveze prethodno sacuvanu istoriju racunanja."
+
+
+Akteri: Korisnik aplikacije (kalkulatora)
+
+
+Preduslovi: "Aplikacija radi i odabran je kalukator unutar pokrenute aplikacije. Odabran je tip racunanja(inace je DEFAULTni) i uneti su podaci neophodni za dato izracunavanje."
+
+
+Postuslovi: "Prikazan rezultat racunanja (ispisan i u istoriji racunanja)."
+
+
+Osnovni tok: 
+        1. Korinisk bira kalkulator iz glavnog menija
+        2. Korisnik bira tip izracunavanja
+        3. Aplikacija konstruise odgovarajuci RACUNAR na osnovu odabranog tipa racunanja
+        4. Aplikacija otvara dostupne alate
+"OVAJ1" 5. Korisnik se nalazi u aplikaciji i moze uneti neophodne podatke
+                5.1. Ako korisnik odabere opciju "Uvezi istoriju"
+                        5.1.1. Prelazi na PODTOK 2
+                        5.2.1. Prelazi na korak 6
+        6. Korisnik unosi neophodne podatke za racunanje.
+        7. Korisnik klikom na dugme "Izracunaj" trazi od aplikacije rezultat.
+        8. Aplikacija cita unete podatke sa odgovarajuceg ulaza.
+                8.1 Aplikacija provera ispravnost ulaza.
+                        8.1.1. Ako je ispravan ulaz, prelazi na korak "OVAJ0"
+                        8.1.2. Ukoliko je neispravan ulaz, ispisuje odgovarajucu gresku i prelazi na korak "OVAJ1"
+
+
+"OVAJ0" 9. Aplikacija vrsi neophodna izracunavanja.
+        10. Aplikacija ispisuje racunanja u "privremenu istoriju racunanja".
+        11. Aplikacija prikazuje korisniku rezultat.
+                11.1. Ako korisnik korisnik klikne na dugme "Sacuvaj istoriju"
+                        11.1.1. Prelazi na PODTOK 1
+                        11.2.1. Prelazi na korak "OVAJ1"
+
+
+Alternativni tok:
+        Neocekivani izlaz iz aplikacije: Ukoliko u bilo kom koraku korisnik iskljuci aplikaciju, brise se "privremena istorija racunanja" i aplikacija zavrsava rad. Slucaj upotrebe se zavrsava.
+
+
+Podtokovi: "Sve sto ne staje u osnovni tok"
+        PODTOK 1: 
+                  1. Korisnik bira gde hoce da sacuva istoriju i pod kojim imenom
+                  2. Aplikacija pravi novi fajl sa navedenim imenom 
+                  3. Aplikacija ispisuje istoriju u dati fajl i cuva ga na odabranom mestu i prelazi na korak "OVAJ1"
+        PODTOK 2: 
+                  1. Korisnik bira odakle hoce da uveze istoriju racunanja
+                  2. Aplikacija cita dati file i upisuje istoriju u "privremenu istoriju racunanja" i prelazi na korak "OVAJ1"        
+
+
+Specijalni zahtevi: "Aplikacija je povezana na internet npr."
+
+
+Dodatne informacije: Tokom trajanja rada kalkulatora, aplikacija pamti "privremenu istoriju racunanja".
+
+
+Naziv: "Pisanje beleski"
+
+
+Kratak opis: "Korisnik klikom na TAB "notes" dobija pristup notesu, unutar kojeg moze pisati svoje beleske sa predavanja. Notes ima toolbar koji mu omogucava najosnovnije akcije - otvaranje nove datoteke, cuvanje trenutne datoteke, otvaranje vec postojece datoteke, korak unazad i unapred, cut, copy i paste opcije.
+
+
+Akteri: Korisnik aplikacije (notesa)
+
+
+Preduslovi: "Aplikacija radi i odabran je notes tab unutar pokrenute aplikacije."
+
+
+Postuslovi: "Sacuvana je tekstualna datoteka na mestu koje je korisnik izabrao, pod imenom koje je korisnik izabrao. Ukoliko korisnik nije sacuvao datoteku, a promenio tab, moze se vratiti i nastaviti sa pisanjem ponovnim klikom na 'notes' tab."
+
+
+Osnovni tok: 
+        1. Korinisk bira notes iz glavnog menija
+OVAJ0        2. Pred korisnikom se nalazi prazan prostor za pisanje teksta.
+        3. Ukoliko korisnik izabere opciju za "otvaranje postojece datoteke":
+                3.1. Prelazi se na PODTOK 1.
+OVAJ1        4. Korisnik pise neki tekst u prostoru predvidjenom za pisanje teksta. Tokom pisanja on moze:
+                4.1. Selektovati i kopirati deo teksta klikom na dugme za "kopiranje" (copy)
+                4.2. Nalepiti prethodno kopiran deo teksta na deo prostora za pisanje teksta oznacen kursorom, klikom na dugme za "lepljenje" (paste)
+                4.3. Selektovati i iseci deo teksta klikom na dugme za "secenje" (cut)
+                4.4. Vratiti se jedan korak unazad klikom na dugme za "vracanje unazad" (undo)
+                4.5. Vratiti se jedan korak unapred klikom na dugme za "vracanje unapred" (redo)
+                4.6. Poceti pisanje nove datoteke klikom na dugme za "novu datoteku":
+                        4.6.1. Ukoliko izabere ovu opciju, prelazi se na PODTOK2.
+        5. Korisnik cuva tekstualnu datoteku koju je napisao klikom na dugme za "cuvanje". Ovim se otvara pop-up koji zahteva unos imena datoteke i biranje lokacije za njeno cuvanje.
+
+
+Alternativni tok:
+        Neocekivani izlaz iz aplikacije: Ukoliko u bilo kom koraku korisnik iskljuci aplikaciju, tekst unutar notesa se resetuje i aplikacija zavrsava rad. Slucaj upotrebe se zavrsava.
+
+
+Podtokovi: "Sve sto ne staje u osnovni tok"
+        PODTOK 1: 
+                1. Ukoliko prethodno napisani tekst (ako ga ima) nije sacuvan, pojavljuje se upozorenje koje opominje korisnika
+                        1.1. Ukoliko korisnik izabere opciju da sacuva prethodno napisani tekst, prelazi se na korak OVAJ1.
+                        1.2. Ukoliko korisnik odluci da ignorise upozorenje, otvara se prozor koji zahteva izbor datoteke koja se otvara. Na prostoru za pisanje teksta se prikazuje sadrzaj otvorene tekstualne datoteke. Prelazi se na korak OVAJ1.
+                2. Ukoliko je prethodno napisani tekst sacuvan ili ga nema:
+                        2.1. Otvara se prozor koji zahteva izbor datoteke koja se otvara. Na prostoru za pisanje teksta se prikazuje sadrzaj otvorene tekstualne datoteke. Prelazi se na korak OVAJ1.
+
+
+        PODTOK 2: 
+                1. Ukoliko prethodno napisani tekst nije sacuvan, pojavljuje se upozorenje koje opominje korisnika.
+                        1.1. Ukoliko korisnik izabere opciju da sacuva prethodno napisani tekst, prelazi se na korak OVAJ1.
+                        1.2. Ukoliko korisnik odluci da ignorise upozorenje, tekst se resetuje i prelazi se na korak OVAJ0.
+                2. Ukoliko je prethodno napisani tekst sacuvan:        
+                        2.1. Prelazi se na korak OVAJ0.
+
+
+
+
+Specijalni zahtevi: /
+
+
+Dodatne informacije: /
