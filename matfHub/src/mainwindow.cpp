@@ -1,5 +1,6 @@
 #include "../include/mainwindow.hpp"
 #include "../ui_mainwindow.h"
+#include "../include/schedule.h"
 
 #include <QSplitter>
 #include <QFileSystemModel>
@@ -11,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    schedule = new Schedule();
 
     QString sPath = ""; //ovde kasnije dodati path i gurnuti ga u setRootPath
     dirModel = new QFileSystemModel(this);
@@ -60,5 +62,17 @@ void MainWindow::on_pushButton_2_clicked()
 void MainWindow::on_pushButton_3_clicked()
 {
     //Ovde za return to home
+}
+
+
+void MainWindow::on_smerBox_activated(int index)
+{
+    schedule->changeSmer(ui, index);
+}
+
+
+void MainWindow::on_rasporedStartButton_clicked()
+{
+    schedule->findSchedule(ui);
 }
 

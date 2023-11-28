@@ -36,7 +36,7 @@
        <enum>Qt::DefaultContextMenu</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="FileManagerTab">
        <attribute name="title">
@@ -507,7 +507,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="go-previous"/>
+         <iconset theme="go-previous">
+          <normaloff>.</normaloff>.</iconset>
         </property>
        </widget>
        <widget class="QPushButton" name="pushButton_2">
@@ -968,7 +969,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="go-next"/>
+         <iconset theme="go-next">
+          <normaloff>.</normaloff>.</iconset>
         </property>
         <property name="autoDefault">
          <bool>false</bool>
@@ -1000,7 +1002,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="go-home"/>
+         <iconset theme="go-home">
+          <normaloff>.</normaloff>.</iconset>
         </property>
        </widget>
       </widget>
@@ -1018,6 +1021,159 @@
        <attribute name="title">
         <string>Raspored</string>
        </attribute>
+       <widget class="QComboBox" name="smerBox">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>20</y>
+          <width>221</width>
+          <height>61</height>
+         </rect>
+        </property>
+        <property name="currentText">
+         <string>Izaberi smer</string>
+        </property>
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <property name="placeholderText">
+         <string/>
+        </property>
+        <item>
+         <property name="text">
+          <string>Izaberi smer</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Informatika</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Matematika</string>
+         </property>
+        </item>
+       </widget>
+       <widget class="QScrollArea" name="examArea">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>90</y>
+          <width>221</width>
+          <height>361</height>
+         </rect>
+        </property>
+        <property name="widgetResizable">
+         <bool>true</bool>
+        </property>
+        <widget class="QWidget" name="scrollAreaWidgetContents">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>219</width>
+           <height>359</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QTableWidget" name="scheduleTable">
+        <property name="geometry">
+         <rect>
+          <x>240</x>
+          <y>20</y>
+          <width>841</width>
+          <height>481</height>
+         </rect>
+        </property>
+        <attribute name="verticalHeaderDefaultSectionSize">
+         <number>86</number>
+        </attribute>
+        <row>
+         <property name="text">
+          <string>Pon</string>
+         </property>
+        </row>
+        <row>
+         <property name="text">
+          <string>Uto</string>
+         </property>
+        </row>
+        <row>
+         <property name="text">
+          <string>Sre</string>
+         </property>
+        </row>
+        <row>
+         <property name="text">
+          <string>Cet</string>
+         </property>
+        </row>
+        <row>
+         <property name="text">
+          <string>Pet</string>
+         </property>
+        </row>
+        <column>
+         <property name="text">
+          <string>8:15-9:00</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>New Column</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>New Column</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>New Column</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>New Column</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>New Column</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>New Column</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>New Column</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>New Column</string>
+         </property>
+        </column>
+       </widget>
+       <widget class="QPushButton" name="rasporedStartButton">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>460</y>
+          <width>221</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Nadji Raspored</string>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="KalendarTab">
        <attribute name="title">

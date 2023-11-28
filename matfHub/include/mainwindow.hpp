@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_HPP
 #define MAINWINDOW_HPP
 
+#include "schedule.h"
 #include <QMainWindow>
 #include <QtCore>
 #include <QtGui>
@@ -27,11 +28,16 @@ private slots:
 
     void on_pushButton_3_clicked();
 
+    void on_smerBox_activated(int index);
+
+    void on_rasporedStartButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     QFileSystemModel *dirModel;
     QFileSystemModel *fileModel;
     std::stack<QString> navigationBefore;
     std::stack<QString> navigationAfter;
+    Schedule* schedule;
 };
 #endif // MAINWINDOW_HPP
