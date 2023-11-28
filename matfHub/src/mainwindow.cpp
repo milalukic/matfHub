@@ -3,8 +3,11 @@
 
 #include <QSplitter>
 #include <QFileSystemModel>
+#include <QFileDialog>
+#include <QMessageBox>
 #include <stack>
-#include <iostream>
+// #include <iostream>
+// #include "../include/notes.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -12,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    notes = new class Notes();
     QString sPath = ""; //ovde kasnije dodati path i gurnuti ga u setRootPath
     dirModel = new QFileSystemModel(this);
     dirModel->setRootPath(QDir::rootPath());
@@ -62,3 +66,44 @@ void MainWindow::on_pushButton_3_clicked()
     //Ovde za return to home
 }
 
+
+// Funkcionalnosti Notes toolbara
+void MainWindow::on_pushButton_5_clicked()
+{
+    notes->new_clicked(ui);
+}
+
+void MainWindow::on_pushButton_6_clicked()
+{
+    notes->open_clicked(ui, this);
+}
+
+void MainWindow::on_pushButton_8_clicked()
+{
+    notes->save_clicked(ui, this);
+}
+
+void MainWindow::on_pushButton_7_clicked()
+{
+    notes->copy_clicked(ui);
+}
+
+void MainWindow::on_pushButton_11_clicked()
+{
+    notes->paste_clicked(ui);
+}
+
+void MainWindow::on_pushButton_9_clicked()
+{
+    notes->cut_clicked(ui);
+}
+
+void MainWindow::on_pushButton_10_clicked()
+{
+    notes->undo_clicked(ui);
+}
+
+void MainWindow::on_pushButton_4_clicked()
+{
+    notes->redo_clicked(ui);
+}
