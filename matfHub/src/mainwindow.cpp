@@ -6,13 +6,14 @@
 #include <QFileSystemModel>
 #include <stack>
 #include <iostream>
+#include <memory>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    schedule = new Schedule();
+    schedule = std::make_unique<Schedule>();
 
     QString sPath = ""; //ovde kasnije dodati path i gurnuti ga u setRootPath
     dirModel = new QFileSystemModel(this);
@@ -67,12 +68,18 @@ void MainWindow::on_pushButton_3_clicked()
 
 void MainWindow::on_smerBox_activated(int index)
 {
-    schedule->changeSmer(ui, index);
+    schedule->changeModule(ui, index);
 }
 
 
 void MainWindow::on_rasporedStartButton_clicked()
 {
     schedule->findSchedule(ui);
+}
+
+
+void MainWindow::on_scrapeButton_clicked()
+{
+    schedule->scrapeSchedule(ui);
 }
 

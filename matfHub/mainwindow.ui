@@ -1022,6 +1022,9 @@
         <string>Raspored</string>
        </attribute>
        <widget class="QComboBox" name="smerBox">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="geometry">
          <rect>
           <x>10</x>
@@ -1030,32 +1033,26 @@
           <height>61</height>
          </rect>
         </property>
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
+        </property>
         <property name="currentText">
-         <string>Izaberi smer</string>
+         <string/>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>-1</number>
         </property>
         <property name="placeholderText">
          <string/>
         </property>
-        <item>
-         <property name="text">
-          <string>Izaberi smer</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Informatika</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Matematika</string>
-         </property>
-        </item>
+        <property name="duplicatesEnabled">
+         <bool>false</bool>
+        </property>
        </widget>
        <widget class="QScrollArea" name="examArea">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="geometry">
          <rect>
           <x>10</x>
@@ -1079,6 +1076,9 @@
         </widget>
        </widget>
        <widget class="QTableWidget" name="scheduleTable">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="geometry">
          <rect>
           <x>240</x>
@@ -1162,16 +1162,32 @@
         </column>
        </widget>
        <widget class="QPushButton" name="rasporedStartButton">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="geometry">
          <rect>
-          <x>10</x>
+          <x>120</x>
           <y>460</y>
-          <width>221</width>
+          <width>111</width>
           <height>41</height>
          </rect>
         </property>
         <property name="text">
-         <string>Nadji Raspored</string>
+         <string>Prikazi</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="scrapeButton">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>460</y>
+          <width>101</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Scrape</string>
         </property>
        </widget>
       </widget>

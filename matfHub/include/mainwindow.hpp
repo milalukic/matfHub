@@ -6,6 +6,7 @@
 #include <QtCore>
 #include <QtGui>
 #include <stack>
+#include <memory>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -32,12 +33,14 @@ private slots:
 
     void on_rasporedStartButton_clicked();
 
+    void on_scrapeButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     QFileSystemModel *dirModel;
     QFileSystemModel *fileModel;
     std::stack<QString> navigationBefore;
     std::stack<QString> navigationAfter;
-    Schedule* schedule;
+    std::unique_ptr<Schedule> schedule;
 };
 #endif // MAINWINDOW_HPP
