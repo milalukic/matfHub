@@ -1,11 +1,26 @@
 #include "../include/notes.h"
 #include "../ui_mainwindow.h"
 
-#include <QFileDialog>
-
-
 Notes::Notes() {
 }
+
+void Notes::open_file(QString filePath, Ui::MainWindow *ui, QWidget *parent) {
+    QFile file(filePath);
+
+
+    if(!file.open(QIODevice::ReadOnly | QFile::Text)){
+        return;
+    }
+
+    parent->setWindowTitle(filePath);
+    QTextStream in(&file);
+    QString text = in.readAll();
+
+    ui->textEdit->setText(text);
+    currentFile = filePath;
+    file.close();
+}
+
 
 void Notes::new_clicked(Ui::MainWindow *ui){
     currentFile.clear();
@@ -14,19 +29,7 @@ void Notes::new_clicked(Ui::MainWindow *ui){
 
 void Notes::open_clicked(Ui::MainWindow *ui, QWidget *parent){
     QString fileName = QFileDialog::getOpenFileName(parent, "Otvori novu datoteku");
-    QFile file(fileName);
-    currentFile = fileName;
-
-    if(!file.open(QIODevice::ReadOnly | QFile::Text)){
-        return;
-    }
-
-    parent->setWindowTitle(fileName);
-    QTextStream in(&file);
-    QString text = in.readAll();
-
-    ui->textEdit->setText(text);
-    file.close();
+    open_file(fileName, ui, parent);
 }
 
 void Notes::save_clicked(Ui::MainWindow *ui, QWidget *parent){
