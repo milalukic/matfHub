@@ -32,10 +32,29 @@ void Notes::openClicked(Ui::MainWindow *ui, QWidget *parent){
     openFile(fileName, ui, parent);
 }
 
+void Notes::openClicked(Ui::MainWindow *ui, QWidget *parent){
+    QString fileName = QFileDialog::getOpenFileName(parent, "Otvori novu datoteku");
+    if(QString::compare(fileName, "")){//bez provere je izbacivao gresku kada se korisnik predomisli i zatvori prozor za odabir datoteke
+        QFile file(fileName);
+        currentFile = fileName;
+
+        if(!file.open(QIODevice::ReadOnly | QFile::Text)){
+            return;
+        }
+
+        parent->setWindowTitle(fileName);
+        QTextStream in(&file);
+        QString text = in.readAll();
+
+        ui->textEdit->setText(text);
+        file.close();
+    }
+}
+
 void Notes::saveClicked(Ui::MainWindow *ui, QWidget *parent){
 
     if (currentFile.isEmpty()) {
-        QString fileName = QFileDialog::getSaveFileName(parent, "Sacuvaj.");
+        QString fileName = QFileDialog::getSaveFileName(parent, "Sacuvaj.");//mislim da treci argument ove f je moze primiti put direktorijuma u kome ce se otvoriti to cudo, treba napraviti geter za hubPath da se ovde prosledi
         QFile file(fileName);
 
         if (!file.open(QFile::WriteOnly | QFile::Text)) {
