@@ -1,20 +1,35 @@
 #include "../include/notes.h"
 #include "../ui_mainwindow.h"
 
-#include <QFileDialog>
-#include <iostream>
-
-
 Notes::Notes() {
 }
 
-void Notes::newClicked(Ui::MainWindow *ui){
-    if(QString::compare(ui->textEdit->toPlainText(), "")){
-        //mozda neki would you like to save ako nije prazan tekst boks?
-        currentFile.clear();
-        ui->textEdit->setText(QString());
-    }else{
+void Notes::open_file(QString filePath, Ui::MainWindow *ui, QWidget *parent) {
+    QFile file(filePath);
+
+
+    if(!file.open(QIODevice::ReadOnly | QFile::Text)){
+        return;
     }
+
+    parent->setWindowTitle(filePath);
+    QTextStream in(&file);
+    QString text = in.readAll();
+
+    ui->textEdit->setText(text);
+    currentFile = filePath;
+    file.close();
+}
+
+
+void Notes::new_clicked(Ui::MainWindow *ui){
+    currentFile.clear();
+    ui->textEdit->setText(QString());
+}
+
+void Notes::open_clicked(Ui::MainWindow *ui, QWidget *parent){
+    QString fileName = QFileDialog::getOpenFileName(parent, "Otvori novu datoteku");
+    open_file(fileName, ui, parent);
 }
 
 void Notes::openClicked(Ui::MainWindow *ui, QWidget *parent){
