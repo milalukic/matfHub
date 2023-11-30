@@ -31,6 +31,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
+    //je l ovde ide "close without saving?"?
     delete ui;
 }
 
@@ -68,42 +69,42 @@ void MainWindow::on_pushButton_3_clicked()
 
 
 // Funkcionalnosti Notes toolbara
-void MainWindow::on_pushButton_5_clicked()
+void MainWindow::on_newFileToolbarButton_clicked()
 {
-    notes->new_clicked(ui);
+    notes->newClicked(ui);
 }
 
-void MainWindow::on_pushButton_6_clicked()
+void MainWindow::on_openFileToolbarButton_clicked()
 {
-    notes->open_clicked(ui, this);
+    notes->openClicked(ui, this);
 }
 
-void MainWindow::on_pushButton_8_clicked()
+void MainWindow::on_saveToolbarButton_clicked()//save/save as? trenutno najlaksa opcija da se sacuva izmena jednog fajla u drugi je ctrl+a ctrl+c ctrl+n ctrl+v ctrl+s (takodje bilo bi kul da se prva tri dugmeta aktiviraju i na ctrl+n ctrl+s i ctrl+o
 {
-    notes->save_clicked(ui, this);
+    notes->saveClicked(ui, this);
 }
 
-void MainWindow::on_pushButton_7_clicked()
+void MainWindow::on_copyToolbarButton_clicked()
 {
-    notes->copy_clicked(ui);
+    notes->copyClicked(ui);
 }
 
-void MainWindow::on_pushButton_11_clicked()
+void MainWindow::on_pasteToolbarButton_clicked()
 {
-    notes->paste_clicked(ui);
+    notes->pasteClicked(ui);
 }
 
-void MainWindow::on_pushButton_9_clicked()
+void MainWindow::on_cutToolbarButton_clicked()
 {
-    notes->cut_clicked(ui);
+    notes->cutClicked(ui);
 }
 
-void MainWindow::on_pushButton_10_clicked()
+void MainWindow::on_undoToolbarButton_clicked()
 {
-    notes->undo_clicked(ui);
+    notes->undoClicked(ui);
 }
 
-void MainWindow::on_pushButton_4_clicked()
+void MainWindow::on_redoToolbarButton_clicked()
 {
-    notes->redo_clicked(ui);
+    notes->redoClicked(ui);
 }

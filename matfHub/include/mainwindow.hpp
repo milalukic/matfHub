@@ -29,21 +29,21 @@ private slots:
 
     void on_pushButton_3_clicked();
 
-    void on_pushButton_5_clicked();
+    void on_newFileToolbarButton_clicked();
 
-    void on_pushButton_6_clicked();
+    void on_openFileToolbarButton_clicked();
 
-    void on_pushButton_8_clicked();
+    void on_saveToolbarButton_clicked();
 
-    void on_pushButton_7_clicked();
+    void on_copyToolbarButton_clicked();
 
-    void on_pushButton_11_clicked();
+    void on_pasteToolbarButton_clicked();
 
-    void on_pushButton_9_clicked();
+    void on_cutToolbarButton_clicked();
 
-    void on_pushButton_10_clicked();
+    void on_undoToolbarButton_clicked();
 
-    void on_pushButton_4_clicked();
+    void on_redoToolbarButton_clicked();
 
 
 private:

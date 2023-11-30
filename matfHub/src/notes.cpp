@@ -2,34 +2,41 @@
 #include "../ui_mainwindow.h"
 
 #include <QFileDialog>
+#include <iostream>
 
 
 Notes::Notes() {
 }
 
-void Notes::new_clicked(Ui::MainWindow *ui){
-    currentFile.clear();
-    ui->textEdit->setText(QString());
-}
-
-void Notes::open_clicked(Ui::MainWindow *ui, QWidget *parent){
-    QString fileName = QFileDialog::getOpenFileName(parent, "Otvori novu datoteku");
-    QFile file(fileName);
-    currentFile = fileName;
-
-    if(!file.open(QIODevice::ReadOnly | QFile::Text)){
-        return;
+void Notes::newClicked(Ui::MainWindow *ui){
+    if(QString::compare(ui->textEdit->toPlainText(), "")){
+        //mozda neki would you like to save ako nije prazan tekst boks?
+        currentFile.clear();
+        ui->textEdit->setText(QString());
+    }else{
     }
-
-    parent->setWindowTitle(fileName);
-    QTextStream in(&file);
-    QString text = in.readAll();
-
-    ui->textEdit->setText(text);
-    file.close();
 }
 
-void Notes::save_clicked(Ui::MainWindow *ui, QWidget *parent){
+void Notes::openClicked(Ui::MainWindow *ui, QWidget *parent){
+    QString fileName = QFileDialog::getOpenFileName(parent, "Otvori novu datoteku");
+    if(QString::compare(fileName, "")){//bez provere je izbacivao gresku kada se korisnik predomisli i zatvori prozor za odabir datoteke
+        QFile file(fileName);
+        currentFile = fileName;
+
+        if(!file.open(QIODevice::ReadOnly | QFile::Text)){
+            return;
+        }
+
+        parent->setWindowTitle(fileName);
+        QTextStream in(&file);
+        QString text = in.readAll();
+
+        ui->textEdit->setText(text);
+        file.close();
+    }
+}
+
+void Notes::saveClicked(Ui::MainWindow *ui, QWidget *parent){
 
     if (currentFile.isEmpty()) {
         QString fileName = QFileDialog::getSaveFileName(parent, "Sacuvaj.");
@@ -60,19 +67,19 @@ void Notes::save_clicked(Ui::MainWindow *ui, QWidget *parent){
     }
 }
 
-void Notes::copy_clicked(Ui::MainWindow *ui){
+void Notes::copyClicked(Ui::MainWindow *ui){
     ui->textEdit->copy();
 }
-void Notes::paste_clicked(Ui::MainWindow *ui){
+void Notes::pasteClicked(Ui::MainWindow *ui){
     ui->textEdit->paste();
 }
-void Notes::cut_clicked(Ui::MainWindow *ui){
+void Notes::cutClicked(Ui::MainWindow *ui){
     ui->textEdit->cut();
 }
 
-void Notes::undo_clicked(Ui::MainWindow *ui){
+void Notes::undoClicked(Ui::MainWindow *ui){
     ui->textEdit->undo();
 }
-void Notes::redo_clicked(Ui::MainWindow *ui){
+void Notes::redoClicked(Ui::MainWindow *ui){
     ui->textEdit->redo();
 }

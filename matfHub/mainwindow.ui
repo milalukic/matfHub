@@ -507,7 +507,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="go-previous"/>
+         <iconset theme="go-previous">
+          <normaloff>.</normaloff>.</iconset>
         </property>
        </widget>
        <widget class="QPushButton" name="pushButton_2">
@@ -968,7 +969,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="go-next"/>
+         <iconset theme="go-next">
+          <normaloff>.</normaloff>.</iconset>
         </property>
         <property name="autoDefault">
          <bool>false</bool>
@@ -1000,7 +1002,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="go-home"/>
+         <iconset theme="go-home">
+          <normaloff>.</normaloff>.</iconset>
         </property>
        </widget>
       </widget>
@@ -1037,9 +1040,9 @@
           <height>31</height>
          </rect>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <layout class="QHBoxLayout" name="toolbarLayout">
          <item>
-          <widget class="QPushButton" name="pushButton_5">
+          <widget class="QPushButton" name="newFileToolbarButton">
            <property name="styleSheet">
             <string notr="true"/>
            </property>
@@ -1053,7 +1056,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_8">
+          <widget class="QPushButton" name="saveToolbarButton">
            <property name="styleSheet">
             <string notr="true"/>
            </property>
@@ -1067,7 +1070,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_6">
+          <widget class="QPushButton" name="openFileToolbarButton">
            <property name="styleSheet">
             <string notr="true"/>
            </property>
@@ -1081,7 +1084,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_7">
+          <widget class="QPushButton" name="copyToolbarButton">
            <property name="text">
             <string/>
            </property>
@@ -1092,7 +1095,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_11">
+          <widget class="QPushButton" name="pasteToolbarButton">
            <property name="text">
             <string/>
            </property>
@@ -1103,7 +1106,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_9">
+          <widget class="QPushButton" name="cutToolbarButton">
            <property name="text">
             <string/>
            </property>
@@ -1114,7 +1117,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_10">
+          <widget class="QPushButton" name="undoToolbarButton">
            <property name="text">
             <string/>
            </property>
@@ -1125,7 +1128,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_4">
+          <widget class="QPushButton" name="redoToolbarButton">
            <property name="text">
             <string/>
            </property>
@@ -1158,7 +1161,7 @@
      <x>0</x>
      <y>0</y>
      <width>1120</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
