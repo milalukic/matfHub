@@ -2,13 +2,11 @@ Specifikacija - Slucajevi upotrebe
 
 
 Slucajevi upotrebe:
-- Pravljenje licnog planera
 - Pisanje beleski
-- Koriscenje fajl sistema
-- Generisanje rasporeda casova
-- Generisanje rasporeda ispita
-- Racunanje matematickog zahteva
-- Crtanje grafika
+- Koriscenje fajl menadzera
+- Racunanje kalkulatorom
+- Generisanje i pregled rasporeda
+- Planiranje obaveza
 
 
 Akteri:
@@ -19,27 +17,22 @@ Akteri:
 SLUCAJEVI UPOTREBE
 
 
-Naziv: "Koriscenje kalkulatora"
+Naziv: "Racunanje kalkulatorom"
 
-
-Kratak opis: "Korisnik klikom na TAB "kalkulator" dobija pristup matematickom kalkulatoru, unutar njega moze odabrati koji tip operacije mu je potreban (matrice, statistika, itd.). Korisnik potom unosi podatke neophodne za dato izracunavanje, aplikacija ispisuje trazeni rezultat. Korisnik moze odabrati da datu istoriju rezultata sacuva u odgovarajucem formatu, ili moze odabrati da uveze prethodno sacuvanu istoriju racunanja."
-
+Kratak opis: Korisnik klikom na tab "kalkulator" dobija pristup matematickom kalkulatoru, unutar njega moze odabrati koji tip operacije mu je potreban (matrice, statistika, itd.). Korisnik potom unosi podatke neophodne za dato izracunavanje, aplikacija ispisuje trazeni rezultat. Korisnik moze odabrati da datu istoriju rezultata sacuva u odgovarajucem formatu, ili moze odabrati da uveze prethodno sacuvanu istoriju racunanja.
 
 Akteri: Korisnik aplikacije (kalkulatora)
 
+Preduslovi: Aplikacija radi i odabran je kalukator unutar pokrenute aplikacije. Odabran je tip racunanja i uneti su podaci neophodni za dato racunanje.
 
-Preduslovi: "Aplikacija radi i odabran je kalukator unutar pokrenute aplikacije. Odabran je tip racunanja(inace je DEFAULTni) i uneti su podaci neophodni za dato izracunavanje."
-
-
-Postuslovi: "Prikazan rezultat racunanja (ispisan i u istoriji racunanja)."
-
+Postuslovi: Prikazan rezultat racunanja (ispisan i u istoriji racunanja).
 
 Osnovni tok: 
         1. Korinisk bira kalkulator iz glavnog menija
         2. Korisnik bira tip izracunavanja
         3. Aplikacija konstruise odgovarajuci RACUNAR na osnovu odabranog tipa racunanja
         4. Aplikacija otvara dostupne alate
-"OVAJ1" 5. Korisnik se nalazi u aplikaciji i moze uneti neophodne podatke
+        5. Korisnik se nalazi u aplikaciji i moze uneti neophodne podatke
                 5.1. Ako korisnik odabere opciju "Uvezi istoriju"
                         5.1.1. Prelazi na PODTOK 2
                         5.2.1. Prelazi na korak 6
@@ -47,23 +40,18 @@ Osnovni tok:
         7. Korisnik klikom na dugme "Izracunaj" trazi od aplikacije rezultat.
         8. Aplikacija cita unete podatke sa odgovarajuceg ulaza.
                 8.1 Aplikacija provera ispravnost ulaza.
-                        8.1.1. Ako je ispravan ulaz, prelazi na korak "OVAJ0"
-                        8.1.2. Ukoliko je neispravan ulaz, ispisuje odgovarajucu gresku i prelazi na korak "OVAJ1"
-
-
-"OVAJ0" 9. Aplikacija vrsi neophodna izracunavanja.
+                        8.1.1. Ako je ispravan ulaz, prelazi na korak 9.
+                        8.1.2. Ukoliko je neispravan ulaz, ispisuje odgovarajucu gresku i prelazi na korak 5.
+        9. Aplikacija vrsi neophodna izracunavanja.
         10. Aplikacija ispisuje racunanja u "privremenu istoriju racunanja".
         11. Aplikacija prikazuje korisniku rezultat.
                 11.1. Ako korisnik korisnik klikne na dugme "Sacuvaj istoriju"
                         11.1.1. Prelazi na PODTOK 1
-                        11.2.1. Prelazi na korak "OVAJ1"
-
-
+                        11.2.1. Prelazi na korak 5.
 Alternativni tok:
         Neocekivani izlaz iz aplikacije: Ukoliko u bilo kom koraku korisnik iskljuci aplikaciju, brise se "privremena istorija racunanja" i aplikacija zavrsava rad. Slucaj upotrebe se zavrsava.
 
-
-Podtokovi: "Sve sto ne staje u osnovni tok"
+Podtokovi:
         PODTOK 1: 
                   1. Korisnik bira gde hoce da sacuva istoriju i pod kojim imenom
                   2. Aplikacija pravi novi fajl sa navedenim imenom 
@@ -72,34 +60,27 @@ Podtokovi: "Sve sto ne staje u osnovni tok"
                   1. Korisnik bira odakle hoce da uveze istoriju racunanja
                   2. Aplikacija cita dati file i upisuje istoriju u "privremenu istoriju racunanja" i prelazi na korak "OVAJ1"        
 
-
-Specijalni zahtevi: "Aplikacija je povezana na internet npr."
-
+Specijalni zahtevi: /
 
 Dodatne informacije: Tokom trajanja rada kalkulatora, aplikacija pamti "privremenu istoriju racunanja".
 
 
 Naziv: "Pisanje beleski"
 
-
-Kratak opis: "Korisnik klikom na TAB "notes" dobija pristup notesu, unutar kojeg moze pisati svoje beleske sa predavanja. Notes ima toolbar koji mu omogucava najosnovnije akcije - otvaranje nove datoteke, cuvanje trenutne datoteke, otvaranje vec postojece datoteke, korak unazad i unapred, cut, copy i paste opcije.
-
+Kratak opis: Korisnik klikom na tab "notes" dobija pristup notesu, unutar kojeg moze pisati svoje beleske sa predavanja. Notes ima toolbar koji mu omogucava najosnovnije akcije: otvaranje nove datoteke, cuvanje trenutne datoteke, otvaranje vec postojece datoteke, korak unazad i unapred, cut, copy i paste opcije.
 
 Akteri: Korisnik aplikacije (notesa)
 
+Preduslovi: Aplikacija radi i odabran je notes tab unutar pokrenute aplikacije.
 
-Preduslovi: "Aplikacija radi i odabran je notes tab unutar pokrenute aplikacije."
-
-
-Postuslovi: "Sacuvana je tekstualna datoteka na mestu koje je korisnik izabrao, pod imenom koje je korisnik izabrao. Ukoliko korisnik nije sacuvao datoteku, a promenio tab, moze se vratiti i nastaviti sa pisanjem ponovnim klikom na 'notes' tab."
-
+Postuslovi: Korisnik je pitan zeli li da sacuva izmene u trenutoj tekstualnoj datoteci na mestu koje je korisnik izabrao, pod imenom koje je korisnik izabrao. Ukoliko korisnik nije sacuvao datoteku, a promenio tab, moze se vratiti i nastaviti sa pisanjem ponovnim klikom na 'notes' tab.
 
 Osnovni tok: 
         1. Korinisk bira notes iz glavnog menija
-OVAJ0        2. Pred korisnikom se nalazi prazan prostor za pisanje teksta.
+        2. Pred korisnikom se nalazi prazan prostor za pisanje teksta.
         3. Ukoliko korisnik izabere opciju za "otvaranje postojece datoteke":
                 3.1. Prelazi se na PODTOK 1.
-OVAJ1        4. Korisnik pise neki tekst u prostoru predvidjenom za pisanje teksta. Tokom pisanja on moze:
+        4. Korisnik pise neki tekst u prostoru predvidjenom za pisanje teksta. Tokom pisanja on moze:
                 4.1. Selektovati i kopirati deo teksta klikom na dugme za "kopiranje" (copy)
                 4.2. Nalepiti prethodno kopiran deo teksta na deo prostora za pisanje teksta oznacen kursorom, klikom na dugme za "lepljenje" (paste)
                 4.3. Selektovati i iseci deo teksta klikom na dugme za "secenje" (cut)
@@ -109,31 +90,55 @@ OVAJ1        4. Korisnik pise neki tekst u prostoru predvidjenom za pisanje teks
                         4.6.1. Ukoliko izabere ovu opciju, prelazi se na PODTOK2.
         5. Korisnik cuva tekstualnu datoteku koju je napisao klikom na dugme za "cuvanje". Ovim se otvara pop-up koji zahteva unos imena datoteke i biranje lokacije za njeno cuvanje.
 
-
 Alternativni tok:
         Neocekivani izlaz iz aplikacije: Ukoliko u bilo kom koraku korisnik iskljuci aplikaciju, tekst unutar notesa se resetuje i aplikacija zavrsava rad. Slucaj upotrebe se zavrsava.
 
-
-Podtokovi: "Sve sto ne staje u osnovni tok"
+Podtokovi:
         PODTOK 1: 
                 1. Ukoliko prethodno napisani tekst (ako ga ima) nije sacuvan, pojavljuje se upozorenje koje opominje korisnika
-                        1.1. Ukoliko korisnik izabere opciju da sacuva prethodno napisani tekst, prelazi se na korak OVAJ1.
-                        1.2. Ukoliko korisnik odluci da ignorise upozorenje, otvara se prozor koji zahteva izbor datoteke koja se otvara. Na prostoru za pisanje teksta se prikazuje sadrzaj otvorene tekstualne datoteke. Prelazi se na korak OVAJ1.
+                        1.1. Ukoliko korisnik izabere opciju da sacuva prethodno napisani tekst, prelazi se na korak 4.
+                        1.2. Ukoliko korisnik odluci da ignorise upozorenje, otvara se prozor koji zahteva izbor datoteke koja se otvara. Na prostoru za pisanje teksta se prikazuje sadrzaj otvorene tekstualne datoteke. Prelazi se na korak 4.
                 2. Ukoliko je prethodno napisani tekst sacuvan ili ga nema:
-                        2.1. Otvara se prozor koji zahteva izbor datoteke koja se otvara. Na prostoru za pisanje teksta se prikazuje sadrzaj otvorene tekstualne datoteke. Prelazi se na korak OVAJ1.
-
-
+                        2.1. Otvara se prozor koji zahteva izbor datoteke koja se otvara. Na prostoru za pisanje teksta se prikazuje sadrzaj otvorene tekstualne datoteke. Prelazi se na korak 4.
         PODTOK 2: 
                 1. Ukoliko prethodno napisani tekst nije sacuvan, pojavljuje se upozorenje koje opominje korisnika.
-                        1.1. Ukoliko korisnik izabere opciju da sacuva prethodno napisani tekst, prelazi se na korak OVAJ1.
-                        1.2. Ukoliko korisnik odluci da ignorise upozorenje, tekst se resetuje i prelazi se na korak OVAJ0.
+                        1.1. Ukoliko korisnik izabere opciju da sacuva prethodno napisani tekst, prelazi se na korak 4.
+                        1.2. Ukoliko korisnik odluci da ignorise upozorenje, tekst se resetuje i prelazi se na korak 2.
                 2. Ukoliko je prethodno napisani tekst sacuvan:        
-                        2.1. Prelazi se na korak OVAJ0.
-
-
-
+                        2.1. Prelazi se na korak 2.
 
 Specijalni zahtevi: /
 
+Dodatne informacije: /
+
+
+Naziv: Generisanje rasporeda
+
+Kratak opis: Korisnik klikom na tab "raspored" dobija pristup genratoru rasporedu, unutar kojeg moze napraviti i pregledati napravljene rasporede.
+
+Akteri: Korisnik aplikacije (rasporeda)
+
+Preduslovi: Aplikacija radi i odabran je raspored tab unutar pokrenute aplikacije. Postoji raspored na poincare serveru.
+
+Postuslovi: Raspored je sacuvan ako je korisnik hteo
+
+Osnovni tok: 
+        1. Korinisk bira raspored iz glavnog menija
+                1.1. Pred korisnikom se nalazi interfejs za kreiranje rasporeda.
+        2. Korisnik salje zahtev za dohvatanje podataka klikom na dugme
+                2.1. Raspored trazi podatke od strugaca
+                2.2. Strugac vraca podatke
+        3. Korisnik bira smer
+                3.1. Raspored vraca korisniku spisak kurseva
+        4. Korisnik bira kurseve
+                4.1. Lista kurseva se prosledjuje generatoru rasporeda
+                4.2. Generator rasporeda vraca listu svih mogucih rasporeda
+                4.3. Raspored korisniku nudi jedan od mogucih rasporeda
+        5. Korisnik cuva trenutni raspored
+                5.1. Raspored se cuva
+                5.1.1. Sacuvan raspored se prikazuje korisniku
+        6. Korisnik zahteva naredni moguci raspored, prelazi se na korak 4.3
+
+Specijalni zahtevi: Internet konekcija, postojanje rasporeda unapred zadatoj adresi
 
 Dodatne informacije: /
