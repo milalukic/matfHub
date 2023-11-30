@@ -12,11 +12,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
-set(PROJECT_SOURCES
-        matfHub/src/main.cpp
-        matfHub/src/mainwindow.cpp
-        matfHub/include/mainwindow.hpp
-        matfHub/mainwindow.ui
+
+file(GLOB PROJECT_SOURCES
+        "matfHub/src/*.cpp"
+	"matfHub/include/*.hpp"
+	"matfHub/*.ui"
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
