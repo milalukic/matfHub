@@ -70,40 +70,40 @@ void MainWindow::on_pushButton_3_clicked()
 // Funkcionalnosti Notes toolbara
 void MainWindow::on_pushButton_5_clicked()
 {
-    notes->new_clicked(ui);
+    notes->newClicked(ui);
 }
 
 void MainWindow::on_pushButton_6_clicked()
 {
-    notes->open_clicked(ui, this);
+    notes->openClicked(ui, this);
 }
 
 void MainWindow::on_pushButton_8_clicked()
 {
-    notes->save_clicked(ui, this);
+    notes->saveClicked(ui, this);
 }
 
 void MainWindow::on_pushButton_7_clicked()
 {
-    notes->copy_clicked(ui);
+    notes->copyClicked(ui);
 }
 
 void MainWindow::on_pushButton_11_clicked()
 {
-    notes->paste_clicked(ui);
+    notes->pasteClicked(ui);
 }
 
 void MainWindow::on_pushButton_9_clicked()
 {
-    notes->cut_clicked(ui);
+    notes->cutClicked(ui);
 }
 
 void MainWindow::on_pushButton_10_clicked()
 {
-    notes->undo_clicked(ui);
+    notes->undoClicked(ui);
 }
 
 void MainWindow::on_pushButton_4_clicked()
 {
-    notes->redo_clicked(ui);
+    notes->redoClicked(ui);
 }
