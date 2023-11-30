@@ -66,6 +66,7 @@ Specijalni zahtevi: /
 
 Dodatne informacije: Tokom trajanja rada kalkulatora, aplikacija pamti "privremenu istoriju racunanja".
 
+------------------------------------------------
 
 Naziv: "Pisanje beleski"
 
@@ -113,6 +114,7 @@ Specijalni zahtevi: /
 
 Dodatne informacije: /
 
+------------------------------------------------
 
 Naziv: Generisanje rasporeda
 
@@ -145,6 +147,7 @@ Specijalni zahtevi: Internet konekcija, postojanje rasporeda unapred zadatoj adr
 
 Dodatne informacije: /
 
+------------------------------------------------
 
 Naziv: Izmena fajl sistema
 
@@ -172,3 +175,67 @@ Osnovni tok:
 Specijalni zahtevi: Masina ima operativni sistem.
 
 Dodatne informacije: /
+
+------------------------------------------------
+
+Naziv: Korišćenje navigacije u fajl menadžeru
+
+Kratak opis: Unutar matfHub aplikacije otvaranjem taba "File Manager" korisnik dobija pristup fajl menadžeru. Unutar njega se može kretati kroz direktorijume,
+otvarati fajlove i praviti razne izmene. Ove akcije se vrše klikovima na foldere/fajlove, dugmice i padajući meni(desni klik).
+
+Akteri: Korisnik aplikacije - Student
+
+Preduslov: MatfHub radi i nalazimo se na tabu za fajl menadžer
+
+Postuslov: Otvoren je izabran fajl/Pozicionirali smo se u željeni direktorijum
+
+Osnovni tok:
+	1. Korisnik bira fajl menadžer od ponuđenih tabova unutar matfHub-a
+        2. Otvara se početni direktorijum (.../matfHub/MATF)
+	3. Pred korisnikom se nalazi otvoreni direktorijum
+	4. Korisnik se kreće kroz fajl sistem ili odmah prelazi na korak 5
+		4.1 Duplim klikom na direktorijum
+			4.1.1 Ulazi u traženi direktorijum
+			4.1.2 Nastavlja od korak 3
+		4.2 Dugme za back
+			4.2.1 Ukoliko postoji, vraća se jedan korak u nazad
+			4.2.2 Nastavlja od korak 3
+		4.3 Dugme za forward
+			4.3.1 Ukoliko postoji, ide jedan korak u napred
+			4.3.2 Nastavlja od korak 3
+		4.4 Dugme ..
+			4.4.1 Ukoliko postoji izlazi u roditeljski direktorijum
+			4.4.2 Nastavlja od korak 3
+		4.5 Dugme home
+			4.5.1 Vraća se na korak 2
+	5. Duplim klikom na neki fajl
+		5.1 Ukoliko je tip fajla podržan od strane matfHub-a
+			5.1.1 Falj se otvara unutar matfHub-a u očekivanoj aplikaciji
+			5.1.2 Ukoliko želi da se vrati na fajl menadžer prelazi na PODTOK1
+		5.2 Ukoliko tip fajla nije podržan od strane matfHub-a
+			5.2.1 Fajl se otvara u sistemski podrazumevanoj aplikaciji
+			5.2.2 Ukoliko želi da se vrati na fajl menadžer prelazi na PODTOK2
+		
+
+Alternativni tok:
+	Neočekivani izlaz iz aplikacije: Fajlovi otvoreni u sistemski podrazumevanoj aplikaciji ostaju otvoreni, a oni otvoreni u matfHubu se zatvaraju.
+					 Pri sledećem paljenju matfHub-a, ponovo ćemo biti pozicionirani u početnom direktorijumu.
+	Nepostojanje koraka pre/posle ili roditeljskog direktorijuma pri pritisku dugmeta: Ništa se neće desiti.
+	Nepostojanje "../matfHub/MATF" direktorijuma: Potreban direktorijum će biti kreiran od strane aplikacije.
+
+Podtokovi: 
+	PODTOK1:
+		1. Ponovnim pritiskom na tab "File Manager"
+		2. Prelazi na fajl menadžer sa poslednjim otvorenim direktorijumom pre otvaranja fajla
+		3. Nastavlja od korak 3
+	PODTOK2:
+		1. Vraćanjem na prozor aplikacije matfHub
+		2. Fajl menadžer će još uvek biti otvoren o pozicioniran na poslednji direktorijum pre otvaranja fajla
+		3. Nastavlja od korak 3 
+
+Specijalni zahtevi: /
+
+Dodatne informacije: /
+
+------------------------------------------------
+
