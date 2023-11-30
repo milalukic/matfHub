@@ -3,9 +3,11 @@ Specifikacija - Slucajevi upotrebe
 
 Slucajevi upotrebe:
 - Pisanje beleski
-- Koriscenje fajl menadzera
-- Racunanje kalkulatorom
-- Generisanje i pregled rasporeda
+- Izmena fajl sistema
+- Pregled fajl sistema
+- Koriscenje kalkulatora
+- Generisanje rasporeda
+- Pregled rasporeda
 - Planiranje obaveza
 
 
@@ -17,7 +19,7 @@ Akteri:
 SLUCAJEVI UPOTREBE
 
 
-Naziv: "Racunanje kalkulatorom"
+Naziv: Koriscenje kalkulatora
 
 Kratak opis: Korisnik klikom na tab "kalkulator" dobija pristup matematickom kalkulatoru, unutar njega moze odabrati koji tip operacije mu je potreban (matrice, statistika, itd.). Korisnik potom unosi podatke neophodne za dato izracunavanje, aplikacija ispisuje trazeni rezultat. Korisnik moze odabrati da datu istoriju rezultata sacuva u odgovarajucem formatu, ili moze odabrati da uveze prethodno sacuvanu istoriju racunanja.
 
@@ -140,5 +142,33 @@ Osnovni tok:
         6. Korisnik zahteva naredni moguci raspored, prelazi se na korak 4.3
 
 Specijalni zahtevi: Internet konekcija, postojanje rasporeda unapred zadatoj adresi
+
+Dodatne informacije: /
+
+
+Naziv: Izmena fajl sistema
+
+Kratak opis: Korisnik klikom na tab "fajl menadzer" dobija pristup fajl menaderu, unutar kojeg moze napraviti i pregledati postojece datoteke i direktorijume.
+
+Akteri: Korisnik aplikacije (menadzera)
+
+Preduslovi: Aplikacija radi i odabran je fajl menadzer tab unutar pokrenute aplikacije. Postoji fajl sistem na masini.
+
+Postuslovi: Korisnicke promene su sacuvane na disku.
+
+Osnovni tok: 
+        1. Odabir taba fajl menadzer
+                1.1. Pogled korisniku prikazuje sadrzaje direktorijuma
+        2. Korisnik bira opciju pravljenja novog direktorijuma
+                2.1. Pogled trazi od modela pravljenje novog direktorijuma
+                2.2. Model azurira pogled
+        3. Korisnik bira opciju promene imena odabrane stavke
+                3.1. Pogled trazi od modela da preimenuje stavku
+                3.2. Model azurira pogled
+        4. Korisnik bira opciju brisanja odabranih stavki 
+                4.1. Pogled trazi od modela da obrise stavke
+                4.2. Model azurira pogled
+
+Specijalni zahtevi: Masina ima operativni sistem.
 
 Dodatne informacije: /
