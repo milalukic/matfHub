@@ -4,7 +4,7 @@
 Notes::Notes() {
 }
 
-void Notes::open_file(QString filePath, Ui::MainWindow *ui, QWidget *parent) {
+void Notes::openFile(QString filePath, Ui::MainWindow *ui, QWidget *parent) {
     QFile file(filePath);
 
 
@@ -22,14 +22,14 @@ void Notes::open_file(QString filePath, Ui::MainWindow *ui, QWidget *parent) {
 }
 
 
-void Notes::new_clicked(Ui::MainWindow *ui){
+void Notes::newClicked(Ui::MainWindow *ui){
     currentFile.clear();
     ui->textEdit->setText(QString());
 }
 
-void Notes::open_clicked(Ui::MainWindow *ui, QWidget *parent){
+void Notes::openClicked(Ui::MainWindow *ui, QWidget *parent){
     QString fileName = QFileDialog::getOpenFileName(parent, "Otvori novu datoteku");
-    open_file(fileName, ui, parent);
+    openFile(fileName, ui, parent);
 }
 
 void Notes::openClicked(Ui::MainWindow *ui, QWidget *parent){
