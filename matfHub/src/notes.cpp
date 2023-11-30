@@ -39,7 +39,7 @@ void Notes::openClicked(Ui::MainWindow *ui, QWidget *parent){
 void Notes::saveClicked(Ui::MainWindow *ui, QWidget *parent){
 
     if (currentFile.isEmpty()) {
-        QString fileName = QFileDialog::getSaveFileName(parent, "Sacuvaj.");
+        QString fileName = QFileDialog::getSaveFileName(parent, "Sacuvaj.");//mislim da treci argument ove f je moze primiti put direktorijuma u kome ce se otvoriti to cudo, treba napraviti geter za hubPath da se ovde prosledi
         QFile file(fileName);
 
         if (!file.open(QFile::WriteOnly | QFile::Text)) {
