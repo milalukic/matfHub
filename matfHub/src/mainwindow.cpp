@@ -7,6 +7,7 @@
 #include <QDebug>
 #include <string>
 #include <QFileDialog>
+#include <QInputDialog>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -29,6 +30,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->fileView->setModel(m_fileManager->fileModel);
     ui->fileView->setRootIndex(m_fileManager->fileModel->setRootPath(m_fileManager->hubPath));
     ui->currentFilePath->setText(m_fileManager->currPath);
+    ui->fileView->setSelectionMode(QAbstractItemView::ExtendedSelection);//klik odabere kliknutu i oddabere ostale; shift klik selektuje sve izmedju selektovane i kliknute, ctrl klik odabere kliknutu i ne oddabere ostale
 }
 
 MainWindow::~MainWindow()
@@ -91,7 +93,8 @@ void MainWindow::on_newFolderButton_clicked()
 
 //kreiranje popapa sa kontekst menijem u desnom pogledu
 void MainWindow::on_fileView_customContextMenuRequested(const QPoint &pos)// !!!!!! ovo bi bilo lepo takodje izmestiti u filemanager.cpp ali prvo connect je iz QObject ili tako necega treba to nasledjivanje srediti drugo poslednja linija funkcije (i jos neke) zove privatne metode privatnih polja iz ui pa bi i to trebalo prebroditi nekako nekim seterom
-{
+{//pored komentara u prethodnoj liniji takodje ova f-ja postaje glomazna, bilo bi lepo mozda razdvojiti je u pozive f-ja koje pojedinacno prave akcije
+    //TODO cut, copy, paste
     QMenu* menu = new QMenu(this);
 
     QAction* newFolderAction = new QAction("New Folder", this);
@@ -106,15 +109,29 @@ void MainWindow::on_fileView_customContextMenuRequested(const QPoint &pos)// !!!
         ui->fileView->clearSelection();
         ui->fileView->selectAll();//ovo ne radi kako sam zamislio i blago je reci da mi ide na zivce :)
         //mozda i radi nego ne prikazuje sve kao plavo, to plavo mozda nije select kako ga mi shvatamo
+        //to plavo tacno jeste selekt kako ga mi shvatamo, samo je trebalo podesiti seleksn mod pogledu. obrisi ova tri komentara kada procitas.
     });
-    //svakako za ovo ispod nam treba neki currentlySelected u kom cemo da cuvamo sta je trenutno selectovano da bi moglo ime da se menja
-    //qdir rename menja ime necega u trenutnoj putanji, a mi ne zelimo da ulazimo u nas new folder da bi se on dodao na putanju i onda tek da mozemo da mu menjamo ime
-    //pakao brate moj
-    QAction* renameAction = new QAction("Rename", this);
-    menu->addAction(renameAction);
-    connect(renameAction, &QAction::triggered, [=](){
-        QDir(m_fileManager->currPath).rename(m_fileManager->currentlySelected, "novo ime");
-    });
+
+    int noSelected = countSelected(ui->fileView);
+    if(noSelected == 1){
+        QAction* renameAction = new QAction("Rename", this);
+        menu->addAction(renameAction);
+        connect(renameAction, &QAction::triggered, [=](){
+            QModelIndex selectedIndex = getSelectedIndex(ui->fileView);
+            QString oldName = m_fileManager->getNameFromIndex(selectedIndex);
+            QString newName = QInputDialog::getText(this, "Preimenuj fajl", "Nov Naziv:", QLineEdit::Normal, oldName);
+            m_fileManager->renameSelectedFile(selectedIndex, newName);
+        });
+    }
+
+    if(noSelected > 0){
+        QAction* deleteAction = new QAction("Delete", this);
+        menu->addAction(deleteAction);
+        connect(deleteAction, &QAction::triggered, [=](){
+            QModelIndexList selectedIndices = getSelectedIndices(ui->fileView); //meni se indices vise svidja kao mnozina od index nego indexes ali Bojane slobodno promeni ako zelis nije mi bitno
+            m_fileManager->deleteSelectedFiles(selectedIndices);
+        });
+    }
 
 
     menu->popup(ui->fileView->viewport()->mapToGlobal(pos));
@@ -154,7 +171,35 @@ QString MainWindow::currentFilePathGetPath(){
     return ui->currentFilePath->text();
 }
 
-void MainWindow::on_fileView_clicked(const QModelIndex &index)
-{
-    m_fileManager->currentlySelected = m_fileManager->fileModel->fileInfo(index).fileName();
+
+int MainWindow::countSelected(const QListView* view){
+
+    return view->selectionModel()->selectedIndexes().length();
+
 }
+
+QModelIndex MainWindow::getSelectedIndex(const QListView* view){
+    return view->selectionModel()->selectedIndexes().first();
+}
+
+QModelIndexList MainWindow::getSelectedIndices(const QListView* view){
+    return view->selectionModel()->selectedIndexes();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

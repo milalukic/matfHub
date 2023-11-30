@@ -15,7 +15,6 @@ public:
     QString appPath;
     QString hubPath;
     QString currPath;
-    QString currentlySelected;
 
     QFileSystemModel *dirModel;
     QFileSystemModel *fileModel;
@@ -35,6 +34,9 @@ public:
     void dotDotButtonClicked();
     void currentFilePathEditingFinished();
     void fileViewCustomContextMenuRequested(const QPoint &pos);
+    QString getNameFromIndex(const QModelIndex index);
+    void renameSelectedFile(const QModelIndex index, const QString newName);
+    void deleteSelectedFiles(const QModelIndexList indices);
 
 private:
     MainWindow *m_mainWindow;

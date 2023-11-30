@@ -16,6 +16,7 @@ FileManager::FileManager(MainWindow* mw)
 
     fileModel = new QFileSystemModel();
     fileModel->setFilter(QDir::AllEntries | QDir::NoDotAndDotDot);
+    fileModel->setReadOnly(false);
 
     currPath = hubPath;
 
@@ -140,6 +141,20 @@ void FileManager::fileViewCustomContextMenuRequested(const QPoint &pos)
     //TODO
 }
 
+QString FileManager::getNameFromIndex(const QModelIndex index){
+    return fileModel->fileName(index);
+}
+
+
+
+void FileManager::renameSelectedFile(const QModelIndex index, const QString newName){
+    fileModel->setData(index, newName);
+}
+void FileManager::deleteSelectedFiles(const QModelIndexList indices){
+    for(auto index : indices){
+        fileModel->remove(index);
+    }
+}
 
 
 

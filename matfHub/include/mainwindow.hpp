@@ -5,6 +5,7 @@
 #include <QtCore>
 #include <QtGui>
 #include <stack>
+#include <QListView>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -48,11 +49,14 @@ private slots:
 
     void on_actionChangeHubLocation_triggered();
 
-    void on_fileView_clicked(const QModelIndex &index);
 
 private:
     Ui::MainWindow *ui;
     FileManager* m_fileManager;
+    int countSelected(const QListView* view);
+    QModelIndex getSelectedIndex(const QListView* view);
+    QModelIndexList getSelectedIndices(const QListView* view);
+
 
 
 };
