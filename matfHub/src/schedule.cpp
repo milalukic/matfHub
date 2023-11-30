@@ -12,9 +12,9 @@ Schedule::Schedule(){
 }
 
 void Schedule::changeModule(Ui::MainWindow *ui, int index){
-    if(index == 0) {
-        return;
-    }
+//    if(index == 0) {
+//        return;
+//    }
     QWidget *scrollContent = new QWidget();
     QVBoxLayout *scrollLayout = new QVBoxLayout(scrollContent);
     std::string module = modules[index];
@@ -31,33 +31,22 @@ void Schedule::findSchedule(Ui::MainWindow *ui){
 }
 
 void Schedule::downloadSchedule(Ui::MainWindow *ui){
-//    ovo treba da skrejpuje sajt rasporeda na matfu
-//    treba da se koristi neka biblioteka za slanje HTTP zahteva
-//    pa jos neka za parsiranje HTML-a...
-//    pa da se to sacuva i parsira kao struktura podataka kojoj moze da se pristupa na nivou predmeta...
-    modules = kmiljanScraper->downloadModules();
+    moduleCourseMap = kmiljanScraper->download();
     ui->smerBox->setPlaceholderText("Izaberi smer");
     ui->smerBox->clear();
     for(auto& module : modules){
         ui->smerBox->addItem(QString::fromStdString(module));
-    }
-//    ui->smerBox->addItems(modules);
-//    return;
-    CourseSet allCourses = kmiljanScraper->downloadCourses();
-
-    for(auto& course : allCourses) {
-        for(auto& module : modules) {
-            if(course.modules.find(module) != course.modules.end()){
-                moduleCourseMap[module].insert(course);
-            }
-        }
     }
 };
 
 void Schedule::scrapeSchedule(Ui::MainWindow *ui){
     QString oldText = ui->scrapeButton->text();
     ui->scrapeButton->setText("Scraping...");
-    this->downloadSchedule(ui);
+    moduleCourseMap = kmiljanScraper->download();
+//    dodaj sve module u vektor da bi se indeksovalo u onom dropdownu intovima
+    for (const auto& pair : moduleCourseMap) {
+        modules.push_back(pair.first);
+    }
     ui->scrapeButton->setText(oldText);
     ui->rasporedStartButton->setEnabled(true);
     ui->scheduleTable->setEnabled(true);
