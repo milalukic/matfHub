@@ -1,0 +1,1 @@
+enum types { DELIMITER = 1, VARIABLE, NUMBER, FUNCTION };

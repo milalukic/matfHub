@@ -27,10 +27,10 @@ void Notes::newClicked(Ui::MainWindow *ui){
     ui->textEdit->setText(QString());
 }
 
-void Notes::openClicked(Ui::MainWindow *ui, QWidget *parent){
-    QString fileName = QFileDialog::getOpenFileName(parent, "Otvori novu datoteku");
-    openFile(fileName, ui, parent);
-}
+//void Notes::openClicked(Ui::MainWindow *ui, QWidget *parent){
+//    QString fileName = QFileDialog::getOpenFileName(parent, "Otvori novu datoteku");
+//    openFile(fileName, ui, parent);
+//}
 
 void Notes::openClicked(Ui::MainWindow *ui, QWidget *parent){
     QString fileName = QFileDialog::getOpenFileName(parent, "Otvori novu datoteku");
