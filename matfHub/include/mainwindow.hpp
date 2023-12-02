@@ -69,6 +69,24 @@ private slots:
 
     //calculator things
     void pbMatrixTest();
+    void changeStackedWidgetPage();
+
+        //calc functions
+            //regular
+    void calculateRegular();
+            //matrix
+    void calculateMatrixTranspose();
+    void calculateMatrixInverse();
+    void calculateMatrixDiag();
+    void calculateMatrixOne();
+
+    void parseMatrix1();
+    void parseMatrix2();
+
+    void calculateMatrixAdd();
+    void calculateMatrixSubtract();
+    void calculateMatrixMultiply();
+    void calculateMatrixDivide();
 
 private:
     Ui::MainWindow *ui;
