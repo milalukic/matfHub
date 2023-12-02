@@ -67,6 +67,9 @@ private slots:
 
     void on_actionChangeHubLocation_triggered();
 
+    //calculator things
+    void pbMatrixTest();
+
 private:
     Ui::MainWindow *ui;
 

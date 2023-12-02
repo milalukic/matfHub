@@ -1,5 +1,6 @@
 #include "../include/mainwindow.hpp"
 #include "../include/filemanager.hpp"
+#include "../include/matrix.hpp"
 
 #include <QSplitter>
 #include <QFileSystemModel>
@@ -40,6 +41,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->fileView->setRootIndex(m_fileManager->fileModel->setRootPath(m_fileManager->hubPath));
     ui->currentFilePath->setText(m_fileManager->currPath);
     ui->fileView->setSelectionMode(QAbstractItemView::ExtendedSelection);//klik odabere kliknutu i oddabere ostale; shift klik selektuje sve izmedju selektovane i kliknute, ctrl klik odabere kliknutu i ne oddabere ostale
+
+    //TODO FIX THIS!!!
+    connect(ui->pbMatrixTest, &QPushButton::clicked, this, &MainWindow::pbMatrixTest);
 
 }
 
@@ -243,7 +247,11 @@ QModelIndexList MainWindow::getSelectedIndices(const QListView* view){
 }
 
 
-
+//kalkulator things
+void MainWindow::pbMatrixTest(){
+    Matrix *m1 = new Matrix(3, 3);
+    std::cout << m1 << std::endl;
+}
 
 
 

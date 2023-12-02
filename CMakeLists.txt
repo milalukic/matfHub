@@ -12,6 +12,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
+#CALCULATOR THINGS
+find_package(Armadillo REQUIRED)
+include_directories(${ARMADILLO_INCLUDE_DIRS})
 
 file(GLOB PROJECT_SOURCES
         "matfHub/src/*.cpp"
@@ -27,6 +30,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         matfHub/src/notes.cpp
         matfHub/resources.qrc
         matfHub/src/calculator.cpp
+        matfHub/include/calculator.h
 
 
     )
@@ -48,7 +52,7 @@ else()
     endif()
 endif()
 
-target_link_libraries(matfHub PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(matfHub PRIVATE Qt${QT_VERSION_MAJOR}::Widgets ${ARMADILLO_LIBRARIES})
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an

@@ -36,7 +36,7 @@
        <enum>Qt::DefaultContextMenu</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="FileManagerTab">
        <attribute name="title">
@@ -1942,6 +1942,32 @@
        <attribute name="title">
         <string>Kalkulator</string>
        </attribute>
+       <widget class="QStackedWidget" name="stackedWidget">
+        <property name="geometry">
+         <rect>
+          <x>400</x>
+          <y>120</y>
+          <width>120</width>
+          <height>80</height>
+         </rect>
+        </property>
+        <widget class="QWidget" name="page">
+         <widget class="QPushButton" name="pbMatrixTest">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>30</y>
+            <width>80</width>
+            <height>22</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>PushButton</string>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QWidget" name="page_2"/>
+       </widget>
       </widget>
       <widget class="QWidget" name="NotesTab">
        <attribute name="title">
@@ -2086,7 +2112,6 @@
     </item>
    </layout>
   </widget>
-
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -2094,10 +2119,9 @@
      <x>0</x>
      <y>0</y>
      <width>1120</width>
-     <height>22</height>
+     <height>19</height>
     </rect>
    </property>
-
    <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>File</string>
@@ -2122,6 +2146,8 @@
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
