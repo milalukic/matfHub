@@ -19,56 +19,7 @@ Akteri:
 SLUCAJEVI UPOTREBE
 
 
-Naziv: Koriscenje kalkulatora
-
-Kratak opis: Korisnik klikom na tab "kalkulator" dobija pristup matematickom kalkulatoru, unutar njega moze odabrati koji tip operacije mu je potreban (matrice, statistika, itd.). Korisnik potom unosi podatke neophodne za dato izracunavanje, aplikacija ispisuje trazeni rezultat. Korisnik moze odabrati da datu istoriju rezultata sacuva u odgovarajucem formatu, ili moze odabrati da uveze prethodno sacuvanu istoriju racunanja.
-
-Akteri: Korisnik aplikacije (kalkulatora)
-
-Preduslovi: Aplikacija radi i odabran je kalukator unutar pokrenute aplikacije. Odabran je tip racunanja i uneti su podaci neophodni za dato racunanje.
-
-Postuslovi: Prikazan rezultat racunanja (ispisan i u istoriji racunanja).
-
-Osnovni tok: 
-        1. Korinisk bira kalkulator iz glavnog menija
-        2. Korisnik bira tip izracunavanja
-        3. Aplikacija konstruise odgovarajuci RACUNAR na osnovu odabranog tipa racunanja
-        4. Aplikacija otvara dostupne alate
-        5. Korisnik se nalazi u aplikaciji i moze uneti neophodne podatke
-                5.1. Ako korisnik odabere opciju "Uvezi istoriju"
-                        5.1.1. Prelazi na PODTOK 2
-                        5.2.1. Prelazi na korak 6
-        6. Korisnik unosi neophodne podatke za racunanje.
-        7. Korisnik klikom na dugme "Izracunaj" trazi od aplikacije rezultat.
-        8. Aplikacija cita unete podatke sa odgovarajuceg ulaza.
-                8.1 Aplikacija provera ispravnost ulaza.
-                        8.1.1. Ako je ispravan ulaz, prelazi na korak 9.
-                        8.1.2. Ukoliko je neispravan ulaz, ispisuje odgovarajucu gresku i prelazi na korak 5.
-        9. Aplikacija vrsi neophodna izracunavanja.
-        10. Aplikacija ispisuje racunanja u "privremenu istoriju racunanja".
-        11. Aplikacija prikazuje korisniku rezultat.
-                11.1. Ako korisnik korisnik klikne na dugme "Sacuvaj istoriju"
-                        11.1.1. Prelazi na PODTOK 1
-                        11.2.1. Prelazi na korak 5.
-Alternativni tok:
-        Neocekivani izlaz iz aplikacije: Ukoliko u bilo kom koraku korisnik iskljuci aplikaciju, brise se "privremena istorija racunanja" i aplikacija zavrsava rad. Slucaj upotrebe se zavrsava.
-
-Podtokovi:
-        PODTOK 1: 
-                  1. Korisnik bira gde hoce da sacuva istoriju i pod kojim imenom
-                  2. Aplikacija pravi novi fajl sa navedenim imenom 
-                  3. Aplikacija ispisuje istoriju u dati fajl i cuva ga na odabranom mestu i prelazi na korak "OVAJ1"
-        PODTOK 2: 
-                  1. Korisnik bira odakle hoce da uveze istoriju racunanja
-                  2. Aplikacija cita dati file i upisuje istoriju u "privremenu istoriju racunanja" i prelazi na korak "OVAJ1"        
-
-Specijalni zahtevi: /
-
-Dodatne informacije: Tokom trajanja rada kalkulatora, aplikacija pamti "privremenu istoriju racunanja".
-
-------------------------------------------------
-
-Naziv: "Pisanje beleski"
+Naziv: Pisanje beleski
 
 Kratak opis: Korisnik klikom na tab "notes" dobija pristup notesu, unutar kojeg moze pisati svoje beleske sa predavanja. Notes ima toolbar koji mu omogucava najosnovnije akcije: otvaranje nove datoteke, cuvanje trenutne datoteke, otvaranje vec postojece datoteke, korak unazad i unapred, cut, copy i paste opcije.
 
@@ -116,39 +67,6 @@ Dodatne informacije: /
 
 ------------------------------------------------
 
-Naziv: Generisanje rasporeda
-
-Kratak opis: Korisnik klikom na tab "raspored" dobija pristup genratoru rasporedu, unutar kojeg moze napraviti i pregledati napravljene rasporede.
-
-Akteri: Korisnik aplikacije (rasporeda)
-
-Preduslovi: Aplikacija radi i odabran je raspored tab unutar pokrenute aplikacije. Postoji raspored na poincare serveru.
-
-Postuslovi: Raspored je sacuvan ako je korisnik hteo
-
-Osnovni tok: 
-        1. Korinisk bira raspored iz glavnog menija
-                1.1. Pred korisnikom se nalazi interfejs za kreiranje rasporeda.
-        2. Korisnik salje zahtev za dohvatanje podataka klikom na dugme
-                2.1. Raspored trazi podatke od strugaca
-                2.2. Strugac vraca podatke
-        3. Korisnik bira smer
-                3.1. Raspored vraca korisniku spisak kurseva
-        4. Korisnik bira kurseve
-                4.1. Lista kurseva se prosledjuje generatoru rasporeda
-                4.2. Generator rasporeda vraca listu svih mogucih rasporeda
-                4.3. Raspored korisniku nudi jedan od mogucih rasporeda
-        5. Korisnik cuva trenutni raspored
-                5.1. Raspored se cuva
-                5.1.1. Sacuvan raspored se prikazuje korisniku
-        6. Korisnik zahteva naredni moguci raspored, prelazi se na korak 4.3
-
-Specijalni zahtevi: Internet konekcija, postojanje rasporeda unapred zadatoj adresi
-
-Dodatne informacije: /
-
-------------------------------------------------
-
 Naziv: Izmena fajl sistema
 
 Kratak opis: Korisnik klikom na tab "fajl menadzer" dobija pristup fajl menaderu, unutar kojeg moze napraviti i pregledati postojece datoteke i direktorijume.
@@ -178,7 +96,7 @@ Dodatne informacije: /
 
 ------------------------------------------------
 
-Naziv: Korišćenje navigacije u fajl menadžeru
+Naziv: Pregled fajl sistema
 
 Kratak opis: Unutar matfHub aplikacije otvaranjem taba "File Manager" korisnik dobija pristup fajl menadžeru. Unutar njega se može kretati kroz direktorijume,
 otvarati fajlove i praviti razne izmene. Ove akcije se vrše klikovima na foldere/fajlove, dugmice i padajući meni(desni klik).
@@ -238,4 +156,87 @@ Specijalni zahtevi: /
 Dodatne informacije: /
 
 ------------------------------------------------
+
+Naziv: Koriscenje kalkulatora
+
+Kratak opis: Korisnik klikom na tab "kalkulator" dobija pristup matematickom kalkulatoru, unutar njega moze odabrati koji tip operacije mu je potreban (matrice, statistika, itd.). Korisnik potom unosi podatke neophodne za dato izracunavanje, aplikacija ispisuje trazeni rezultat. Korisnik moze odabrati da datu istoriju rezultata sacuva u odgovarajucem formatu, ili moze odabrati da uveze prethodno sacuvanu istoriju racunanja.
+
+Akteri: Korisnik aplikacije (kalkulatora)
+
+Preduslovi: Aplikacija radi i odabran je kalukator unutar pokrenute aplikacije. Odabran je tip racunanja i uneti su podaci neophodni za dato racunanje.
+
+Postuslovi: Prikazan rezultat racunanja (ispisan i u istoriji racunanja).
+
+Osnovni tok: 
+        1. Korinisk bira kalkulator iz glavnog menija
+        2. Korisnik bira tip izracunavanja
+        3. Aplikacija konstruise odgovarajuci RACUNAR na osnovu odabranog tipa racunanja
+        4. Aplikacija otvara dostupne alate
+        5. Korisnik se nalazi u aplikaciji i moze uneti neophodne podatke
+                5.1. Ako korisnik odabere opciju "Uvezi istoriju"
+                        5.1.1. Prelazi na PODTOK 2
+                        5.2.1. Prelazi na korak 6
+        6. Korisnik unosi neophodne podatke za racunanje.
+        7. Korisnik klikom na dugme "Izracunaj" trazi od aplikacije rezultat.
+        8. Aplikacija cita unete podatke sa odgovarajuceg ulaza.
+                8.1 Aplikacija provera ispravnost ulaza.
+                        8.1.1. Ako je ispravan ulaz, prelazi na korak 9.
+                        8.1.2. Ukoliko je neispravan ulaz, ispisuje odgovarajucu gresku i prelazi na korak 5.
+        9. Aplikacija vrsi neophodna izracunavanja.
+        10. Aplikacija ispisuje racunanja u "privremenu istoriju racunanja".
+        11. Aplikacija prikazuje korisniku rezultat.
+                11.1. Ako korisnik korisnik klikne na dugme "Sacuvaj istoriju"
+                        11.1.1. Prelazi na PODTOK 1
+                        11.2.1. Prelazi na korak 5.
+Alternativni tok:
+        Neocekivani izlaz iz aplikacije: Ukoliko u bilo kom koraku korisnik iskljuci aplikaciju, brise se "privremena istorija racunanja" i aplikacija zavrsava rad. Slucaj upotrebe se zavrsava.
+
+Podtokovi:
+        PODTOK 1: 
+                  1. Korisnik bira gde hoce da sacuva istoriju i pod kojim imenom
+                  2. Aplikacija pravi novi fajl sa navedenim imenom 
+                  3. Aplikacija ispisuje istoriju u dati fajl i cuva ga na odabranom mestu i prelazi na korak "OVAJ1"
+        PODTOK 2: 
+                  1. Korisnik bira odakle hoce da uveze istoriju racunanja
+                  2. Aplikacija cita dati file i upisuje istoriju u "privremenu istoriju racunanja" i prelazi na korak "OVAJ1"        
+
+Specijalni zahtevi: /
+
+Dodatne informacije: Tokom trajanja rada kalkulatora, aplikacija pamti "privremenu istoriju racunanja".
+
+------------------------------------------------
+
+Naziv: Generisanje rasporeda
+
+Kratak opis: Korisnik klikom na tab "raspored" dobija pristup genratoru rasporedu, unutar kojeg moze napraviti i pregledati napravljene rasporede.
+
+Akteri: Korisnik aplikacije (rasporeda)
+
+Preduslovi: Aplikacija radi i odabran je raspored tab unutar pokrenute aplikacije. Postoji raspored na poincare serveru.
+
+Postuslovi: Raspored je sacuvan ako je korisnik hteo
+
+Osnovni tok: 
+        1. Korinisk bira raspored iz glavnog menija
+                1.1. Pred korisnikom se nalazi interfejs za kreiranje rasporeda.
+        2. Korisnik salje zahtev za dohvatanje podataka klikom na dugme
+                2.1. Raspored trazi podatke od strugaca
+                2.2. Strugac vraca podatke
+        3. Korisnik bira smer
+                3.1. Raspored vraca korisniku spisak kurseva
+        4. Korisnik bira kurseve
+                4.1. Lista kurseva se prosledjuje generatoru rasporeda
+                4.2. Generator rasporeda vraca listu svih mogucih rasporeda
+                4.3. Raspored korisniku nudi jedan od mogucih rasporeda
+        5. Korisnik cuva trenutni raspored
+                5.1. Raspored se cuva
+                5.1.1. Sacuvan raspored se prikazuje korisniku
+        6. Korisnik zahteva naredni moguci raspored, prelazi se na korak 4.3
+
+Specijalni zahtevi: Internet konekcija, postojanje rasporeda unapred zadatoj adresi
+
+Dodatne informacije: /
+
+------------------------------------------------
+
 
