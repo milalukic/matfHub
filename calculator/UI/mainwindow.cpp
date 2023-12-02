@@ -8,7 +8,10 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    connect(ui->pbParser, &QPushButton::clicked, this, &MainWindow::onClick);
+    connect(ui->pbParser, &QPushButton::clicked, this, &MainWindow::calculateResult);
+    connect(ui->pbChangeRegular, &QPushButton::clicked, this, &MainWindow::changeStackedWidgetPage);
+    connect(ui->pbChangeMatrix, &QPushButton::clicked, this, &MainWindow::changeStackedWidgetPage);
+    connect(ui->pbChangePlotting, &QPushButton::clicked, this, &MainWindow::changeStackedWidgetPage);
 }
 
 MainWindow::~MainWindow()
@@ -16,7 +19,22 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::onClick(){
+void MainWindow::changeStackedWidgetPage(int d){
+
+    QPushButton* buttonSender = qobject_cast<QPushButton*>(sender());
+    QString buttonText = buttonSender->text();
+    std::cout << buttonText.toStdString() << std::endl;
+
+    if(buttonText == "Regular calculator")
+        ui->stackedWidget->setCurrentIndex(0);
+    if(buttonText == "Matrix calculator")
+        ui->stackedWidget->setCurrentIndex(1);
+    if(buttonText == "Plotting calculator")
+        ui->stackedWidget->setCurrentIndex(2);
+
+}
+
+void MainWindow::calculateResult(){
 
     Parser *parser = new Parser();
 

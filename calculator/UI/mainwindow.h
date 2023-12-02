@@ -16,7 +16,9 @@ public:
     ~MainWindow();
 
 public slots:
-           void onClick();
+
+    void calculateResult();
+    void changeStackedWidgetPage(int d);
 
 private:
     Ui::MainWindow *ui;
