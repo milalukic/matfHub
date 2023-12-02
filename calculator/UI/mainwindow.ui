@@ -43,7 +43,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="p0Regular">
        <widget class="QLineEdit" name="lineEdit">
@@ -59,20 +59,70 @@
          <string>Regular</string>
         </property>
        </widget>
-      </widget>
-      <widget class="QWidget" name="p1Matrix">
-       <widget class="QLineEdit" name="lineEdit_2">
+       <widget class="QLineEdit" name="leParser">
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>0</y>
-          <width>113</width>
+          <y>30</y>
+          <width>1198</width>
+          <height>22</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pbParser">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>110</y>
+          <width>1198</width>
           <height>22</height>
          </rect>
         </property>
         <property name="text">
-         <string>Matrix</string>
+         <string>Izracunaj</string>
         </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="p1Matrix">
+       <widget class="QWidget" name="gridLayoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>221</width>
+          <height>121</height>
+         </rect>
+        </property>
+        <layout class="QGridLayout" name="gridLayout">
+         <item row="0" column="1">
+          <widget class="QPushButton" name="pbMatrixInverse">
+           <property name="text">
+            <string>Inverse</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QPushButton" name="pbMatrixTranspose">
+           <property name="text">
+            <string>Transpose</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QPushButton" name="pbMatrixDiag">
+           <property name="text">
+            <string>Diag</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QPushButton" name="pbMatrixOne">
+           <property name="text">
+            <string>One</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </widget>
       <widget class="QWidget" name="p2Plotting">
@@ -95,9 +145,6 @@
     <item>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QLineEdit" name="leParser"/>
-      </item>
-      <item>
        <widget class="QLabel" name="label">
         <property name="text">
          <string>Resenje</string>
@@ -106,13 +153,6 @@
       </item>
       <item>
        <widget class="QTextBrowser" name="tbParser"/>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pbParser">
-        <property name="text">
-         <string>Izracunaj</string>
-        </property>
-       </widget>
       </item>
      </layout>
     </item>

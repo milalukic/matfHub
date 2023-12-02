@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "./../parser/parser.cpp"
+//#include "./../src/matrix/matrix.cpp"
 #include <cstring>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -8,10 +9,17 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    connect(ui->pbParser, &QPushButton::clicked, this, &MainWindow::calculateResult);
+    connect(ui->pbParser, &QPushButton::clicked, this, &MainWindow::calculateRegular);
+
     connect(ui->pbChangeRegular, &QPushButton::clicked, this, &MainWindow::changeStackedWidgetPage);
     connect(ui->pbChangeMatrix, &QPushButton::clicked, this, &MainWindow::changeStackedWidgetPage);
     connect(ui->pbChangePlotting, &QPushButton::clicked, this, &MainWindow::changeStackedWidgetPage);
+
+    connect(ui->pbMatrixTranspose, &QPushButton::clicked, this, &MainWindow::calculateMatrixTranspose);
+    connect(ui->pbMatrixInverse, &QPushButton::clicked, this, &MainWindow::calculateMatrixInverse);
+    connect(ui->pbMatrixDiag, &QPushButton::clicked, this, &MainWindow::calculateMatrixDiag);
+    connect(ui->pbMatrixOne, &QPushButton::clicked, this, &MainWindow::calculateMatrixOne);
+
 }
 
 MainWindow::~MainWindow()
@@ -19,7 +27,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::changeStackedWidgetPage(int d){
+void MainWindow::changeStackedWidgetPage(){
 
     QPushButton* buttonSender = qobject_cast<QPushButton*>(sender());
     QString buttonText = buttonSender->text();
@@ -34,7 +42,7 @@ void MainWindow::changeStackedWidgetPage(int d){
 
 }
 
-void MainWindow::calculateResult(){
+void MainWindow::calculateRegular(){
 
     Parser *parser = new Parser();
 
@@ -55,4 +63,23 @@ void MainWindow::calculateResult(){
     ui->tbParser->setText(history);
 
     delete parser; parser = nullptr;
+}
+
+void MainWindow::calculateMatrixTranspose(){
+
+    //TODO make this work (CMake probably)
+//    Matrix *m1 = new Matrix(5, 5);
+    std::cout << "Transpose" << std::endl;
+}
+
+void MainWindow::calculateMatrixInverse(){
+    std::cout << "Inverse" << std::endl;
+}
+
+void MainWindow::calculateMatrixDiag(){
+    std::cout << "Diag" << std::endl;
+}
+
+void MainWindow::calculateMatrixOne(){
+    std::cout << "One" << std::endl;
 }
