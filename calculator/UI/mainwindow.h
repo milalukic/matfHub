@@ -31,7 +31,10 @@ public slots:
     void parseMatrix1();
     void parseMatrix2();
 
-
+    void calculateMatrixAdd();
+    void calculateMatrixSubtract();
+    void calculateMatrixMultiply();
+    void calculateMatrixDivide();
 
 private:
     Ui::MainWindow *ui;

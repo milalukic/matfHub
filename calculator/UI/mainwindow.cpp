@@ -23,6 +23,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pbMatrixLoad1, &QPushButton::clicked, this, &MainWindow::parseMatrix1);
     connect(ui->pbMatrixLoad2, &QPushButton::clicked, this, &MainWindow::parseMatrix2);
 
+    connect(ui->pbMatrixAdd, &QPushButton::clicked, this, &MainWindow::calculateMatrixAdd);
+    connect(ui->pbMatrixSubtract, &QPushButton::clicked, this, &MainWindow::calculateMatrixSubtract);
+    connect(ui->pbMatrixMultiply, &QPushButton::clicked, this, &MainWindow::calculateMatrixMultiply);
+    connect(ui->pbMatrixDivide, &QPushButton::clicked, this, &MainWindow::calculateMatrixDivide);
 }
 
 MainWindow::~MainWindow()
@@ -96,5 +100,21 @@ void MainWindow::parseMatrix1(){
 void MainWindow::parseMatrix2(){
     QString text = "Dim1: " + ui->leMatrixDim21->text() + " Dim2: " + ui->leMatrixDim22->text() + " data: " + ui->leMatrixData2->text();
     std::cout << text.toStdString() << std::endl;
+}
+
+void MainWindow::calculateMatrixAdd(){
+    std::cout << "Add" << std::endl;
+}
+
+void MainWindow::calculateMatrixSubtract(){
+    std::cout << "Subtract" << std::endl;
+}
+
+void MainWindow::calculateMatrixMultiply(){
+    std::cout << "Multiply" << std::endl;
+}
+
+void MainWindow::calculateMatrixDivide(){
+    std::cout << "Divide" << std::endl;
 }
 
