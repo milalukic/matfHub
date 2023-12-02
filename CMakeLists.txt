@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 
+set(CMAKE_TOOLCHAIN_FILE "/home/ryu/vcpkg/scripts/buildsystems/vcpkg.cmake")
+
 project(matfHub VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_AUTOUIC ON)
@@ -15,6 +17,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 #CALCULATOR THINGS
 find_package(Armadillo REQUIRED)
 include_directories(${ARMADILLO_INCLUDE_DIRS})
+find_package(Matplot++ REQUIRED)
 
 file(GLOB PROJECT_SOURCES
         "matfHub/src/*.cpp"
@@ -52,7 +55,8 @@ else()
     endif()
 endif()
 
-target_link_libraries(matfHub PRIVATE Qt${QT_VERSION_MAJOR}::Widgets ${ARMADILLO_LIBRARIES})
+# target_link_libraries(matfHub PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(matfHub PRIVATE Qt${QT_VERSION_MAJOR}::Widgets ${ARMADILLO_LIBRARIES} PUBLIC Matplot++::matplot)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
