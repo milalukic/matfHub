@@ -28,7 +28,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pbMatrixMultiply, &QPushButton::clicked, this, &MainWindow::calculateMatrixMultiply);
     connect(ui->pbMatrixDivide, &QPushButton::clicked, this, &MainWindow::calculateMatrixDivide);
 }
-
+//TODO complete implementation of everything listed below
+//TODO make it user friendly
+//TODO refactor code
 MainWindow::~MainWindow()
 {
     delete ui;
