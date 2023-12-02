@@ -17,12 +17,21 @@ public:
 
 public slots:
 
-    void calculateRegular();
     void changeStackedWidgetPage();
+
+    //calc functions
+        //regular
+    void calculateRegular();
+        //matrix
     void calculateMatrixTranspose();
     void calculateMatrixInverse();
     void calculateMatrixDiag();
     void calculateMatrixOne();
+
+    void parseMatrix1();
+    void parseMatrix2();
+
+
 
 private:
     Ui::MainWindow *ui;

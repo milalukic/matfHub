@@ -20,6 +20,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pbMatrixDiag, &QPushButton::clicked, this, &MainWindow::calculateMatrixDiag);
     connect(ui->pbMatrixOne, &QPushButton::clicked, this, &MainWindow::calculateMatrixOne);
 
+    connect(ui->pbMatrixLoad1, &QPushButton::clicked, this, &MainWindow::parseMatrix1);
+    connect(ui->pbMatrixLoad2, &QPushButton::clicked, this, &MainWindow::parseMatrix2);
+
 }
 
 MainWindow::~MainWindow()
@@ -83,3 +86,15 @@ void MainWindow::calculateMatrixDiag(){
 void MainWindow::calculateMatrixOne(){
     std::cout << "One" << std::endl;
 }
+
+void MainWindow::parseMatrix1(){
+    QString text = "Dim1: " + ui->leMatrixDim11->text() + " Dim2: " + ui->leMatrixDim12->text() + " data: " + ui->leMatrixData1->text();
+    std::cout << text.toStdString() << std::endl;
+
+}
+
+void MainWindow::parseMatrix2(){
+    QString text = "Dim1: " + ui->leMatrixDim21->text() + " Dim2: " + ui->leMatrixDim22->text() + " data: " + ui->leMatrixData2->text();
+    std::cout << text.toStdString() << std::endl;
+}
+
