@@ -206,6 +206,51 @@ Dodatne informacije: Tokom trajanja rada kalkulatora, aplikacija pamti "privreme
 
 ------------------------------------------------
 
+Naziv: "Crtanje grafika"
+
+Kratak opis: "Korisnik unosi vrednosti x i y koordinata(moze biti funkcija), i nakon klika na dugme "Iscrtaj", korisniku se na ekranu prikazuje crtez grafika trazene funkcije."
+
+Akteri: "Korisnik kalkulatora"
+
+Preduslovi: "Kao glavni tab je odabran kalkulator, a u samom kalkulatoru je odabrana stranica "Plottovanje"."
+
+Postuslovi: "Prikazan grafik funkcije i sacuvan u istoriji racunanja."
+
+Osnovni tok:
+	1. Korisnik bira kalkulator iz glavnog menija
+	2. Korisnik bira "Plottovanje" kao opciju u samom kalkulatoru
+	3. Aplikacija konstruise odgovarajuci RACUNAR koji ce koristiti za iscrtavanje
+	4. Aplikacija otvara dostupne alate
+"JUMP"  5. Korisnik se nalazi u aplikaciji i moze uneti neophodne podatke
+		5.1. Ukoliko korisnik odabere opciju "Uvezi istoriju"
+			5.1.1. Korisnik bira lokaciju fajla iz kog ce se ucitati istorija
+			5.1.2. Aplikacija uvezenu istoriju cuva u privremenoj istoriji racunanja
+	6. Korisnik unosi neophodne podatke za racunanje.
+	7. Korisnik klikom na dugme "Iscrtaj" podatke salje aplikaciji.
+	8. Aplikacija cita podatke koje je korisnik poslao
+		8.1 Aplikacija proverava ispravnost podataka.
+			8.1.1. Ako su podaci neispravni, aplikacija prikazuje gresku
+	9. Aplikacija izvrsava izracunavanja i rezultat cuva u privremenoj istoriji racunanja
+	10. Aplikacija korisniku prikazuje nacrtan grafik trazene funkcije
+		10.1. Ukoliko korisnik klikne dugme "Sacuvaj istoriju"
+			10.1.1. Prelazi na PODTOK 1
+	11. Prelazi na korak "JUMP"
+
+Alternativni tok:
+	Iznenadni izlaz iz aplikacije: Ukoliko korisnik na bilo koji nacin izadje iz aplikacije, privremena istorija racunanja ce biti obrisana, a aplikacija ce obustaviti rad.
+
+Podtokovi:
+	PODTOK 1:
+		1. Korisnik bira lokaciju gde ce se istorija sacuvati
+		2. Aplikacija na zadatoj lokaciji pravi fajl i u njega upisuje istoriju racunanja
+		3. Prelazi na korak "JUMP"
+
+Specijalni zahtevi: /
+
+Dodatne informacije: U pozadini, aplikacija trenutnu istoriju pamti kao privremenu istoriju racunanja
+
+------------------------------------------------
+
 Naziv: Generisanje rasporeda
 
 Kratak opis: Korisnik klikom na tab "raspored" dobija pristup genratoru rasporedu, unutar kojeg moze napraviti i pregledati napravljene rasporede.
