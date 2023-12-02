@@ -222,17 +222,14 @@ Osnovni tok:
 	3. Aplikacija konstruise odgovarajuci RACUNAR koji ce koristiti za iscrtavanje
 	4. Aplikacija otvara dostupne alate
 "JUMP"  5. Korisnik se nalazi u aplikaciji i moze uneti neophodne podatke
-		5.1. Ukoliko korisnik odabere opciju "Uvezi istoriju"
-			5.1.1. Korisnik bira lokaciju fajla iz kog ce se ucitati istorija
-			5.1.2. Aplikacija uvezenu istoriju cuva u privremenoj istoriji racunanja
 	6. Korisnik unosi neophodne podatke za racunanje.
 	7. Korisnik klikom na dugme "Iscrtaj" podatke salje aplikaciji.
 	8. Aplikacija cita podatke koje je korisnik poslao
 		8.1 Aplikacija proverava ispravnost podataka.
 			8.1.1. Ako su podaci neispravni, aplikacija prikazuje gresku
-	9. Aplikacija izvrsava izracunavanja i rezultat cuva u privremenoj istoriji racunanja
+	9. Aplikacija izvrsava izracunavanja i rezultat cuva u privremenom fajlu
 	10. Aplikacija korisniku prikazuje nacrtan grafik trazene funkcije
-		10.1. Ukoliko korisnik klikne dugme "Sacuvaj istoriju"
+		10.1. Ukoliko korisnik klikne dugme "Sacuvaj datoteku"
 			10.1.1. Prelazi na PODTOK 1
 	11. Prelazi na korak "JUMP"
 
@@ -241,13 +238,13 @@ Alternativni tok:
 
 Podtokovi:
 	PODTOK 1:
-		1. Korisnik bira lokaciju gde ce se istorija sacuvati
-		2. Aplikacija na zadatoj lokaciji pravi fajl i u njega upisuje istoriju racunanja
+		1. Korisnik bira lokaciju gde ce se datoteka sacuvati
+		2. Aplikacija na zadatoj lokaciji pravi datoteku
 		3. Prelazi na korak "JUMP"
 
 Specijalni zahtevi: /
 
-Dodatne informacije: U pozadini, aplikacija trenutnu istoriju pamti kao privremenu istoriju racunanja
+Dodatne informacije: U pozadini, aplikacija trenutnu istoriju pamti kao privremeni fajl.
 
 ------------------------------------------------
 
