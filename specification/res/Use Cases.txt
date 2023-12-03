@@ -170,7 +170,7 @@ Postuslovi: Prikazan rezultat racunanja (ispisan i u istoriji racunanja).
 Osnovni tok: 
         1. Korinisk bira kalkulator iz glavnog menija
         2. Korisnik bira tip izracunavanja
-        3. Aplikacija konstruise odgovarajuci RACUNAR na osnovu odabranog tipa racunanja
+        3. Aplikacija konstruise odgovarajuci "racunar" na osnovu odabranog tipa racunanja
         4. Aplikacija otvara dostupne alate
         5. Korisnik se nalazi u aplikaciji i moze uneti neophodne podatke
                 5.1. Ako korisnik odabere opciju "Uvezi istoriju"
@@ -219,9 +219,9 @@ Postuslovi: "Prikazan grafik funkcije i sacuvan u istoriji racunanja."
 Osnovni tok:
 	1. Korisnik bira kalkulator iz glavnog menija
 	2. Korisnik bira "Plottovanje" kao opciju u samom kalkulatoru
-	3. Aplikacija konstruise odgovarajuci RACUNAR koji ce koristiti za iscrtavanje
+	3. Aplikacija konstruise odgovarajucu klasu koja ce se koristiti za iscrtavanje
 	4. Aplikacija otvara dostupne alate
-"JUMP"  5. Korisnik se nalazi u aplikaciji i moze uneti neophodne podatke
+    5. Korisnik se nalazi u aplikaciji i moze uneti neophodne podatke
 	6. Korisnik unosi neophodne podatke za racunanje.
 	7. Korisnik klikom na dugme "Iscrtaj" podatke salje aplikaciji.
 	8. Aplikacija cita podatke koje je korisnik poslao
@@ -231,7 +231,7 @@ Osnovni tok:
 	10. Aplikacija korisniku prikazuje nacrtan grafik trazene funkcije
 		10.1. Ukoliko korisnik klikne dugme "Sacuvaj datoteku"
 			10.1.1. Prelazi na PODTOK 1
-	11. Prelazi na korak "JUMP"
+	11. Prelazi na korak
 
 Alternativni tok:
 	Iznenadni izlaz iz aplikacije: Ukoliko korisnik na bilo koji nacin izadje iz aplikacije, privremena istorija racunanja ce biti obrisana, a aplikacija ce obustaviti rad.
@@ -240,7 +240,7 @@ Podtokovi:
 	PODTOK 1:
 		1. Korisnik bira lokaciju gde ce se datoteka sacuvati
 		2. Aplikacija na zadatoj lokaciji pravi datoteku
-		3. Prelazi na korak "JUMP"
+		3. Prelazi na korak 5
 
 Specijalni zahtevi: /
 
