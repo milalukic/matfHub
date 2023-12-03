@@ -1,10 +1,12 @@
 #ifndef MAINWINDOW_HPP
 #define MAINWINDOW_HPP
 
+#include "schedule.h"
 #include <QMainWindow>
 #include <QtCore>
 #include <QtGui>
 #include <stack>
+#include <memory>
 #include <QListView>
 
 #include "notes.h"
@@ -88,8 +90,19 @@ private slots:
     void calculateMatrixMultiply();
     void calculateMatrixDivide();
 
+    void on_smerBox_activated(int index);
+
+    void on_rasporedStartButton_clicked();
+
+    void on_scrapeButton_clicked();
+
 private:
     Ui::MainWindow *ui;
+    QFileSystemModel *dirModel;
+    QFileSystemModel *fileModel;
+    std::stack<QString> navigationBefore;
+    std::stack<QString> navigationAfter;
+    std::unique_ptr<Schedule> schedule;
 
     Notes *notes;
 

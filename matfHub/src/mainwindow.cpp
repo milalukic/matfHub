@@ -1,4 +1,6 @@
 #include "../include/mainwindow.hpp"
+#include "../ui_mainwindow.h"
+#include "../include/schedule.h"
 #include "../include/filemanager.hpp"
 #include "../include/matrix.hpp"
 #include "../include/parser.hpp"
@@ -9,6 +11,8 @@
 #include <QInputDialog>
 #include <QMessageBox>
 #include <stack>
+#include <iostream>
+#include <memory>
 #include <QDebug>
 #include <string>
 
@@ -22,6 +26,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    schedule = std::make_unique<Schedule>();
 
     m_fileManager = new FileManager(this);
 
@@ -226,6 +231,24 @@ void MainWindow::on_fileView_customContextMenuRequested(const QPoint &pos)// !!!
 void MainWindow::on_actionExit_triggered()
 {
     QApplication::quit();
+}
+
+
+void MainWindow::on_smerBox_activated(int index)
+{
+    schedule->changeModule(ui, index);
+}
+
+
+void MainWindow::on_rasporedStartButton_clicked()
+{
+    schedule->findSchedule(ui);
+}
+
+
+void MainWindow::on_scrapeButton_clicked()
+{
+    schedule->scrapeSchedule(ui);
 }
 
 //promena glavnog hab foldera
