@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
 
-set(CMAKE_TOOLCHAIN_FILE "/home/ryu/vcpkg/scripts/buildsystems/vcpkg.cmake")
-
 project(matfHub VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_AUTOUIC ON)
