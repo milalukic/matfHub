@@ -1,0 +1,284 @@
+Specifikacija - Slucajevi upotrebe
+
+
+Slucajevi upotrebe:
+- Pisanje beleski
+- Izmena fajl sistema
+- Pregled fajl sistema
+- Koriscenje kalkulatora
+- Generisanje rasporeda
+- Pregled rasporeda
+- Planiranje obaveza
+
+
+Akteri:
+- Korisnik(Student)
+
+
+---------------------------------------------------------------------------
+SLUCAJEVI UPOTREBE
+
+
+Naziv: Pisanje beleski
+
+Kratak opis: Korisnik klikom na tab "notes" dobija pristup notesu, unutar kojeg moze pisati svoje beleske sa predavanja. Notes ima toolbar koji mu omogucava najosnovnije akcije: otvaranje nove datoteke, cuvanje trenutne datoteke, otvaranje vec postojece datoteke, korak unazad i unapred, cut, copy i paste opcije.
+
+Akteri: Korisnik aplikacije (notesa)
+
+Preduslovi: Aplikacija radi i odabran je notes tab unutar pokrenute aplikacije.
+
+Postuslovi: Korisnik je pitan zeli li da sacuva izmene u trenutoj tekstualnoj datoteci na mestu koje je korisnik izabrao, pod imenom koje je korisnik izabrao. Ukoliko korisnik nije sacuvao datoteku, a promenio tab, moze se vratiti i nastaviti sa pisanjem ponovnim klikom na 'notes' tab.
+
+Osnovni tok: 
+        1. Korinisk bira notes iz glavnog menija
+        2. Pred korisnikom se nalazi prazan prostor za pisanje teksta.
+        3. Ukoliko korisnik izabere opciju za "otvaranje postojece datoteke":
+                3.1. Prelazi se na PODTOK 1.
+        4. Korisnik pise neki tekst u prostoru predvidjenom za pisanje teksta. Tokom pisanja on moze:
+                4.1. Selektovati i kopirati deo teksta klikom na dugme za "kopiranje" (copy)
+                4.2. Nalepiti prethodno kopiran deo teksta na deo prostora za pisanje teksta oznacen kursorom, klikom na dugme za "lepljenje" (paste)
+                4.3. Selektovati i iseci deo teksta klikom na dugme za "secenje" (cut)
+                4.4. Vratiti se jedan korak unazad klikom na dugme za "vracanje unazad" (undo)
+                4.5. Vratiti se jedan korak unapred klikom na dugme za "vracanje unapred" (redo)
+                4.6. Poceti pisanje nove datoteke klikom na dugme za "novu datoteku":
+                        4.6.1. Ukoliko izabere ovu opciju, prelazi se na PODTOK2.
+        5. Korisnik cuva tekstualnu datoteku koju je napisao klikom na dugme za "cuvanje". Ovim se otvara pop-up koji zahteva unos imena datoteke i biranje lokacije za njeno cuvanje.
+
+Alternativni tok:
+        Neocekivani izlaz iz aplikacije: Ukoliko u bilo kom koraku korisnik iskljuci aplikaciju, tekst unutar notesa se resetuje i aplikacija zavrsava rad. Slucaj upotrebe se zavrsava.
+
+Podtokovi:
+        PODTOK 1: 
+                1. Ukoliko prethodno napisani tekst (ako ga ima) nije sacuvan, pojavljuje se upozorenje koje opominje korisnika
+                        1.1. Ukoliko korisnik izabere opciju da sacuva prethodno napisani tekst, prelazi se na korak 4.
+                        1.2. Ukoliko korisnik odluci da ignorise upozorenje, otvara se prozor koji zahteva izbor datoteke koja se otvara. Na prostoru za pisanje teksta se prikazuje sadrzaj otvorene tekstualne datoteke. Prelazi se na korak 4.
+                2. Ukoliko je prethodno napisani tekst sacuvan ili ga nema:
+                        2.1. Otvara se prozor koji zahteva izbor datoteke koja se otvara. Na prostoru za pisanje teksta se prikazuje sadrzaj otvorene tekstualne datoteke. Prelazi se na korak 4.
+        PODTOK 2: 
+                1. Ukoliko prethodno napisani tekst nije sacuvan, pojavljuje se upozorenje koje opominje korisnika.
+                        1.1. Ukoliko korisnik izabere opciju da sacuva prethodno napisani tekst, prelazi se na korak 4.
+                        1.2. Ukoliko korisnik odluci da ignorise upozorenje, tekst se resetuje i prelazi se na korak 2.
+                2. Ukoliko je prethodno napisani tekst sacuvan:        
+                        2.1. Prelazi se na korak 2.
+
+Specijalni zahtevi: /
+
+Dodatne informacije: /
+
+------------------------------------------------
+
+Naziv: Izmena fajl sistema
+
+Kratak opis: Korisnik klikom na tab "fajl menadzer" dobija pristup fajl menaderu, unutar kojeg moze napraviti i pregledati postojece datoteke i direktorijume.
+
+Akteri: Korisnik aplikacije (menadzera)
+
+Preduslovi: Aplikacija radi i odabran je fajl menadzer tab unutar pokrenute aplikacije. Postoji fajl sistem na masini.
+
+Postuslovi: Korisnicke promene su sacuvane na disku.
+
+Osnovni tok: 
+        1. Odabir taba fajl menadzer
+                1.1. Pogled korisniku prikazuje sadrzaje direktorijuma
+        2. Korisnik bira opciju pravljenja novog direktorijuma
+                2.1. Pogled trazi od modela pravljenje novog direktorijuma
+                2.2. Model azurira pogled
+        3. Korisnik bira opciju promene imena odabrane stavke
+                3.1. Pogled trazi od modela da preimenuje stavku
+                3.2. Model azurira pogled
+        4. Korisnik bira opciju brisanja odabranih stavki 
+                4.1. Pogled trazi od modela da obrise stavke
+                4.2. Model azurira pogled
+
+Specijalni zahtevi: Masina ima operativni sistem.
+
+Dodatne informacije: /
+
+------------------------------------------------
+
+Naziv: Pregled fajl sistema
+
+Kratak opis: Unutar matfHub aplikacije otvaranjem taba "File Manager" korisnik dobija pristup fajl menadžeru. Unutar njega se može kretati kroz direktorijume,
+otvarati fajlove i praviti razne izmene. Ove akcije se vrše klikovima na foldere/fajlove, dugmice i padajući meni(desni klik).
+
+Akteri: Korisnik aplikacije - Student
+
+Preduslov: MatfHub radi i nalazimo se na tabu za fajl menadžer
+
+Postuslov: Otvoren je izabran fajl/Pozicionirali smo se u željeni direktorijum
+
+Osnovni tok:
+	1. Korisnik bira fajl menadžer od ponuđenih tabova unutar matfHub-a
+        2. Otvara se početni direktorijum (.../matfHub/MATF)
+	3. Pred korisnikom se nalazi otvoreni direktorijum
+	4. Korisnik se kreće kroz fajl sistem ili odmah prelazi na korak 5
+		4.1 Duplim klikom na direktorijum
+			4.1.1 Ulazi u traženi direktorijum
+			4.1.2 Nastavlja od korak 3
+		4.2 Dugme za back
+			4.2.1 Ukoliko postoji, vraća se jedan korak u nazad
+			4.2.2 Nastavlja od korak 3
+		4.3 Dugme za forward
+			4.3.1 Ukoliko postoji, ide jedan korak u napred
+			4.3.2 Nastavlja od korak 3
+		4.4 Dugme ..
+			4.4.1 Ukoliko postoji izlazi u roditeljski direktorijum
+			4.4.2 Nastavlja od korak 3
+		4.5 Dugme home
+			4.5.1 Vraća se na korak 2
+	5. Duplim klikom na neki fajl
+		5.1 Ukoliko je tip fajla podržan od strane matfHub-a
+			5.1.1 Falj se otvara unutar matfHub-a u očekivanoj aplikaciji
+			5.1.2 Ukoliko želi da se vrati na fajl menadžer prelazi na PODTOK1
+		5.2 Ukoliko tip fajla nije podržan od strane matfHub-a
+			5.2.1 Fajl se otvara u sistemski podrazumevanoj aplikaciji
+			5.2.2 Ukoliko želi da se vrati na fajl menadžer prelazi na PODTOK2
+		
+
+Alternativni tok:
+	Neočekivani izlaz iz aplikacije: Fajlovi otvoreni u sistemski podrazumevanoj aplikaciji ostaju otvoreni, a oni otvoreni u matfHubu se zatvaraju.
+					 Pri sledećem paljenju matfHub-a, ponovo ćemo biti pozicionirani u početnom direktorijumu.
+	Nepostojanje koraka pre/posle ili roditeljskog direktorijuma pri pritisku dugmeta: Ništa se neće desiti.
+	Nepostojanje "../matfHub/MATF" direktorijuma: Potreban direktorijum će biti kreiran od strane aplikacije.
+
+Podtokovi: 
+	PODTOK1:
+		1. Ponovnim pritiskom na tab "File Manager"
+		2. Prelazi na fajl menadžer sa poslednjim otvorenim direktorijumom pre otvaranja fajla
+		3. Nastavlja od korak 3
+	PODTOK2:
+		1. Vraćanjem na prozor aplikacije matfHub
+		2. Fajl menadžer će još uvek biti otvoren o pozicioniran na poslednji direktorijum pre otvaranja fajla
+		3. Nastavlja od korak 3 
+
+Specijalni zahtevi: /
+
+Dodatne informacije: /
+
+------------------------------------------------
+
+Naziv: Koriscenje kalkulatora
+
+Kratak opis: Korisnik klikom na tab "kalkulator" dobija pristup matematickom kalkulatoru, unutar njega moze odabrati koji tip operacije mu je potreban (matrice, statistika, itd.). Korisnik potom unosi podatke neophodne za dato izracunavanje, aplikacija ispisuje trazeni rezultat. Korisnik moze odabrati da datu istoriju rezultata sacuva u odgovarajucem formatu, ili moze odabrati da uveze prethodno sacuvanu istoriju racunanja.
+
+Akteri: Korisnik aplikacije (kalkulatora)
+
+Preduslovi: Aplikacija radi i odabran je kalukator unutar pokrenute aplikacije. Odabran je tip racunanja i uneti su podaci neophodni za dato racunanje.
+
+Postuslovi: Prikazan rezultat racunanja (ispisan i u istoriji racunanja).
+
+Osnovni tok: 
+        1. Korinisk bira kalkulator iz glavnog menija
+        2. Korisnik bira tip izracunavanja
+        3. Aplikacija konstruise odgovarajuci "racunar" na osnovu odabranog tipa racunanja
+        4. Aplikacija otvara dostupne alate
+        5. Korisnik se nalazi u aplikaciji i moze uneti neophodne podatke
+                5.1. Ako korisnik odabere opciju "Uvezi istoriju"
+                        5.1.1. Prelazi na PODTOK 2
+                        5.2.1. Prelazi na korak 6
+        6. Korisnik unosi neophodne podatke za racunanje.
+        7. Korisnik klikom na dugme "Izracunaj" trazi od aplikacije rezultat.
+        8. Aplikacija cita unete podatke sa odgovarajuceg ulaza.
+                8.1 Aplikacija provera ispravnost ulaza.
+                        8.1.1. Ako je ispravan ulaz, prelazi na korak 9.
+                        8.1.2. Ukoliko je neispravan ulaz, ispisuje odgovarajucu gresku i prelazi na korak 5.
+        9. Aplikacija vrsi neophodna izracunavanja.
+        10. Aplikacija ispisuje racunanja u "privremenu istoriju racunanja".
+        11. Aplikacija prikazuje korisniku rezultat.
+                11.1. Ako korisnik korisnik klikne na dugme "Sacuvaj istoriju"
+                        11.1.1. Prelazi na PODTOK 1
+                        11.2.1. Prelazi na korak 5.
+Alternativni tok:
+        Neocekivani izlaz iz aplikacije: Ukoliko u bilo kom koraku korisnik iskljuci aplikaciju, brise se "privremena istorija racunanja" i aplikacija zavrsava rad. Slucaj upotrebe se zavrsava.
+
+Podtokovi:
+        PODTOK 1: 
+                  1. Korisnik bira gde hoce da sacuva istoriju i pod kojim imenom
+                  2. Aplikacija pravi novi fajl sa navedenim imenom 
+                  3. Aplikacija ispisuje istoriju u dati fajl i cuva ga na odabranom mestu i prelazi na korak "OVAJ1"
+        PODTOK 2: 
+                  1. Korisnik bira odakle hoce da uveze istoriju racunanja
+                  2. Aplikacija cita dati file i upisuje istoriju u "privremenu istoriju racunanja" i prelazi na korak "OVAJ1"        
+
+Specijalni zahtevi: /
+
+Dodatne informacije: Tokom trajanja rada kalkulatora, aplikacija pamti "privremenu istoriju racunanja".
+
+------------------------------------------------
+
+Naziv: "Crtanje grafika"
+
+Kratak opis: "Korisnik unosi vrednosti x i y koordinata(moze biti funkcija), i nakon klika na dugme "Iscrtaj", korisniku se na ekranu prikazuje crtez grafika trazene funkcije."
+
+Akteri: "Korisnik kalkulatora"
+
+Preduslovi: "Kao glavni tab je odabran kalkulator, a u samom kalkulatoru je odabrana stranica "Plottovanje"."
+
+Postuslovi: "Prikazan grafik funkcije i sacuvan u istoriji racunanja."
+
+Osnovni tok:
+	1. Korisnik bira kalkulator iz glavnog menija
+	2. Korisnik bira "Plottovanje" kao opciju u samom kalkulatoru
+	3. Aplikacija konstruise odgovarajucu klasu koja ce se koristiti za iscrtavanje
+	4. Aplikacija otvara dostupne alate
+    5. Korisnik se nalazi u aplikaciji i moze uneti neophodne podatke
+	6. Korisnik unosi neophodne podatke za racunanje.
+	7. Korisnik klikom na dugme "Iscrtaj" podatke salje aplikaciji.
+	8. Aplikacija cita podatke koje je korisnik poslao
+		8.1 Aplikacija proverava ispravnost podataka.
+			8.1.1. Ako su podaci neispravni, aplikacija prikazuje gresku
+	9. Aplikacija izvrsava izracunavanja i rezultat cuva u privremenom fajlu
+	10. Aplikacija korisniku prikazuje nacrtan grafik trazene funkcije
+		10.1. Ukoliko korisnik klikne dugme "Sacuvaj datoteku"
+			10.1.1. Prelazi na PODTOK 1
+	11. Prelazi na korak
+
+Alternativni tok:
+	Iznenadni izlaz iz aplikacije: Ukoliko korisnik na bilo koji nacin izadje iz aplikacije, privremena istorija racunanja ce biti obrisana, a aplikacija ce obustaviti rad.
+
+Podtokovi:
+	PODTOK 1:
+		1. Korisnik bira lokaciju gde ce se datoteka sacuvati
+		2. Aplikacija na zadatoj lokaciji pravi datoteku
+		3. Prelazi na korak 5
+
+Specijalni zahtevi: /
+
+Dodatne informacije: U pozadini, aplikacija trenutnu istoriju pamti kao privremeni fajl.
+
+------------------------------------------------
+
+Naziv: Generisanje rasporeda
+
+Kratak opis: Korisnik klikom na tab "raspored" dobija pristup genratoru rasporedu, unutar kojeg moze napraviti i pregledati napravljene rasporede.
+
+Akteri: Korisnik aplikacije (rasporeda)
+
+Preduslovi: Aplikacija radi i odabran je raspored tab unutar pokrenute aplikacije. Postoji raspored na poincare serveru.
+
+Postuslovi: Raspored je sacuvan ako je korisnik hteo
+
+Osnovni tok: 
+        1. Korinisk bira raspored iz glavnog menija
+                1.1. Pred korisnikom se nalazi interfejs za kreiranje rasporeda.
+        2. Korisnik salje zahtev za dohvatanje podataka klikom na dugme
+                2.1. Raspored trazi podatke od strugaca
+                2.2. Strugac vraca podatke
+        3. Korisnik bira smer
+                3.1. Raspored vraca korisniku spisak kurseva
+        4. Korisnik bira kurseve
+                4.1. Lista kurseva se prosledjuje generatoru rasporeda
+                4.2. Generator rasporeda vraca listu svih mogucih rasporeda
+                4.3. Raspored korisniku nudi jedan od mogucih rasporeda
+        5. Korisnik cuva trenutni raspored
+                5.1. Raspored se cuva
+                5.1.1. Sacuvan raspored se prikazuje korisniku
+        6. Korisnik zahteva naredni moguci raspored, prelazi se na korak 4.3
+
+Specijalni zahtevi: Internet konekcija, postojanje rasporeda unapred zadatoj adresi
+
+Dodatne informacije: /
+
+------------------------------------------------
+
+

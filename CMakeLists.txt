@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 
+set(CMAKE_TOOLCHAIN_FILE "/home/ryu/vcpkg/scripts/buildsystems/vcpkg.cmake")
+
 project(matfHub VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_AUTOUIC ON)
@@ -12,17 +14,29 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Network Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Network Core)
 
+#CALCULATOR THINGS
+# find_package(Armadillo REQUIRED)
+# include_directories(${ARMADILLO_INCLUDE_DIRS})
+#find_package(Matplot++ REQUIRED)
+
 file(GLOB PROJECT_SOURCES
-    "matfHub/src/*.cpp"
-    "matfHub/include/*.h"
-    "matfHub/include/*.hpp"
-    "matfHub/mainwindow.ui"
+        "matfHub/src/*.cpp"
+        "matfHub/include/*.hpp"
+        "matfHub/include/*.h"
+	"matfHub/*.ui"
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(matfHub
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        matfHub/include/notes.h
+        matfHub/src/notes.cpp
+        matfHub/resources.qrc
+        matfHub/src/calculator.cpp
+        matfHub/include/calculator.h
+
+
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET matfHub APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
@@ -43,6 +57,9 @@ else()
 endif()
 
 target_link_libraries(matfHub PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Network Qt${QT_VERSION_MAJOR}::Core)
+# target_link_libraries(matfHub PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+#target_link_libraries(matfHub PRIVATE Qt${QT_VERSION_MAJOR}::Widgets ${ARMADILLO_LIBRARIES} PUBLIC Matplot++::matplot)
+# target_link_libraries(matfHub PRIVATE Qt${QT_VERSION_MAJOR}::Widgets ${ARMADILLO_LIBRARIES})
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
