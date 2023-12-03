@@ -1,9 +1,9 @@
-#include "../include/calculator.h"
-#include "../ui_mainwindow.h"
+//#include "../include/calculator.h"
+//#include "../ui_mainwindow.h"
 
-Calculator::Calculator() {}
+//Calculator::Calculator() {}
 
 
-void Calculator::matrixTest(){
+//void Calculator::matrixTest(){
 
-}
+//}

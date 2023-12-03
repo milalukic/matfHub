@@ -68,7 +68,7 @@ private slots:
     void on_actionChangeHubLocation_triggered();
 
     //calculator things
-    void pbMatrixTest();
+//    void pbMatrixTest();
     void changeStackedWidgetPage();
 
         //calc functions

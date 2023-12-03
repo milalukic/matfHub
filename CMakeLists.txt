@@ -17,7 +17,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 #CALCULATOR THINGS
 find_package(Armadillo REQUIRED)
 include_directories(${ARMADILLO_INCLUDE_DIRS})
-find_package(Matplot++ REQUIRED)
+#find_package(Matplot++ REQUIRED)
 
 file(GLOB PROJECT_SOURCES
         "matfHub/src/*.cpp"
@@ -56,7 +56,8 @@ else()
 endif()
 
 # target_link_libraries(matfHub PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
-target_link_libraries(matfHub PRIVATE Qt${QT_VERSION_MAJOR}::Widgets ${ARMADILLO_LIBRARIES} PUBLIC Matplot++::matplot)
+#target_link_libraries(matfHub PRIVATE Qt${QT_VERSION_MAJOR}::Widgets ${ARMADILLO_LIBRARIES} PUBLIC Matplot++::matplot)
+target_link_libraries(matfHub PRIVATE Qt${QT_VERSION_MAJOR}::Widgets ${ARMADILLO_LIBRARIES})
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an

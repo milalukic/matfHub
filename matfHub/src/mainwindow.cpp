@@ -268,10 +268,10 @@ QModelIndexList MainWindow::getSelectedIndices(const QListView* view){
 
 
 //kalkulator things
-void MainWindow::pbMatrixTest(){
-    Matrix *m1 = new Matrix(3, 3);
-    std::cout << m1 << std::endl;
-}
+//void MainWindow::pbMatrixTest(){
+//    Matrix *m1 = new Matrix(3, 3);
+//    std::cout << m1 << std::endl;
+//}
 
 
 void MainWindow::changeStackedWidgetPage(){
