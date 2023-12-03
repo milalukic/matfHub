@@ -15,7 +15,9 @@ private:
     std::string baseLink;
     RequestHandler requestHandler;
     std::unordered_map<std::string, std::string> getRooms(std::string baseHtml);
-    CourseSet traverseRooms(std::unordered_map<std::string, std::string> roomMap) noexcept(false);
+    Course tdToCourse(QString tdHtml, int day, int start);
+    CourseSet tableToCourses(QString tableHtml, std::string classroom);
+    CourseSet getAllCourses(std::unordered_map<std::string, std::string> roomMap) noexcept(false);
 };
 
 #endif // KMILJANSCRAPER_H

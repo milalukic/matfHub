@@ -6,6 +6,7 @@
 #include <QCheckBox>
 #include <QString>
 #include <string>
+#include <iostream>
 
 Schedule::Schedule(){
     kmiljanScraper = std::make_unique<KmiljanScraper>();
@@ -32,6 +33,10 @@ void Schedule::findSchedule(Ui::MainWindow *ui){
 
 void Schedule::downloadSchedule(Ui::MainWindow *ui){
     moduleCourseMap = kmiljanScraper->download();
+    modules.clear();
+    for (const auto& pair : moduleCourseMap) {
+        modules.push_back(pair.first);
+    }
     ui->smerBox->setPlaceholderText("Izaberi smer");
     ui->smerBox->clear();
     for(auto& module : modules){
@@ -42,11 +47,7 @@ void Schedule::downloadSchedule(Ui::MainWindow *ui){
 void Schedule::scrapeSchedule(Ui::MainWindow *ui){
     QString oldText = ui->scrapeButton->text();
     ui->scrapeButton->setText("Scraping...");
-    moduleCourseMap = kmiljanScraper->download();
-//    dodaj sve module u vektor da bi se indeksovalo u onom dropdownu intovima
-    for (const auto& pair : moduleCourseMap) {
-        modules.push_back(pair.first);
-    }
+    downloadSchedule(ui);
     ui->scrapeButton->setText(oldText);
     ui->rasporedStartButton->setEnabled(true);
     ui->scheduleTable->setEnabled(true);

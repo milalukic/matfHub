@@ -8,7 +8,7 @@
 class Course {
 public:
     std::string description;
-    std::string day;
+    int day;
     std::string teacher;
     int start;
     int duration;
@@ -17,20 +17,20 @@ public:
     std::set<std::string> groups;
     std::string classroom;
     std::set<std::string> modules;
-    int years;
+    std::set<int> years;
     std::set<std::string> subgroups;
 
     Course(
         const std::string& desc,
-        const std::string& d,
+        int d,
         const std::string& t,
         int s,
         int dur,
         const std::string& type,
         const std::set<std::string>& grps,
-        const std::string& clsrm,
+        std::string& clsrm,
         const std::set<std::string>& mods,
-        int yrs,
+        const std::set<int>& yrs,
         const std::set<std::string>& subgrps
         );
 };
