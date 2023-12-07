@@ -37,6 +37,8 @@ public:
     QString getNameFromIndex(const QModelIndex index);
     void renameSelectedFile(const QModelIndex index, const QString newName);
     void deleteSelectedFiles(const QModelIndexList indices);
+    void createNewDocument();
+    //ako ne gresim pola ovoga treba biti privatno???
 
 private:
     MainWindow *m_mainWindow;

@@ -4,6 +4,7 @@
 #include "../include/filemanager.hpp"
 #include "../include/matrix.hpp"
 #include "../include/parser.hpp"
+#include "../include/config.hpp"
 
 #include <QSplitter>
 #include <QFileSystemModel>
@@ -30,13 +31,15 @@ MainWindow::MainWindow(QWidget *parent)
 
     m_fileManager = new FileManager(this);
 
+    QString hubPath = Config::getConfig()->getHubPath();
+
     // ako ne postoji dir MATF, pravimo ga
-    if(!QDir("MATF").exists()){
-        QDir().mkdir("MATF");
+    if(!QDir(hubPath).exists()){//-||-
+        qDebug() << hubPath;
+        QDir().mkdir(hubPath);
     }
 
     notes = new class Notes();
-    QString sPath = ""; //ovde kasnije dodati path i gurnuti ga u setRootPath
 
     ui->dirView->setModel(m_fileManager->dirModel);
     ui->dirView->hideColumn(1);
@@ -188,6 +191,12 @@ void MainWindow::on_fileView_customContextMenuRequested(const QPoint &pos)// !!!
         m_fileManager->createNewFolder();
     });
 
+    QAction* newDocumentAction = new QAction("Ned Document", this);
+    menu->addAction(newDocumentAction);
+    connect(newDocumentAction, &QAction::triggered, [=](){
+        m_fileManager->createNewDocument();
+    });
+
     QAction* selectAllAction = new QAction("Select All", this);
     menu->addAction(selectAllAction);
     connect(selectAllAction, &QAction::triggered, [=](){
@@ -255,8 +264,8 @@ void MainWindow::on_scrapeButton_clicked()
 void MainWindow::on_actionChangeHubLocation_triggered()
 {
     QString newHubPath = QFileDialog::getExistingDirectory(this, "Odaberi direktorijum");
-    m_fileManager->hubPath = newHubPath;   //hubPath treba uciniti trajnim nakon zatvaranja programa
-    m_fileManager->currPath = m_fileManager->hubPath;
+    Config::getConfig()->setHubPath(newHubPath);
+    m_fileManager->currPath = newHubPath;
     ui->currentFilePath->setText(m_fileManager->currPath);
     ui->fileView->setRootIndex(m_fileManager->fileModel->setRootPath(m_fileManager->currPath));
 }

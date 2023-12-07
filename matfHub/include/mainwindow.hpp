@@ -27,6 +27,11 @@ public:
     void fileViewSetPath(const QString path);
     void currentFilePathSetPath(const QString path);
     QString currentFilePathGetPath();
+    Notes *notes;
+    FileManager* m_fileManager;
+    Ui::MainWindow *ui;
+
+
 
 private slots:
     void on_newFileToolbarButton_clicked();
@@ -97,16 +102,12 @@ private slots:
     void on_scrapeButton_clicked();
 
 private:
-    Ui::MainWindow *ui;
     QFileSystemModel *dirModel;
     QFileSystemModel *fileModel;
     std::stack<QString> navigationBefore;
     std::stack<QString> navigationAfter;
     std::unique_ptr<Schedule> schedule;
 
-    Notes *notes;
-
-    FileManager* m_fileManager;
     int countSelected(const QListView* view);
     QModelIndex getSelectedIndex(const QListView* view);
     QModelIndexList getSelectedIndices(const QListView* view);

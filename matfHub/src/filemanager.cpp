@@ -1,6 +1,7 @@
 #include "../include/filemanager.hpp"
 #include "../include/mainwindow.hpp"
 #include "../ui_mainwindow.h"
+#include "../include/config.hpp"
 
 FileManager::FileManager(MainWindow* mw)
     :m_mainWindow(mw)
@@ -8,21 +9,21 @@ FileManager::FileManager(MainWindow* mw)
 
     appPath = QDir::currentPath();
 
-    hubPath = appPath + "/MATF";
+    hubPath = appPath + "/" + Config::getConfig()->getHubPath();
 
     dirModel = new QFileSystemModel();
     dirModel->setRootPath(hubPath);
     dirModel->setFilter(QDir::AllDirs | QDir::NoDotAndDotDot);
 
     fileModel = new QFileSystemModel();
-    fileModel->setFilter(QDir::AllEntries | QDir::NoDotAndDotDot);
+    fileModel->setFilter(QDir::AllEntries | QDir::NoDotAndDotDot | QDir::Hidden);
     fileModel->setReadOnly(false);
 
     currPath = hubPath;
 
 }
 
-//pravi novi folder u trenutnom direktorijumu desnog pogleda
+//pravi novi folder/dokument u trenutnom direktorijumu desnog pogleda
 void FileManager::createNewFolder(){
     QString name = "New Folder";
     QString newFolderPath = currPath;
@@ -30,7 +31,7 @@ void FileManager::createNewFolder(){
     newFolderPath.append(name);
     int i = 1;
     while(QDir(newFolderPath).exists()){
-        int foundSpace = name.lastIndexOf("r")+1;
+        int foundSpace = name.lastIndexOf("r")+1; //osecam se kao da je ovo r magicna konstanta nz treba li je promeniti
         name = name.left(foundSpace);
         name.append(" ");
         name.append(QString::number(i));
@@ -41,6 +42,28 @@ void FileManager::createNewFolder(){
         newFolderPath.append(name);
     }
     QDir(currPath).mkdir(name);
+}
+void FileManager::createNewDocument(){
+    QString name = "New Document.txt";
+    QString newFilePath = currPath;
+    newFilePath.append("/");
+    newFilePath.append(name);
+    int i = 1;
+    while(QFile(newFilePath).exists()){
+        int foundSpace = name.indexOf("t")+1;
+        name = name.left(foundSpace);
+        name.append(" ");
+        name.append(QString::number(i));
+        i++;
+        name.append(".txt");
+
+        int foundSlash = newFilePath.lastIndexOf("/");
+        newFilePath = newFilePath.left(foundSlash+1);
+        newFilePath.append(name);
+    }
+    QFile file(newFilePath);
+    file.open(QIODevice::ReadWrite | QFile::Text);
+    file.close();
 }
 
 //prebacuje desni pogled u zadati direktorijum, postavlja oldPath i currPath, na pozivaocu funkcije je da promenu zabelezi u istoriji navigacije
@@ -67,11 +90,18 @@ void FileManager::fileViewDoubleClicked(const QModelIndex &index)
         navigationBefore.push(oldPath);
 
     }else{
-        //if(podrzan tip fajla){
-        //    otvori u odgovarajucem tabu
-        //}else{
-        QDesktopServices::openUrl(fileModel->fileInfo(index).absoluteFilePath());
-        //}
+        QString clickedFilePath = fileModel->fileInfo(index).absoluteFilePath();
+        auto lastDot = clickedFilePath.lastIndexOf(".");
+        if(lastDot != -1){
+            auto fileExtension = clickedFilePath.last(clickedFilePath.length() - lastDot);
+            if(".txt" == fileExtension || ".json" == fileExtension){
+                m_mainWindow->ui->tabWidgetMatfHub->setCurrentIndex(2); //ovo je tvrdo kodirano, bilo bi lepo izvuci indeks iz imena ili makar definisati enum
+                m_mainWindow->notes->openFile(clickedFilePath, m_mainWindow->ui, m_mainWindow);
+            }else{
+                QDesktopServices::openUrl(fileModel->fileInfo(index).absoluteFilePath());
+            }
+        }
+
     }
 }
 
