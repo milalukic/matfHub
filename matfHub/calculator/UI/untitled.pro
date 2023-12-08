@@ -11,7 +11,8 @@ CONFIG += c++17
 SOURCES += \
     keyPressed.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    plotter.cpp
 
 HEADERS += \
     keyPressed.h \

@@ -89,6 +89,7 @@ private slots:
     void calculateMatrixSubtract();
     void calculateMatrixMultiply();
     void calculateMatrixDivide();
+    void plotSin();
 
     void on_smerBox_activated(int index);
 

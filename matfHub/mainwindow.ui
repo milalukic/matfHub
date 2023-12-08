@@ -36,7 +36,7 @@
        <enum>Qt::DefaultContextMenu</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="FileManagerTab">
        <attribute name="title">
@@ -507,8 +507,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="go-previous">
-          <normaloff>.</normaloff>.</iconset>
+         <iconset theme="go-previous"/>
         </property>
        </widget>
        <widget class="QPushButton" name="forwardButton">
@@ -969,8 +968,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="go-next">
-          <normaloff>.</normaloff>.</iconset>
+         <iconset theme="go-next"/>
         </property>
         <property name="autoDefault">
          <bool>false</bool>
@@ -1447,8 +1445,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="go-home">
-          <normaloff>.</normaloff>.</iconset>
+         <iconset theme="go-home"/>
         </property>
        </widget>
        <widget class="QLineEdit" name="currentFilePath">
@@ -1916,8 +1913,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="go-up">
-          <normaloff>.</normaloff>.</iconset>
+         <iconset theme="go-up"/>
         </property>
        </widget>
        <widget class="QPushButton" name="newFolderButton">
@@ -1933,8 +1929,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="folder-new">
-          <normaloff>.</normaloff>.</iconset>
+         <iconset theme="folder-new"/>
         </property>
        </widget>
       </widget>
@@ -1971,7 +1966,7 @@
         <item>
          <widget class="QStackedWidget" name="stackedWidget">
           <property name="currentIndex">
-           <number>0</number>
+           <number>2</number>
           </property>
           <widget class="QWidget" name="page">
            <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -2177,14 +2172,27 @@
            <widget class="QLabel" name="label_4">
             <property name="geometry">
              <rect>
-              <x>9</x>
-              <y>9</y>
+              <x>20</x>
+              <y>20</y>
               <width>41</width>
               <height>16</height>
              </rect>
             </property>
             <property name="text">
              <string>Plotting</string>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="pbSin">
+            <property name="geometry">
+             <rect>
+              <x>390</x>
+              <y>120</y>
+              <width>80</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Sin</string>
             </property>
            </widget>
           </widget>

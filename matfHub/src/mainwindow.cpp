@@ -4,6 +4,7 @@
 #include "../include/filemanager.hpp"
 #include "../include/matrix.hpp"
 #include "../include/parser.hpp"
+#include "../include/plotter.hpp"
 
 #include <QSplitter>
 #include <QFileSystemModel>
@@ -15,6 +16,7 @@
 #include <memory>
 #include <QDebug>
 #include <string>
+#include <matplot/matplot.h>
 
 
 // #include <iostream>
@@ -69,6 +71,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pbMatrixSubtract, &QPushButton::clicked, this, &MainWindow::calculateMatrixSubtract);
     connect(ui->pbMatrixMultiply, &QPushButton::clicked, this, &MainWindow::calculateMatrixMultiply);
     connect(ui->pbMatrixDivide, &QPushButton::clicked, this, &MainWindow::calculateMatrixDivide);
+
+    connect(ui->pbSin, &QPushButton::clicked, this, &MainWindow::plotSin);
+
 
 }
 
@@ -378,6 +383,11 @@ void MainWindow::calculateMatrixMultiply(){
 
 void MainWindow::calculateMatrixDivide(){
     std::cout << "Divide" << std::endl;
+}
+
+void MainWindow::plotSin(){
+    Plotter *plt = new Plotter();
+    plt->plot_sin();
 }
 
 
