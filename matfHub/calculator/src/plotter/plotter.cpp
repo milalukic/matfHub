@@ -1,4 +1,4 @@
-#include "plotter.hpp"
+#include "./src/plotter.hpp"
 
 //konstruktor
 Plotter::Plotter(std::string func){
@@ -6,7 +6,7 @@ Plotter::Plotter(std::string func){
 }
 
 //metode
-void plot_sin(){
+void Plotter::plot_sin(){
     matplot::fplot("sin(x)", "o-r")->line_width(2);
     matplot::show();
 }

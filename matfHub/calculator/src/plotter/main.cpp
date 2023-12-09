@@ -1,4 +1,4 @@
-#include "plotter.hpp"
+#include "./src/plotter.hpp"
 
 int main() {
     Plotter *plt = new Plotter("sin");
