@@ -19,12 +19,27 @@ public:
     ~Plotter();
 
     //metode
-    void plotSin(std::vector<double>x);
+    void plot();
 
     std::vector<double> linSpace(double lowerBound, double upperBound, size_t step);
 
+    void transformSin();
+
+    //TODO fill
+    //getters setters
+    void xData(std::vector<double> &newX);
+    std::vector<double> xData() const;
+
+    void yData(std::vector<double> &newY);
+    std::vector<double> yData() const;
+
+
 private:
     std::string _func;
+
+    //TODO fix naming and comments
+    std::vector<double> _xData; //linspace data
+    std::vector<double> _yData;
 };
 
 #endif

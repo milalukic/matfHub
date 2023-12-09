@@ -2194,17 +2194,17 @@
              <string>Plotting</string>
             </property>
            </widget>
-           <widget class="QPushButton" name="pbSin">
+           <widget class="QPushButton" name="pbPlot">
             <property name="geometry">
              <rect>
-              <x>50</x>
-              <y>240</y>
-              <width>91</width>
+              <x>290</x>
+              <y>230</y>
+              <width>171</width>
               <height>25</height>
              </rect>
             </property>
             <property name="text">
-             <string>Sin</string>
+             <string>Plot</string>
             </property>
            </widget>
            <widget class="QLineEdit" name="leLinspaceLB">
@@ -2216,6 +2216,9 @@
               <height>22</height>
              </rect>
             </property>
+            <property name="text">
+             <string>-10</string>
+            </property>
            </widget>
            <widget class="QLineEdit" name="leLinspaceUB">
             <property name="geometry">
@@ -2225,6 +2228,9 @@
               <width>113</width>
               <height>22</height>
              </rect>
+            </property>
+            <property name="text">
+             <string>10</string>
             </property>
            </widget>
            <widget class="QLineEdit" name="leLinspaceS">
@@ -2238,6 +2244,58 @@
             </property>
             <property name="text">
              <string>100</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="labelState">
+            <property name="geometry">
+             <rect>
+              <x>570</x>
+              <y>70</y>
+              <width>91</width>
+              <height>21</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Trenutno stanje: </string>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="leState">
+            <property name="geometry">
+             <rect>
+              <x>680</x>
+              <y>70</y>
+              <width>113</width>
+              <height>22</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>x</string>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="pbLinspace">
+            <property name="geometry">
+             <rect>
+              <x>70</x>
+              <y>180</y>
+              <width>111</width>
+              <height>21</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>LinSpace</string>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="pbSin">
+            <property name="geometry">
+             <rect>
+              <x>650</x>
+              <y>150</y>
+              <width>80</width>
+              <height>22</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Sin</string>
             </property>
            </widget>
           </widget>

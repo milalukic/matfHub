@@ -10,6 +10,7 @@
 #include <QListView>
 
 #include "notes.h"
+#include "plotter.hpp"
 
 
 QT_BEGIN_NAMESPACE
@@ -27,6 +28,10 @@ public:
     void fileViewSetPath(const QString path);
     void currentFilePathSetPath(const QString path);
     QString currentFilePathGetPath();
+
+    //TODO PITAJ ***********************************************************************
+    Plotter *plt;
+
 
 private slots:
     void on_newFileToolbarButton_clicked();
@@ -89,8 +94,14 @@ private slots:
     void calculateMatrixSubtract();
     void calculateMatrixMultiply();
     void calculateMatrixDivide();
-    void plotSin();
 
+        //plotting
+    void plot();
+    void plotSin();
+    void plotLinspace();
+
+
+    //kmiljanify
     void on_smerBox_activated(int index);
 
     void on_rasporedStartButton_clicked();

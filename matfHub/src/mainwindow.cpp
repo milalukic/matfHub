@@ -72,7 +72,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pbMatrixMultiply, &QPushButton::clicked, this, &MainWindow::calculateMatrixMultiply);
     connect(ui->pbMatrixDivide, &QPushButton::clicked, this, &MainWindow::calculateMatrixDivide);
 
+    connect(ui->pbPlot, &QPushButton::clicked, this, &MainWindow::plot);
     connect(ui->pbSin, &QPushButton::clicked, this, &MainWindow::plotSin);
+    connect(ui->pbLinspace, &QPushButton::clicked, this, &MainWindow::plotLinspace);
 
 }
 
@@ -384,22 +386,48 @@ void MainWindow::calculateMatrixDivide(){
     std::cout << "Divide" << std::endl;
 }
 
+
+//TODO global classes?
+void MainWindow::plot(){
+//    Plotter *plt = new Plotter("sin");
+
+    plt->plot();
+    std::cerr <<"Crtanje: " << std::endl;
+    std::cerr << "\t" << ui->leLinspaceLB->text().toStdString() << " ";
+    std::cerr << ui->leLinspaceUB->text().toStdString() << std::endl;
+}
+
+void MainWindow::plotLinspace(){
+    //TODO GLOBAL CLASSES?
+    plt = new Plotter("dd");
+
+    double lowerBound = ui->leLinspaceLB->text().toDouble();
+    double upperBound = ui->leLinspaceUB->text().toDouble();
+    double numOfDots = ui->leLinspaceS->text().toDouble();
+    std::vector<double> newXData = plt->linSpace(lowerBound, upperBound, numOfDots);
+    plt->xData(newXData);
+
+    //TODO remove
+    std::vector<double>x = plt->xData();
+    plt->yData(x);
+
+    ui->leState->setText("x");
+    std::cerr << "Resetovan y" << std::endl;
+    std::cerr <<"Postavljen linspace" << std::endl;
+}
+
 void MainWindow::plotSin(){
-    Plotter *plt = new Plotter("sin");
 
-    double lowerBound, upperBound;
-    uint numOfDots;
+    ui->leState->setText("sin(" + ui->leState->text() + ")" );
 
-    lowerBound = ui->leLinspaceLB->text().toDouble();
-    upperBound = ui->leLinspaceUB->text().toDouble();
-    numOfDots = ui->leLinspaceS->text().toInt();
+    plt->transformSin();
 
-    auto x = plt->linSpace(lowerBound, upperBound, numOfDots);
-    plt->plotSin(x);
+    //TODO sme ovako? Enkapsulacija
+//    plt->plotSin(plt->xData());
 
-    // std::cout << "Press Enter to continue" << std::endl;
 
 }
+
 
 
 
