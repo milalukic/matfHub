@@ -8,7 +8,7 @@
 #include <stack>
 #include <memory>
 #include <QListView>
-
+#include <QSortFilterProxyModel>
 #include "notes.h"
 
 
@@ -111,6 +111,8 @@ private:
     int countSelected(const QListView* view);
     QModelIndex getSelectedIndex(const QListView* view);
     QModelIndexList getSelectedIndices(const QListView* view);
+
+    QSortFilterProxyModel *proxyModel;
 
 };
 #endif // MAINWINDOW_HPP

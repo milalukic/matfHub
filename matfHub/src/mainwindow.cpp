@@ -11,6 +11,7 @@
 #include <QFileDialog>
 #include <QInputDialog>
 #include <QMessageBox>
+#include <QSortFilterProxyModel>
 #include <stack>
 #include <iostream>
 #include <memory>
@@ -30,6 +31,8 @@ MainWindow::MainWindow(QWidget *parent)
     schedule = std::make_unique<Schedule>();
 
     m_fileManager = new FileManager(this);
+    proxyModel = new QSortFilterProxyModel(this);
+    proxyModel->setSourceModel(fileView);
 
     QString hubPath = Config::getConfig()->getHubPath();
 
@@ -46,7 +49,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->dirView->hideColumn(2);
     ui->dirView->setColumnWidth(0, 200);
     //ui->dirView->setRootIndex(dirModel->setRootPath(hubPath));
-    ui->fileView->setModel(m_fileManager->fileModel);
+    //ui->fileView->setModel(m_fileManager->fileModel);
+    ui->fileView->setModel(proxyModel);
     ui->fileView->setRootIndex(m_fileManager->fileModel->setRootPath(m_fileManager->hubPath));
     ui->currentFilePath->setText(m_fileManager->currPath);
     ui->fileView->setSelectionMode(QAbstractItemView::ExtendedSelection);//klik odabere kliknutu i oddabere ostale; shift klik selektuje sve izmedju selektovane i kliknute, ctrl klik odabere kliknutu i ne oddabere ostale
@@ -205,6 +209,34 @@ void MainWindow::on_fileView_customContextMenuRequested(const QPoint &pos)// !!!
         //mozda i radi nego ne prikazuje sve kao plavo, to plavo mozda nije select kako ga mi shvatamo
         //to plavo tacno jeste selekt kako ga mi shvatamo, samo je trebalo podesiti seleksn mod pogledu. obrisi ova tri komentara kada procitas.
     });
+
+    QMenu* subMenu = new QMenu("Sort by", this);
+
+    QAction* sortByName = new QAction("Name", this);
+    subMenu->addAction(sortByName);
+    connect(sortByName, &QAction::triggered, [=](){
+
+    });
+
+    QAction* sortByDate = new QAction("Date", this);
+    subMenu->addAction(sortByDate);
+    connect(sortByDate, &QAction::triggered, [=](){
+
+    });
+
+    QAction* sortBySize = new QAction("Size", this);
+    subMenu->addAction(sortBySize);
+    connect(sortBySize, &QAction::triggered, [=](){
+
+    });
+
+    QAction* sortByType = new QAction("Type", this);
+    subMenu->addAction(sortByType);
+    connect(sortByType, &QAction::triggered, [=](){
+
+    });
+
+    menu->addMenu(subMenu);
 
     int noSelected = countSelected(ui->fileView);
     if(noSelected == 1){
