@@ -4,6 +4,9 @@
 
 #include <iostream>
 #include <vector>
+
+#include <cmath>
+
 #include <armadillo>
 #include <matplot/matplot.h>
 
@@ -11,15 +14,17 @@ class Plotter{
 
 public:
     //konstruktor
-    Plotter();
+    Plotter(std::string func);
     //destruktor
     ~Plotter();
 
     //metode
-    void plot_sin();
+    void plotSin(std::vector<double>x);
 
-// private:
-//     std::string _func;
+    std::vector<double> linSpace(double lowerBound, double upperBound, size_t step);
+
+private:
+    std::string _func;
 };
 
 #endif

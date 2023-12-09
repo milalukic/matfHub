@@ -74,7 +74,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->pbSin, &QPushButton::clicked, this, &MainWindow::plotSin);
 
-
 }
 
 MainWindow::~MainWindow()
@@ -386,8 +385,20 @@ void MainWindow::calculateMatrixDivide(){
 }
 
 void MainWindow::plotSin(){
-    Plotter *plt = new Plotter();
-    plt->plot_sin();
+    Plotter *plt = new Plotter("sin");
+
+    double lowerBound, upperBound;
+    uint numOfDots;
+
+    lowerBound = ui->leLinspaceLB->text().toDouble();
+    upperBound = ui->leLinspaceUB->text().toDouble();
+    numOfDots = ui->leLinspaceS->text().toInt();
+
+    auto x = plt->linSpace(lowerBound, upperBound, numOfDots);
+    plt->plotSin(x);
+
+    // std::cout << "Press Enter to continue" << std::endl;
+
 }
 
 
