@@ -45,6 +45,55 @@ void Plotter::transformTan(){
     this->yData(y);
 }
 
+void Plotter::transformLn(){
+    std::vector<double>yPrev = this->yData();
+    std::vector<double>y = matplot::transform(yPrev, [](auto yPrev) {return log(yPrev); });
+
+    this->yData(y);
+}
+
+void Plotter::transformLog(){
+    std::vector<double>yPrev = this->yData();
+    std::vector<double>y = matplot::transform(yPrev, [](auto yPrev) {return log10(yPrev); });
+
+    this->yData(y);
+}
+
+void Plotter::transformExp(){
+    std::vector<double>yPrev = this->yData();
+    std::vector<double>y = matplot::transform(yPrev, [](auto yPrev) {return exp(yPrev); });
+
+    this->yData(y);
+}
+
+void Plotter::transformAbs(){
+    std::vector<double>yPrev = this->yData();
+    std::vector<double>y = matplot::transform(yPrev, [](auto yPrev) {return std::abs(yPrev); });
+
+    this->yData(y);
+}
+
+void Plotter::transformNeg(){
+    std::vector<double>yPrev = this->yData();
+    std::vector<double>y = matplot::transform(yPrev, [](auto yPrev) {return -yPrev; });
+
+    this->yData(y);
+}
+
+void Plotter::transformSquare(){
+    std::vector<double>yPrev = this->yData();
+    std::vector<double>y = matplot::transform(yPrev, [](auto yPrev) {return pow(yPrev, 2); });
+
+    this->yData(y);
+}
+
+void Plotter::transformRoot(){
+    std::vector<double>yPrev = this->yData();
+    std::vector<double>y = matplot::transform(yPrev, [](auto yPrev) {return sqrt(yPrev); });
+
+    this->yData(y);
+}
+
 void Plotter::xData(std::vector<double> &newX)  {
     this->_xData = newX;
 }

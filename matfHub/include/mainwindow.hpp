@@ -100,6 +100,13 @@ private slots:
     void plotSin();
     void plotCos();
     void plotTan();
+    void plotLn();
+    void plotLog();
+    void plotExp();
+    void plotAbs();
+    void plotNeg();
+    void plotSquare();
+    void plotRoot();
     void plotLinspace();
 
 

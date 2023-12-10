@@ -26,6 +26,13 @@ public:
     void transformSin();
     void transformCos();
     void transformTan();
+    void transformLn();
+    void transformLog();
+    void transformAbs();
+    void transformNeg();
+    void transformSquare();
+    void transformRoot();
+    void transformExp();
 
     //TODO fill
     //getters setters

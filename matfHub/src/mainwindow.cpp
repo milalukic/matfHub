@@ -76,6 +76,13 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pbSin, &QPushButton::clicked, this, &MainWindow::plotSin);
     connect(ui->pbCos, &QPushButton::clicked, this, &MainWindow::plotCos);
     connect(ui->pbTan, &QPushButton::clicked, this, &MainWindow::plotTan);
+    connect(ui->pbLn, &QPushButton::clicked, this, &MainWindow::plotLn);
+    connect(ui->pbLog, &QPushButton::clicked, this, &MainWindow::plotLog);
+    connect(ui->pbExp, &QPushButton::clicked, this, &MainWindow::plotExp);
+    connect(ui->pbAbs, &QPushButton::clicked, this, &MainWindow::plotAbs);
+    connect(ui->pbNeg, &QPushButton::clicked, this, &MainWindow::plotNeg);
+    connect(ui->pbSquare, &QPushButton::clicked, this, &MainWindow::plotSquare);
+    connect(ui->pbRoot, &QPushButton::clicked, this, &MainWindow::plotRoot);
     connect(ui->pbLinspace, &QPushButton::clicked, this, &MainWindow::plotLinspace);
 
 }
@@ -442,7 +449,65 @@ void MainWindow::plotTan(){
     plt->transformTan();
 }
 
+void MainWindow::plotLn(){
 
+    ui->leState->setText("ln(" + ui->leState->text() + ")" );
+
+    plt->transformLn();
+}
+
+void MainWindow::plotLog(){
+
+    ui->leState->setText("log(" + ui->leState->text() + ")" );
+
+    plt->transformLog();
+}
+
+void MainWindow::plotExp(){
+
+    ui->leState->setText("log(" + ui->leState->text() + ")" );
+
+    plt->transformExp();
+}
+
+void MainWindow::plotAbs(){
+
+    // std::string state = ui->leState->text().toStdString();
+    // if (state[0] == '-') {
+    //     std::string new_state = state.substr(2, state.length()-3);
+    //     ui->leState->setText(QString::fromStdString(new_state));
+    // }
+    // plt->transformAbs();
+
+    ui->leState->setText("|" + ui->leState->text() + "|" );
+
+    plt->transformAbs();
+}
+
+void MainWindow::plotNeg(){
+    std::string state = ui->leState->text().toStdString();
+    if (state[0] == '-') {
+        std::string new_state = state.substr(2, state.length()-3);
+        ui->leState->setText(QString::fromStdString(new_state));
+    } else
+        ui->leState->setText("-(" + ui->leState->text() + ")" );
+
+    plt->transformNeg();
+}
+
+void MainWindow::plotSquare(){
+
+    ui->leState->setText("(" + ui->leState->text() + ")²" );
+
+    plt->transformSquare();
+}
+
+void MainWindow::plotRoot(){
+
+    ui->leState->setText("√(" + ui->leState->text() + ")" );
+
+    plt->transformRoot();
+}
 
 
 
