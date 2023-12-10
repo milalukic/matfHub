@@ -256,6 +256,9 @@ void MainWindow::on_fileView_customContextMenuRequested(const QPoint &pos)// !!!
 
     menu->addMenu(viewSubMenu);
 
+    //iz nekog razloga izbacuje warning?? za ove sub-menije, ali ja nemam pojma zasto
+    //pozabaviti se time obavezno u nekom trenutku
+
     int noSelected = countSelected(ui->fileView);
     if(noSelected == 1){
         QAction* renameAction = new QAction("Rename", this);

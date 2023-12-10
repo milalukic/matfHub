@@ -42,6 +42,7 @@ void FileManager::createNewFolder(){
     }
     QDir(currPath).mkdir(name);
 }
+
 void FileManager::createNewDocument(){
     QString name = "New Document.txt";
     QString newFilePath = currPath;
@@ -174,8 +175,6 @@ QString FileManager::getNameFromIndex(const QModelIndex index){
     return fileModel->fileName(index);
 }
 
-
-
 void FileManager::renameSelectedFile(const QModelIndex index, const QString newName){
     fileModel->setData(index, newName);
 }
@@ -184,7 +183,6 @@ void FileManager::deleteSelectedFiles(const QModelIndexList indices){
         fileModel->remove(index);
     }
 }
-
 
 void FileManager::sortByName(){
     //qDebug() << "Column 0:" << fileModel->headerData(0, Qt::Horizontal, Qt::DisplayRole);
@@ -196,6 +194,7 @@ void FileManager::sortByName(){
         nameSortCounter++;
     }
 }
+
 void FileManager::sortByDate(){
     //qDebug() << "Column 3:" << fileModel->headerData(3, Qt::Horizontal, Qt::DisplayRole);
     if (dateSortCounter%2==1){
@@ -206,6 +205,7 @@ void FileManager::sortByDate(){
         dateSortCounter++;
     }
 }
+
 void FileManager::sortBySize(){
     //qDebug() << "Column 1:" << fileModel->headerData(1, Qt::Horizontal, Qt::DisplayRole);
     if (sizeSortCounter%2==1){
@@ -216,6 +216,7 @@ void FileManager::sortBySize(){
         sizeSortCounter++;
     }
 }
+
 void FileManager::sortByType(){
     //qDebug() << "Column 2:" << fileModel->headerData(2, Qt::Horizontal, Qt::DisplayRole);
     if (typeSortCounter%2==1){
@@ -226,7 +227,6 @@ void FileManager::sortByType(){
         typeSortCounter++;
     }
 }
-
 
 void FileManager::largerIcons(){
     if (iconSize < 60){
@@ -248,11 +248,3 @@ void FileManager::smallerIcons(){
     m_mainWindow->ui->fileView->setIconSize(QSize(iconSize,iconSize));
     qDebug() << iconSize;
 }
-
-
-
-
-
-
-
-
