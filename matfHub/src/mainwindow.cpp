@@ -31,8 +31,6 @@ MainWindow::MainWindow(QWidget *parent)
     schedule = std::make_unique<Schedule>();
 
     m_fileManager = new FileManager(this);
-    proxyModel = new QSortFilterProxyModel(this);
-    proxyModel->setSourceModel(fileView);
 
     QString hubPath = Config::getConfig()->getHubPath();
 
@@ -49,8 +47,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->dirView->hideColumn(2);
     ui->dirView->setColumnWidth(0, 200);
     //ui->dirView->setRootIndex(dirModel->setRootPath(hubPath));
-    //ui->fileView->setModel(m_fileManager->fileModel);
-    ui->fileView->setModel(proxyModel);
+    ui->fileView->setModel(m_fileManager->fileModel);
     ui->fileView->setRootIndex(m_fileManager->fileModel->setRootPath(m_fileManager->hubPath));
     ui->currentFilePath->setText(m_fileManager->currPath);
     ui->fileView->setSelectionMode(QAbstractItemView::ExtendedSelection);//klik odabere kliknutu i oddabere ostale; shift klik selektuje sve izmedju selektovane i kliknute, ctrl klik odabere kliknutu i ne oddabere ostale

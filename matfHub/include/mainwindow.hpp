@@ -112,7 +112,5 @@ private:
     QModelIndex getSelectedIndex(const QListView* view);
     QModelIndexList getSelectedIndices(const QListView* view);
 
-    QSortFilterProxyModel *proxyModel;
-
 };
 #endif // MAINWINDOW_HPP

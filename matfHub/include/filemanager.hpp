@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QFileSystemModel>
 #include <stack>
+#include <QSortFilterProxyModel>
 
 class MainWindow;
 class FileManager
@@ -18,6 +19,7 @@ public:
 
     QFileSystemModel *dirModel;
     QFileSystemModel *fileModel;
+    QSortFilterProxyModel *proxyModel;
 
     std::stack<QString> navigationBefore;
     std::stack<QString> navigationAfter;
