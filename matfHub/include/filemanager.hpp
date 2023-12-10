@@ -24,6 +24,8 @@ public:
     int sizeSortCounter = 0;
     int typeSortCounter = 0;
 
+    int iconSize = 50; //default velicina ikonica
+
     std::stack<QString> navigationBefore;
     std::stack<QString> navigationAfter;
 
@@ -47,6 +49,8 @@ public:
     void sortByDate();
     void sortBySize();
     void sortByType();
+    void largerIcons();
+    void smallerIcons();
     //ako ne gresim pola ovoga treba biti privatno???
 
 private:

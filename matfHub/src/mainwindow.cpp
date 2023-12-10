@@ -210,33 +210,51 @@ void MainWindow::on_fileView_customContextMenuRequested(const QPoint &pos)// !!!
         //to plavo tacno jeste selekt kako ga mi shvatamo, samo je trebalo podesiti seleksn mod pogledu. obrisi ova tri komentara kada procitas.
     });
 
-    QMenu* subMenu = new QMenu("Sort by", this);
+    QMenu* sortSubMenu = new QMenu("Sort by", this);
 
     QAction* sortByName = new QAction("Name", this);
-    subMenu->addAction(sortByName);
+    sortSubMenu->addAction(sortByName);
     connect(sortByName, &QAction::triggered, [=](){
         m_fileManager->sortByName();
     });
 
     QAction* sortByDate = new QAction("Date", this);
-    subMenu->addAction(sortByDate);
+    sortSubMenu->addAction(sortByDate);
     connect(sortByDate, &QAction::triggered, [=](){
         m_fileManager->sortByDate();
     });
 
     QAction* sortBySize = new QAction("Size", this);
-    subMenu->addAction(sortBySize);
+    sortSubMenu->addAction(sortBySize);
     connect(sortBySize, &QAction::triggered, [=](){
         m_fileManager->sortBySize();
     });
 
     QAction* sortByType = new QAction("Type", this);
-    subMenu->addAction(sortByType);
+    sortSubMenu->addAction(sortByType);
     connect(sortByType, &QAction::triggered, [=](){
         m_fileManager->sortByType();
     });
 
-    menu->addMenu(subMenu);
+    menu->addMenu(sortSubMenu);
+
+
+
+    QMenu* viewSubMenu = new QMenu("View", this);
+
+    QAction* viewLarger = new QAction("Larger icons", this);
+    viewSubMenu->addAction(viewLarger);
+    connect(viewLarger, &QAction::triggered, [=](){
+        m_fileManager->largerIcons();
+    });
+
+    QAction* viewSmaller = new QAction("Smaller icons", this);
+    viewSubMenu->addAction(viewSmaller);
+    connect(viewSmaller, &QAction::triggered, [=](){
+        m_fileManager->smallerIcons();
+    });
+
+    menu->addMenu(viewSubMenu);
 
     int noSelected = countSelected(ui->fileView);
     if(noSelected == 1){
