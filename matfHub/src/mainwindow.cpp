@@ -47,6 +47,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->dirView->hideColumn(2);
     ui->dirView->setColumnWidth(0, 200);
     //ui->dirView->setRootIndex(dirModel->setRootPath(hubPath));
+
+
+
     ui->fileView->setModel(m_fileManager->fileModel);
     ui->fileView->setRootIndex(m_fileManager->fileModel->setRootPath(m_fileManager->hubPath));
     ui->currentFilePath->setText(m_fileManager->currPath);
@@ -212,25 +215,25 @@ void MainWindow::on_fileView_customContextMenuRequested(const QPoint &pos)// !!!
     QAction* sortByName = new QAction("Name", this);
     subMenu->addAction(sortByName);
     connect(sortByName, &QAction::triggered, [=](){
-
+        m_fileManager->sortByName();
     });
 
     QAction* sortByDate = new QAction("Date", this);
     subMenu->addAction(sortByDate);
     connect(sortByDate, &QAction::triggered, [=](){
-
+        m_fileManager->sortByDate();
     });
 
     QAction* sortBySize = new QAction("Size", this);
     subMenu->addAction(sortBySize);
     connect(sortBySize, &QAction::triggered, [=](){
-
+        m_fileManager->sortBySize();
     });
 
     QAction* sortByType = new QAction("Type", this);
     subMenu->addAction(sortByType);
     connect(sortByType, &QAction::triggered, [=](){
-
+        m_fileManager->sortByType();
     });
 
     menu->addMenu(subMenu);

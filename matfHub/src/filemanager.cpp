@@ -20,7 +20,6 @@ FileManager::FileManager(MainWindow* mw)
     fileModel->setReadOnly(false);
 
     currPath = hubPath;
-
 }
 
 //pravi novi folder/dokument u trenutnom direktorijumu desnog pogleda
@@ -187,7 +186,46 @@ void FileManager::deleteSelectedFiles(const QModelIndexList indices){
 }
 
 
-
+void FileManager::sortByName(){
+    //qDebug() << "Column 0:" << fileModel->headerData(0, Qt::Horizontal, Qt::DisplayRole);
+    if (nameSortCounter%2==1){
+        fileModel->sort(0, Qt::AscendingOrder);
+        nameSortCounter++;
+    }else{
+        fileModel->sort(0, Qt::DescendingOrder);
+        nameSortCounter++;
+    }
+}
+void FileManager::sortByDate(){
+    //qDebug() << "Column 3:" << fileModel->headerData(3, Qt::Horizontal, Qt::DisplayRole);
+    if (dateSortCounter%2==1){
+        fileModel->sort(3, Qt::AscendingOrder);
+        dateSortCounter++;
+    }else{
+        fileModel->sort(3, Qt::DescendingOrder);
+        dateSortCounter++;
+    }
+}
+void FileManager::sortBySize(){
+    //qDebug() << "Column 1:" << fileModel->headerData(1, Qt::Horizontal, Qt::DisplayRole);
+    if (sizeSortCounter%2==1){
+        fileModel->sort(1, Qt::AscendingOrder);
+        sizeSortCounter++;
+    }else{
+        fileModel->sort(1, Qt::DescendingOrder);
+        sizeSortCounter++;
+    }
+}
+void FileManager::sortByType(){
+    //qDebug() << "Column 2:" << fileModel->headerData(2, Qt::Horizontal, Qt::DisplayRole);
+    if (typeSortCounter%2==1){
+        fileModel->sort(2, Qt::AscendingOrder);
+        typeSortCounter++;
+    }else{
+        fileModel->sort(2, Qt::DescendingOrder);
+        typeSortCounter++;
+    }
+}
 
 
 

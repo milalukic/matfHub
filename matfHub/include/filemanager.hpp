@@ -4,7 +4,6 @@
 #include <QObject>
 #include <QFileSystemModel>
 #include <stack>
-#include <QSortFilterProxyModel>
 
 class MainWindow;
 class FileManager
@@ -19,7 +18,11 @@ public:
 
     QFileSystemModel *dirModel;
     QFileSystemModel *fileModel;
-    QSortFilterProxyModel *proxyModel;
+
+    int nameSortCounter = 0;
+    int dateSortCounter = 0;
+    int sizeSortCounter = 0;
+    int typeSortCounter = 0;
 
     std::stack<QString> navigationBefore;
     std::stack<QString> navigationAfter;
@@ -40,6 +43,10 @@ public:
     void renameSelectedFile(const QModelIndex index, const QString newName);
     void deleteSelectedFiles(const QModelIndexList indices);
     void createNewDocument();
+    void sortByName();
+    void sortByDate();
+    void sortBySize();
+    void sortByType();
     //ako ne gresim pola ovoga treba biti privatno???
 
 private:
