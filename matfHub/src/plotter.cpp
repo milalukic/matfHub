@@ -11,29 +11,39 @@ Plotter::~Plotter(){
 
 //metode
 void Plotter::plot(){
-
     matplot::plot(this->xData(), this->yData())->line_width(3).color("red");
     matplot::show();
 }
 
 //TODO change arguments to double
-std::vector<double> Plotter::linSpace(double lowerBound, double upperBound, size_t step){
-
-    //TODO maknuti ? //POPRAVITI
-    std::vector<double>x = this->xData();
+void Plotter::linSpace(double lowerBound, double upperBound, size_t step){
+    // Promenjena funkcija
+    std::vector<double>x = matplot::linspace(lowerBound, upperBound, step);
+    this->xData(x);
     this->yData(x);
-
-    return matplot::linspace(lowerBound, upperBound, step);
 }
 
 void Plotter::transformSin(){
     //TODO privremeni vector?
-    std::vector<double>x = this->xData();
-    std::vector<double>y = matplot::transform(x, [](auto x) {return sin(x); });
+    std::vector<double>yPrev = this->yData();
+    std::vector<double>y = matplot::transform(yPrev, [](auto yPrev) {return sin(yPrev); });
 
     this->yData(y);
 }
 
+void Plotter::transformCos(){
+    std::vector<double>yPrev = this->yData();
+    std::vector<double>y = matplot::transform(yPrev, [](auto yPrev) {return cos(yPrev); });
+
+    this->yData(y);
+}
+
+void Plotter::transformTan(){
+    std::vector<double>yPrev = this->yData();
+    std::vector<double>y = matplot::transform(yPrev, [](auto yPrev) {return tan(yPrev); });
+
+    this->yData(y);
+}
 
 void Plotter::xData(std::vector<double> &newX)  {
     this->_xData = newX;

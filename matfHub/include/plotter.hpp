@@ -21,9 +21,11 @@ public:
     //metode
     void plot();
 
-    std::vector<double> linSpace(double lowerBound, double upperBound, size_t step);
+    void linSpace(double lowerBound, double upperBound, size_t step);
 
     void transformSin();
+    void transformCos();
+    void transformTan();
 
     //TODO fill
     //getters setters

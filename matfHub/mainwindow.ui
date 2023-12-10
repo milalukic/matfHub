@@ -507,8 +507,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="go-previous">
-          <normaloff>.</normaloff>.</iconset>
+         <iconset theme="go-previous"/>
         </property>
        </widget>
        <widget class="QPushButton" name="forwardButton">
@@ -969,8 +968,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="go-next">
-          <normaloff>.</normaloff>.</iconset>
+         <iconset theme="go-next"/>
         </property>
         <property name="autoDefault">
          <bool>false</bool>
@@ -1447,8 +1445,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="go-home">
-          <normaloff>.</normaloff>.</iconset>
+         <iconset theme="go-home"/>
         </property>
        </widget>
        <widget class="QLineEdit" name="currentFilePath">
@@ -1916,8 +1913,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="go-up">
-          <normaloff>.</normaloff>.</iconset>
+         <iconset theme="go-up"/>
         </property>
        </widget>
        <widget class="QPushButton" name="newFolderButton">
@@ -1933,8 +1929,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="folder-new">
-          <normaloff>.</normaloff>.</iconset>
+         <iconset theme="folder-new"/>
         </property>
        </widget>
       </widget>
@@ -2249,8 +2244,8 @@
            <widget class="QLabel" name="labelState">
             <property name="geometry">
              <rect>
-              <x>570</x>
-              <y>70</y>
+              <x>600</x>
+              <y>80</y>
               <width>91</width>
               <height>21</height>
              </rect>
@@ -2262,8 +2257,8 @@
            <widget class="QLineEdit" name="leState">
             <property name="geometry">
              <rect>
-              <x>680</x>
-              <y>70</y>
+              <x>710</x>
+              <y>80</y>
               <width>113</width>
               <height>22</height>
              </rect>
@@ -2288,14 +2283,67 @@
            <widget class="QPushButton" name="pbSin">
             <property name="geometry">
              <rect>
-              <x>650</x>
-              <y>150</y>
+              <x>570</x>
+              <y>130</y>
               <width>80</width>
               <height>22</height>
              </rect>
             </property>
             <property name="text">
              <string>Sin</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="lbLin">
+            <property name="geometry">
+             <rect>
+              <x>200</x>
+              <y>100</y>
+              <width>111</width>
+              <height>61</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="pbCos">
+            <property name="geometry">
+             <rect>
+              <x>670</x>
+              <y>130</y>
+              <width>80</width>
+              <height>22</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Cos</string>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="pbTan">
+            <property name="geometry">
+             <rect>
+              <x>770</x>
+              <y>130</y>
+              <width>80</width>
+              <height>22</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Tan</string>
             </property>
            </widget>
           </widget>
@@ -2625,7 +2673,7 @@
      <x>0</x>
      <y>0</y>
      <width>1315</width>
-     <height>19</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

@@ -74,6 +74,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->pbPlot, &QPushButton::clicked, this, &MainWindow::plot);
     connect(ui->pbSin, &QPushButton::clicked, this, &MainWindow::plotSin);
+    connect(ui->pbCos, &QPushButton::clicked, this, &MainWindow::plotCos);
+    connect(ui->pbTan, &QPushButton::clicked, this, &MainWindow::plotTan);
     connect(ui->pbLinspace, &QPushButton::clicked, this, &MainWindow::plotLinspace);
 
 }
@@ -404,14 +406,14 @@ void MainWindow::plotLinspace(){
     double lowerBound = ui->leLinspaceLB->text().toDouble();
     double upperBound = ui->leLinspaceUB->text().toDouble();
     double numOfDots = ui->leLinspaceS->text().toDouble();
-    std::vector<double> newXData = plt->linSpace(lowerBound, upperBound, numOfDots);
-    plt->xData(newXData);
+    plt->linSpace(lowerBound, upperBound, numOfDots);
 
-    //TODO remove
-    std::vector<double>x = plt->xData();
-    plt->yData(x);
+    // //TODO remove
+    // std::vector<double>x = plt->xData();
+    // plt->yData(x);
 
     ui->leState->setText("x");
+    ui->lbLin->setText("Vektor je uspesno ucitan");
     std::cerr << "Resetovan y" << std::endl;
     std::cerr <<"Postavljen linspace" << std::endl;
 }
@@ -424,8 +426,20 @@ void MainWindow::plotSin(){
 
     //TODO sme ovako? Enkapsulacija
 //    plt->plotSin(plt->xData());
+}
 
+void MainWindow::plotCos(){
 
+    ui->leState->setText("cos(" + ui->leState->text() + ")" );
+
+    plt->transformCos();
+}
+
+void MainWindow::plotTan(){
+
+    ui->leState->setText("tan(" + ui->leState->text() + ")" );
+
+    plt->transformTan();
 }
 
 

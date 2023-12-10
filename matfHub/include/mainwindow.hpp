@@ -98,6 +98,8 @@ private slots:
         //plotting
     void plot();
     void plotSin();
+    void plotCos();
+    void plotTan();
     void plotLinspace();
 
 
