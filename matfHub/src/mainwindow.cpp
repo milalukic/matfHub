@@ -465,19 +465,12 @@ void MainWindow::plotLog(){
 
 void MainWindow::plotExp(){
 
-    ui->leState->setText("log(" + ui->leState->text() + ")" );
+    ui->leState->setText("e^(" + ui->leState->text() + ")" );
 
     plt->transformExp();
 }
 
 void MainWindow::plotAbs(){
-
-    // std::string state = ui->leState->text().toStdString();
-    // if (state[0] == '-') {
-    //     std::string new_state = state.substr(2, state.length()-3);
-    //     ui->leState->setText(QString::fromStdString(new_state));
-    // }
-    // plt->transformAbs();
 
     ui->leState->setText("|" + ui->leState->text() + "|" );
 
