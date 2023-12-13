@@ -370,44 +370,6 @@ void MainWindow::calculateRegular(){
 //    delete parser; parser = nullptr;
 }
 
-void MainWindow::calculateMatrixTranspose(){
-
-    Matrix *m1 = new Matrix(4, 5);
-    arma::mat d = arma::randu(4, 5);
-    m1->data(d);
-    Matrix *m2 = m1->transpose();
-    std::cout << "Transposed matrix: " << std::endl;
-    std::cout << m2 << std::endl;
-}
-
-void MainWindow::calculateMatrixInverse(){
-
-    Matrix *m1 = new Matrix(3, 3);
-    arma::mat d = arma::randu(3, 3);
-    m1->data(d);
-    m1 = m1->inverse();
-    std::cout << "Inverse" << std::endl;
-    std::cout << m1 << std::endl;
-}
-
-void MainWindow::calculateMatrixDiag(){
-    Matrix *m1 = new Matrix(3, 3);
-    arma::mat d = arma::randu(3, 3);
-    m1->data(d);
-    m1 = m1->diag();
-    std::cout << "Diag" << std::endl;
-    std::cout << m1 << std::endl;
-}
-
-void MainWindow::calculateMatrixOne(){
-
-    Matrix *m1 = new Matrix(3, 3);
-
-    m1 = m1->ones();
-    std::cout << m1 << std::endl;
-    std::cout << "One" << std::endl;
-}
-
 //TODO what to do with it
 Matrix *m1;
 Matrix *m2;
@@ -426,7 +388,10 @@ void MainWindow::parseMatrix1(){
     //TODO exception if data.size() isn't right
     //TODO fix this?
     arma::mat A = arma::conv_to<arma::mat>::from(data);
+    A.reshape(dim1, dim2);
 
+    arma::rowvec b = A.as_row();
+    A = arma::conv_to<arma::mat>::from(b);
     A.reshape(dim1, dim2);
 
     m1->data(A);
@@ -440,48 +405,74 @@ void MainWindow::parseMatrix2(){
     int dim1 = ui->leMatrixDim21->text().toInt();
     int dim2 = ui->leMatrixDim22->text().toInt();
     m2 = new Matrix(dim1, dim2);
+
+    std::string in = ui->leMatrixData2->text().toStdString();
+
+    std::vector<double> data = cppsplit(in);
+
+    //TODO exception if data.size() isn't right
+    //TODO fix this?
+    arma::mat A = arma::conv_to<arma::mat>::from(data);
+    A.reshape(dim1, dim2);
+
+    arma::rowvec b = A.as_row();
+    A = arma::conv_to<arma::mat>::from(b);
+    A.reshape(dim1, dim2);
+
+    m2->data(A);
     std::cout << m2 << std::endl;
 }
 
-void MainWindow::calculateMatrixAdd(){
-    Matrix *m1 = new Matrix(3, 3);
-    m1->data(arma::randu(3, 3));
+void MainWindow::calculateMatrixTranspose(){
 
-    Matrix *m2 = new Matrix(3, 3);
-    m2->data(arma::randu(3, 3));
+    m1 = m1->transpose();
+    std::cout << "Transposed matrix: " << std::endl;
+    std::cout << m1 << std::endl;
+}
+//TODO exceptions
+void MainWindow::calculateMatrixInverse(){
+
+    m1 = m1->inverse();
+    std::cout << "Inverse" << std::endl;
+    std::cout << m1 << std::endl;
+}
+
+void MainWindow::calculateMatrixDiag(){
+
+    m1 = m1->diag();
+    std::cout << "Diag" << std::endl;
+    std::cout << m1 << std::endl;
+}
+
+void MainWindow::calculateMatrixOne(){
+
+    m1 = m1->ones();
+    std::cout << m1 << std::endl;
+    std::cout << "One" << std::endl;
+}
+
+
+//TODO save this somewhere?
+void MainWindow::calculateMatrixAdd(){
+
 
     std::cout << *m1+*m2 << std::endl;
     std::cout << "Add" << std::endl;
 }
 
 void MainWindow::calculateMatrixSubtract(){
-    Matrix *m1 = new Matrix(3, 3);
-    m1->data(arma::randu(3, 3));
-
-    Matrix *m2 = new Matrix(3, 3);
-    m2->data(arma::randu(3, 3));
 
     std::cout << *m1-*m2 << std::endl;
     std::cout << "Subtract" << std::endl;
 }
 
 void MainWindow::calculateMatrixMultiply(){
-    Matrix *m1 = new Matrix(3, 3);
-    m1->data(arma::randu(3, 3));
-
-    Matrix *m2 = new Matrix(3, 3);
-    m2->data(arma::randu(3, 3));
 
     std::cout << *m1**m2 << std::endl;
     std::cout << "Multiply" << std::endl;
 }
-
+//TODO exceptions
 void MainWindow::calculateMatrixDivide(){
-    Matrix *m1 = new Matrix(3, 3);
-    m1->data(arma::randu(3, 3));
-
-    Matrix *m2 = new Matrix(3, 3);
-    m2->data(arma::randu(3, 3));
 
     std::cout << *m1 / *m2 << std::endl;
     std::cout << "Divide" << std::endl;
