@@ -7,7 +7,6 @@
 
 #include <cmath>
 
-#include <armadillo>
 #include <matplot/matplot.h>
 
 class Plotter{
