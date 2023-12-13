@@ -351,20 +351,39 @@ void MainWindow::calculateRegular(){
 
 void MainWindow::calculateMatrixTranspose(){
 
-    //TODO make this work (CMake probably)
-    //    Matrix *m1 = new Matrix(5, 5);
-    std::cout << "Transpose" << std::endl;
+    Matrix *m1 = new Matrix(4, 5);
+    arma::mat d = arma::randu(4, 5);
+    m1->data(d);
+    Matrix *m2 = m1->transpose();
+    std::cout << "Transposed matrix: " << std::endl;
+    std::cout << m2 << std::endl;
 }
 
 void MainWindow::calculateMatrixInverse(){
+
+    Matrix *m1 = new Matrix(3, 3);
+    arma::mat d = arma::randu(3, 3);
+    m1->data(d);
+    m1 = m1->inverse();
     std::cout << "Inverse" << std::endl;
+    std::cout << m1 << std::endl;
 }
 
 void MainWindow::calculateMatrixDiag(){
+    Matrix *m1 = new Matrix(3, 3);
+    arma::mat d = arma::randu(3, 3);
+    m1->data(d);
+    m1 = m1->diag();
     std::cout << "Diag" << std::endl;
+    std::cout << m1 << std::endl;
 }
 
 void MainWindow::calculateMatrixOne(){
+
+    Matrix *m1 = new Matrix(3, 3);
+
+    m1 = m1->ones();
+    std::cout << m1 << std::endl;
     std::cout << "One" << std::endl;
 }
 
@@ -380,22 +399,50 @@ void MainWindow::parseMatrix2(){
 }
 
 void MainWindow::calculateMatrixAdd(){
+    Matrix *m1 = new Matrix(3, 3);
+    m1->data(arma::randu(3, 3));
+
+    Matrix *m2 = new Matrix(3, 3);
+    m2->data(arma::randu(3, 3));
+
+    std::cout << *m1+*m2 << std::endl;
     std::cout << "Add" << std::endl;
 }
 
 void MainWindow::calculateMatrixSubtract(){
+    Matrix *m1 = new Matrix(3, 3);
+    m1->data(arma::randu(3, 3));
+
+    Matrix *m2 = new Matrix(3, 3);
+    m2->data(arma::randu(3, 3));
+
+    std::cout << *m1-*m2 << std::endl;
     std::cout << "Subtract" << std::endl;
 }
 
 void MainWindow::calculateMatrixMultiply(){
+    Matrix *m1 = new Matrix(3, 3);
+    m1->data(arma::randu(3, 3));
+
+    Matrix *m2 = new Matrix(3, 3);
+    m2->data(arma::randu(3, 3));
+
+    std::cout << *m1**m2 << std::endl;
     std::cout << "Multiply" << std::endl;
 }
 
 void MainWindow::calculateMatrixDivide(){
+    Matrix *m1 = new Matrix(3, 3);
+    m1->data(arma::randu(3, 3));
+
+    Matrix *m2 = new Matrix(3, 3);
+    m2->data(arma::randu(3, 3));
+
+    std::cout << *m1 / *m2 << std::endl;
     std::cout << "Divide" << std::endl;
 }
 
-
+//////////////////////////////////////////////////////
 //TODO global classes?
 void MainWindow::plot(){
 //    Plotter *plt = new Plotter("sin");

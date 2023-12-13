@@ -13,8 +13,8 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Network Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Network Core)
 
 #CALCULATOR THINGS
-#find_package(Armadillo REQUIRED)
-#include_directories(${ARMADILLO_INCLUDE_DIRS})
+find_package(Armadillo REQUIRED)
+include_directories(${ARMADILLO_INCLUDE_DIRS})
 
 
 include(FetchContent)
@@ -27,8 +27,6 @@ if(NOT matplotplusplus_POPULATED)
     FetchContent_Populate(matplotplusplus)
     add_subdirectory(${matplotplusplus_SOURCE_DIR} ${matplotplusplus_BINARY_DIR} EXCLUDE_FROM_ALL)
 endif()
-
-
 
 #find_package(Matplot++ REQUIRED)
 
@@ -72,7 +70,7 @@ else()
     endif()
 endif()
 
-target_link_libraries(matfHub PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Network Qt${QT_VERSION_MAJOR}::Core PUBLIC Matplot++::matplot)
+target_link_libraries(matfHub PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Network Qt${QT_VERSION_MAJOR}::Core PUBLIC Matplot++::matplot ${ARMADILLO_LIBRARIES})
 # target_link_libraries(matfHub PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 # target_link_libraries(matfHub PRIVATE Qt${QT_VERSION_MAJOR}::Widgets ${ARMADILLO_LIBRARIES})
 
