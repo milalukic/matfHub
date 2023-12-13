@@ -325,10 +325,11 @@ void MainWindow::changeStackedWidgetPage(){
         ui->stackedWidget->setCurrentIndex(2);
 }
 
+Parser *parser = new Parser();
 void MainWindow::calculateRegular(){
 
     //TODO make x+5 work (if possible)
-    Parser *parser = new Parser();
+//    Parser *parser = new Parser();
 
     //TODO so it works with char*
     char *expr = ui->leParser->text().toStdString().data();
@@ -346,7 +347,7 @@ void MainWindow::calculateRegular(){
     ui->leParser->setText(qres);
     ui->tbParser->setText(history);
 
-    delete parser; parser = nullptr;
+//    delete parser; parser = nullptr;
 }
 
 void MainWindow::calculateMatrixTranspose(){
