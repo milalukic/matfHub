@@ -89,10 +89,14 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pbMean, &QPushButton::clicked, this, &MainWindow::statCalcMean);
     connect(ui->pbVariance, &QPushButton::clicked, this, &MainWindow::statCalcVariance);
     connect(ui->pbMedian, &QPushButton::clicked, this, &MainWindow::statCalcMedian);
+    connect(ui->pbMode, &QPushButton::clicked, this, &MainWindow::statCalcMode);
+    connect(ui->pbHist, &QPushButton::clicked, this, &MainWindow::statPlotHist);
+    connect(ui->pbBar, &QPushButton::clicked, this, &MainWindow::statPlotBar);
+
 
 
 }
-//TODO move this
+//TODO move this, change serbian to english
 std::vector<double> cppSplit(std::string &s){
 
     //TODO more flexible?
@@ -108,6 +112,27 @@ std::vector<double> cppSplit(std::string &s){
         s.erase(0, pos + delimiter.length());
     }
     niz.push_back(stod(s));
+
+    //TODO pointer?
+    return niz;
+}
+
+//TODO change name
+std::vector<std::string> cppSplitString(std::string &s){
+
+    //TODO more flexible?
+    std::string delimiter = ", ";
+
+    std::vector<std::string>niz;
+
+    size_t pos = 0;
+    std::string token;
+    while ((pos = s.find(delimiter)) != std::string::npos) {
+        token = s.substr(0, pos);
+        niz.push_back(token);
+        s.erase(0, pos + delimiter.length());
+    }
+    niz.push_back(s);
 
     //TODO pointer?
     return niz;
@@ -640,10 +665,44 @@ void MainWindow::statCalcMedian(){
 
 }
 
+void MainWindow::statCalcMode(){
 
+    std::map<double, int> occurences;
+    std::string input = ui->leStat->text().toStdString();
 
+    auto data = cppSplit(input);
 
+    for(auto x : data)
+        occurences[x]++;
 
+    auto it = std::max_element(occurences.begin(), occurences.end(), [](const auto &x, const auto &y) {
+        return x.second < y.second;
+    });
 
+    ui->tbParser->setText(QString::number(it->first));
+}
 
+void MainWindow::statPlotHist(){
 
+    std::string input = ui->leStat->text().toStdString();
+
+    auto data = cppSplit(input);
+
+    matplot::hist(data);
+
+    show();
+}
+
+void MainWindow::statPlotBar(){
+
+    std::string input1 = ui->leStat->text().toStdString();
+    std::string input2 = ui->leStatNames->text().toStdString();
+
+    auto data = cppSplit(input1);
+    auto names = cppSplitString(input2);
+
+    matplot::bar(data);
+    matplot::gca()->x_axis().ticklabels(names);
+
+    show();
+}

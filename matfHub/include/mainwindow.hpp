@@ -113,6 +113,9 @@ private slots:
     void statCalcMean();
     void statCalcVariance();
     void statCalcMedian();
+    void statCalcMode();
+    void statPlotHist();
+    void statPlotBar();
 
 
     //kmiljanify

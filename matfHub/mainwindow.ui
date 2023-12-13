@@ -2449,9 +2449,9 @@
            <widget class="QLineEdit" name="leStat">
             <property name="geometry">
              <rect>
-              <x>0</x>
-              <y>220</y>
-              <width>621</width>
+              <x>160</x>
+              <y>100</y>
+              <width>831</width>
               <height>21</height>
              </rect>
             </property>
@@ -2459,8 +2459,8 @@
            <widget class="QLabel" name="label_9">
             <property name="geometry">
              <rect>
-              <x>0</x>
-              <y>190</y>
+              <x>530</x>
+              <y>70</y>
               <width>58</width>
               <height>15</height>
              </rect>
@@ -2472,8 +2472,8 @@
            <widget class="QPushButton" name="pbMean">
             <property name="geometry">
              <rect>
-              <x>60</x>
-              <y>250</y>
+              <x>230</x>
+              <y>170</y>
               <width>101</width>
               <height>31</height>
              </rect>
@@ -2485,8 +2485,8 @@
            <widget class="QPushButton" name="pbVariance">
             <property name="geometry">
              <rect>
-              <x>470</x>
-              <y>250</y>
+              <x>640</x>
+              <y>170</y>
               <width>101</width>
               <height>31</height>
              </rect>
@@ -2498,14 +2498,63 @@
            <widget class="QPushButton" name="pbMedian">
             <property name="geometry">
              <rect>
-              <x>260</x>
-              <y>250</y>
+              <x>430</x>
+              <y>170</y>
               <width>101</width>
               <height>31</height>
              </rect>
             </property>
             <property name="text">
              <string>Median</string>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="pbMode">
+            <property name="geometry">
+             <rect>
+              <x>830</x>
+              <y>170</y>
+              <width>101</width>
+              <height>31</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Mode</string>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="pbHist">
+            <property name="geometry">
+             <rect>
+              <x>230</x>
+              <y>220</y>
+              <width>101</width>
+              <height>31</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Histogram</string>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="pbBar">
+            <property name="geometry">
+             <rect>
+              <x>430</x>
+              <y>220</y>
+              <width>101</width>
+              <height>31</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Bar Plot</string>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="leStatNames">
+            <property name="geometry">
+             <rect>
+              <x>160</x>
+              <y>140</y>
+              <width>831</width>
+              <height>21</height>
+             </rect>
             </property>
            </widget>
           </widget>
