@@ -86,6 +86,26 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pbLinspace, &QPushButton::clicked, this, &MainWindow::plotLinspace);
 
 }
+//TODO move this
+std::vector<double> cppsplit(std::string &s){
+
+    //TODO more flexible?
+    std::string delimiter = ", ";
+
+    std::vector<double>niz;
+
+    size_t pos = 0;
+    std::string token;
+    while ((pos = s.find(delimiter)) != std::string::npos) {
+        token = s.substr(0, pos);
+        niz.push_back(stod(token));
+        s.erase(0, pos + delimiter.length());
+    }
+    niz.push_back(stod(s));
+
+    //TODO pointer?
+    return niz;
+}
 
 MainWindow::~MainWindow()
 {
@@ -388,15 +408,39 @@ void MainWindow::calculateMatrixOne(){
     std::cout << "One" << std::endl;
 }
 
+//TODO what to do with it
+Matrix *m1;
+Matrix *m2;
 void MainWindow::parseMatrix1(){
-    QString text = "Dim1: " + ui->leMatrixDim11->text() + " Dim2: " + ui->leMatrixDim12->text() + " data: " + ui->leMatrixData1->text();
-    std::cout << text.toStdString() << std::endl;
+
+
+    //TODO polymorph
+    int dim1 = ui->leMatrixDim11->text().toInt();
+    int dim2 = ui->leMatrixDim12->text().toInt();
+    m1 = new Matrix(dim1, dim2);
+
+    std::string in = ui->leMatrixData1->text().toStdString();
+
+    std::vector<double> data = cppsplit(in);
+
+    //TODO exception if data.size() isn't right
+    //TODO fix this?
+    arma::mat A = arma::conv_to<arma::mat>::from(data);
+
+    A.reshape(dim1, dim2);
+
+    m1->data(A);
+    std::cout << m1 << std::endl;
 
 }
 
 void MainWindow::parseMatrix2(){
-    QString text = "Dim1: " + ui->leMatrixDim21->text() + " Dim2: " + ui->leMatrixDim22->text() + " data: " + ui->leMatrixData2->text();
-    std::cout << text.toStdString() << std::endl;
+
+    //TODO polymorph
+    int dim1 = ui->leMatrixDim21->text().toInt();
+    int dim2 = ui->leMatrixDim22->text().toInt();
+    m2 = new Matrix(dim1, dim2);
+    std::cout << m2 << std::endl;
 }
 
 void MainWindow::calculateMatrixAdd(){
