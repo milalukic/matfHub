@@ -56,6 +56,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pbChangeRegular, &QPushButton::clicked, this, &MainWindow::changeStackedWidgetPage);
     connect(ui->pbChangeMatrix, &QPushButton::clicked, this, &MainWindow::changeStackedWidgetPage);
     connect(ui->pbChangePlot, &QPushButton::clicked, this, &MainWindow::changeStackedWidgetPage);
+    connect(ui->pbChangeStat, &QPushButton::clicked, this, &MainWindow::changeStackedWidgetPage);
 
     connect(ui->pbParser, &QPushButton::clicked, this, &MainWindow::calculateRegular);
 
@@ -85,9 +86,14 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pbRoot, &QPushButton::clicked, this, &MainWindow::plotRoot);
     connect(ui->pbLinspace, &QPushButton::clicked, this, &MainWindow::plotLinspace);
 
+    connect(ui->pbMean, &QPushButton::clicked, this, &MainWindow::statCalcMean);
+    connect(ui->pbVariance, &QPushButton::clicked, this, &MainWindow::statCalcVariance);
+    connect(ui->pbMedian, &QPushButton::clicked, this, &MainWindow::statCalcMedian);
+
+
 }
 //TODO move this
-std::vector<double> cppsplit(std::string &s){
+std::vector<double> cppSplit(std::string &s){
 
     //TODO more flexible?
     std::string delimiter = ", ";
@@ -343,6 +349,8 @@ void MainWindow::changeStackedWidgetPage(){
         ui->stackedWidget->setCurrentIndex(1);
     else if(buttonText == "Plotting calculator")
         ui->stackedWidget->setCurrentIndex(2);
+    else if(buttonText == "Statistics")
+        ui->stackedWidget->setCurrentIndex(3);
 }
 
 Parser *parser = new Parser();
@@ -383,7 +391,7 @@ void MainWindow::parseMatrix1(){
 
     std::string in = ui->leMatrixData1->text().toStdString();
 
-    std::vector<double> data = cppsplit(in);
+    std::vector<double> data = cppSplit(in);
 
     //TODO exception if data.size() isn't right
     //TODO fix this?
@@ -408,7 +416,7 @@ void MainWindow::parseMatrix2(){
 
     std::string in = ui->leMatrixData2->text().toStdString();
 
-    std::vector<double> data = cppsplit(in);
+    std::vector<double> data = cppSplit(in);
 
     //TODO exception if data.size() isn't right
     //TODO fix this?
@@ -585,8 +593,52 @@ void MainWindow::plotRoot(){
     plt->transformRoot();
 }
 
+void MainWindow::statCalcMean(){
 
+    std::string input = ui->leStat->text().toStdString();
 
+    auto data = cppSplit(input);
+
+    double average = std::accumulate(data.begin(), data.end(), 0.0) / (data.size()-1);
+    ui->tbParser->setText(QString::number(average));
+
+}
+
+void MainWindow::statCalcVariance(){
+
+    std::string input = ui->leStat->text().toStdString();
+
+    auto data = cppSplit(input);
+
+    double average = std::accumulate(data.begin(), data.end(), 0.0) / (data.size()-1);
+    double result = 0;
+
+    for(int i = 0; i < data.size(); i++)
+        result += pow((data[i] - average), 2);
+
+    result = result / (data.size()-1);
+
+    ui->tbParser->setText(QString::number(result));
+
+}
+
+// Prouci kod
+void MainWindow::statCalcMedian(){
+
+    std::string input = ui->leStat->text().toStdString();
+
+    auto data = cppSplit(input);
+
+    auto n = data.size() / 2;
+    nth_element(data.begin(), data.begin()+n, data.end());
+    auto med = data[n];
+    if(!(data.size() & 1)) {
+        auto maxIt = max_element(data.begin(), data.begin()+n);
+        med = (*maxIt + med) / 2.0;
+    }
+    ui->tbParser->setText(QString::number(med));
+
+}
 
 
 

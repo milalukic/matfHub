@@ -1961,6 +1961,13 @@
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QPushButton" name="pbChangeStat">
+            <property name="text">
+             <string>Statistics</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </item>
         <item>
@@ -1973,7 +1980,7 @@
         <item>
          <widget class="QStackedWidget" name="stackedWidget">
           <property name="currentIndex">
-           <number>2</number>
+           <number>3</number>
           </property>
           <widget class="QWidget" name="page">
            <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -2438,6 +2445,70 @@
             </property>
            </widget>
           </widget>
+          <widget class="QWidget" name="page_4">
+           <widget class="QLineEdit" name="leStat">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>220</y>
+              <width>621</width>
+              <height>21</height>
+             </rect>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_9">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>190</y>
+              <width>58</width>
+              <height>15</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Input</string>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="pbMean">
+            <property name="geometry">
+             <rect>
+              <x>60</x>
+              <y>250</y>
+              <width>101</width>
+              <height>31</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Mean</string>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="pbVariance">
+            <property name="geometry">
+             <rect>
+              <x>470</x>
+              <y>250</y>
+              <width>101</width>
+              <height>31</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Variance</string>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="pbMedian">
+            <property name="geometry">
+             <rect>
+              <x>260</x>
+              <y>250</y>
+              <width>101</width>
+              <height>31</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Median</string>
+            </property>
+           </widget>
+          </widget>
          </widget>
         </item>
         <item>
@@ -2764,7 +2835,7 @@
      <x>0</x>
      <y>0</y>
      <width>1315</width>
-     <height>22</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

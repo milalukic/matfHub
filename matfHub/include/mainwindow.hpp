@@ -109,6 +109,11 @@ private slots:
     void plotRoot();
     void plotLinspace();
 
+    //Staistics
+    void statCalcMean();
+    void statCalcVariance();
+    void statCalcMedian();
+
 
     //kmiljanify
     void on_smerBox_activated(int index);
