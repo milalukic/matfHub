@@ -11,6 +11,7 @@
 
 #include "notes.h"
 #include "plotter.hpp"
+#include "matrix.hpp"
 
 
 QT_BEGIN_NAMESPACE
@@ -82,6 +83,8 @@ private slots:
             //regular
     void calculateRegular();
             //matrix
+    void showMatrix(Matrix *m);
+
     void calculateMatrixTranspose();
     void calculateMatrixInverse();
     void calculateMatrixDiag();

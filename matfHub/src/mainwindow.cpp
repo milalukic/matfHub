@@ -99,6 +99,7 @@ MainWindow::MainWindow(QWidget *parent)
 //TODO move this, change serbian to english
 std::vector<double> cppSplit(std::string &s){
 
+    std::cout << s << std::endl;
     //TODO more flexible?
     std::string delimiter = ", ";
 
@@ -136,6 +137,21 @@ std::vector<std::string> cppSplitString(std::string &s){
 
     //TODO pointer?
     return niz;
+}
+
+void MainWindow::showMatrix(Matrix *m){
+
+    QString history = ui->tbParser->toPlainText();
+
+    for(int i = 0; i < m->dimension1(); i++) {
+        for(int j = 0; j < m->dimension2(); j++) {
+            history += QString::number(m->data()(i,j));
+            history += " ";
+        }
+        history += '\n';
+    }
+    history += "------------------------\n";
+    ui->tbParser->setText(history);
 }
 
 MainWindow::~MainWindow()
@@ -406,6 +422,7 @@ void MainWindow::calculateRegular(){
 //TODO what to do with it
 Matrix *m1;
 Matrix *m2;
+//TODO figure out why it's working with ints instead of doubles
 void MainWindow::parseMatrix1(){
 
 
@@ -423,12 +440,8 @@ void MainWindow::parseMatrix1(){
     arma::mat A = arma::conv_to<arma::mat>::from(data);
     A.reshape(dim1, dim2);
 
-    arma::rowvec b = A.as_row();
-    A = arma::conv_to<arma::mat>::from(b);
-    A.reshape(dim1, dim2);
-
     m1->data(A);
-    std::cout << m1 << std::endl;
+    showMatrix(m1);
 
 }
 
@@ -448,12 +461,8 @@ void MainWindow::parseMatrix2(){
     arma::mat A = arma::conv_to<arma::mat>::from(data);
     A.reshape(dim1, dim2);
 
-    arma::rowvec b = A.as_row();
-    A = arma::conv_to<arma::mat>::from(b);
-    A.reshape(dim1, dim2);
-
     m2->data(A);
-    std::cout << m2 << std::endl;
+    showMatrix(m2);
 }
 
 void MainWindow::calculateMatrixTranspose(){
@@ -461,6 +470,7 @@ void MainWindow::calculateMatrixTranspose(){
     m1 = m1->transpose();
     std::cout << "Transposed matrix: " << std::endl;
     std::cout << m1 << std::endl;
+    showMatrix(m1);
 }
 //TODO exceptions
 void MainWindow::calculateMatrixInverse(){
@@ -468,6 +478,7 @@ void MainWindow::calculateMatrixInverse(){
     m1 = m1->inverse();
     std::cout << "Inverse" << std::endl;
     std::cout << m1 << std::endl;
+    showMatrix(m1);
 }
 
 void MainWindow::calculateMatrixDiag(){
@@ -475,6 +486,7 @@ void MainWindow::calculateMatrixDiag(){
     m1 = m1->diag();
     std::cout << "Diag" << std::endl;
     std::cout << m1 << std::endl;
+    showMatrix(m1);
 }
 
 void MainWindow::calculateMatrixOne(){
@@ -482,33 +494,41 @@ void MainWindow::calculateMatrixOne(){
     m1 = m1->ones();
     std::cout << m1 << std::endl;
     std::cout << "One" << std::endl;
+    showMatrix(m1);
 }
 
 
 //TODO save this somewhere?
 void MainWindow::calculateMatrixAdd(){
 
-
+    m1->data((*m1+*m2)->data());
     std::cout << *m1+*m2 << std::endl;
     std::cout << "Add" << std::endl;
+    showMatrix(m1);
 }
 
 void MainWindow::calculateMatrixSubtract(){
 
+    m1->data((*m1-*m2)->data());
     std::cout << *m1-*m2 << std::endl;
     std::cout << "Subtract" << std::endl;
+    showMatrix(m1);
 }
 
 void MainWindow::calculateMatrixMultiply(){
 
+    m1->data((*m1**m2)->data());
     std::cout << *m1**m2 << std::endl;
     std::cout << "Multiply" << std::endl;
+    showMatrix(m1);
 }
 //TODO exceptions
 void MainWindow::calculateMatrixDivide(){
 
+    m1->data((*m1 / *m2)->data());
     std::cout << *m1 / *m2 << std::endl;
     std::cout << "Divide" << std::endl;
+    showMatrix(m1);
 }
 
 //////////////////////////////////////////////////////
