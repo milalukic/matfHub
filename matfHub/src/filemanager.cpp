@@ -9,7 +9,7 @@ FileManager::FileManager(MainWindow* mw)
 
     appPath = QDir::currentPath();
 
-    hubPath = appPath + "/" + Config::getConfig()->getHubPath();
+    hubPath = /*appPath + "/" +*/ Config::getConfig()->getHubPath();
 
     dirModel = new QFileSystemModel();
     dirModel->setRootPath(hubPath);

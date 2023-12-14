@@ -9,21 +9,24 @@ Config* Config::configPtr = nullptr;
 
 Config::Config(){
     QString currentPath = QDir::currentPath();
-    if(!QDir(currentPath+"./config").exists()){
-        qDebug() << "plsno";
+    if(!QFile(currentPath+"/.config/save.json").exists()){
+        qDebug() << "ne posotji";
         hubPath = "MATF";
         configPath = currentPath + "/.config"; //const
         QDir(currentPath).mkdir(".config");
+        setConfig();
     }else{
-        qDebug()<<"pls";
         configPath = currentPath + "/.config";
-        QFile configFile(configPath);
-        configFile.open(QIODevice::ReadOnly);
+        QFile configFile(configPath + "/save.json");
+        if(!configFile.open(QIODevice::ReadOnly)){
+            qDebug() << "nije otvoren??";
+        }else{
+            qDebug() << "otvoren";
+        }
         QByteArray bytes = configFile.readAll();
         QJsonDocument configDocument = QJsonDocument::fromJson(bytes);
         QJsonObject configObject = configDocument.object();
-        auto test = configObject.value("hubPath");
-        qDebug() << test;
+        hubPath = configObject["hubPath"].toString();
     }
 }
 
@@ -54,9 +57,7 @@ void Config::setConfig(){
     QByteArray bytes = configDocument.toJson(QJsonDocument::Indented);
 
     QFile configFile(configPath+"/save.json");
-    qDebug() << configPath;
     configFile.open( QIODevice::WriteOnly | QFile::Text | QIODevice::Truncate );
-    qDebug() << configFile.isOpen();
 
     QTextStream iStream(&configFile);
     iStream << bytes;
