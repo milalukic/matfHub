@@ -13,6 +13,7 @@
 #include <QMessageBox>
 #include <stack>
 #include <iostream>
+#include <cstdlib>
 #include <memory>
 #include <QDebug>
 #include <string>
@@ -97,24 +98,64 @@ MainWindow::MainWindow(QWidget *parent)
 
 }
 //TODO move this, change serbian to english
-std::vector<double> cppSplit(std::string &s){
+// std::vector<double> cppSplit(std::string &s){
 
+//     std::cout << s << std::endl;
+//     //TODO more flexible?
+//     std::string delimiter = ", ";
+
+//     std::vector<double>niz;
+
+//     size_t pos = 0;
+//     std::string token;
+//     while ((pos = s.find(delimiter)) != std::string::npos) {
+//         token = s.substr(0, pos);
+//         std::cout << token << " " << stod(token) << std::endl;
+//         niz.push_back(stod(token));
+//         s.erase(0, pos + delimiter.length());
+//     }
+//     niz.push_back(stod(s));
+
+//     //TODO pointer?
+//     return niz;
+// }
+
+//TODO study code
+std::vector<double> cppSplit(const std::string &s) {
     std::cout << s << std::endl;
-    //TODO more flexible?
+
+    // TODO: more flexible?
     std::string delimiter = ", ";
 
-    std::vector<double>niz;
+    std::vector<double> niz;
 
-    size_t pos = 0;
+    std::istringstream ss(s);
     std::string token;
-    while ((pos = s.find(delimiter)) != std::string::npos) {
-        token = s.substr(0, pos);
-        niz.push_back(stod(token));
-        s.erase(0, pos + delimiter.length());
-    }
-    niz.push_back(stod(s));
 
-    //TODO pointer?
+    // Temporarily set the locale to "C" to ensure '.' is used as the decimal point
+    std::locale defaultLocale = std::locale::global(std::locale("C"));
+
+    while (std::getline(ss, token, ',')) {
+        // Trim whitespaces from the token
+        token.erase(token.find_last_not_of(" \t\n\r\f\v") + 1);
+
+        try {
+            double value = std::stod(token);
+            std::cout << token << " " << std::setprecision(15) << value << std::endl;
+            niz.push_back(value);
+        } catch (const std::invalid_argument& e) {
+            // Handle invalid argument (e.g., if conversion fails)
+            std::cerr << "Invalid argument: " << e.what() << std::endl;
+        } catch (const std::out_of_range& e) {
+            // Handle out of range (e.g., if the value is too large or too small)
+            std::cerr << "Out of range: " << e.what() << std::endl;
+        }
+    }
+
+    // Restore the original locale
+    std::locale::global(defaultLocale);
+
+    // TODO: pointer?
     return niz;
 }
 
