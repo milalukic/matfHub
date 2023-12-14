@@ -3,14 +3,22 @@
 
 #include <QString>
 #include <QFileDialog>
+#include <QSyntaxHighlighter>
 
 #include "../ui_mainwindow.h"
-
+#include "../QSourceHighlite/qsourcehighliter.h"
 
 class Notes
 {
+private:
+
+    Ui::MainWindow* m_mw;
+    QSourceHighlite::QSourceHighliter* m_highliter;
+
+    void changeLanguage(QString fileName);
+
 public:
-    Notes();
+    Notes(Ui::MainWindow* mw);
     QString currentFile = "";
 
     void openFile(QString filePath, Ui::MainWindow *ui, QWidget *parent);

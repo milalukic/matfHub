@@ -22,6 +22,8 @@ file(GLOB PROJECT_SOURCES
         "matfHub/include/*.hpp"
         "matfHub/include/*.h"
 	"matfHub/*.ui"
+	"matfHub/QSourceHighlite/*.cpp"
+	"matfHub/QSourceHighlite/*.h"
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

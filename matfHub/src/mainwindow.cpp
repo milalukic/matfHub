@@ -35,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent)
         QDir().mkdir("MATF");
     }
 
-    notes = new class Notes();
+    notes = new class Notes(ui);
     QString sPath = ""; //ovde kasnije dodati path i gurnuti ga u setRootPath
 
     ui->dirView->setModel(m_fileManager->dirModel);
