@@ -60,6 +60,10 @@ Course KmiljanScraper::tdToCourse(QString tdHtml, int day, int start){
     QStringList qsubgroups = soup[2].split(",");
     std::set<std::string> subgroups;
     for(auto& subgr : qsubgroups){
+        if (subgr == ""){                  //cisto da ne ostaje prazno
+            subgr = "- cela grupa -";
+        }
+        //std::cout<<subgr.toStdString()<<std::endl;
         subgroups.insert(subgr.simplified().toStdString());
     }
     QString staff = soup.length() > 3 ? soup[3].simplified() : "NULL";
@@ -104,7 +108,7 @@ QStringList splitByTd(QString text){
     QStringList lines;
     int startPos = 0;
     while ((startPos = text.indexOf("<td", startPos)) != -1) {
-        int endPos = text.indexOf("<td", startPos + 1);
+        int endPos = text.indexOf("<td", startPos+1);
         if (endPos != -1) {
             lines << text.mid(startPos, endPos - startPos);
             startPos = endPos;
@@ -152,19 +156,19 @@ CourseSet KmiljanScraper::tableToCourses(QString tableHtml, std::string classroo
     QStringList lines = splitByTd(tableHtml);
     QStringList days = {"Ponedeljak", "Utorak", "Sreda", "Četvrtak", "Petak"};
     int dayIdx = 0;
-    int hour = 0;
+    int hour = 8;           //prvo predavanje moze biti tek u 8
     for(auto& line : lines) {
-        if(line.contains("Превођење")){
-            std::cout << 3;
-        }
-        if(line.contains("Prevođenje")){
-            std::cout << 2;
-        }
-        std::cout << line.toStdString() << std::endl;
+//        if(line.contains("Превођење")){                        //Ovo je vrv neko debugovanje bilo, printa ceo html
+//            std::cout << 3;
+//        }
+//        if(line.contains("Prevođenje")){
+//            std::cout << 2;
+//        }
+//        std::cout << line.toStdString() << std::endl;
         if(line.startsWith("<td")){
             if(dayIdx < 5 && line.contains(">"+days[dayIdx]+"<")){
                 dayIdx++;
-                hour = 0;
+                hour = 8;
             } else if(dayIdx == 0) {
                 continue; // Trazimo ponedeljak...
             } else if(line.contains("&nbsp;")){
@@ -208,6 +212,29 @@ CourseSet KmiljanScraper::getAllCourses(std::unordered_map<std::string, std::str
         allCourses.insert(roomCourses.begin(), roomCourses.end());
 
     }
+//    for (auto i : allCourses){
+//        std::cout<< i.description<<std::endl;
+//        std::cout<< i.day<<std::endl;
+//        std::cout<< i.teacher<<std::endl;
+//        std::cout<< i.start<<std::endl;
+//        std::cout<< i.duration<<std::endl;
+//        std::cout<< i.end<<std::endl;
+//        std::cout<< i.course_type<<std::endl;
+//        for (auto it : i.groups){
+//            std::cout<< it <<std::endl;
+//        }
+//        std::cout<< i.classroom<<std::endl;
+//        for (auto it : i.modules){
+//            std::cout<< it<<std::endl;
+//        }
+//        for (auto it : i.years){
+//            std::cout<< it<<std::endl;
+//        }
+//        for (auto it : i.subgroups){
+//            std::cout<< it<<std::endl;
+//        }
+//        std::cout<< "-----------------"<<std::endl;
+//    }
     return allCourses;
 }
 
