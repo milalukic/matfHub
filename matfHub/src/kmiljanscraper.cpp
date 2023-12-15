@@ -79,13 +79,20 @@ Course KmiljanScraper::tdToCourse(QString tdHtml, int day, int start){
         {"V", "Aktuarska"},
         {"L", "Profesor"}
     };
-    for(auto sg : qsubgroups){
-        sg = sg.replace("O", "RMNVL");
+    for(auto sg : qgroups){
+        sg = sg.replace(QString::fromStdString("O"), QString::fromStdString("RMNVL"));
         for(auto& kv : moduleMap){
             if(sg.contains(QString::fromStdString(kv.first))){
                 modules.insert(kv.second);
             }
         }
+//        if (sg.contains("O")){
+//            modules.insert("Racunarstvo");
+//            modules.insert("Teorijska");
+//            modules.insert("Primenjena");
+//            modules.insert("Akturska");
+//            modules.insert("Profesor");
+//        }
     }
     for(auto& g : groups){
         int year = g[0]-'0';
@@ -212,29 +219,31 @@ CourseSet KmiljanScraper::getAllCourses(std::unordered_map<std::string, std::str
         allCourses.insert(roomCourses.begin(), roomCourses.end());
 
     }
-//    for (auto i : allCourses){
-//        std::cout<< i.description<<std::endl;
-//        std::cout<< i.day<<std::endl;
-//        std::cout<< i.teacher<<std::endl;
-//        std::cout<< i.start<<std::endl;
-//        std::cout<< i.duration<<std::endl;
-//        std::cout<< i.end<<std::endl;
-//        std::cout<< i.course_type<<std::endl;
-//        for (auto it : i.groups){
-//            std::cout<< it <<std::endl;
-//        }
-//        std::cout<< i.classroom<<std::endl;
-//        for (auto it : i.modules){
-//            std::cout<< it<<std::endl;
-//        }
-//        for (auto it : i.years){
-//            std::cout<< it<<std::endl;
-//        }
-//        for (auto it : i.subgroups){
-//            std::cout<< it<<std::endl;
-//        }
-//        std::cout<< "-----------------"<<std::endl;
-//    }
+    for (auto& i : allCourses){
+        std::cout<< i.description<<std::endl;
+        std::cout<< i.day<<std::endl;
+        std::cout<< i.teacher<<std::endl;
+        std::cout<< i.start<<std::endl;
+        std::cout<< i.duration<<std::endl;
+        std::cout<< i.end<<std::endl;
+        std::cout<< i.course_type<<std::endl;
+        for (auto& it : i.groups){
+            std::cout<< it <<std::endl;
+        }
+        std::cout<< i.classroom<<std::endl;
+        std::cout<< "---" << std::endl;
+        for (auto& it : i.modules){
+            std::cout<< it<<std::endl;
+        }
+        std::cout<< "---" << std::endl;
+        for (auto& it : i.years){
+            std::cout<< it<<std::endl;
+        }
+        for (auto& it : i.subgroups){
+            std::cout<< it<<std::endl;
+        }
+        std::cout<< "-----------------"<<std::endl;
+    }
     return allCourses;
 }
 
