@@ -219,31 +219,31 @@ CourseSet KmiljanScraper::getAllCourses(std::unordered_map<std::string, std::str
         allCourses.insert(roomCourses.begin(), roomCourses.end());
 
     }
-    for (auto& i : allCourses){
-        std::cout<< i.description<<std::endl;
-        std::cout<< i.day<<std::endl;
-        std::cout<< i.teacher<<std::endl;
-        std::cout<< i.start<<std::endl;
-        std::cout<< i.duration<<std::endl;
-        std::cout<< i.end<<std::endl;
-        std::cout<< i.course_type<<std::endl;
-        for (auto& it : i.groups){
-            std::cout<< it <<std::endl;
-        }
-        std::cout<< i.classroom<<std::endl;
-        std::cout<< "---" << std::endl;
-        for (auto& it : i.modules){
-            std::cout<< it<<std::endl;
-        }
-        std::cout<< "---" << std::endl;
-        for (auto& it : i.years){
-            std::cout<< it<<std::endl;
-        }
-        for (auto& it : i.subgroups){
-            std::cout<< it<<std::endl;
-        }
-        std::cout<< "-----------------"<<std::endl;
-    }
+//    for (auto& i : allCourses){
+//        std::cout<< i.description<<std::endl;
+//        std::cout<< i.day<<std::endl;
+//        std::cout<< i.teacher<<std::endl;
+//        std::cout<< i.start<<std::endl;
+//        std::cout<< i.duration<<std::endl;
+//        std::cout<< i.end<<std::endl;
+//        std::cout<< i.course_type<<std::endl;
+//        for (auto& it : i.groups){
+//            std::cout<< it <<std::endl;
+//        }
+//        std::cout<< i.classroom<<std::endl;
+//        std::cout<< "---" << std::endl;
+//        for (auto& it : i.modules){
+//            std::cout<< it<<std::endl;
+//        }
+//        std::cout<< "---" << std::endl;
+//        for (auto& it : i.years){
+//            std::cout<< it<<std::endl;
+//        }
+//        for (auto& it : i.subgroups){
+//            std::cout<< it<<std::endl;
+//        }
+//        std::cout<< "-----------------"<<std::endl;
+//    }
     return allCourses;
 }
 

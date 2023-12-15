@@ -7,6 +7,7 @@
 #include <QString>
 #include <string>
 #include <iostream>
+#include <set>
 
 Schedule::Schedule(){
     kmiljanScraper = std::make_unique<KmiljanScraper>();
@@ -19,8 +20,12 @@ void Schedule::changeModule(Ui::MainWindow *ui, int index){
     QWidget *scrollContent = new QWidget();
     QVBoxLayout *scrollLayout = new QVBoxLayout(scrollContent);
     std::string module = modules[index];
+    std::set<std::string> courseSet;
     for(Course course: moduleCourseMap[module]) {
-        QCheckBox *checkBox = new QCheckBox(QString::fromStdString(course.description));
+        courseSet.insert(course.description);
+    }
+    for(auto course: courseSet){
+        QCheckBox *checkBox = new QCheckBox(QString::fromStdString(course));
         scrollLayout->addWidget(checkBox);
     }
     delete ui->examArea->takeWidget(); // fix memory leak
