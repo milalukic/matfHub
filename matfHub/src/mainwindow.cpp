@@ -437,6 +437,7 @@ void MainWindow::changeStackedWidgetPage(){
 }
 //TODO global
 Calculator *calculator = new Calculator();
+History *history = new History();
 Parser *parser = new Parser();
 void MainWindow::calculateRegular(){
 
@@ -448,9 +449,9 @@ void MainWindow::calculateRegular(){
     double res = parser->eval_exp(expr);
     QString qres = QString::number(res);
 
-//    calculator->writeHistory(expr);
-//    calculator->writeHistory(qres.toStdString());
-//    calculator->writeHistory("----------");
+    history->writeHistory(expr);
+    history->writeHistory(qres.toStdString());
+    history->writeHistory("----------");
 
     QString history = ui->tbParser->toPlainText();
 
@@ -588,6 +589,18 @@ void MainWindow::plot(){
     std::cerr <<"Crtanje: " << std::endl;
     std::cerr << "\t" << ui->leLinspaceLB->text().toStdString() << " ";
     std::cerr << ui->leLinspaceUB->text().toStdString() << std::endl;
+
+    std::string lowerBound = ui->leLinspaceLB->text().toStdString();
+    std::string upperBound = ui->leLinspaceLB->text().toStdString();
+    std::string numOfDots = ui->leLinspaceS->text().toStdString();
+    std::string function = ui->leState->text().toStdString();
+    std::string linspaceString = "(" + lowerBound + ", " + upperBound + ")";
+    linspaceString += " Dots: " + numOfDots;
+
+    history->writeHistory("Plot:");
+    history->writeHistory(linspaceString);
+    history->writeHistory(function);
+    history->writeHistory(history->EOC);
 }
 
 void MainWindow::plotLinspace(){
@@ -610,8 +623,6 @@ void MainWindow::plotSin(){
     ui->leState->setText("sin(" + ui->leState->text() + ")" );
 
     plt->transformSin();
-    calculator->writeHistory("PLOT: " + ui->leState->text().toStdString());
-    std::cout << calculator->lastLine() << std::endl;
 }
 
 void MainWindow::plotCos(){
@@ -619,8 +630,6 @@ void MainWindow::plotCos(){
     ui->leState->setText("cos(" + ui->leState->text() + ")" );
 
     plt->transformCos();
-    calculator->writeHistory("PLOT: " + ui->leState->text().toStdString());
-    std::cout << calculator->lastLine() << std::endl;
 }
 
 void MainWindow::plotTan(){
@@ -628,8 +637,6 @@ void MainWindow::plotTan(){
     ui->leState->setText("tan(" + ui->leState->text() + ")" );
 
     plt->transformTan();
-    calculator->writeHistory("PLOT: " + ui->leState->text().toStdString());
-    std::cout << calculator->lastLine() << std::endl;
 }
 
 void MainWindow::plotLn(){
@@ -637,8 +644,6 @@ void MainWindow::plotLn(){
     ui->leState->setText("ln(" + ui->leState->text() + ")" );
 
     plt->transformLn();
-    calculator->writeHistory("PLOT: " + ui->leState->text().toStdString());
-    std::cout << calculator->lastLine() << std::endl;
 }
 
 void MainWindow::plotLog(){
@@ -646,8 +651,6 @@ void MainWindow::plotLog(){
     ui->leState->setText("log(" + ui->leState->text() + ")" );
 
     plt->transformLog();
-    calculator->writeHistory("PLOT: " + ui->leState->text().toStdString());
-    std::cout << calculator->lastLine() << std::endl;
 }
 
 void MainWindow::plotExp(){
@@ -655,8 +658,6 @@ void MainWindow::plotExp(){
     ui->leState->setText("e^(" + ui->leState->text() + ")" );
 
     plt->transformExp();
-    calculator->writeHistory("PLOT: " + ui->leState->text().toStdString());
-    std::cout << calculator->lastLine() << std::endl;
 }
 
 void MainWindow::plotAbs(){
@@ -664,8 +665,6 @@ void MainWindow::plotAbs(){
     ui->leState->setText("|" + ui->leState->text() + "|" );
 
     plt->transformAbs();
-    calculator->writeHistory("PLOT: " + ui->leState->text().toStdString());
-    std::cout << calculator->lastLine() << std::endl;
 }
 
 void MainWindow::plotNeg(){
@@ -677,9 +676,6 @@ void MainWindow::plotNeg(){
         ui->leState->setText("-(" + ui->leState->text() + ")" );
 
     plt->transformNeg();
-
-    calculator->writeHistory("PLOT: " + ui->leState->text().toStdString());
-    std::cout << calculator->lastLine() << std::endl;
 }
 
 void MainWindow::plotSquare(){
@@ -687,8 +683,7 @@ void MainWindow::plotSquare(){
     ui->leState->setText("(" + ui->leState->text() + ")²" );
 
     plt->transformSquare();
-    calculator->editLastLine("PLOT: " + ui->leState->text().toStdString());
-    std::cout << calculator->lastLine() << std::endl;
+    std::cout << history->lastLine() << std::endl;
 }
 
 void MainWindow::plotRoot(){
@@ -696,8 +691,7 @@ void MainWindow::plotRoot(){
     ui->leState->setText("√(" + ui->leState->text() + ")" );
 
     plt->transformRoot();
-    calculator->writeHistory("PLOT: " + ui->leState->text().toStdString());
-    std::cout << calculator->lastLine() << std::endl;
+    std::cout << history->lastLine() << std::endl;
 }
 
 //stat
@@ -706,16 +700,33 @@ Statistics *stat = new Statistics();
 void MainWindow::statCalcMean(){
 
     auto input = ui->leStat->text().toStdString();
-    stat->xData(cppSplit(input));    
-    ui->tbParser->setText(QString::number(stat->mean()));
+    stat->xData(cppSplit(input));
+
+    auto result = stat->mean();
+    ui->tbParser->setText(QString::number(result));
+
+
+    //TODO ploymorph
+    std::string hOutput = "Mean: " + input;
+    history->writeHistory(hOutput);
+    history->writeHistory(std::to_string(result));
+    history->writeHistory(history->EOC);
 }
 
 void MainWindow::statCalcVariance(){
 
     auto input = ui->leStat->text().toStdString();
     stat->xData(cppSplit(input));
-    
-    ui->tbParser->setText(QString::number(stat->variance()));
+
+    auto result = stat->variance();
+    ui->tbParser->setText(QString::number(result));
+
+    //TODO ploymorph
+    std::string hOutput = "Variance: " + input;
+    history->writeHistory(hOutput);
+    history->writeHistory(std::to_string(result));
+    history->writeHistory(history->EOC);
+
 }
 
 void MainWindow::statCalcStd(){
@@ -723,7 +734,14 @@ void MainWindow::statCalcStd(){
     auto input = ui->leStat->text().toStdString();
     stat->xData(cppSplit(input));
 
-    ui->tbParser->setText(QString::number(stat->std()));
+    auto result = stat->std();
+    ui->tbParser->setText(QString::number(result));
+
+    //TODO ploymorph
+    std::string hOutput = "Median: " + input;
+    history->writeHistory(hOutput);
+    history->writeHistory(std::to_string(result));
+    history->writeHistory(history->EOC);
 }
 
 void MainWindow::statCalcMedian(){
@@ -734,7 +752,14 @@ void MainWindow::statCalcMedian(){
     auto input = ui->leStat->text().toStdString();
     stat->xData(cppSplit(input));
 
-    ui->tbParser->setText(QString::number(stat->median()));
+    auto result = stat->median();
+    ui->tbParser->setText(QString::number(result));
+
+    //TODO ploymorph
+    std::string hOutput = "Median: " + input;
+    history->writeHistory(hOutput);
+    history->writeHistory(std::to_string(result));
+    history->writeHistory(history->EOC);
 }
 
 void MainWindow::statCalcMode(){
@@ -742,7 +767,14 @@ void MainWindow::statCalcMode(){
     auto input = ui->leStat->text().toStdString();
     stat->xData(cppSplit(input));
 
-    ui->tbParser->setText(QString::number(stat->mode()));
+    auto result = stat->mode();
+    ui->tbParser->setText(QString::number(result));
+
+    //TODO ploymorph
+    std::string hOutput = "Mode: " + input;
+    history->writeHistory(hOutput);
+    history->writeHistory(std::to_string(result));
+    history->writeHistory(history->EOC);
 }
 
 void MainWindow::statPlotHist(){
@@ -751,6 +783,11 @@ void MainWindow::statPlotHist(){
     stat->xData(cppSplit(input));
     
     stat->histogram();
+
+    //TODO ploymorph
+    history->writeHistory("Histogram: ");
+    history->writeHistory(input);
+    history->writeHistory(history->EOC);
 }
 
 void MainWindow::statPlotBar(){
@@ -761,6 +798,12 @@ void MainWindow::statPlotBar(){
     stat->textData(cppSplitString(input2));
 
     stat->barplot();
+
+    //TODO ploymorph
+    history->writeHistory("Barplot: ");
+    history->writeHistory(input1);
+    history->writeHistory(input2);
+    history->writeHistory(history->EOC);
 }
 
 void MainWindow::statPlotBox(){
@@ -770,11 +813,17 @@ void MainWindow::statPlotBox(){
     stat->textData(cppSplitString(input2));
 
     stat->boxplot();
+
+    //TODO ploymorph
+    history->writeHistory("Boxplot: ");
+    history->writeHistory(input1);
+    history->writeHistory(input2);
+    history->writeHistory(history->EOC);
 }
 
 //HISTORY
 
 void MainWindow::historySave(){
-    calculator->saveHistory();
+    history->saveHistory();
     std::cout << "History saved!" << std::endl;
 }

@@ -7,7 +7,7 @@
 class History
 {
 public:
-    History(std::vector<std::string> h = std::vector<std::string>());
+    History(std::vector<std::string> h = {" "});
     ~History();
 
     //
@@ -22,7 +22,8 @@ public:
 
     void history(std::vector<std::string> &newHistory);
 
-
+    //static?
+    const std::string EOC = "--------------------";
 
 private:
     std::vector<std::string> _history;

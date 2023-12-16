@@ -1,14 +1,17 @@
 #include "../include/history.hpp"
 
 #include <fstream>
+#include <QFile>
 
-History::History(std::vector<std::string> h = std::vector<std::string>()){}
+//TODO initialize?
+History::History(std::vector<std::string>h){}
 History::~History(){
     std::cout << "History unisten" << std::endl;
 }
 
     //TODO enkapsulacija? friendly?
 void History::writeHistory(std::string line){
+    line += "\n";
     this->_history.push_back(line);
 }
 
@@ -26,18 +29,13 @@ void History::editLastLine(std::string line){
 }
 
 void History::saveHistory(){
-    std::ofstream file("history.txt");
-    std::cout << "Hist" << std::endl;
+    QFile file("../hist.txt");
+    file.open(QIODevice::WriteOnly);
     auto history = this->history();
     for(auto const &x : history){
-        file << x;
-        file << "\n";
+        file.write(x.c_str());
     }
-    file.close();
 }
-
-    
-    //
 
 std::vector<std::string> History::history() const{
     return this->_history;
