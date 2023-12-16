@@ -10,6 +10,7 @@
 #include <QListView>
 
 #include "notes.h"
+#include "calendar.h"
 
 
 QT_BEGIN_NAMESPACE

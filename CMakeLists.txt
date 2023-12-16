@@ -33,6 +33,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         matfHub/resources.qrc
         matfHub/src/calculator.cpp
         matfHub/include/calculator.h
+        matfHub/include/calendar.h
+        matfHub/src/calendar.cpp
 
 
     )
