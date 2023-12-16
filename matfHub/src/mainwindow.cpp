@@ -449,9 +449,8 @@ void MainWindow::calculateRegular(){
     double res = parser->eval_exp(expr);
     QString qres = QString::number(res);
 
-    history->writeHistory(expr);
-    history->writeHistory(qres.toStdString());
-    history->writeHistory("----------");
+    history->writeHistory(expr, qres.toStdString());
+
 
     QString history = ui->tbParser->toPlainText();
 
@@ -594,13 +593,10 @@ void MainWindow::plot(){
     std::string upperBound = ui->leLinspaceLB->text().toStdString();
     std::string numOfDots = ui->leLinspaceS->text().toStdString();
     std::string function = ui->leState->text().toStdString();
-    std::string linspaceString = "(" + lowerBound + ", " + upperBound + ")";
+    std::string linspaceString = "Plot: (" + lowerBound + ", " + upperBound + ")";
     linspaceString += " Dots: " + numOfDots;
 
-    history->writeHistory("Plot:");
-    history->writeHistory(linspaceString);
-    history->writeHistory(function);
-    history->writeHistory(history->EOC);
+    history->writeHistory(linspaceString, function);
 }
 
 void MainWindow::plotLinspace(){
@@ -697,6 +693,7 @@ void MainWindow::plotRoot(){
 //stat
 //TODO global?
 Statistics *stat = new Statistics();
+
 void MainWindow::statCalcMean(){
 
     auto input = ui->leStat->text().toStdString();
@@ -705,12 +702,9 @@ void MainWindow::statCalcMean(){
     auto result = stat->mean();
     ui->tbParser->setText(QString::number(result));
 
-
     //TODO ploymorph
     std::string hOutput = "Mean: " + input;
-    history->writeHistory(hOutput);
-    history->writeHistory(std::to_string(result));
-    history->writeHistory(history->EOC);
+    history->writeHistory(hOutput, std::to_string(result));
 }
 
 void MainWindow::statCalcVariance(){
@@ -723,10 +717,7 @@ void MainWindow::statCalcVariance(){
 
     //TODO ploymorph
     std::string hOutput = "Variance: " + input;
-    history->writeHistory(hOutput);
-    history->writeHistory(std::to_string(result));
-    history->writeHistory(history->EOC);
-
+    history->writeHistory(hOutput, std::to_string(result));
 }
 
 void MainWindow::statCalcStd(){
@@ -739,9 +730,7 @@ void MainWindow::statCalcStd(){
 
     //TODO ploymorph
     std::string hOutput = "Median: " + input;
-    history->writeHistory(hOutput);
-    history->writeHistory(std::to_string(result));
-    history->writeHistory(history->EOC);
+    history->writeHistory(hOutput, std::to_string(result));
 }
 
 void MainWindow::statCalcMedian(){
@@ -757,9 +746,7 @@ void MainWindow::statCalcMedian(){
 
     //TODO ploymorph
     std::string hOutput = "Median: " + input;
-    history->writeHistory(hOutput);
-    history->writeHistory(std::to_string(result));
-    history->writeHistory(history->EOC);
+    history->writeHistory(hOutput, std::to_string(result));
 }
 
 void MainWindow::statCalcMode(){
@@ -770,11 +757,8 @@ void MainWindow::statCalcMode(){
     auto result = stat->mode();
     ui->tbParser->setText(QString::number(result));
 
-    //TODO ploymorph
     std::string hOutput = "Mode: " + input;
-    history->writeHistory(hOutput);
-    history->writeHistory(std::to_string(result));
-    history->writeHistory(history->EOC);
+    history->writeHistory(hOutput, std::to_string(result));
 }
 
 void MainWindow::statPlotHist(){
@@ -784,10 +768,7 @@ void MainWindow::statPlotHist(){
     
     stat->histogram();
 
-    //TODO ploymorph
-    history->writeHistory("Histogram: ");
-    history->writeHistory(input);
-    history->writeHistory(history->EOC);
+    history->writeHistory("Histogram", input);
 }
 
 void MainWindow::statPlotBar(){
@@ -799,11 +780,7 @@ void MainWindow::statPlotBar(){
 
     stat->barplot();
 
-    //TODO ploymorph
-    history->writeHistory("Barplot: ");
-    history->writeHistory(input1);
-    history->writeHistory(input2);
-    history->writeHistory(history->EOC);
+    history->writeHistory("Barplot", input1 + input2);
 }
 
 void MainWindow::statPlotBox(){
@@ -814,11 +791,7 @@ void MainWindow::statPlotBox(){
 
     stat->boxplot();
 
-    //TODO ploymorph
-    history->writeHistory("Boxplot: ");
-    history->writeHistory(input1);
-    history->writeHistory(input2);
-    history->writeHistory(history->EOC);
+    history->writeHistory("Boxplot", input1 + input2);
 }
 
 //HISTORY

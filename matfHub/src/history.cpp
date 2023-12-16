@@ -10,10 +10,14 @@ History::~History(){
 }
 
     //TODO enkapsulacija? friendly?
-void History::writeHistory(std::string line){
+void History::writeHistory(std::string title, std::string line){
+    title += "\n";
     line += "\n";
+    this->_history.push_back(title);
     this->_history.push_back(line);
+    this->_history.push_back(this->EOC);
 }
+
 
 std::string History::lastLine(){
     auto history = this->history();
@@ -22,6 +26,9 @@ std::string History::lastLine(){
 }
 
 void History::editLastLine(std::string line){
+    if(this->history().size() == 0){
+        this->writeHistory(" ", " ");
+    }
     auto history = this->history();
     int numOfLastLine = history.size()-1;
     history[numOfLastLine] = line;

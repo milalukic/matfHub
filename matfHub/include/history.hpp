@@ -11,7 +11,7 @@ public:
     ~History();
 
     //
-    void writeHistory(std::string line);
+    void writeHistory(std::string title, std::string line);
     std::string lastLine();
     void editLastLine(std::string line);
     
@@ -23,7 +23,7 @@ public:
     void history(std::vector<std::string> &newHistory);
 
     //static?
-    const std::string EOC = "--------------------";
+    const std::string EOC = "--------------------\n";
 
 private:
     std::vector<std::string> _history;
