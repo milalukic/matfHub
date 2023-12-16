@@ -186,7 +186,7 @@ std::vector<std::string> cppSplitString(std::string &s){
 
 void MainWindow::showMatrix(Matrix *m){
 
-    QString history = ui->tbParser->toPlainText();
+    QString history = ui->tbHistory->toPlainText();
 
     for(int i = 0; i < m->dimension1(); i++) {
         for(int j = 0; j < m->dimension2(); j++) {
@@ -196,7 +196,7 @@ void MainWindow::showMatrix(Matrix *m){
         history += '\n';
     }
     history += "------------------------\n";
-    ui->tbParser->setText(history);
+    ui->tbHistory->setText(history);
 }
 
 MainWindow::~MainWindow()
@@ -451,8 +451,7 @@ void MainWindow::calculateRegular(){
 
     history->writeHistory(expr, qres.toStdString());
 
-
-    QString history = ui->tbParser->toPlainText();
+    QString history = ui->tbHistory->toPlainText();
 
     history += expr;
     history += "\n";
@@ -460,7 +459,7 @@ void MainWindow::calculateRegular(){
     history += "\n--------------\n";
 
     ui->leParser->setText(qres);
-    ui->tbParser->setText(history);
+    ui->tbHistory->setText(history);
 
 //    std::cout << calculator->lastLine() << std::endl;
 
@@ -597,6 +596,7 @@ void MainWindow::plot(){
     linspaceString += " Dots: " + numOfDots;
 
     history->writeHistory(linspaceString, function);
+
 }
 
 void MainWindow::plotLinspace(){
@@ -700,10 +700,10 @@ void MainWindow::statCalcMean(){
     stat->xData(cppSplit(input));
 
     auto result = stat->mean();
-    ui->tbParser->setText(QString::number(result));
+    ui->tbHistory->setText(QString::number(result));
 
     //TODO ploymorph
-    std::string hOutput = "Mean: " + input;
+    std::string hOutput = "Mean: \n" + input;
     history->writeHistory(hOutput, std::to_string(result));
 }
 
@@ -713,10 +713,10 @@ void MainWindow::statCalcVariance(){
     stat->xData(cppSplit(input));
 
     auto result = stat->variance();
-    ui->tbParser->setText(QString::number(result));
+    ui->tbHistory->setText(QString::number(result));
 
     //TODO ploymorph
-    std::string hOutput = "Variance: " + input;
+    std::string hOutput = "Variance: \n" + input;
     history->writeHistory(hOutput, std::to_string(result));
 }
 
@@ -726,10 +726,10 @@ void MainWindow::statCalcStd(){
     stat->xData(cppSplit(input));
 
     auto result = stat->std();
-    ui->tbParser->setText(QString::number(result));
+    ui->tbHistory->setText(QString::number(result));
 
     //TODO ploymorph
-    std::string hOutput = "Median: " + input;
+    std::string hOutput = "Std: \n" + input;
     history->writeHistory(hOutput, std::to_string(result));
 }
 
@@ -742,10 +742,10 @@ void MainWindow::statCalcMedian(){
     stat->xData(cppSplit(input));
 
     auto result = stat->median();
-    ui->tbParser->setText(QString::number(result));
+    ui->tbHistory->setText(QString::number(result));
 
     //TODO ploymorph
-    std::string hOutput = "Median: " + input;
+    std::string hOutput = "Median: \n" + input;
     history->writeHistory(hOutput, std::to_string(result));
 }
 
@@ -755,9 +755,9 @@ void MainWindow::statCalcMode(){
     stat->xData(cppSplit(input));
 
     auto result = stat->mode();
-    ui->tbParser->setText(QString::number(result));
+    ui->tbHistory->setText(QString::number(result));
 
-    std::string hOutput = "Mode: " + input;
+    std::string hOutput = "Mode: \n" + input;
     history->writeHistory(hOutput, std::to_string(result));
 }
 

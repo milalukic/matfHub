@@ -36,10 +36,12 @@ public:
     //TODO fill
     //getters setters
     void xData(std::vector<double> &newX);
-    std::vector<double> xData() const;
-
     void yData(std::vector<double> &newY);
+    void output(std::string text);
+
+    std::vector<double> xData() const;
     std::vector<double> yData() const;
+    std::string output() const;
 
 
 private:
@@ -48,6 +50,8 @@ private:
     //TODO fix naming and comments
     std::vector<double> _xData; //linspace data
     std::vector<double> _yData;
+
+    std::string _output;
 };
 
 #endif

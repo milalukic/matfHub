@@ -2592,7 +2592,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QTextBrowser" name="tbParser"/>
+         <widget class="QTextBrowser" name="tbHistory"/>
         </item>
         <item>
          <widget class="QPushButton" name="pbHistorySave">

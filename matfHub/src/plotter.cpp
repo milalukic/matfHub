@@ -94,22 +94,28 @@ void Plotter::transformRoot(){
     this->yData(y);
 }
 
+//set
 void Plotter::xData(std::vector<double> &newX)  {
     this->_xData = newX;
 }
-
-//TODO auto preporuka?
-std::vector<double> Plotter::xData() const {
-    return this->_xData;
-}
-
 
 void Plotter::yData(std::vector<double> &newY)  {
     this->_yData = newY;
 }
 
-//TODO auto preporuka?
+void Plotter::output(std::string text){
+    this->_output = text;
+}
+
+//get
+std::vector<double> Plotter::xData() const {
+    return this->_xData;
+}
+
 std::vector<double> Plotter::yData() const {
     return this->_yData;
 }
 
+std::string Plotter::output() const{
+    return this->_output;
+}
