@@ -65,99 +65,49 @@ void Notes::newClicked(Ui::MainWindow *ui){
 //    openFile(fileName, ui, parent);
 //}
 
+
+
 void Notes::changeLanguage(QString fileName){
+
+    std::map<QString,  QSourceHighlite::QSourceHighliter::Language> extToLanguageMap = {
+        { ".cpp",  QSourceHighlite::QSourceHighliter::Language::CodeCpp },
+        { ".hpp", QSourceHighlite::QSourceHighliter::Language::CodeCpp },
+        { ".js", QSourceHighlite::QSourceHighliter::Language::CodeJs },
+        { ".c", QSourceHighlite::QSourceHighliter::Language::CodeC },
+        { ".h", QSourceHighlite::QSourceHighliter::Language::CodeC },
+        { ".php", QSourceHighlite::QSourceHighliter::Language::CodePHP },
+        { ".qml", QSourceHighlite::QSourceHighliter::Language::CodeQML },
+        { ".py", QSourceHighlite::QSourceHighliter::Language::CodePython },
+        { ".rs", QSourceHighlite::QSourceHighliter::Language::CodeRust },
+        { ".java", QSourceHighlite::QSourceHighliter::Language::CodeJava },
+        { ".class", QSourceHighlite::QSourceHighliter::Language::CodeJava},
+        { ".cs", QSourceHighlite::QSourceHighliter::Language::CodeCSharp },
+        { ".go", QSourceHighlite::QSourceHighliter::Language::CodeGo },
+        { ".sql", QSourceHighlite::QSourceHighliter::Language::CodeSQL },
+        { ".json", QSourceHighlite::QSourceHighliter::Language::CodeJSON },
+        { ".xml", QSourceHighlite::QSourceHighliter::Language::CodeXML },
+        { ".html", QSourceHighlite::QSourceHighliter::Language::CodeXML },
+        { ".css", QSourceHighlite::QSourceHighliter::Language::CodeCSS },
+        { ".ts", QSourceHighlite::QSourceHighliter::Language::CodeTypeScript },
+        { ".yaml", QSourceHighlite::QSourceHighliter::Language::CodeYAML },
+        { ".ini", QSourceHighlite::QSourceHighliter::Language::CodeINI },
+        { ".vex", QSourceHighlite::QSourceHighliter::Language::CodeVex },
+        { ".s", QSourceHighlite::QSourceHighliter::Language::CodeAsm },
+        { ".lua", QSourceHighlite::QSourceHighliter::Language::CodeLua },
+    };
+
+    if (fileName.startsWith("#! /usr/bin/python")) {
+        m_highliter->setCurrentLanguage(QSourceHighlite::QSourceHighliter::Language::CodePython);
+    } else if (fileName.startsWith("#! /bin/bash")) {
+        m_highliter->setCurrentLanguage(QSourceHighlite::QSourceHighliter::Language::CodeBash);
+    }
 
     QString extension = fileName.right(fileName.length() - fileName.lastIndexOf("."));
 
-    QStringList extensionList;
-    extensionList << ".cpp" << ".hpp" << ".js" << ".c" << ".h" << ".php" << ".qml" << ".py" << ".rs" << ".jav" << ".cs" << ".go" << ".sql" << ".json" << ".xml" << ".html" << ".css" << ".ts" << ".yaml" << ".ini" << ".vex" << ".s" << ".lua";
-    //                0         1         2        3       4       5         6         7        8        9         10       11       12        13         14        15         16        17       18         19        20        21      22;
-    //1 ne znam kako drugacije da saltam string po switchu a da nije enum (sto je vrv ispravnije resenje)
-    //2 svakako ova lista bi mozda pre trebalo da bude neka staticka konstantna lista klase umesto da se pravi u rantajmu ali to ostavljam nekome drugome (vrv sebi u buducnosti) da popravi B)
-    // apdejt: lice samo napravi mapu string u int, ionako zelis da neke razlicite ekstenzije okidaju isti jezik
-    //TODO: dodati ekstenzije za javu i ostale koje imaju istu sintaksu a fale ovde
-    //TODO: dodati prepoznavanje simejka parsiranjem pocetka naziva, bash i ostalih skripti bez ekstenzije itd
-
-    QSourceHighlite::QSourceHighliter::Language language;
-    switch (extensionList.indexOf(extension)) {
-    case 0:
-        language = QSourceHighlite::QSourceHighliter::Language::CodeCpp;
-        break;
-    case 1:
-        language = QSourceHighlite::QSourceHighliter::Language::CodeCpp;
-        break;
-    case 2:
-        language = QSourceHighlite::QSourceHighliter::Language::CodeJs;
-        break;
-    case 3:
-        language = QSourceHighlite::QSourceHighliter::Language::CodeC;
-        break;
-    case 4:
-        language = QSourceHighlite::QSourceHighliter::Language::CodeC;
-        break;
-    case 5:
-        language = QSourceHighlite::QSourceHighliter::Language::CodePHP;
-        break;
-    case 6:
-        language = QSourceHighlite::QSourceHighliter::Language::CodeQML;
-        break;
-    case 7:
-        language = QSourceHighlite::QSourceHighliter::Language::CodePython;
-        break;
-    case 8:
-        language = QSourceHighlite::QSourceHighliter::Language::CodeRust;
-        break;
-    case 9:
-        language = QSourceHighlite::QSourceHighliter::Language::CodeJava;
-        break;
-    case 10:
-        language = QSourceHighlite::QSourceHighliter::Language::CodeCSharp;
-        break;
-    case 11:
-        language = QSourceHighlite::QSourceHighliter::Language::CodeGo;
-        break;
-    case 12:
-        language = QSourceHighlite::QSourceHighliter::Language::CodeSQL;
-        break;
-    case 13:
-        language = QSourceHighlite::QSourceHighliter::Language::CodeJSON;
-        break;
-    case 14:
-        language = QSourceHighlite::QSourceHighliter::Language::CodeXML;
-        break;
-    case 15:
-        language = QSourceHighlite::QSourceHighliter::Language::CodeXML;
-        break;
-    case 16:
-        language = QSourceHighlite::QSourceHighliter::Language::CodeCSS;
-        break;
-    case 17:
-        language = QSourceHighlite::QSourceHighliter::Language::CodeTypeScript;
-        break;
-    case 18:
-        language = QSourceHighlite::QSourceHighliter::Language::CodeYAML;
-        break;
-    case 19:
-        language = QSourceHighlite::QSourceHighliter::Language::CodeINI;
-        break;
-    case 20:
-        language = QSourceHighlite::QSourceHighliter::Language::CodeVex;
-        break;
-    case 21:
-        language = QSourceHighlite::QSourceHighliter::Language::CodeAsm;
-        break;
-    case 22:
-        language = QSourceHighlite::QSourceHighliter::Language::CodeLua;
-        break;
-    default:
-        //TODO nisam nasao jezik koji ne boji nista tkd sad ako ne prepozna ekstenziju ostavlja prethodni
-//        language = QSourceHighlite::QSourceHighliter::Language::Text
-        return;
-        break;
+    auto it = extToLanguageMap.find(extension);
+    if (it != extToLanguageMap.end()) {
+        m_highliter->setCurrentLanguage(it->second);
     }
-
-    m_highliter->setCurrentLanguage(language);
-
 }
 
 void Notes::openClicked(Ui::MainWindow *ui, QWidget *parent){
