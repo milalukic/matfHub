@@ -3,27 +3,21 @@
 
 #include <iostream>
 #include <vector>
+#include "../include/history.hpp"
 
 class Calculator
 {
 public:
-    Calculator(std::vector<std::string> h = std::vector<std::string>());
+    Calculator();
     ~Calculator();
 
     //
-    void writeHistory(std::string line);
-    void editLastLine(std::string line);
-    std::string lastLine();
+
     //
-    std::vector<std::string> history() const;
-
-    void history(std::vector<std::string> &newHistory);
-
-    void saveHistory();
+    History history() const;
 
 private:
-    std::vector<std::string> _history;
-
+    History _history;
 };
 
 
