@@ -5,6 +5,7 @@
 #include "../include/matrix.hpp"
 #include "../include/parser.hpp"
 #include "../include/plotter.hpp"
+#include "../include/statistics.hpp"
 
 #include <QSplitter>
 #include <QFileSystemModel>
@@ -18,6 +19,8 @@
 #include <QDebug>
 #include <string>
 #include <matplot/matplot.h>
+
+
 
 
 // #include <iostream>
@@ -678,103 +681,70 @@ void MainWindow::plotRoot(){
     plt->transformRoot();
 }
 
+//stat
+//TODO global?
+Statistics *stat = new Statistics();
 void MainWindow::statCalcMean(){
 
-    std::string input = ui->leStat->text().toStdString();
+    auto input = ui->leStat->text().toStdString();
+    stat->xData(cppSplit(input));
 
-    auto data = cppSplit(input);
-
-    double average = std::accumulate(data.begin(), data.end(), 0.0) / (data.size()-1);
-    ui->tbParser->setText(QString::number(average));
-
+    ui->tbParser->setText(QString::number(stat->mean()));
 }
 
 void MainWindow::statCalcVariance(){
 
-    std::string input = ui->leStat->text().toStdString();
-
-    auto data = cppSplit(input);
-
-    double average = std::accumulate(data.begin(), data.end(), 0.0) / (data.size()-1);
-    double result = 0;
-
-    for(int i = 0; i < data.size(); i++)
-        result += pow((data[i] - average), 2);
-
-    result = result / (data.size()-1);
-
-    ui->tbParser->setText(QString::number(result));
-
+    auto input = ui->leStat->text().toStdString();
+    stat->xData(cppSplit(input));
+    
+    ui->tbParser->setText(QString::number(stat->variance()));
 }
 
 // Prouci kod
 void MainWindow::statCalcMedian(){
 
-    std::string input = ui->leStat->text().toStdString();
+    //TODO razmisli
+    // stat->loadData();
+    
+    auto input = ui->leStat->text().toStdString();
+    stat->xData(cppSplit(input));
 
-    auto data = cppSplit(input);
-
-    auto n = data.size() / 2;
-    nth_element(data.begin(), data.begin()+n, data.end());
-    auto med = data[n];
-    if(!(data.size() & 1)) {
-        auto maxIt = max_element(data.begin(), data.begin()+n);
-        med = (*maxIt + med) / 2.0;
-    }
-    ui->tbParser->setText(QString::number(med));
-
+    ui->tbParser->setText(QString::number(stat->median()));
 }
 
 void MainWindow::statCalcMode(){
 
-    std::map<double, int> occurences;
-    std::string input = ui->leStat->text().toStdString();
+    auto input = ui->leStat->text().toStdString();
+    stat->xData(cppSplit(input));
 
-    auto data = cppSplit(input);
-
-    for(auto x : data)
-        occurences[x]++;
-
-    auto it = std::max_element(occurences.begin(), occurences.end(), [](const auto &x, const auto &y) {
-        return x.second < y.second;
-    });
-
-    ui->tbParser->setText(QString::number(it->first));
+    ui->tbParser->setText(QString::number(stat->mode()));
 }
 
 void MainWindow::statPlotHist(){
 
-    std::string input = ui->leStat->text().toStdString();
-
-    auto data = cppSplit(input);
-
-    matplot::hist(data);
-
-    show();
+    auto input = ui->leStat->text().toStdString();
+    stat->xData(cppSplit(input));
+    
+    stat->histogram();
 }
 
 void MainWindow::statPlotBar(){
 
-    std::string input1 = ui->leStat->text().toStdString();
-    std::string input2 = ui->leStatNames->text().toStdString();
+    auto input1 = ui->leStat->text().toStdString();
+    auto input2 = ui->leStatNames->text().toStdString();
+    stat->xData(cppSplit(input1));
+    stat->textData(cppSplitString(input2));
 
-    auto data = cppSplit(input1);
-    auto names = cppSplitString(input2);
-
-    matplot::bar(data);
-    matplot::gca()->x_axis().ticklabels(names);
-
-    show();
+    stat->barplot();
 }
 
 void MainWindow::statPlotBox(){
-    std::string input1 = ui->leStat->text().toStdString();
-    std::string input2 = ui->leStatNames->text().toStdString();
+    auto input1 = ui->leStat->text().toStdString();
+    auto input2 = ui->leStatNames->text().toStdString();
+    stat->xData(cppSplit(input1));
+    stat->textData(cppSplitString(input2));
 
-    auto data = cppSplit(input1);
-    auto names = cppSplitString(input2);
-
-    matplot::boxplot(data, names);
+    stat->boxplot();
 }
 
 
