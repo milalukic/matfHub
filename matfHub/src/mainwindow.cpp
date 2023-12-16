@@ -90,6 +90,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->pbMean, &QPushButton::clicked, this, &MainWindow::statCalcMean);
     connect(ui->pbVariance, &QPushButton::clicked, this, &MainWindow::statCalcVariance);
+    connect(ui->pbStd, &QPushButton::clicked, this, &MainWindow::statCalcStd);
     connect(ui->pbMedian, &QPushButton::clicked, this, &MainWindow::statCalcMedian);
     connect(ui->pbMode, &QPushButton::clicked, this, &MainWindow::statCalcMode);
     connect(ui->pbHist, &QPushButton::clicked, this, &MainWindow::statPlotHist);
@@ -696,6 +697,14 @@ void MainWindow::statCalcVariance(){
     stat->xData(cppSplit(input));
     
     ui->tbParser->setText(QString::number(stat->variance()));
+}
+
+void MainWindow::statCalcStd(){
+
+    auto input = ui->leStat->text().toStdString();
+    stat->xData(cppSplit(input));
+
+    ui->tbParser->setText(QString::number(stat->std()));
 }
 
 void MainWindow::statCalcMedian(){

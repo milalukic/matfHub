@@ -115,6 +115,7 @@ private slots:
     //Staistics
     void statCalcMean();
     void statCalcVariance();
+    void statCalcStd();
     void statCalcMedian();
     void statCalcMode();
     void statPlotHist();

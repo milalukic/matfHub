@@ -15,8 +15,7 @@ Statistics::~Statistics(){
 double Statistics::mean(){
 
     auto data = this->xData();
-    auto result = std::accumulate(cbegin(data), cend(data), 0.0) / (data.size() - 1);
-    return result;
+    return std::accumulate(cbegin(data), cend(data), 0.0) / (data.size() - 1);
 }
 
 double Statistics::variance(){
@@ -25,8 +24,12 @@ double Statistics::variance(){
     auto mean = this->mean();
 
     std::vector<double> diff(data.size());
-    transform(cbegin(data), cend(data), begin(diff), std::bind2nd(std::minus<double>(), mean));
-    return std::inner_product(cbegin(diff), cend(diff), cbegin(data), 0.0);
+    transform(cbegin(data), cend(data), begin(diff), [mean](auto x){return pow(x-mean,2);});
+    return std::accumulate(cbegin(diff), cend(diff), 0.0) / (data.size() - 1);
+}
+
+double Statistics::std(){
+    return std::sqrt(this->variance());
 }
 
 double Statistics::median(){

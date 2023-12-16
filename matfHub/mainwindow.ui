@@ -2529,8 +2529,8 @@
            <widget class="QPushButton" name="pbHist">
             <property name="geometry">
              <rect>
-              <x>230</x>
-              <y>220</y>
+              <x>430</x>
+              <y>230</y>
               <width>101</width>
               <height>31</height>
              </rect>
@@ -2542,8 +2542,8 @@
            <widget class="QPushButton" name="pbBar">
             <property name="geometry">
              <rect>
-              <x>430</x>
-              <y>220</y>
+              <x>630</x>
+              <y>230</y>
               <width>101</width>
               <height>31</height>
              </rect>
@@ -2565,14 +2565,27 @@
            <widget class="QPushButton" name="pbBox">
             <property name="geometry">
              <rect>
-              <x>640</x>
-              <y>230</y>
+              <x>840</x>
+              <y>220</y>
               <width>101</width>
               <height>31</height>
              </rect>
             </property>
             <property name="text">
              <string>BoxPlot</string>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="pbStd">
+            <property name="geometry">
+             <rect>
+              <x>230</x>
+              <y>230</y>
+              <width>111</width>
+              <height>31</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Standard deviation</string>
             </property>
            </widget>
           </widget>

@@ -22,6 +22,7 @@ public:
     //metode
     double mean();
     double variance();
+    double std();
     double median();
     double mode();
     
