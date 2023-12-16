@@ -12,7 +12,7 @@
 #include "notes.h"
 #include "plotter.hpp"
 #include "matrix.hpp"
-
+#include "statistics.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

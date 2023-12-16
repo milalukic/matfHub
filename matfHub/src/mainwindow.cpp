@@ -22,8 +22,6 @@
 
 
 
-
-// #include <iostream>
 // #include "../include/notes.h"
 
 
@@ -700,7 +698,6 @@ void MainWindow::statCalcVariance(){
     ui->tbParser->setText(QString::number(stat->variance()));
 }
 
-// Prouci kod
 void MainWindow::statCalcMedian(){
 
     //TODO razmisli

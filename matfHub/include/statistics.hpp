@@ -6,8 +6,10 @@
 #include <vector>
 
 #include <cmath>
+#include <map>
+#include <numeric>
 
-// #include <matplot/matplot.h>
+#include <matplot/matplot.h>
 
 class Statistics{
 

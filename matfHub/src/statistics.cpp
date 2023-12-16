@@ -1,6 +1,7 @@
 
 #include "../include/statistics.hpp"
 
+
 //konstruktor
 Statistics::Statistics(std::vector<double> const &xData)
     : _xData(xData){}
@@ -24,7 +25,7 @@ double Statistics::variance(){
     auto mean = this->mean();
 
     std::vector<double> diff(data.size());
-    std::transform(cbegin(data), cend(data), begin(diff), std::bind2nd(std::minus<double>(), mean));
+    transform(cbegin(data), cend(data), begin(diff), std::bind2nd(std::minus<double>(), mean));
     return std::inner_product(cbegin(diff), cend(diff), cbegin(data), 0.0);
 }
 
@@ -33,7 +34,7 @@ double Statistics::median(){
     auto data = this->xData();
     auto n = data.size() / 2;
 
-    std::nth_element(cbegin(data), cbegin(data)+n, cend(data));
+    nth_element(begin(data), begin(data)+n, end(data));
     auto med = data[n];
 
     if(!(data.size() & 1)) {
