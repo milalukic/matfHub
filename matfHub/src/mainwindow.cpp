@@ -68,8 +68,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pbMatrixDiag, &QPushButton::clicked, this, &MainWindow::calculateMatrixDiag);
     connect(ui->pbMatrixOne, &QPushButton::clicked, this, &MainWindow::calculateMatrixOne);
 
-    connect(ui->pbMatrixLoad1, &QPushButton::clicked, this, &MainWindow::parseMatrix1);
-    connect(ui->pbMatrixLoad2, &QPushButton::clicked, this, &MainWindow::parseMatrix2);
+    connect(ui->pbMatrixLoad1, &QPushButton::clicked, this, &MainWindow::reshapeMatrix1);
+    connect(ui->pbMatrixLoad2, &QPushButton::clicked, this, &MainWindow::reshapeMatrix2);
 
     connect(ui->pbMatrixAdd, &QPushButton::clicked, this, &MainWindow::calculateMatrixAdd);
     connect(ui->pbMatrixSubtract, &QPushButton::clicked, this, &MainWindow::calculateMatrixSubtract);
@@ -470,46 +470,79 @@ void MainWindow::calculateRegular(){
 Matrix *m1;
 Matrix *m2;
 //TODO figure out why it's working with ints instead of doubles
-void MainWindow::parseMatrix1(){
+//void MainWindow::parseMatrix1(){
+void MainWindow::reshapeMatrix1(){//preimenujte reshape -> resize ako vam ima vise smisla
 
-
-    //TODO polymorph
+    //TODO polymorph // je l ovaj komentar jos uvek relevantan? ako da je l za ove dve linije ili celu funkciju ili staru funkciju tj ucitavanje matrice?
     int dim1 = ui->leMatrixDim11->text().toInt();
     int dim2 = ui->leMatrixDim12->text().toInt();
-    m1 = new Matrix(dim1, dim2);
 
-    std::string in = ui->leMatrixData1->text().toStdString();
+    QVBoxLayout* rows;
+    if(ui->scrollAreaM1widget->children().isEmpty()){
+        rows = new QVBoxLayout;
+        ui->scrollAreaM1widget->setLayout(rows);
+    }else{
+        rows = qobject_cast<QVBoxLayout*>(ui->scrollAreaM1widget->children().first());
+        while( !(rows->children().isEmpty()) ){
+            auto row = rows->children().first();
+            delete row;//ovo nije dovoljno, iako skrolboks i lejaut rows vise ne razmsljaju o prethodno nacrtanim kutijama i moguce da se cak ni iventovi koje su okidali ne pale vise ali prethodni tekstboksovi su jos uvek na ekranu (iako ispod novonapravljenih u narednih nekoliko linija) i u njih se moze upisivati tekst. nikada na ovom projektu me nista nije mucilo koliko ovaj problem, necu moci spavati danima, molim neka neko popravi bio bih jako zahvalan u suprotnom mislim da cu se obesiti o tramvajske zice ovde na dorcolu nece niko iz kruga dvojke moci da se vozi vise kada svog pomeranca dovodi ovde u veterinarsku apoteku da mu kupi probiotike jer kerce ima osetljiv stomacic nastace haos u gradu pazite sta sam rekao ovo je pretnja!!!!!!!!
+        }//na komentar u prethodnoj linij dodao bih da sam probao samim teksteditima da kazem .hide(), set_shown(false), delete, row.update(), row.hide() itd itd, rows.update(), ui.update() i |nista| od toga nije radilo sva sreca da ne umem da varim i da nemam bager inace bih zavario celicne ploce debljine tri santimetra na bager i prosao preko skupstine sve do Espoa u Finskoj da sravnim sediste "The Qt Company" kompanije pazite sta sam rekao ovo je pretnja2!!!!!!!!!
+    }
+    for(int i = 0; i < (dim1 <= 25 ? dim1 : 25); ++i){
+        QHBoxLayout* fields = new QHBoxLayout;
+        for(int j = 0; j < (dim2 <= 25 ? dim2 : 25); ++j){
+            QLineEdit* field = new QLineEdit;
+            //connect(field, onEdit, this, func);
 
-    std::vector<double> data = cppSplit(in);
+            field->setMaximumSize(64, 32);
+            fields->addWidget(field);
+        }
+        rows->addLayout(fields);
+    }
+
+
+//    m1 = new Matrix(dim1, dim2);
+
+//    std::string in = ui->leMatrixData1->text().toStdString();
+
+//    std::vector<double> data = cppSplit(in);
 
     //TODO exception if data.size() isn't right
     //TODO fix this?
-    arma::mat A = arma::conv_to<arma::mat>::from(data);
-    A.reshape(dim1, dim2);
+//    arma::mat A = arma::conv_to<arma::mat>::from(data);
+//    A.reshape(dim1, dim2);
 
-    m1->data(A);
-    showMatrix(m1);
+//    m1->data(A);
+//    showMatrix(m1);
 
 }
 
-void MainWindow::parseMatrix2(){
+void MainWindow::reshapeMatrix2(){//e ovo je bukvalno kopiran kod ajde molim vas da se to izdvoji u funkciju mene trenutno mrzi tako da u "vas" unutar "molim vas" uglavnom spadam ja ali slobodno ako se neko pojavi i ne daj Boze cita komentare
 
-    //TODO polymorph
     int dim1 = ui->leMatrixDim21->text().toInt();
     int dim2 = ui->leMatrixDim22->text().toInt();
-    m2 = new Matrix(dim1, dim2);
 
-    std::string in = ui->leMatrixData2->text().toStdString();
+    QVBoxLayout* rows;
+    if(ui->scrollAreaM2widget->children().isEmpty()){
+        rows = new QVBoxLayout;
+        ui->scrollAreaM2widget->setLayout(rows);
+    }else{
+        rows = qobject_cast<QVBoxLayout*>(ui->scrollAreaM2widget->children().first());
+        while( !(rows->children().isEmpty()) ){
+            auto row = rows->children().first();
+            delete row;
+        }
+    }
+    for(int i = 0; i < (dim1 <= 25 ? dim1 : 25); ++i){
+        QHBoxLayout* fields = new QHBoxLayout;
+        for(int j = 0; j < (dim2 <= 25 ? dim2 : 25); ++j){
+            QLineEdit* field = new QLineEdit;
+            field->setMaximumSize(64, 32);
+            fields->addWidget(field);
+        }
+        rows->addLayout(fields);
+    }
 
-    std::vector<double> data = cppSplit(in);
-
-    //TODO exception if data.size() isn't right
-    //TODO fix this?
-    arma::mat A = arma::conv_to<arma::mat>::from(data);
-    A.reshape(dim1, dim2);
-
-    m2->data(A);
-    showMatrix(m2);
 }
 
 void MainWindow::calculateMatrixTranspose(){

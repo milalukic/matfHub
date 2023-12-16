@@ -90,8 +90,8 @@ private slots:
     void calculateMatrixDiag();
     void calculateMatrixOne();
 
-    void parseMatrix1();
-    void parseMatrix2();
+    void reshapeMatrix1();
+    void reshapeMatrix2();
 
     void calculateMatrixAdd();
     void calculateMatrixSubtract();
