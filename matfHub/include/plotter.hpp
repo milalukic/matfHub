@@ -19,6 +19,7 @@ public:
 
     //metode
     void plot();
+    void operator()() const;
 
     void linSpace(double lowerBound, double upperBound, size_t step);
 
@@ -43,7 +44,7 @@ public:
     std::vector<double> yData() const;
     std::string output() const;
 
-    void operator()() const;
+
 
 private:
     std::string _func;

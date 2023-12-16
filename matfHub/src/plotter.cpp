@@ -9,16 +9,15 @@ Plotter::~Plotter(){
     std::cout << "Unisten plotter" << std::endl;
 }
 
+//TODO Magic numbers
 void Plotter::operator()() const {
-    matplot::plot(this->xData(), this->yData())->line_width(3).color("red");
+    std::vector<double> zero(this->xData().size());
+    std::fill(zero.begin(), zero.end(), 0);
+    matplot::plot(zero, this->xData(), this->xData(), zero, this->xData(), this->yData());
     matplot::show();
 }
 
 //metode
-void Plotter::plot(){
-    matplot::plot(this->xData(), this->yData())->line_width(3).color("red");
-    matplot::show();
-}
 
 //TODO change arguments to double
 void Plotter::linSpace(double lowerBound, double upperBound, size_t step){
