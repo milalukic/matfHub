@@ -3,10 +3,21 @@
 #include <fstream>
 #include <QFile>
 
-//TODO initialize?
-History::History(std::vector<std::string>h){}
+
+History* History::historyPtr = nullptr;
+
+History::History(std::vector<std::string>h){
+
+}
 History::~History(){
     std::cout << "History unisten" << std::endl;
+}
+
+History* History::getHistory(){
+    if(historyPtr == nullptr){
+        historyPtr = new History();
+    }
+    return historyPtr;
 }
 
     //TODO enkapsulacija? friendly?

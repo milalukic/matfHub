@@ -14,10 +14,10 @@ public:
     //
 
     //
-    History history() const;
+//    History history() const;
 
 private:
-    History _history;
+//    History _history;
 };
 
 

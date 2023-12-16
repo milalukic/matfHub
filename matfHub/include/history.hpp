@@ -7,9 +7,9 @@
 class History
 {
 public:
-    History(std::vector<std::string> h = {" "});
     ~History();
 
+    static History* getHistory();
     //
     void writeHistory(std::string title, std::string line);
     std::string lastLine();
@@ -26,8 +26,10 @@ public:
     const std::string EOC = "--------------------\n";
 
 private:
-    std::vector<std::string> _history;
+    History(std::vector<std::string>h = std::vector<std::string>());
+    static History* historyPtr;
 
+    std::vector<std::string> _history;
 };
 
 

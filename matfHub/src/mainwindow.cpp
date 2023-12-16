@@ -437,7 +437,7 @@ void MainWindow::changeStackedWidgetPage(){
 }
 //TODO global
 Calculator *calculator = new Calculator();
-History *history = new History();
+History *history = History::getHistory();
 Parser *parser = new Parser();
 void MainWindow::calculateRegular(){
 

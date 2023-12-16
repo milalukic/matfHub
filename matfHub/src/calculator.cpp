@@ -8,7 +8,7 @@ Calculator::~Calculator(){
     std::cout << "Calculator unisten" << std::endl;
 }
 
-History Calculator::history() const{
-    return this->_history;
-}
+//History Calculator::history() const{
+//    return this->_history;
+//}
 
