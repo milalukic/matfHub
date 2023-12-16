@@ -9,6 +9,11 @@ Plotter::~Plotter(){
     std::cout << "Unisten plotter" << std::endl;
 }
 
+void Plotter::operator()() const {
+    matplot::plot(this->xData(), this->yData())->line_width(3).color("red");
+    matplot::show();
+}
+
 //metode
 void Plotter::plot(){
     matplot::plot(this->xData(), this->yData())->line_width(3).color("red");

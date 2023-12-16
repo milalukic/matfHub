@@ -43,6 +43,7 @@ public:
     std::vector<double> yData() const;
     std::string output() const;
 
+    void operator()() const;
 
 private:
     std::string _func;

@@ -580,10 +580,27 @@ void MainWindow::calculateMatrixDivide(){
 
 //////////////////////////////////////////////////////
 //TODO global classes?
+
+//plt = new Plotter("dd");
+void MainWindow::plotLinspace(){
+    //TODO GLOBAL CLASSES?
+    plt = new Plotter("dd");
+
+    double lowerBound = ui->leLinspaceLB->text().toDouble();
+    double upperBound = ui->leLinspaceUB->text().toDouble();
+    double numOfDots = ui->leLinspaceS->text().toDouble();
+    plt->linSpace(lowerBound, upperBound, numOfDots);
+
+    ui->leState->setText("x");
+    ui->lbLin->setText("Vektor je uspesno ucitan");
+    std::cerr << "Resetovan y" << std::endl;
+    std::cerr <<"Postavljen linspace" << std::endl;
+}
+
 void MainWindow::plot(){
 //    Plotter *plt = new Plotter("sin");
 
-    plt->plot();
+    (*plt)();
     std::cerr <<"Crtanje: " << std::endl;
     std::cerr << "\t" << ui->leLinspaceLB->text().toStdString() << " ";
     std::cerr << ui->leLinspaceUB->text().toStdString() << std::endl;
@@ -599,20 +616,6 @@ void MainWindow::plot(){
 
 }
 
-void MainWindow::plotLinspace(){
-    //TODO GLOBAL CLASSES?
-    plt = new Plotter("dd");
-
-    double lowerBound = ui->leLinspaceLB->text().toDouble();
-    double upperBound = ui->leLinspaceUB->text().toDouble();
-    double numOfDots = ui->leLinspaceS->text().toDouble();
-    plt->linSpace(lowerBound, upperBound, numOfDots);
-
-    ui->leState->setText("x");
-    ui->lbLin->setText("Vektor je uspesno ucitan");
-    std::cerr << "Resetovan y" << std::endl;
-    std::cerr <<"Postavljen linspace" << std::endl;
-}
 
 void MainWindow::plotSin(){
 
