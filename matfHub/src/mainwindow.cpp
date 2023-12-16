@@ -93,8 +93,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pbMode, &QPushButton::clicked, this, &MainWindow::statCalcMode);
     connect(ui->pbHist, &QPushButton::clicked, this, &MainWindow::statPlotHist);
     connect(ui->pbBar, &QPushButton::clicked, this, &MainWindow::statPlotBar);
-
-
+    connect(ui->pbBox, &QPushButton::clicked, this, &MainWindow::statPlotBox);
 
 }
 //TODO move this, change serbian to english
@@ -767,3 +766,15 @@ void MainWindow::statPlotBar(){
 
     show();
 }
+
+void MainWindow::statPlotBox(){
+    std::string input1 = ui->leStat->text().toStdString();
+    std::string input2 = ui->leStatNames->text().toStdString();
+
+    auto data = cppSplit(input1);
+    auto names = cppSplitString(input2);
+
+    matplot::boxplot(data, names);
+}
+
+

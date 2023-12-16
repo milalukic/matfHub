@@ -119,6 +119,7 @@ private slots:
     void statCalcMode();
     void statPlotHist();
     void statPlotBar();
+    void statPlotBox();
 
 
     //kmiljanify
