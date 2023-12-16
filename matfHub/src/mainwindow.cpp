@@ -6,6 +6,7 @@
 #include "../include/parser.hpp"
 #include "../include/plotter.hpp"
 #include "../include/statistics.hpp"
+#include "../include/calculator.h"
 
 #include <QSplitter>
 #include <QFileSystemModel>
@@ -96,6 +97,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pbHist, &QPushButton::clicked, this, &MainWindow::statPlotHist);
     connect(ui->pbBar, &QPushButton::clicked, this, &MainWindow::statPlotBar);
     connect(ui->pbBox, &QPushButton::clicked, this, &MainWindow::statPlotBox);
+
+    connect(ui->pbHistorySave, &QPushButton::clicked, this, &MainWindow::historySave);
 
 }
 //TODO move this, change serbian to english
@@ -415,10 +418,7 @@ QModelIndexList MainWindow::getSelectedIndices(const QListView* view){
 
 
 //kalkulator things
-//void MainWindow::pbMatrixTest(){
-//    Matrix *m1 = new Matrix(3, 3);
-//    std::cout << m1 << std::endl;
-//}
+
 
 
 void MainWindow::changeStackedWidgetPage(){
@@ -435,11 +435,11 @@ void MainWindow::changeStackedWidgetPage(){
     else if(buttonText == "Statistics")
         ui->stackedWidget->setCurrentIndex(3);
 }
-
+//TODO global
+Calculator *calculator = new Calculator();
 Parser *parser = new Parser();
 void MainWindow::calculateRegular(){
 
-    //TODO make x+5 work (if possible)
 //    Parser *parser = new Parser();
 
     //TODO so it works with char*
@@ -447,6 +447,10 @@ void MainWindow::calculateRegular(){
     parser->eval_exp(expr);
     double res = parser->eval_exp(expr);
     QString qres = QString::number(res);
+
+//    calculator->writeHistory(expr);
+//    calculator->writeHistory(qres.toStdString());
+//    calculator->writeHistory("----------");
 
     QString history = ui->tbParser->toPlainText();
 
@@ -457,6 +461,8 @@ void MainWindow::calculateRegular(){
 
     ui->leParser->setText(qres);
     ui->tbParser->setText(history);
+
+//    std::cout << calculator->lastLine() << std::endl;
 
 //    delete parser; parser = nullptr;
 }
@@ -593,10 +599,6 @@ void MainWindow::plotLinspace(){
     double numOfDots = ui->leLinspaceS->text().toDouble();
     plt->linSpace(lowerBound, upperBound, numOfDots);
 
-    // //TODO remove
-    // std::vector<double>x = plt->xData();
-    // plt->yData(x);
-
     ui->leState->setText("x");
     ui->lbLin->setText("Vektor je uspesno ucitan");
     std::cerr << "Resetovan y" << std::endl;
@@ -608,9 +610,8 @@ void MainWindow::plotSin(){
     ui->leState->setText("sin(" + ui->leState->text() + ")" );
 
     plt->transformSin();
-
-    //TODO sme ovako? Enkapsulacija
-//    plt->plotSin(plt->xData());
+    calculator->writeHistory("PLOT: " + ui->leState->text().toStdString());
+    std::cout << calculator->lastLine() << std::endl;
 }
 
 void MainWindow::plotCos(){
@@ -618,6 +619,8 @@ void MainWindow::plotCos(){
     ui->leState->setText("cos(" + ui->leState->text() + ")" );
 
     plt->transformCos();
+    calculator->writeHistory("PLOT: " + ui->leState->text().toStdString());
+    std::cout << calculator->lastLine() << std::endl;
 }
 
 void MainWindow::plotTan(){
@@ -625,6 +628,8 @@ void MainWindow::plotTan(){
     ui->leState->setText("tan(" + ui->leState->text() + ")" );
 
     plt->transformTan();
+    calculator->writeHistory("PLOT: " + ui->leState->text().toStdString());
+    std::cout << calculator->lastLine() << std::endl;
 }
 
 void MainWindow::plotLn(){
@@ -632,6 +637,8 @@ void MainWindow::plotLn(){
     ui->leState->setText("ln(" + ui->leState->text() + ")" );
 
     plt->transformLn();
+    calculator->writeHistory("PLOT: " + ui->leState->text().toStdString());
+    std::cout << calculator->lastLine() << std::endl;
 }
 
 void MainWindow::plotLog(){
@@ -639,6 +646,8 @@ void MainWindow::plotLog(){
     ui->leState->setText("log(" + ui->leState->text() + ")" );
 
     plt->transformLog();
+    calculator->writeHistory("PLOT: " + ui->leState->text().toStdString());
+    std::cout << calculator->lastLine() << std::endl;
 }
 
 void MainWindow::plotExp(){
@@ -646,6 +655,8 @@ void MainWindow::plotExp(){
     ui->leState->setText("e^(" + ui->leState->text() + ")" );
 
     plt->transformExp();
+    calculator->writeHistory("PLOT: " + ui->leState->text().toStdString());
+    std::cout << calculator->lastLine() << std::endl;
 }
 
 void MainWindow::plotAbs(){
@@ -653,6 +664,8 @@ void MainWindow::plotAbs(){
     ui->leState->setText("|" + ui->leState->text() + "|" );
 
     plt->transformAbs();
+    calculator->writeHistory("PLOT: " + ui->leState->text().toStdString());
+    std::cout << calculator->lastLine() << std::endl;
 }
 
 void MainWindow::plotNeg(){
@@ -664,6 +677,9 @@ void MainWindow::plotNeg(){
         ui->leState->setText("-(" + ui->leState->text() + ")" );
 
     plt->transformNeg();
+
+    calculator->writeHistory("PLOT: " + ui->leState->text().toStdString());
+    std::cout << calculator->lastLine() << std::endl;
 }
 
 void MainWindow::plotSquare(){
@@ -671,6 +687,8 @@ void MainWindow::plotSquare(){
     ui->leState->setText("(" + ui->leState->text() + ")²" );
 
     plt->transformSquare();
+    calculator->editLastLine("PLOT: " + ui->leState->text().toStdString());
+    std::cout << calculator->lastLine() << std::endl;
 }
 
 void MainWindow::plotRoot(){
@@ -678,6 +696,8 @@ void MainWindow::plotRoot(){
     ui->leState->setText("√(" + ui->leState->text() + ")" );
 
     plt->transformRoot();
+    calculator->writeHistory("PLOT: " + ui->leState->text().toStdString());
+    std::cout << calculator->lastLine() << std::endl;
 }
 
 //stat
@@ -686,8 +706,7 @@ Statistics *stat = new Statistics();
 void MainWindow::statCalcMean(){
 
     auto input = ui->leStat->text().toStdString();
-    stat->xData(cppSplit(input));
-
+    stat->xData(cppSplit(input));    
     ui->tbParser->setText(QString::number(stat->mean()));
 }
 
@@ -753,4 +772,9 @@ void MainWindow::statPlotBox(){
     stat->boxplot();
 }
 
+//HISTORY
 
+void MainWindow::historySave(){
+    calculator->saveHistory();
+    std::cout << "History saved!" << std::endl;
+}

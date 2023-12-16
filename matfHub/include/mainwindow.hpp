@@ -123,6 +123,8 @@ private slots:
     void statPlotBox();
 
 
+    void historySave();
+
     //kmiljanify
     void on_smerBox_activated(int index);
 
