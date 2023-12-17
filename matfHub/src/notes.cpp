@@ -120,7 +120,7 @@ void Notes::openClicked(Ui::MainWindow *ui, QWidget *parent){
             return;
         }
 
-        parent->setWindowTitle(fileName);
+        parent->setWindowTitle(fileName.right(fileName.length() - fileName.lastIndexOf("/")-1));
         QTextStream in(&file);
         QString text = in.readAll();
 
@@ -143,7 +143,7 @@ void Notes::saveClicked(Ui::MainWindow *ui, QWidget *parent){
         }
 
         currentFile = fileName;
-        parent->setWindowTitle(fileName);
+        parent->setWindowTitle(fileName.right(fileName.length() - fileName.lastIndexOf("/")-1));
 
         QTextStream out(&file);
         QString text = ui->textEdit->toPlainText();
