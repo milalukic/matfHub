@@ -3,6 +3,7 @@
 //TODO use camelCase
 
 #include <QStringList>
+#include <QDebug>
 
 Matrix* Matrix::m_M1 = new Matrix(1,1);
 Matrix* Matrix::m_M2 = new Matrix(1,1);
@@ -26,6 +27,37 @@ Matrix::~Matrix(){
 }
 
     //getteri
+std::pair<unsigned, unsigned> Matrix::getM1shape(){
+    return {m_M1->m_columns, m_M1->m_rows};
+}
+std::pair<unsigned, unsigned> Matrix::getM2shape(){
+    return {m_M2->m_columns, m_M2->m_rows};
+}
+
+QString Matrix::toString(){
+    QString res = "";
+    for(int i = 0; i < m_rows; ++i){
+        res += "|\t";
+        for(int j = 0; j < m_columns; ++j){
+            qDebug() << "i: " << i << " j: " << j;
+            res += QString::number(m_data[i][j]).toStdString();
+            res += "\t";
+        }
+        res += "|\n";
+    }
+    return res;
+}
+QString Matrix::m1toString(){
+    qDebug() << "2.1";
+    return m_M1->toString();
+    qDebug() << "2.2";
+}
+QString Matrix::m2toString(){
+    return m_M2->toString();
+}
+QString Matrix::m3toString(){
+    return m_M3->toString();
+}
 
 
     // setteri
@@ -42,33 +74,18 @@ void Matrix::setData(QString data){
     }
 }
 
-void Matrix::setM1Data(QString data){
-    int r=0, c=0;
-    for(auto value : data.split(" ")){
-        Matrix::m_M1->m_data[r][c] = value.toDouble();
-        c++;
-        if(c == m_M1->m_columns){
-            c = 0;
-            r++;
-        }
-    }
+void Matrix::setM1Data(double value, unsigned i, unsigned j){
+    Matrix::m_M1->m_data[i][j] = value;
 }
 void Matrix::reshapeM1(int col, int row){
-    reshapeMatrix(m_M1);
+    m_M1->reshapeMatrix(col, row);
 }
-void Matrix::setM2Data(QString data){
-    int r=0, c=0;
-    for(auto value : data.split(" ")){
-        m_M2->m_data[r][c] = value.toDouble();
-        c++;
-        if(c == m_M2->m_columns){
-            c = 0;
-            r++;
-        }
-    }
+void Matrix::setM2Data(double value, unsigned i, unsigned j){
+    m_M2->m_data[i][j] = value;
+
 }
 void Matrix::reshapeM2(int col, int row){
-    reshapeMatrix(m_M2);
+    m_M2->reshapeMatrix(col, row);
 }
 
     //operators
@@ -77,9 +94,10 @@ void Matrix::reshapeM2(int col, int row){
 
     //functions
 
-void Matrix::reshapeMatrix(Matrix* mat, unsigned col, unsigned row){
-    delete mat->m_data;
-    mat->m_data = arma::mat(col, row);
+void Matrix::reshapeMatrix(unsigned col, unsigned row){
+    m_data->set_size(row, col);
+    m_columns = col;
+    m_rows = row;
 }
 
 

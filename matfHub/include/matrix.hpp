@@ -19,13 +19,19 @@ public:
     ~Matrix();
 
     //get
+    static std::pair<unsigned, unsigned> getM1shape();
+    static std::pair<unsigned, unsigned> getM2shape();
+    QString toString();
+    static QString m1toString();
+    static QString m2toString();
+    static QString m3toString();
 
 
 
     //set
-    static void setM1Data(QString data);
+    static void setM1Data(double value, unsigned i, unsigned j);
     static void reshapeM1(int col, int row);
-    static void setM2Data(QString data);
+    static void setM2Data(double value, unsigned i, unsigned j);
     static void reshapeM2(int col, int row);
 
     //functions
@@ -64,7 +70,7 @@ private:
     static std::vector<Matrix*> m_savedMatrices;
 
     void setData(QString data);
-    void reshapeMatrix(Matrix* mat, unsigned col, unsigned row);
+    void reshapeMatrix(unsigned col, unsigned row);
 
 };
 

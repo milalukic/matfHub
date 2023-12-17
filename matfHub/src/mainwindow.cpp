@@ -501,7 +501,17 @@ void MainWindow::reshapeMatrix1(){//preimenujte reshape -> resize ako vam ima vi
     //TODO polymorph // je l ovaj komentar jos uvek relevantan? ako da je l za ove dve linije ili celu funkciju ili staru funkciju tj ucitavanje matrice?
     int dim1 = ui->leMatrixDim11->text().toInt();
     int dim2 = ui->leMatrixDim12->text().toInt();
+    auto [oldDim1, oldDim2] = Matrix::getM1shape();
+    qDebug() << "dim1: " << dim1;
+    qDebug() << "dim2: " << dim2;
+    qDebug() << "old dim1: " << oldDim1;
+    qDebug() << "old dim2: " << oldDim2;
+    if (dim1 == oldDim1 && dim2 == oldDim2){
+        qDebug() << "nothing changed";
+        return;
+    }
 
+    Matrix::reshapeM1(dim1, dim2);
 
     QVBoxLayout* rows;
     if(ui->scrollAreaM1widget->children().isEmpty()){
@@ -520,9 +530,11 @@ void MainWindow::reshapeMatrix1(){//preimenujte reshape -> resize ako vam ima vi
             QLineEdit* field = new QLineEdit;
             field->setText("0");
             connect(field, &QLineEdit::editingFinished , this, [i, j, field, this](){
-                qDebug() << "mat[" << i << "][" << j << "] = " << field->text();
-                QString m1Data = readM1Data();
-                Matrix::setM1Data(m1Data);
+                qDebug() << "1";
+                Matrix::setM1Data(field->text().toDouble(), i, j);
+                qDebug() << "2";
+                qDebug().noquote() << Matrix::m1toString();
+                qDebug() << "3";
             });
 
             field->setMaximumSize(64, 32);
