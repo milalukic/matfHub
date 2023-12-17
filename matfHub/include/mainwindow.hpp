@@ -8,6 +8,7 @@
 #include <stack>
 #include <memory>
 #include <QListView>
+#include <QString>
 
 #include "notes.h"
 #include "plotter.hpp"
@@ -92,6 +93,8 @@ private slots:
 
     void reshapeMatrix1();
     void reshapeMatrix2();
+    QString readM1Data();
+    QString readM2Data();
 
     void calculateMatrixAdd();
     void calculateMatrixSubtract();

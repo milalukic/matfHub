@@ -4,27 +4,29 @@
 
 #include <iostream>
 #include <vector>
+
+#include <QString>
+
 #include <armadillo>
 
 class Matrix{
 
 public:
 //konstruktori
-    Matrix(unsigned dimension1 = 1, unsigned dimension2 = 1, std::string matrixName = "matrix name");
+    Matrix(unsigned rows = 1, unsigned columns = 1);
+    Matrix(unsigned rows, unsigned columns, QString data);
     //destruktor
     ~Matrix();
 
     //get
-    unsigned dimension1() const;
-    unsigned dimension2() const;
-    std::string matrixName() const;
-    arma::mat data() const;
+
+
 
     //set
-    void dimension1(unsigned u);
-    void dimension2(unsigned u);
-    void matrixName(std::string name);
-    void data(arma::mat Matrix);
+    static void setM1Data(QString data);
+    static void reshapeM1(int col, int row);
+    static void setM2Data(QString data);
+    static void reshapeM2(int col, int row);
 
     //functions
     Matrix *transpose();
@@ -50,10 +52,20 @@ public:
 
     
 private:
-    unsigned _dimension1;
-    unsigned _dimension2;
-    std::string _matrixName;
-    arma::mat *_data;
+
+    unsigned m_rows;
+    unsigned m_columns;
+    arma::mat* m_data;
+
+    static Matrix* m_M1;
+    static Matrix* m_M2;
+    static Matrix* m_M3;
+
+    static std::vector<Matrix*> m_savedMatrices;
+
+    void setData(QString data);
+    void reshapeMatrix(Matrix* mat, unsigned col, unsigned row);
+
 };
 
 std::ostream &operator<<(std::ostream &out, const Matrix *value);

@@ -186,17 +186,17 @@ std::vector<std::string> cppSplitString(std::string &s){
 
 void MainWindow::showMatrix(Matrix *m){
 
-    QString history = ui->tbHistory->toPlainText();
+//    QString history = ui->tbHistory->toPlainText();
 
-    for(int i = 0; i < m->dimension1(); i++) {
-        for(int j = 0; j < m->dimension2(); j++) {
-            history += QString::number(m->data()(i,j));
-            history += " ";
-        }
-        history += '\n';
-    }
-    history += "------------------------\n";
-    ui->tbHistory->setText(history);
+//    for(int i = 0; i < m->dimension1(); i++) {
+//        for(int j = 0; j < m->dimension2(); j++) {
+//            history += QString::number(m->data()(i,j));
+//            history += " ";
+//        }
+//        history += '\n';
+//    }
+//    history += "------------------------\n";
+//    ui->tbHistory->setText(history);
 }
 
 MainWindow::~MainWindow()
@@ -469,6 +469,31 @@ void MainWindow::calculateRegular(){
 //TODO what to do with it
 Matrix *m1;
 Matrix *m2;
+
+QString MainWindow::readM1Data(){
+    QString res("");
+    //ovaj kod ce verovatno biti uzasan i pun bagova, radna verzija
+    auto rows = ui->scrollAreaM1widget->children().first();
+    for(auto cols : rows->children()){
+        for(auto field : cols->children()){
+            QLineEdit* lEdit = qobject_cast<QLineEdit*>(field);
+            res += lEdit->text();
+        }
+    }
+    return res;
+}
+QString MainWindow::readM2Data(){
+    QString res("");
+    //ovaj kod ce verovatno biti uzasan i pun bagova, radna verzija
+    auto rows = ui->scrollAreaM2widget->children().first();
+    for(auto cols : rows->children()){
+        for(auto field : cols->children()){
+            QLineEdit* lEdit = qobject_cast<QLineEdit*>(field);
+            res += lEdit->text();
+        }
+    }
+    return res;
+}
 //TODO figure out why it's working with ints instead of doubles
 //void MainWindow::parseMatrix1(){
 void MainWindow::reshapeMatrix1(){//preimenujte reshape -> resize ako vam ima vise smisla
@@ -476,6 +501,7 @@ void MainWindow::reshapeMatrix1(){//preimenujte reshape -> resize ako vam ima vi
     //TODO polymorph // je l ovaj komentar jos uvek relevantan? ako da je l za ove dve linije ili celu funkciju ili staru funkciju tj ucitavanje matrice?
     int dim1 = ui->leMatrixDim11->text().toInt();
     int dim2 = ui->leMatrixDim12->text().toInt();
+
 
     QVBoxLayout* rows;
     if(ui->scrollAreaM1widget->children().isEmpty()){
@@ -492,7 +518,12 @@ void MainWindow::reshapeMatrix1(){//preimenujte reshape -> resize ako vam ima vi
         QHBoxLayout* fields = new QHBoxLayout;
         for(int j = 0; j < (dim2 <= 25 ? dim2 : 25); ++j){
             QLineEdit* field = new QLineEdit;
-            //connect(field, onEdit, this, func);
+            field->setText("0");
+            connect(field, &QLineEdit::editingFinished , this, [i, j, field, this](){
+                qDebug() << "mat[" << i << "][" << j << "] = " << field->text();
+                QString m1Data = readM1Data();
+                Matrix::setM1Data(m1Data);
+            });
 
             field->setMaximumSize(64, 32);
             fields->addWidget(field);
@@ -547,68 +578,68 @@ void MainWindow::reshapeMatrix2(){//e ovo je bukvalno kopiran kod ajde molim vas
 
 void MainWindow::calculateMatrixTranspose(){
 
-    m1 = m1->transpose();
-    std::cout << "Transposed matrix: " << std::endl;
-    std::cout << m1 << std::endl;
-    showMatrix(m1);
+//    m1 = m1->transpose();
+//    std::cout << "Transposed matrix: " << std::endl;
+//    std::cout << m1 << std::endl;
+//    showMatrix(m1);
 }
 //TODO exceptions
 void MainWindow::calculateMatrixInverse(){
 
-    m1 = m1->inverse();
-    std::cout << "Inverse" << std::endl;
-    std::cout << m1 << std::endl;
-    showMatrix(m1);
+//    m1 = m1->inverse();
+//    std::cout << "Inverse" << std::endl;
+//    std::cout << m1 << std::endl;
+//    showMatrix(m1);
 }
 
 void MainWindow::calculateMatrixDiag(){
 
-    m1 = m1->diag();
-    std::cout << "Diag" << std::endl;
-    std::cout << m1 << std::endl;
-    showMatrix(m1);
+//    m1 = m1->diag();
+//    std::cout << "Diag" << std::endl;
+//    std::cout << m1 << std::endl;
+//    showMatrix(m1);
 }
 
 void MainWindow::calculateMatrixOne(){
 
-    m1 = m1->ones();
-    std::cout << m1 << std::endl;
-    std::cout << "One" << std::endl;
-    showMatrix(m1);
+//    m1 = m1->ones();
+//    std::cout << m1 << std::endl;
+//    std::cout << "One" << std::endl;
+//    showMatrix(m1);
 }
 
 
 //TODO save this somewhere?
 void MainWindow::calculateMatrixAdd(){
 
-    m1->data((*m1+*m2)->data());
-    std::cout << *m1+*m2 << std::endl;
-    std::cout << "Add" << std::endl;
-    showMatrix(m1);
+//    m1->data((*m1+*m2)->data());
+//    std::cout << *m1+*m2 << std::endl;
+//    std::cout << "Add" << std::endl;
+//    showMatrix(m1);
 }
 
 void MainWindow::calculateMatrixSubtract(){
 
-    m1->data((*m1-*m2)->data());
-    std::cout << *m1-*m2 << std::endl;
-    std::cout << "Subtract" << std::endl;
-    showMatrix(m1);
+//    m1->data((*m1-*m2)->data());
+//    std::cout << *m1-*m2 << std::endl;
+//    std::cout << "Subtract" << std::endl;
+//    showMatrix(m1);
 }
 
 void MainWindow::calculateMatrixMultiply(){
 
-    m1->data((*m1**m2)->data());
-    std::cout << *m1**m2 << std::endl;
-    std::cout << "Multiply" << std::endl;
-    showMatrix(m1);
+//    m1->data((*m1**m2)->data());
+//    std::cout << *m1**m2 << std::endl;
+//    std::cout << "Multiply" << std::endl;
+//    showMatrix(m1);
 }
 //TODO exceptions
 void MainWindow::calculateMatrixDivide(){
 
-    m1->data((*m1 / *m2)->data());
-    std::cout << *m1 / *m2 << std::endl;
-    std::cout << "Divide" << std::endl;
-    showMatrix(m1);
+//    m1->data((*m1 / *m2)->data());
+//    std::cout << *m1 / *m2 << std::endl;
+//    std::cout << "Divide" << std::endl;
+//    showMatrix(m1);
 }
 
 //////////////////////////////////////////////////////
