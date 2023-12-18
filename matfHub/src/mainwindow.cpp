@@ -654,20 +654,35 @@ void MainWindow::calculateMatrixOne(){
 
 
 //TODO save this somewhere?
+
 void MainWindow::calculateMatrixAdd(){
 
-//    m1->data((*m1+*m2)->data());
-//    std::cout << *m1+*m2 << std::endl;
-//    std::cout << "Add" << std::endl;
-//    showMatrix(m1);
+    DEBUG << "ulaz";
+    bool sameDim = Matrix::add();
+    DEBUG << "izlaz";
+    if(sameDim){
+        DEBUG << "tustring ulaz";
+        qDebug().noquote() << Matrix::m3toString();
+        DEBUG << "tustring izlaz";
+        //TODO ispisivanje u tekstboks
+    }else{
+        qDebug() << "dimenzije matrica se ne poklapaju";
+        //TODO -||-
+    }
+
 }
 
 void MainWindow::calculateMatrixSubtract(){
 
-//    m1->data((*m1-*m2)->data());
-//    std::cout << *m1-*m2 << std::endl;
-//    std::cout << "Subtract" << std::endl;
-//    showMatrix(m1);
+    bool sameDim = Matrix::subtract();
+    if(sameDim){
+        qDebug().noquote() << Matrix::m3toString();
+        //TODO ispisivanje u tekstboks
+    }else{
+        qDebug() << "dimenzije matrica se ne poklapaju";
+        //TODO -||-
+    }
+
 }
 
 void MainWindow::calculateMatrixMultiply(){

@@ -35,11 +35,13 @@ public:
     static void reshapeM2(int col, int row);
 
     //functions
+    static bool add();
+    static bool subtract();
+
     Matrix *transpose();
     Matrix *inverse();
     Matrix *ones();
     Matrix *diag();
-
     //operators
     Matrix *operator + (const Matrix &other) const;
     Matrix *operator + (const double &number) const;

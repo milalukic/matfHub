@@ -37,6 +37,8 @@ std::pair<unsigned, unsigned> Matrix::getM2shape(){
 }
 
 QString Matrix::toString(){
+    DEBUG << "m_rows: " << m_rows;
+    DEBUG << "m_cols: " << m_columns;
     QString res = "";
     for(int i = 0; i < m_rows; ++i){
         res += "|\t";
@@ -96,20 +98,15 @@ void Matrix::reshapeM2(int col, int row){
 
 void Matrix::reshapeMatrix(unsigned col, unsigned row){
     arma::mat* newMat = new arma::mat(row, col);//namerno je kontra, don't worry about it
-    Matrix* test = new Matrix();
-    test->m_data = newMat;
-    test->m_columns = col;
-    test->m_rows = row;
-    qDebug().noquote() << test->toString();
     newMat->fill(0);
-    DEBUG << "m_columns: " << m_columns;
-    DEBUG << "m_rows: " << m_rows;
-    qDebug().noquote() << this->toString();
-    DEBUG << "petlja";
+//    DEBUG << "m_columns: " << m_columns;
+//    DEBUG << "m_rows: " << m_rows;
+//    qDebug().noquote() << this->toString();
+//    DEBUG << "petlja";
     for(int i = 0; i < (row < m_rows ? row : m_rows); ++i){
-        DEBUG << "i: " << i;
+//        DEBUG << "i: " << i;
         for(int j = 0; j < (col < m_columns ? col : m_columns); ++j){
-            DEBUG << "\tj: " << j;
+//            DEBUG << "\tj: " << j;
             (*newMat)(i, j) = (*m_data)(i, j);
         }
     }
@@ -119,6 +116,60 @@ void Matrix::reshapeMatrix(unsigned col, unsigned row){
     m_rows = row;
 }
 
+bool Matrix::add(){
+
+    if(m_M1->m_columns != m_M2->m_columns || m_M1->m_rows != m_M2->m_rows){
+        return false;
+    }
+
+    DEBUG << "0";
+    m_M3 = *m_M1 + *m_M2;
+    DEBUG << "7";
+
+    return true;
+
+}
+bool Matrix::subtract(){
+
+    if(m_M1->m_columns != m_M2->m_columns || m_M1->m_rows != m_M2->m_rows){
+        return false;
+    }
+
+    m_M3 = *m_M1 - *m_M2;
+    return true;
+
+}
+
+Matrix* Matrix::operator + (const Matrix &other) const{
+
+    unsigned newCol = m_columns < other.m_columns ? m_columns : other.m_columns;
+    unsigned newRow = m_rows < other.m_rows ? m_rows : other.m_rows;
+    arma::mat* newData = new arma::mat(newRow, newCol);
+
+    *newData = *m_data + *(other.m_data);
+
+    DEBUG << "newCol: " << newCol;
+    DEBUG << "newRow: " << newRow;
+
+    Matrix* newMat = new Matrix(newRow, newCol);
+    newMat->m_data = newData;
+
+    return newMat;
+
+}
+Matrix* Matrix::operator - (const Matrix &other) const{
+
+    unsigned newCol = m_columns < other.m_columns ? m_columns : other.m_columns;
+    unsigned newRow = m_rows < other.m_rows ? m_rows : other.m_rows;
+    arma::mat* newData = new arma::mat(newRow, newCol);
+    *newData = *m_data - *(other.m_data);
+
+    Matrix* newMat = new Matrix(newRow, newCol);
+    newMat->m_data = newData;
+
+    return newMat;
+
+}
 
 //TODO make this work
 // std::istream &operator>>(std::istream &in, Matrix &value){
