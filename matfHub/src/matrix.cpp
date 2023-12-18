@@ -5,6 +5,8 @@
 #include <QStringList>
 #include <QDebug>
 
+#define DEBUG (qDebug() << __FILE__ << ":" << __LINE__ << ":\t")
+
 Matrix* Matrix::m_M1 = new Matrix(1,1);
 Matrix* Matrix::m_M2 = new Matrix(1,1);
 Matrix* Matrix::m_M3 = new Matrix(1,1);
@@ -39,8 +41,8 @@ QString Matrix::toString(){
     for(int i = 0; i < m_rows; ++i){
         res += "|\t";
         for(int j = 0; j < m_columns; ++j){
-            qDebug() << "i: " << i << " j: " << j;
-            res += QString::number(m_data[i][j]).toStdString();
+            //qDebug() << "i: " << i << " j: " << j;
+            res += QString::number((*(this->m_data))(i,j)).toStdString();
             res += "\t";
         }
         res += "|\n";
@@ -48,9 +50,7 @@ QString Matrix::toString(){
     return res;
 }
 QString Matrix::m1toString(){
-    qDebug() << "2.1";
     return m_M1->toString();
-    qDebug() << "2.2";
 }
 QString Matrix::m2toString(){
     return m_M2->toString();
@@ -65,7 +65,7 @@ QString Matrix::m3toString(){
 void Matrix::setData(QString data){
     int r=0, c=0;
     for(auto value : data.split(" ")){
-        m_data[r][c] = value.toDouble();
+        (*(this->m_data))(r, c) = value.toDouble();
         c++;
         if(c == m_columns){
             c = 0;
@@ -75,13 +75,13 @@ void Matrix::setData(QString data){
 }
 
 void Matrix::setM1Data(double value, unsigned i, unsigned j){
-    Matrix::m_M1->m_data[i][j] = value;
+    (*(Matrix::m_M1->m_data))(i, j) = value;
 }
 void Matrix::reshapeM1(int col, int row){
     m_M1->reshapeMatrix(col, row);
 }
 void Matrix::setM2Data(double value, unsigned i, unsigned j){
-    m_M2->m_data[i][j] = value;
+    (*(Matrix::m_M2->m_data))(i, j) = value;
 
 }
 void Matrix::reshapeM2(int col, int row){
@@ -95,7 +95,26 @@ void Matrix::reshapeM2(int col, int row){
     //functions
 
 void Matrix::reshapeMatrix(unsigned col, unsigned row){
-    m_data->set_size(row, col);
+    arma::mat* newMat = new arma::mat(row, col);//namerno je kontra, don't worry about it
+    Matrix* test = new Matrix();
+    test->m_data = newMat;
+    test->m_columns = col;
+    test->m_rows = row;
+    qDebug().noquote() << test->toString();
+    newMat->fill(0);
+    DEBUG << "m_columns: " << m_columns;
+    DEBUG << "m_rows: " << m_rows;
+    qDebug().noquote() << this->toString();
+    DEBUG << "petlja";
+    for(int i = 0; i < (row < m_rows ? row : m_rows); ++i){
+        DEBUG << "i: " << i;
+        for(int j = 0; j < (col < m_columns ? col : m_columns); ++j){
+            DEBUG << "\tj: " << j;
+            (*newMat)(i, j) = (*m_data)(i, j);
+        }
+    }
+    delete m_data;
+    m_data = newMat;
     m_columns = col;
     m_rows = row;
 }

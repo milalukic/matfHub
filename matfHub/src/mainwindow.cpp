@@ -21,7 +21,7 @@
 #include <string>
 #include <matplot/matplot.h>
 
-
+#define DEBUG (qDebug() << __FILE__ << ":" << __LINE__ << ":\t")
 
 // #include "../include/notes.h"
 
@@ -501,17 +501,26 @@ void MainWindow::reshapeMatrix1(){//preimenujte reshape -> resize ako vam ima vi
     //TODO polymorph // je l ovaj komentar jos uvek relevantan? ako da je l za ove dve linije ili celu funkciju ili staru funkciju tj ucitavanje matrice?
     int dim1 = ui->leMatrixDim11->text().toInt();
     int dim2 = ui->leMatrixDim12->text().toInt();
-    auto [oldDim1, oldDim2] = Matrix::getM1shape();
-    qDebug() << "dim1: " << dim1;
-    qDebug() << "dim2: " << dim2;
-    qDebug() << "old dim1: " << oldDim1;
-    qDebug() << "old dim2: " << oldDim2;
+    auto [oldDim2, oldDim1] = Matrix::getM1shape();
+    DEBUG << "dim1: " << dim1;
+    DEBUG << "dim2: " << dim2;
+    DEBUG << "old dim1: " << oldDim1;
+    DEBUG << "old dim2: " << oldDim2;
     if (dim1 == oldDim1 && dim2 == oldDim2){
-        qDebug() << "nothing changed";
+        DEBUG << "nothing changed";
         return;
     }
 
-    Matrix::reshapeM1(dim1, dim2);
+    unsigned realDim1 = (dim1 <= 25 ? dim1 : 25);
+    unsigned realDim2 = (dim2 <= 25 ? dim2 : 25);
+
+    Matrix::reshapeM1(dim2, dim1);//ovo je zamenjeno namerno, don't worry about it...
+    QString m1String = Matrix::m1toString();
+    m1String.replace("\n", "");
+    m1String.replace("|", "");
+    QStringList m1StrList = m1String.split("\t");
+    m1StrList.removeAll("");
+    DEBUG << m1StrList;
 
     QVBoxLayout* rows;
     if(ui->scrollAreaM1widget->children().isEmpty()){
@@ -524,18 +533,15 @@ void MainWindow::reshapeMatrix1(){//preimenujte reshape -> resize ako vam ima vi
             delete row;//ovo nije dovoljno, iako skrolboks i lejaut rows vise ne razmsljaju o prethodno nacrtanim kutijama i moguce da se cak ni iventovi koje su okidali ne pale vise ali prethodni tekstboksovi su jos uvek na ekranu (iako ispod novonapravljenih u narednih nekoliko linija) i u njih se moze upisivati tekst. nikada na ovom projektu me nista nije mucilo koliko ovaj problem, necu moci spavati danima, molim neka neko popravi bio bih jako zahvalan u suprotnom mislim da cu se obesiti o tramvajske zice ovde na dorcolu nece niko iz kruga dvojke moci da se vozi vise kada svog pomeranca dovodi ovde u veterinarsku apoteku da mu kupi probiotike jer kerce ima osetljiv stomacic nastace haos u gradu pazite sta sam rekao ovo je pretnja!!!!!!!!
         }//na komentar u prethodnoj linij dodao bih da sam probao samim teksteditima da kazem .hide(), set_shown(false), delete, row.update(), row.hide() itd itd, rows.update(), ui.update() i |nista| od toga nije radilo sva sreca da ne umem da varim i da nemam bager inace bih zavario celicne ploce debljine tri santimetra na bager i prosao preko skupstine sve do Espoa u Finskoj da sravnim sediste "The Qt Company" kompanije pazite sta sam rekao ovo je pretnja2!!!!!!!!!
     }
-    for(int i = 0; i < (dim1 <= 25 ? dim1 : 25); ++i){
+    for(int i = 0; i < realDim1; ++i){
         QHBoxLayout* fields = new QHBoxLayout;
-        for(int j = 0; j < (dim2 <= 25 ? dim2 : 25); ++j){
+        for(int j = 0; j < realDim2; ++j){
             QLineEdit* field = new QLineEdit;
-            field->setText("0");
+            field->setText(m1StrList.at(j+i*realDim2));
             connect(field, &QLineEdit::editingFinished , this, [i, j, field, this](){
-                qDebug() << "1";
                 Matrix::setM1Data(field->text().toDouble(), i, j);
-                qDebug() << "2";
                 qDebug().noquote() << Matrix::m1toString();
-                qDebug() << "3";
-            });
+                });
 
             field->setMaximumSize(64, 32);
             fields->addWidget(field);
@@ -564,6 +570,26 @@ void MainWindow::reshapeMatrix2(){//e ovo je bukvalno kopiran kod ajde molim vas
 
     int dim1 = ui->leMatrixDim21->text().toInt();
     int dim2 = ui->leMatrixDim22->text().toInt();
+    auto [oldDim2, oldDim1] = Matrix::getM2shape();
+    DEBUG << "dim1: " << dim1;
+    DEBUG << "dim2: " << dim2;
+    DEBUG << "old dim1: " << oldDim1;
+    DEBUG << "old dim2: " << oldDim2;
+    if (dim1 == oldDim1 && dim2 == oldDim2){
+        DEBUG << "nothing changed";
+        return;
+    }
+
+    unsigned realDim1 = (dim1 <= 25 ? dim1 : 25);
+    unsigned realDim2 = (dim2 <= 25 ? dim2 : 25);
+
+    Matrix::reshapeM2(realDim2, realDim1);
+    QString m2String = Matrix::m2toString();
+    m2String.replace("\n", "");
+    m2String.replace("|", "");
+    QStringList m2StrList = m2String.split("\t");
+    m2StrList.removeAll("");
+    DEBUG << m2StrList;
 
     QVBoxLayout* rows;
     if(ui->scrollAreaM2widget->children().isEmpty()){
@@ -576,10 +602,16 @@ void MainWindow::reshapeMatrix2(){//e ovo je bukvalno kopiran kod ajde molim vas
             delete row;
         }
     }
-    for(int i = 0; i < (dim1 <= 25 ? dim1 : 25); ++i){
+    for(int i = 0; i < realDim1; ++i){
         QHBoxLayout* fields = new QHBoxLayout;
-        for(int j = 0; j < (dim2 <= 25 ? dim2 : 25); ++j){
+        for(int j = 0; j < realDim2; ++j){
             QLineEdit* field = new QLineEdit;
+            field->setText(m2StrList.at(j+i*realDim2));
+            connect(field, &QLineEdit::editingFinished , this, [i, j, field, this](){
+                Matrix::setM2Data(field->text().toDouble(), i, j);
+                qDebug().noquote() << Matrix::m2toString();
+            });
+
             field->setMaximumSize(64, 32);
             fields->addWidget(field);
         }
