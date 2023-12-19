@@ -505,6 +505,58 @@ QStringList MainWindow::matrixStringToStringList(QString str){
     return strLst;
 }
 
+void MainWindow::reshapeMatrix(unsigned dim1, unsigned dim2, unsigned pos){
+
+    auto [oldDim2, oldDim1] = (pos == 1 ? Matrix::getM1shape() : Matrix::getM2shape());
+    if(dim1 == oldDim1 && dim2 == oldDim2){
+        return;
+    }
+
+    unsigned realDim1 = (dim1 <= 25 ? dim1 : 25);
+    unsigned realDim2 = (dim2 <= 25 ? dim2 : 25);
+
+    pos == 1 ? Matrix::reshapeM1(realDim2, realDim1) : Matrix::reshapeM2(realDim2, realDim1);
+
+    QVBoxLayout* rows;
+    QWidget* scrollAreaWidget = (pos == 1 ? ui->scrollAreaM1widget : ui->scrollAreaM2widget);
+    if(scrollAreaWidget->children().isEmpty()){
+        rows = new QVBoxLayout;
+        scrollAreaWidget->setLayout(rows);
+    }else{
+        rows = qobject_cast<QVBoxLayout*>(scrollAreaWidget->children().first());
+        while(!rows->isEmpty()){
+            auto row = rows->takeAt(0)->layout();
+            while(!row->isEmpty()){
+                delete row->takeAt(0)->widget();
+            }
+            delete row;
+        }
+    }
+    QStringList content = matrixStringToStringList(pos == 1 ? (Matrix::m1toString()) : (Matrix::m2toString()));
+    for(int i = 0; i < realDim1; ++i){
+        QHBoxLayout* fields = new QHBoxLayout;
+        for(int j = 0; j < realDim2; ++j){
+            QLineEdit* field = new QLineEdit;
+            field->setText(content.at(j+i*realDim2));
+            if(pos == 1){
+                connect(field, &QLineEdit::editingFinished , this, [i, j, field, this](){
+                    Matrix::setM1Data(field->text().toDouble(), i, j);
+                    qDebug().noquote() << Matrix::m1toString();
+                });
+            }else{
+                connect(field, &QLineEdit::editingFinished , this, [i, j, field, this](){
+                    Matrix::setM2Data(field->text().toDouble(), i, j);
+                    qDebug().noquote() << Matrix::m2toString();
+                });
+            }
+
+            field->setMaximumSize(64, 32);
+            fields->addWidget(field);
+        }
+        rows->addLayout(fields);
+    }
+}
+
 void MainWindow::reshapeMatrix(unsigned dim1, unsigned dim2, unsigned pos, QStringList content){//TODO napraviti enum za pos LEFT i RIGHT
 
     auto [oldDim2, oldDim1] = (pos == 1 ? Matrix::getM1shape() : Matrix::getM2shape());
@@ -561,13 +613,13 @@ void MainWindow::reshapeMatrix(unsigned dim1, unsigned dim2, unsigned pos, QStri
 void MainWindow::reshapeMatrix1(){//preimenujte reshape -> resize ako vam ima vise smisla
     int dim1 = ui->leMatrixDim11->text().toInt();
     int dim2 = ui->leMatrixDim12->text().toInt();
-    reshapeMatrix(dim1, dim2, 1, matrixStringToStringList(Matrix::m1toString()));
+    reshapeMatrix(dim1, dim2, 1);
 }
 
 void MainWindow::reshapeMatrix2(){//e ovo je bukvalno kopiran kod ajde molim vas da se to izdvoji u funkciju mene trenutno mrzi tako da u "vas" unutar "molim vas" uglavnom spadam ja ali slobodno ako se neko pojavi i ne daj Boze cita komentare
     int dim1 = ui->leMatrixDim21->text().toInt();
     int dim2 = ui->leMatrixDim22->text().toInt();
-    reshapeMatrix(dim1, dim2, 2, matrixStringToStringList(Matrix::m2toString()));
+    reshapeMatrix(dim1, dim2, 2);
 }
 
 void MainWindow::calculateMatrixTranspose(){

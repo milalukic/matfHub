@@ -93,6 +93,7 @@ private slots:
 
     QStringList matrixStringToStringList(QString str);
     void reshapeMatrix(unsigned dim1, unsigned dim2, unsigned pos, QStringList content);
+    void reshapeMatrix(unsigned dim1, unsigned dim2, unsigned pos);
     void reshapeMatrix1();
     void reshapeMatrix2();
     QString readM1Data();

@@ -7,9 +7,9 @@
 
 #define DEBUG (qDebug() << __FILE__ << ":" << __LINE__ << ":\t")
 
-Matrix* Matrix::m_M1 = new Matrix(1,1);
-Matrix* Matrix::m_M2 = new Matrix(1,1);
-Matrix* Matrix::m_M3 = new Matrix(1,1);
+Matrix* Matrix::m_M1 = new Matrix(0,0);
+Matrix* Matrix::m_M2 = new Matrix(0,0);
+Matrix* Matrix::m_M3 = new Matrix(0,0);
 std::vector<Matrix*> Matrix::m_savedMatrices;
 
 
