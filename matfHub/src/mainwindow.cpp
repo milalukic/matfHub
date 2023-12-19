@@ -76,6 +76,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pbMatrixMultiply, &QPushButton::clicked, this, &MainWindow::calculateMatrixMultiply);
     connect(ui->pbMatrixDivide, &QPushButton::clicked, this, &MainWindow::calculateMatrixDivide);
 
+    connect(ui->pbSaveMatrix, &QPushButton::clicked, this, &MainWindow::saveMatrix);
+
     connect(ui->pbPlot, &QPushButton::clicked, this, &MainWindow::plot);
     connect(ui->pbSin, &QPushButton::clicked, this, &MainWindow::plotSin);
     connect(ui->pbCos, &QPushButton::clicked, this, &MainWindow::plotCos);
@@ -502,12 +504,7 @@ void MainWindow::reshapeMatrix1(){//preimenujte reshape -> resize ako vam ima vi
     int dim1 = ui->leMatrixDim11->text().toInt();
     int dim2 = ui->leMatrixDim12->text().toInt();
     auto [oldDim2, oldDim1] = Matrix::getM1shape();
-    DEBUG << "dim1: " << dim1;
-    DEBUG << "dim2: " << dim2;
-    DEBUG << "old dim1: " << oldDim1;
-    DEBUG << "old dim2: " << oldDim2;
     if (dim1 == oldDim1 && dim2 == oldDim2){
-        DEBUG << "nothing changed";
         return;
     }
 
@@ -571,10 +568,6 @@ void MainWindow::reshapeMatrix2(){//e ovo je bukvalno kopiran kod ajde molim vas
     int dim1 = ui->leMatrixDim21->text().toInt();
     int dim2 = ui->leMatrixDim22->text().toInt();
     auto [oldDim2, oldDim1] = Matrix::getM2shape();
-    DEBUG << "dim1: " << dim1;
-    DEBUG << "dim2: " << dim2;
-    DEBUG << "old dim1: " << oldDim1;
-    DEBUG << "old dim2: " << oldDim2;
     if (dim1 == oldDim1 && dim2 == oldDim2){
         DEBUG << "nothing changed";
         return;
@@ -584,12 +577,12 @@ void MainWindow::reshapeMatrix2(){//e ovo je bukvalno kopiran kod ajde molim vas
     unsigned realDim2 = (dim2 <= 25 ? dim2 : 25);
 
     Matrix::reshapeM2(realDim2, realDim1);
-    QString m2String = Matrix::m2toString();
-    m2String.replace("\n", "");
-    m2String.replace("|", "");
-    QStringList m2StrList = m2String.split("\t");
-    m2StrList.removeAll("");
-    DEBUG << m2StrList;
+    QString m2String = Matrix::m2toString();//ovaj ceo deo treba izdvojiti u funkciju, koristila bi se na drugim mestima
+    m2String.replace("\n", "");//
+    m2String.replace("|", "");//
+    QStringList m2StrList = m2String.split("\t");//
+    m2StrList.removeAll("");//
+    DEBUG << m2StrList;//
 
     QVBoxLayout* rows;
     if(ui->scrollAreaM2widget->children().isEmpty()){
@@ -656,24 +649,17 @@ void MainWindow::calculateMatrixOne(){
 //TODO save this somewhere?
 
 void MainWindow::calculateMatrixAdd(){
-
-    DEBUG << "ulaz";
     bool sameDim = Matrix::add();
-    DEBUG << "izlaz";
     if(sameDim){
-        DEBUG << "tustring ulaz";
         qDebug().noquote() << Matrix::m3toString();
-        DEBUG << "tustring izlaz";
         //TODO ispisivanje u tekstboks
     }else{
         qDebug() << "dimenzije matrica se ne poklapaju";
         //TODO -||-
     }
-
 }
 
 void MainWindow::calculateMatrixSubtract(){
-
     bool sameDim = Matrix::subtract();
     if(sameDim){
         qDebug().noquote() << Matrix::m3toString();
@@ -682,15 +668,17 @@ void MainWindow::calculateMatrixSubtract(){
         qDebug() << "dimenzije matrica se ne poklapaju";
         //TODO -||-
     }
-
 }
 
 void MainWindow::calculateMatrixMultiply(){
-
-//    m1->data((*m1**m2)->data());
-//    std::cout << *m1**m2 << std::endl;
-//    std::cout << "Multiply" << std::endl;
-//    showMatrix(m1);
+    bool inverseDim = Matrix::multiply();
+    if(inverseDim){
+        qDebug().noquote() << Matrix::m3toString();
+        //TODO ispisivanje u tekstboks
+    }else{
+        qDebug() << "dimenzije matrica se ne poklapaju";
+        //TODO -||-
+    }
 }
 //TODO exceptions
 void MainWindow::calculateMatrixDivide(){
@@ -699,6 +687,24 @@ void MainWindow::calculateMatrixDivide(){
 //    std::cout << *m1 / *m2 << std::endl;
 //    std::cout << "Divide" << std::endl;
 //    showMatrix(m1);
+}
+void MainWindow::saveMatrix(){
+    unsigned index = Matrix::saveMatrix();
+    QPushButton* loadLeft = new QPushButton("Ucitaj levo");
+    QPushButton* loadRight = new QPushButton("Ucitaj desno");
+    QHBoxLayout* pair = new QHBoxLayout();
+    auto layout = ui->savedMatricesLayout;
+    layout->addLayout(pair);
+    pair->addWidget(loadLeft);
+    pair->addWidget(loadRight);
+    connect(loadLeft, &QPushButton::clicked, this, [index](){
+        Matrix::loadLeft(index);
+        //TODO iz funkcije MainWindow::reshapeMatrix izvuci parce koda o kome pricam i pozvati ovde da se apdejtuje tekst u lajn editima
+    });
+    connect(loadRight, &QPushButton::clicked, this, [index](){
+        Matrix::loadRight(index);
+        //TODO -||-
+    });
 }
 
 //////////////////////////////////////////////////////

@@ -101,6 +101,8 @@ private slots:
     void calculateMatrixMultiply();
     void calculateMatrixDivide();
 
+    void saveMatrix();
+
         //plotting
     void plot();
     void plotSin();

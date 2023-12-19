@@ -13,8 +13,9 @@ class Matrix{
 
 public:
 //konstruktori
-    Matrix(unsigned rows = 1, unsigned columns = 1);
-    Matrix(unsigned rows, unsigned columns, QString data);
+    Matrix(const unsigned rows = 1, const unsigned columns = 1);
+    Matrix(const unsigned rows, const unsigned columns, const QString data);
+    Matrix(const Matrix &other);
     //destruktor
     ~Matrix();
 
@@ -33,10 +34,18 @@ public:
     static void reshapeM1(int col, int row);
     static void setM2Data(double value, unsigned i, unsigned j);
     static void reshapeM2(int col, int row);
+    static unsigned saveMatrix();
+    static void loadLeft(unsigned index);
+    static void loadRight(unsigned index);
 
     //functions
     static bool add();
     static bool subtract();
+    static bool multiply();
+    static bool divide();
+    static void increment();
+    static void decrement();
+    static void negate();
 
     Matrix *transpose();
     Matrix *inverse();
@@ -44,19 +53,23 @@ public:
     Matrix *diag();
     //operators
     Matrix *operator + (const Matrix &other) const;
-    Matrix *operator + (const double &number) const;
     Matrix *operator - (const Matrix &other) const;
-    Matrix *operator - (const double &number) const;
-    Matrix *operator *(const Matrix &other) const;
-    Matrix *operator /(const Matrix &other) const;
+    Matrix *operator * (const Matrix &other) const;
+    Matrix *operator * (const double number) const;
+    Matrix *operator-() const;
+
     Matrix *operator ++();
     Matrix *operator ++(int);
     Matrix *operator --();
     Matrix *operator --(int);
-    Matrix *operator-() const;
+    Matrix *operator + (const double &number) const;
+    Matrix *operator - (const double &number) const;
+    Matrix *operator /(const Matrix &other) const;
 
     bool operator == (const Matrix &other) const;
     bool operator != (const Matrix &other) const;
+
+    Matrix &operator = (const Matrix &other);
 
     
 private:

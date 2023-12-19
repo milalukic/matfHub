@@ -10,18 +10,24 @@
 Matrix* Matrix::m_M1 = new Matrix(1,1);
 Matrix* Matrix::m_M2 = new Matrix(1,1);
 Matrix* Matrix::m_M3 = new Matrix(1,1);
+std::vector<Matrix*> Matrix::m_savedMatrices;
 
 
 //konstruktori
-Matrix::Matrix(unsigned rows, unsigned columns):
+Matrix::Matrix(const unsigned int rows, const unsigned int columns):
     m_rows(rows), m_columns(columns)
 {
     m_data = new arma::mat(rows, columns);
 }
-Matrix::Matrix(unsigned rows, unsigned columns, QString data):
+Matrix::Matrix(const unsigned rows, const unsigned columns, const QString data):
     m_rows(rows), m_columns(columns)
 {
     m_data = new arma::mat(rows, columns);
+}
+Matrix::Matrix(const Matrix &other):
+    m_rows(other.m_rows), m_columns(other.m_columns), m_data(other.m_data)
+{
+
 }
     //destruktor
 Matrix::~Matrix(){
@@ -89,9 +95,17 @@ void Matrix::setM2Data(double value, unsigned i, unsigned j){
 void Matrix::reshapeM2(int col, int row){
     m_M2->reshapeMatrix(col, row);
 }
-
-    //operators
-
+unsigned Matrix::saveMatrix(){
+    Matrix* toSave = m_M3;
+    m_savedMatrices.push_back(toSave);
+    return m_savedMatrices.size();
+}
+void Matrix::loadLeft(unsigned index){
+    m_M1 = m_savedMatrices[index];
+}
+void Matrix::loadRight(unsigned index){
+    m_M2 = m_savedMatrices[index];
+}
 
 
     //functions
@@ -117,58 +131,83 @@ void Matrix::reshapeMatrix(unsigned col, unsigned row){
 }
 
 bool Matrix::add(){
-
     if(m_M1->m_columns != m_M2->m_columns || m_M1->m_rows != m_M2->m_rows){
         return false;
     }
-
-    DEBUG << "0";
+    if(m_M3){
+        delete m_M3;
+    }
     m_M3 = *m_M1 + *m_M2;
-    DEBUG << "7";
-
     return true;
-
 }
 bool Matrix::subtract(){
-
     if(m_M1->m_columns != m_M2->m_columns || m_M1->m_rows != m_M2->m_rows){
         return false;
     }
-
+    if(m_M3){
+        delete m_M3;
+    }
     m_M3 = *m_M1 - *m_M2;
     return true;
+}
+bool Matrix::multiply(){
+    if(m_M1->m_columns != m_M2->m_rows || m_M1->m_rows != m_M2->m_columns){
+        return false;
+    }
+    if(m_M3){
+        delete m_M3;
+    }
+    m_M3 = (*m_M1) * (*m_M2);
+    return true;
+}
+bool Matrix::divide(){
+    return false;
+}
+void Matrix::increment(){
 
 }
+void Matrix::decrement(){
+
+}
+void Matrix::negate(){
+
+}
+
+//operators
 
 Matrix* Matrix::operator + (const Matrix &other) const{
-
-    unsigned newCol = m_columns < other.m_columns ? m_columns : other.m_columns;
-    unsigned newRow = m_rows < other.m_rows ? m_rows : other.m_rows;
-    arma::mat* newData = new arma::mat(newRow, newCol);
-
-    *newData = *m_data + *(other.m_data);
-
-    DEBUG << "newCol: " << newCol;
-    DEBUG << "newRow: " << newRow;
-
-    Matrix* newMat = new Matrix(newRow, newCol);
-    newMat->m_data = newData;
-
+    Matrix* newMat = new Matrix(m_rows, m_columns);
+    newMat->m_data = new arma::mat(m_rows, m_columns);
+    *(newMat->m_data) = *m_data + *(other.m_data);
     return newMat;
-
 }
 Matrix* Matrix::operator - (const Matrix &other) const{
-
-    unsigned newCol = m_columns < other.m_columns ? m_columns : other.m_columns;
-    unsigned newRow = m_rows < other.m_rows ? m_rows : other.m_rows;
-    arma::mat* newData = new arma::mat(newRow, newCol);
-    *newData = *m_data - *(other.m_data);
-
-    Matrix* newMat = new Matrix(newRow, newCol);
-    newMat->m_data = newData;
-
+    Matrix* newMat = new Matrix(m_rows, m_columns);
+    newMat->m_data = new arma::mat(m_rows, m_columns);
+    *(newMat->m_data) = *m_data - *(other.m_data);
     return newMat;
-
+}
+Matrix* Matrix::operator * (const Matrix &other) const{
+    Matrix* newMat = new Matrix(m_rows, other.m_columns);
+    newMat->m_data = new arma::mat(m_rows, other.m_columns);
+    *(newMat->m_data) = (*m_data) * (*(other.m_data));
+    return newMat;
+}
+Matrix* Matrix::operator * (const double number) const{
+    Matrix* newMat = new Matrix(m_rows, m_columns);
+    newMat->m_data = new arma::mat(m_rows, m_columns);
+    *(newMat->m_data) = (*m_data) * number;
+    return newMat;
+}
+Matrix* Matrix::operator - () const{
+    return *this * -1.0;
+}
+Matrix &Matrix::operator = (const Matrix &other) {
+    m_columns = other.m_columns;
+    m_rows = other.m_rows;
+    m_data->reshape(m_rows, m_columns);
+    *m_data = *(other.m_data);
+    return *this;
 }
 
 //TODO make this work
