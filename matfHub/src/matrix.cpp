@@ -43,8 +43,8 @@ std::pair<unsigned, unsigned> Matrix::getM2shape(){
 }
 
 QString Matrix::toString(){
-    DEBUG << "m_rows: " << m_rows;
-    DEBUG << "m_cols: " << m_columns;
+    //DEBUG << "m_rows: " << m_rows;
+    //DEBUG << "m_cols: " << m_columns;
     QString res = "";
     for(int i = 0; i < m_rows; ++i){
         res += "|\t";
@@ -66,7 +66,9 @@ QString Matrix::m2toString(){
 QString Matrix::m3toString(){
     return m_M3->toString();
 }
-
+Matrix* Matrix::getSaved(unsigned int index){
+    return m_savedMatrices[index];
+}
 
     // setteri
 
@@ -96,15 +98,27 @@ void Matrix::reshapeM2(int col, int row){
     m_M2->reshapeMatrix(col, row);
 }
 unsigned Matrix::saveMatrix(){
-    Matrix* toSave = m_M3;
+    Matrix* toSave = new Matrix(m_M3->m_rows, m_M3->m_columns);
+    toSave->m_data = m_M3->m_data;
+    qDebug().noquote() << toSave->toString();
     m_savedMatrices.push_back(toSave);
-    return m_savedMatrices.size();
+    return m_savedMatrices.size()-1;
 }
-void Matrix::loadLeft(unsigned index){
-    m_M1 = m_savedMatrices[index];
+std::pair<unsigned, unsigned> Matrix::loadLeft(unsigned index){
+    Matrix* toLoad = m_savedMatrices[index];
+    qDebug().noquote() << toLoad->toString();
+    m_M1->reshapeMatrix(toLoad->m_columns, toLoad->m_rows);
+    *m_M1 = *(toLoad);
+    qDebug().noquote() << m_M1->toString();
+    return {toLoad->m_columns, toLoad->m_rows};
 }
-void Matrix::loadRight(unsigned index){
-    m_M2 = m_savedMatrices[index];
+std::pair<unsigned, unsigned> Matrix::loadRight(unsigned index){
+    Matrix* toLoad = m_savedMatrices[index];
+    qDebug().noquote() << toLoad->toString();
+    m_M2->reshapeMatrix(toLoad->m_columns, toLoad->m_rows);
+    *m_M2 = *(toLoad);
+    qDebug().noquote() << m_M2->toString();
+    return {toLoad->m_columns, toLoad->m_rows};
 }
 
 
@@ -113,14 +127,9 @@ void Matrix::loadRight(unsigned index){
 void Matrix::reshapeMatrix(unsigned col, unsigned row){
     arma::mat* newMat = new arma::mat(row, col);//namerno je kontra, don't worry about it
     newMat->fill(0);
-//    DEBUG << "m_columns: " << m_columns;
-//    DEBUG << "m_rows: " << m_rows;
-//    qDebug().noquote() << this->toString();
-//    DEBUG << "petlja";
+    qDebug().noquote() << this->toString();
     for(int i = 0; i < (row < m_rows ? row : m_rows); ++i){
-//        DEBUG << "i: " << i;
         for(int j = 0; j < (col < m_columns ? col : m_columns); ++j){
-//            DEBUG << "\tj: " << j;
             (*newMat)(i, j) = (*m_data)(i, j);
         }
     }

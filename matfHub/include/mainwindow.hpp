@@ -91,6 +91,8 @@ private slots:
     void calculateMatrixDiag();
     void calculateMatrixOne();
 
+    QStringList matrixStringToStringList(QString str);
+    void reshapeMatrix(unsigned dim1, unsigned dim2, unsigned pos, QStringList content);
     void reshapeMatrix1();
     void reshapeMatrix2();
     QString readM1Data();
@@ -102,6 +104,7 @@ private slots:
     void calculateMatrixDivide();
 
     void saveMatrix();
+    void loadMatrix(unsigned int pos, QStringList strLst, unsigned d1, unsigned d2, unsigned index);
 
         //plotting
     void plot();

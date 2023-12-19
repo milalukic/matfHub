@@ -26,6 +26,7 @@ public:
     static QString m1toString();
     static QString m2toString();
     static QString m3toString();
+    static Matrix* getSaved(unsigned index);
 
 
 
@@ -35,8 +36,8 @@ public:
     static void setM2Data(double value, unsigned i, unsigned j);
     static void reshapeM2(int col, int row);
     static unsigned saveMatrix();
-    static void loadLeft(unsigned index);
-    static void loadRight(unsigned index);
+    static std::pair<unsigned, unsigned> loadLeft(unsigned index);
+    static std::pair<unsigned, unsigned> loadRight(unsigned index);
 
     //functions
     static bool add();

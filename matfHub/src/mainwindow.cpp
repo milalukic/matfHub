@@ -496,102 +496,40 @@ QString MainWindow::readM2Data(){
     }
     return res;
 }
-//TODO figure out why it's working with ints instead of doubles
-//void MainWindow::parseMatrix1(){
-void MainWindow::reshapeMatrix1(){//preimenujte reshape -> resize ako vam ima vise smisla
 
-    //TODO polymorph // je l ovaj komentar jos uvek relevantan? ako da je l za ove dve linije ili celu funkciju ili staru funkciju tj ucitavanje matrice?
-    int dim1 = ui->leMatrixDim11->text().toInt();
-    int dim2 = ui->leMatrixDim12->text().toInt();
-    auto [oldDim2, oldDim1] = Matrix::getM1shape();
-    if (dim1 == oldDim1 && dim2 == oldDim2){
-        return;
-    }
-
-    unsigned realDim1 = (dim1 <= 25 ? dim1 : 25);
-    unsigned realDim2 = (dim2 <= 25 ? dim2 : 25);
-
-    Matrix::reshapeM1(dim2, dim1);//ovo je zamenjeno namerno, don't worry about it...
-    QString m1String = Matrix::m1toString();
-    m1String.replace("\n", "");
-    m1String.replace("|", "");
-    QStringList m1StrList = m1String.split("\t");
-    m1StrList.removeAll("");
-    DEBUG << m1StrList;
-
-    QVBoxLayout* rows;
-    if(ui->scrollAreaM1widget->children().isEmpty()){
-        rows = new QVBoxLayout;
-        ui->scrollAreaM1widget->setLayout(rows);
-    }else{
-        rows = qobject_cast<QVBoxLayout*>(ui->scrollAreaM1widget->children().first());
-        while( !(rows->children().isEmpty()) ){
-            auto row = rows->children().first();
-            delete row;//ovo nije dovoljno, iako skrolboks i lejaut rows vise ne razmsljaju o prethodno nacrtanim kutijama i moguce da se cak ni iventovi koje su okidali ne pale vise ali prethodni tekstboksovi su jos uvek na ekranu (iako ispod novonapravljenih u narednih nekoliko linija) i u njih se moze upisivati tekst. nikada na ovom projektu me nista nije mucilo koliko ovaj problem, necu moci spavati danima, molim neka neko popravi bio bih jako zahvalan u suprotnom mislim da cu se obesiti o tramvajske zice ovde na dorcolu nece niko iz kruga dvojke moci da se vozi vise kada svog pomeranca dovodi ovde u veterinarsku apoteku da mu kupi probiotike jer kerce ima osetljiv stomacic nastace haos u gradu pazite sta sam rekao ovo je pretnja!!!!!!!!
-        }//na komentar u prethodnoj linij dodao bih da sam probao samim teksteditima da kazem .hide(), set_shown(false), delete, row.update(), row.hide() itd itd, rows.update(), ui.update() i |nista| od toga nije radilo sva sreca da ne umem da varim i da nemam bager inace bih zavario celicne ploce debljine tri santimetra na bager i prosao preko skupstine sve do Espoa u Finskoj da sravnim sediste "The Qt Company" kompanije pazite sta sam rekao ovo je pretnja2!!!!!!!!!
-    }
-    for(int i = 0; i < realDim1; ++i){
-        QHBoxLayout* fields = new QHBoxLayout;
-        for(int j = 0; j < realDim2; ++j){
-            QLineEdit* field = new QLineEdit;
-            field->setText(m1StrList.at(j+i*realDim2));
-            connect(field, &QLineEdit::editingFinished , this, [i, j, field, this](){
-                Matrix::setM1Data(field->text().toDouble(), i, j);
-                qDebug().noquote() << Matrix::m1toString();
-                });
-
-            field->setMaximumSize(64, 32);
-            fields->addWidget(field);
-        }
-        rows->addLayout(fields);
-    }
-
-
-//    m1 = new Matrix(dim1, dim2);
-
-//    std::string in = ui->leMatrixData1->text().toStdString();
-
-//    std::vector<double> data = cppSplit(in);
-
-    //TODO exception if data.size() isn't right
-    //TODO fix this?
-//    arma::mat A = arma::conv_to<arma::mat>::from(data);
-//    A.reshape(dim1, dim2);
-
-//    m1->data(A);
-//    showMatrix(m1);
-
+QStringList MainWindow::matrixStringToStringList(QString str){
+    str.replace("\n", "");
+    str.replace("|", "");
+    QStringList strLst = str.split("\t");
+    strLst.removeAll("");
+    return strLst;
 }
 
-void MainWindow::reshapeMatrix2(){//e ovo je bukvalno kopiran kod ajde molim vas da se to izdvoji u funkciju mene trenutno mrzi tako da u "vas" unutar "molim vas" uglavnom spadam ja ali slobodno ako se neko pojavi i ne daj Boze cita komentare
+void MainWindow::reshapeMatrix(unsigned dim1, unsigned dim2, unsigned pos, QStringList content){//TODO napraviti enum za pos LEFT i RIGHT
 
-    int dim1 = ui->leMatrixDim21->text().toInt();
-    int dim2 = ui->leMatrixDim22->text().toInt();
-    auto [oldDim2, oldDim1] = Matrix::getM2shape();
+    auto [oldDim2, oldDim1] = (pos == 1 ? Matrix::getM1shape() : Matrix::getM2shape());
     if (dim1 == oldDim1 && dim2 == oldDim2){
-        DEBUG << "nothing changed";
         return;
     }
 
     unsigned realDim1 = (dim1 <= 25 ? dim1 : 25);
     unsigned realDim2 = (dim2 <= 25 ? dim2 : 25);
 
-    Matrix::reshapeM2(realDim2, realDim1);
-    QString m2String = Matrix::m2toString();//ovaj ceo deo treba izdvojiti u funkciju, koristila bi se na drugim mestima
-    m2String.replace("\n", "");//
-    m2String.replace("|", "");//
-    QStringList m2StrList = m2String.split("\t");//
-    m2StrList.removeAll("");//
-    DEBUG << m2StrList;//
+    pos == 1 ? Matrix::reshapeM1(realDim2, realDim1) : Matrix::reshapeM2(realDim2, realDim1);
+    DEBUG << content;
 
     QVBoxLayout* rows;
-    if(ui->scrollAreaM2widget->children().isEmpty()){
+    QWidget* scrollAreaWidget = (pos == 1 ? ui->scrollAreaM1widget : ui->scrollAreaM2widget);
+    if(scrollAreaWidget->children().isEmpty()){
         rows = new QVBoxLayout;
-        ui->scrollAreaM2widget->setLayout(rows);
+        scrollAreaWidget->setLayout(rows);
     }else{
-        rows = qobject_cast<QVBoxLayout*>(ui->scrollAreaM2widget->children().first());
-        while( !(rows->children().isEmpty()) ){
-            auto row = rows->children().first();
+        rows = qobject_cast<QVBoxLayout*>(scrollAreaWidget->children().first());
+        while(!rows->isEmpty()){
+            auto row = rows->takeAt(0)->layout();
+            while(!row->isEmpty()){
+                delete row->takeAt(0)->widget();
+            }
             delete row;
         }
     }
@@ -599,18 +537,37 @@ void MainWindow::reshapeMatrix2(){//e ovo je bukvalno kopiran kod ajde molim vas
         QHBoxLayout* fields = new QHBoxLayout;
         for(int j = 0; j < realDim2; ++j){
             QLineEdit* field = new QLineEdit;
-            field->setText(m2StrList.at(j+i*realDim2));
-            connect(field, &QLineEdit::editingFinished , this, [i, j, field, this](){
-                Matrix::setM2Data(field->text().toDouble(), i, j);
-                qDebug().noquote() << Matrix::m2toString();
-            });
+            field->setText(content.at(j+i*realDim2));
+            if(pos == 1){
+                connect(field, &QLineEdit::editingFinished , this, [i, j, field, this](){
+                    Matrix::setM1Data(field->text().toDouble(), i, j);
+                    qDebug().noquote() << Matrix::m1toString();
+                });
+            }else{
+                connect(field, &QLineEdit::editingFinished , this, [i, j, field, this](){
+                    Matrix::setM2Data(field->text().toDouble(), i, j);
+                    qDebug().noquote() << Matrix::m2toString();
+                });
+            }
 
             field->setMaximumSize(64, 32);
             fields->addWidget(field);
         }
         rows->addLayout(fields);
     }
+}
 
+//void MainWindow::parseMatrix1(){
+void MainWindow::reshapeMatrix1(){//preimenujte reshape -> resize ako vam ima vise smisla
+    int dim1 = ui->leMatrixDim11->text().toInt();
+    int dim2 = ui->leMatrixDim12->text().toInt();
+    reshapeMatrix(dim1, dim2, 1, matrixStringToStringList(Matrix::m1toString()));
+}
+
+void MainWindow::reshapeMatrix2(){//e ovo je bukvalno kopiran kod ajde molim vas da se to izdvoji u funkciju mene trenutno mrzi tako da u "vas" unutar "molim vas" uglavnom spadam ja ali slobodno ako se neko pojavi i ne daj Boze cita komentare
+    int dim1 = ui->leMatrixDim21->text().toInt();
+    int dim2 = ui->leMatrixDim22->text().toInt();
+    reshapeMatrix(dim1, dim2, 2, matrixStringToStringList(Matrix::m2toString()));
 }
 
 void MainWindow::calculateMatrixTranspose(){
@@ -692,19 +649,24 @@ void MainWindow::saveMatrix(){
     unsigned index = Matrix::saveMatrix();
     QPushButton* loadLeft = new QPushButton("Ucitaj levo");
     QPushButton* loadRight = new QPushButton("Ucitaj desno");
-    QHBoxLayout* pair = new QHBoxLayout();
+    QHBoxLayout* savedM = new QHBoxLayout();
     auto layout = ui->savedMatricesLayout;
-    layout->addLayout(pair);
-    pair->addWidget(loadLeft);
-    pair->addWidget(loadRight);
-    connect(loadLeft, &QPushButton::clicked, this, [index](){
-        Matrix::loadLeft(index);
-        //TODO iz funkcije MainWindow::reshapeMatrix izvuci parce koda o kome pricam i pozvati ovde da se apdejtuje tekst u lajn editima
+    layout->addLayout(savedM);
+    QLabel* matrixName = new QLabel("#m");//Mat::getSavedVectorLen.toStr
+    savedM->addWidget(matrixName);
+    savedM->addWidget(loadLeft);
+    savedM->addWidget(loadRight);
+    connect(loadLeft, &QPushButton::clicked, this, [this, index](){
+        auto [d1, d2] = Matrix::loadLeft(index);
+        loadMatrix(1, matrixStringToStringList(Matrix::m1toString()), d1, d2, index);
     });
-    connect(loadRight, &QPushButton::clicked, this, [index](){
-        Matrix::loadRight(index);
-        //TODO -||-
+    connect(loadRight, &QPushButton::clicked, this, [this, index](){
+        auto [d1, d2] = Matrix::loadRight(index);
+        loadMatrix(2, matrixStringToStringList(Matrix::m2toString()), d1, d2, index);
     });
+}
+void MainWindow::loadMatrix(unsigned int pos, QStringList strLst, unsigned d1, unsigned d2, unsigned index){
+    reshapeMatrix(d1, d2, pos, matrixStringToStringList(Matrix::getSaved(index)->toString()));
 }
 
 //////////////////////////////////////////////////////
