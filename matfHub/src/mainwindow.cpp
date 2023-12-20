@@ -35,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent)
         QDir().mkdir("MATF");
     }
 
-    notes = new class Notes(ui);
+    m_notes = new class Notes(ui);
     QString sPath = ""; //ovde kasnije dodati path i gurnuti ga u setRootPath
 
     ui->dirView->setModel(m_fileManager->dirModel);
@@ -70,6 +70,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pbMatrixMultiply, &QPushButton::clicked, this, &MainWindow::calculateMatrixMultiply);
     connect(ui->pbMatrixDivide, &QPushButton::clicked, this, &MainWindow::calculateMatrixDivide);
 
+    connect(ui->textEdit, &QTextEdit::textChanged, this, [this](){
+        m_notes->notesContentChanged(this, ui);
+    });
+
 }
 
 MainWindow::~MainWindow()
@@ -81,43 +85,44 @@ MainWindow::~MainWindow()
 // Funkcionalnosti Notes toolbara
 void MainWindow::on_newFileToolbarButton_clicked()
 {
-    notes->newClicked(ui);
+    m_notes->newClicked(ui);
 }
 
 void MainWindow::on_openFileToolbarButton_clicked()
 {
-    notes->openClicked(ui, this);
+    m_notes->openClicked(ui, this);
 }
 
 void MainWindow::on_saveToolbarButton_clicked()//save/save as? trenutno najlaksa opcija da se sacuva izmena jednog fajla u drugi je ctrl+a ctrl+c ctrl+n ctrl+v ctrl+s (takodje bilo bi kul da se prva tri dugmeta aktiviraju i na ctrl+n ctrl+s i ctrl+o
 {
-    notes->saveClicked(ui, this);
+    m_notes->saveClicked(ui, this);
 }
 
 void MainWindow::on_copyToolbarButton_clicked()
 {
-    notes->copyClicked(ui);
+    m_notes->copyClicked(ui);
 }
 
 void MainWindow::on_pasteToolbarButton_clicked()
 {
-    notes->pasteClicked(ui);
+    m_notes->pasteClicked(ui);
 }
 
 void MainWindow::on_cutToolbarButton_clicked()
 {
-    notes->cutClicked(ui);
+    m_notes->cutClicked(ui);
 }
 
 void MainWindow::on_undoToolbarButton_clicked()
 {
-    notes->undoClicked(ui);
+    m_notes->undoClicked(ui);
 }
 
 void MainWindow::on_redoToolbarButton_clicked()
 {
-    notes->redoClicked(ui);
+    m_notes->redoClicked(ui);
 }
+
 
 
 // funkc fMenadzera

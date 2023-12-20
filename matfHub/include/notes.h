@@ -14,12 +14,13 @@ private:
 
     Ui::MainWindow* m_mw;
     QSourceHighlite::QSourceHighliter* m_highliter;
+    QString* m_fileContentUnchanged;
 
     void changeLanguage(QString fileName);
 
 public:
     Notes(Ui::MainWindow* mw);
-    QString currentFile = "";
+    QString m_currentFile = "";
 
     void openFile(QString filePath, Ui::MainWindow *ui, QWidget *parent);
 
@@ -33,6 +34,8 @@ public:
 
     void undoClicked(Ui::MainWindow *ui);
     void redoClicked(Ui::MainWindow *ui);
+
+    void notesContentChanged(QWidget* parent, Ui::MainWindow *ui);
 };
 
 #endif // NOTES_H

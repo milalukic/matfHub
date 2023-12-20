@@ -29,44 +29,27 @@ public:
     QString currentFilePathGetPath();
 
 private slots:
+//notes things
     void on_newFileToolbarButton_clicked();
-
     void on_openFileToolbarButton_clicked();
-
     void on_saveToolbarButton_clicked();
-
     void on_copyToolbarButton_clicked();
-
     void on_pasteToolbarButton_clicked();
-
     void on_cutToolbarButton_clicked();
-
     void on_undoToolbarButton_clicked();
-
     void on_redoToolbarButton_clicked();
-
+//fmng things
     void on_dirView_doubleClicked(const QModelIndex &index);
-
     void on_backButton_clicked();
-
     void on_forwardButton_clicked();
-
     void on_homeButton_clicked();
-
     void on_fileView_doubleClicked(const QModelIndex &index);
-
     void on_dirView_clicked(const QModelIndex &index);
-
     void on_currentFilePath_editingFinished();
-
     void on_dotDotButton_clicked();
-
     void on_newFolderButton_clicked();
-
     void on_fileView_customContextMenuRequested(const QPoint &pos);
-
     void on_actionExit_triggered();
-
     void on_actionChangeHubLocation_triggered();
 
     //calculator things
@@ -97,14 +80,14 @@ private slots:
     void on_scrapeButton_clicked();
 
 private:
-    Ui::MainWindow *ui;
-    QFileSystemModel *dirModel;
-    QFileSystemModel *fileModel;
+    Ui::MainWindow* ui;
+    QFileSystemModel* dirModel;
+    QFileSystemModel* fileModel;
     std::stack<QString> navigationBefore;
     std::stack<QString> navigationAfter;
     std::unique_ptr<Schedule> schedule;
 
-    Notes *notes;
+    Notes* m_notes;
 
     FileManager* m_fileManager;
     int countSelected(const QListView* view);
