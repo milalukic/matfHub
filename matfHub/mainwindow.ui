@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1315</width>
-    <height>772</height>
+    <height>845</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -1976,16 +1976,9 @@
          </layout>
         </item>
         <item>
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string>Resenje</string>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QStackedWidget" name="stackedWidget">
           <property name="currentIndex">
-           <number>2</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="page">
            <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -2009,56 +2002,40 @@
            </layout>
           </widget>
           <widget class="QWidget" name="page_2">
-           <widget class="QLabel" name="label_3">
-            <property name="geometry">
-             <rect>
-              <x>10</x>
-              <y>10</y>
-              <width>53</width>
-              <height>14</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Matrix</string>
-            </property>
-           </widget>
            <widget class="QWidget" name="formLayoutWidget">
             <property name="geometry">
              <rect>
               <x>10</x>
               <y>30</y>
-              <width>231</width>
-              <height>120</height>
+              <width>152</width>
+              <height>91</height>
              </rect>
             </property>
             <layout class="QFormLayout" name="formLayout">
              <item row="0" column="0">
               <widget class="QLabel" name="label_5">
                <property name="text">
-                <string>Dimension 1</string>
+                <string>Br. vrsta</string>
                </property>
               </widget>
              </item>
              <item row="0" column="1">
               <widget class="QLineEdit" name="leMatrixDim11"/>
              </item>
-             <item row="1" column="1">
-              <widget class="QLineEdit" name="leMatrixDim12"/>
-             </item>
-             <item row="3" column="0" colspan="2">
-              <widget class="QPushButton" name="pbMatrixLoad1">
-               <property name="text">
-                <string>PushButton</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0" colspan="2">
-              <widget class="QLineEdit" name="leMatrixData1"/>
-             </item>
              <item row="1" column="0">
               <widget class="QLabel" name="label_6">
                <property name="text">
-                <string>Dimension 2</string>
+                <string>Br. kolona</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="leMatrixDim12"/>
+             </item>
+             <item row="2" column="0" colspan="2">
+              <widget class="QPushButton" name="pbMatrixLoad1">
+               <property name="text">
+                <string>Ucitaj dimenzije</string>
                </property>
               </widget>
              </item>
@@ -2067,17 +2044,17 @@
            <widget class="QWidget" name="formLayoutWidget_2">
             <property name="geometry">
              <rect>
-              <x>640</x>
-              <y>20</y>
-              <width>231</width>
-              <height>120</height>
+              <x>550</x>
+              <y>30</y>
+              <width>152</width>
+              <height>91</height>
              </rect>
             </property>
             <layout class="QFormLayout" name="formLayout_2">
              <item row="0" column="0">
               <widget class="QLabel" name="label_7">
                <property name="text">
-                <string>Dimension 1</string>
+                <string>Br. vrsta</string>
                </property>
               </widget>
              </item>
@@ -2087,22 +2064,19 @@
              <item row="1" column="0">
               <widget class="QLabel" name="label_8">
                <property name="text">
-                <string>Dimension 2</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0" colspan="2">
-              <widget class="QLineEdit" name="leMatrixData2"/>
-             </item>
-             <item row="3" column="0" colspan="2">
-              <widget class="QPushButton" name="pbMatrixLoad2">
-               <property name="text">
-                <string>PushButton</string>
+                <string>Br. kolona</string>
                </property>
               </widget>
              </item>
              <item row="1" column="1">
               <widget class="QLineEdit" name="leMatrixDim22"/>
+             </item>
+             <item row="2" column="0" colspan="2">
+              <widget class="QPushButton" name="pbMatrixLoad2">
+               <property name="text">
+                <string>Ucitaj dimenzije</string>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>
@@ -2110,8 +2084,8 @@
             <property name="geometry">
              <rect>
               <x>10</x>
-              <y>160</y>
-              <width>561</width>
+              <y>200</y>
+              <width>531</width>
               <height>131</height>
              </rect>
             </property>
@@ -2119,21 +2093,21 @@
              <item row="0" column="1">
               <widget class="QPushButton" name="pbMatrixSubtract">
                <property name="text">
-                <string>Subtract</string>
+                <string>Oduzmi</string>
                </property>
               </widget>
              </item>
              <item row="0" column="0">
               <widget class="QPushButton" name="pbMatrixAdd">
                <property name="text">
-                <string>Add</string>
+                <string>Saberi</string>
                </property>
               </widget>
              </item>
              <item row="1" column="0">
               <widget class="QPushButton" name="pbMatrixMultiply">
                <property name="text">
-                <string>Multiply</string>
+                <string>Pomnozi</string>
                </property>
               </widget>
              </item>
@@ -2149,13 +2123,20 @@
            <widget class="QWidget" name="gridLayoutWidget">
             <property name="geometry">
              <rect>
-              <x>640</x>
-              <y>160</y>
-              <width>611</width>
+              <x>550</x>
+              <y>200</y>
+              <width>521</width>
               <height>131</height>
              </rect>
             </property>
             <layout class="QGridLayout" name="gridLayout">
+             <item row="0" column="1">
+              <widget class="QPushButton" name="pbMatrixInverse">
+               <property name="text">
+                <string>Inverse</string>
+               </property>
+              </widget>
+             </item>
              <item row="1" column="1">
               <widget class="QPushButton" name="pbMatrixOne">
                <property name="text">
@@ -2163,10 +2144,10 @@
                </property>
               </widget>
              </item>
-             <item row="0" column="1">
-              <widget class="QPushButton" name="pbMatrixInverse">
+             <item row="1" column="0">
+              <widget class="QPushButton" name="pbMatrixDiag">
                <property name="text">
-                <string>Inverse</string>
+                <string>Diag</string>
                </property>
               </widget>
              </item>
@@ -2177,10 +2158,96 @@
                </property>
               </widget>
              </item>
-             <item row="1" column="0">
-              <widget class="QPushButton" name="pbMatrixDiag">
+            </layout>
+           </widget>
+           <widget class="QScrollArea" name="scrollAreaM1">
+            <property name="geometry">
+             <rect>
+              <x>170</x>
+              <y>10</y>
+              <width>371</width>
+              <height>171</height>
+             </rect>
+            </property>
+            <property name="widgetResizable">
+             <bool>true</bool>
+            </property>
+            <widget class="QWidget" name="scrollAreaM1widget">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>369</width>
+               <height>169</height>
+              </rect>
+             </property>
+            </widget>
+           </widget>
+           <widget class="QScrollArea" name="scrollAreaM2">
+            <property name="geometry">
+             <rect>
+              <x>710</x>
+              <y>10</y>
+              <width>361</width>
+              <height>171</height>
+             </rect>
+            </property>
+            <property name="widgetResizable">
+             <bool>true</bool>
+            </property>
+            <widget class="QWidget" name="scrollAreaM2widget">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>359</width>
+               <height>169</height>
+              </rect>
+             </property>
+            </widget>
+           </widget>
+           <widget class="QWidget" name="verticalLayoutWidget_2">
+            <property name="geometry">
+             <rect>
+              <x>1080</x>
+              <y>10</y>
+              <width>191</width>
+              <height>321</height>
+             </rect>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_3">
+             <item>
+              <widget class="QScrollArea" name="scrollAreaSavedM">
+               <property name="widgetResizable">
+                <bool>true</bool>
+               </property>
+               <widget class="QWidget" name="scrollAreaSavedMWidget">
+                <property name="geometry">
+                 <rect>
+                  <x>0</x>
+                  <y>0</y>
+                  <width>187</width>
+                  <height>286</height>
+                 </rect>
+                </property>
+                <widget class="QWidget" name="verticalLayoutWidget_3">
+                 <property name="geometry">
+                  <rect>
+                   <x>0</x>
+                   <y>0</y>
+                   <width>181</width>
+                   <height>281</height>
+                  </rect>
+                 </property>
+                 <layout class="QVBoxLayout" name="savedMatricesLayout"/>
+                </widget>
+               </widget>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pbSaveMatrix">
                <property name="text">
-                <string>Diag</string>
+                <string>Ucitaj rezultat u listu</string>
                </property>
               </widget>
              </item>
@@ -2922,7 +2989,7 @@
      <x>0</x>
      <y>0</y>
      <width>1315</width>
-     <height>19</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

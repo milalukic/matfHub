@@ -8,6 +8,7 @@
 #include <stack>
 #include <memory>
 #include <QListView>
+#include <QString>
 
 #include "notes.h"
 #include "plotter.hpp"
@@ -90,13 +91,21 @@ private slots:
     void calculateMatrixDiag();
     void calculateMatrixOne();
 
-    void parseMatrix1();
-    void parseMatrix2();
+    QStringList matrixStringToStringList(QString str);
+    void reshapeMatrix(unsigned dim1, unsigned dim2, unsigned pos, QStringList content);
+    void reshapeMatrix(unsigned dim1, unsigned dim2, unsigned pos);
+    void reshapeMatrix1();
+    void reshapeMatrix2();
+    QString readM1Data();
+    QString readM2Data();
 
     void calculateMatrixAdd();
     void calculateMatrixSubtract();
     void calculateMatrixMultiply();
     void calculateMatrixDivide();
+
+    void saveMatrix();
+    void loadMatrix(unsigned int pos, QStringList strLst, unsigned d1, unsigned d2);
 
         //plotting
     void plot();

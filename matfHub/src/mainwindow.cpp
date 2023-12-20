@@ -21,7 +21,7 @@
 #include <string>
 #include <matplot/matplot.h>
 
-
+#define DEBUG (qDebug() << __FILE__ << ":" << __LINE__ << ":\t")
 
 // #include "../include/notes.h"
 
@@ -68,13 +68,15 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pbMatrixDiag, &QPushButton::clicked, this, &MainWindow::calculateMatrixDiag);
     connect(ui->pbMatrixOne, &QPushButton::clicked, this, &MainWindow::calculateMatrixOne);
 
-    connect(ui->pbMatrixLoad1, &QPushButton::clicked, this, &MainWindow::parseMatrix1);
-    connect(ui->pbMatrixLoad2, &QPushButton::clicked, this, &MainWindow::parseMatrix2);
+    connect(ui->pbMatrixLoad1, &QPushButton::clicked, this, &MainWindow::reshapeMatrix1);
+    connect(ui->pbMatrixLoad2, &QPushButton::clicked, this, &MainWindow::reshapeMatrix2);
 
     connect(ui->pbMatrixAdd, &QPushButton::clicked, this, &MainWindow::calculateMatrixAdd);
     connect(ui->pbMatrixSubtract, &QPushButton::clicked, this, &MainWindow::calculateMatrixSubtract);
     connect(ui->pbMatrixMultiply, &QPushButton::clicked, this, &MainWindow::calculateMatrixMultiply);
     connect(ui->pbMatrixDivide, &QPushButton::clicked, this, &MainWindow::calculateMatrixDivide);
+
+    connect(ui->pbSaveMatrix, &QPushButton::clicked, this, &MainWindow::saveMatrix);
 
     connect(ui->pbPlot, &QPushButton::clicked, this, &MainWindow::plot);
     connect(ui->pbSin, &QPushButton::clicked, this, &MainWindow::plotSin);
@@ -186,17 +188,17 @@ std::vector<std::string> cppSplitString(std::string &s){
 
 void MainWindow::showMatrix(Matrix *m){
 
-    QString history = ui->tbHistory->toPlainText();
+//    QString history = ui->tbHistory->toPlainText();
 
-    for(int i = 0; i < m->dimension1(); i++) {
-        for(int j = 0; j < m->dimension2(); j++) {
-            history += QString::number(m->data()(i,j));
-            history += " ";
-        }
-        history += '\n';
-    }
-    history += "------------------------\n";
-    ui->tbHistory->setText(history);
+//    for(int i = 0; i < m->dimension1(); i++) {
+//        for(int j = 0; j < m->dimension2(); j++) {
+//            history += QString::number(m->data()(i,j));
+//            history += " ";
+//        }
+//        history += '\n';
+//    }
+//    history += "------------------------\n";
+//    ui->tbHistory->setText(history);
 }
 
 MainWindow::~MainWindow()
@@ -216,7 +218,7 @@ void MainWindow::on_openFileToolbarButton_clicked()
     notes->openClicked(ui, this);
 }
 
-void MainWindow::on_saveToolbarButton_clicked()//save/save as? trenutno najlaksa opcija da se sacuva izmena jednog fajla u drugi je ctrl+a ctrl+c ctrl+n ctrl+v ctrl+s (takodje bilo bi kul da se prva tri dugmeta aktiviraju i na ctrl+n ctrl+s i ctrl+o
+void MainWindow::on_saveToolbarButton_clicked()//TODDO save/save as? trenutno najlaksa opcija da se sacuva izmena jednog fajla u drugi je ctrl+a ctrl+c ctrl+n ctrl+v ctrl+s (takodje bilo bi kul da se prva tri dugmeta aktiviraju i na ctrl+n ctrl+s i ctrl+o
 {
     notes->saveClicked(ui, this);
 }
@@ -469,113 +471,251 @@ void MainWindow::calculateRegular(){
 //TODO what to do with it
 Matrix *m1;
 Matrix *m2;
-//TODO figure out why it's working with ints instead of doubles
-void MainWindow::parseMatrix1(){
 
-
-    //TODO polymorph
-    int dim1 = ui->leMatrixDim11->text().toInt();
-    int dim2 = ui->leMatrixDim12->text().toInt();
-    m1 = new Matrix(dim1, dim2);
-
-    std::string in = ui->leMatrixData1->text().toStdString();
-
-    std::vector<double> data = cppSplit(in);
-
-    //TODO exception if data.size() isn't right
-    //TODO fix this?
-    arma::mat A = arma::conv_to<arma::mat>::from(data);
-    A.reshape(dim1, dim2);
-
-    m1->data(A);
-    showMatrix(m1);
-
+QString MainWindow::readM1Data(){
+    QString res("");
+    //ovaj kod ce verovatno biti uzasan i pun bagova, radna verzija
+    auto rows = ui->scrollAreaM1widget->children().first();
+    for(auto cols : rows->children()){
+        for(auto field : cols->children()){
+            QLineEdit* lEdit = qobject_cast<QLineEdit*>(field);
+            res += lEdit->text();
+        }
+    }
+    return res;
+}
+QString MainWindow::readM2Data(){
+    QString res("");
+    //ovaj kod ce verovatno biti uzasan i pun bagova, radna verzija
+    auto rows = ui->scrollAreaM2widget->children().first();
+    for(auto cols : rows->children()){
+        for(auto field : cols->children()){
+            QLineEdit* lEdit = qobject_cast<QLineEdit*>(field);
+            res += lEdit->text();
+        }
+    }
+    return res;
 }
 
-void MainWindow::parseMatrix2(){
+QStringList MainWindow::matrixStringToStringList(QString str){
+    str.replace("\n", "");
+    str.replace("|", "");
+    QStringList strLst = str.split("\t");
+    strLst.removeAll("");
+    return strLst;
+}
 
-    //TODO polymorph
+void MainWindow::reshapeMatrix(unsigned dim1, unsigned dim2, unsigned pos){
+
+    auto [oldDim2, oldDim1] = (pos == 1 ? Matrix::getM1shape() : Matrix::getM2shape());
+    if(dim1 == oldDim1 && dim2 == oldDim2){
+        return;
+    }
+
+    unsigned realDim1 = (dim1 <= 25 ? dim1 : 25);
+    unsigned realDim2 = (dim2 <= 25 ? dim2 : 25);
+
+    pos == 1 ? Matrix::reshapeM1(realDim2, realDim1) : Matrix::reshapeM2(realDim2, realDim1);
+
+    QVBoxLayout* rows;
+    QWidget* scrollAreaWidget = (pos == 1 ? ui->scrollAreaM1widget : ui->scrollAreaM2widget);
+    if(scrollAreaWidget->children().isEmpty()){
+        rows = new QVBoxLayout;
+        scrollAreaWidget->setLayout(rows);
+    }else{
+        rows = qobject_cast<QVBoxLayout*>(scrollAreaWidget->children().first());
+        while(!rows->isEmpty()){
+            auto row = rows->takeAt(0)->layout();
+            while(!row->isEmpty()){
+                delete row->takeAt(0)->widget();
+            }
+            delete row;
+        }
+    }
+    QStringList content = matrixStringToStringList(pos == 1 ? (Matrix::m1toString()) : (Matrix::m2toString()));
+    for(int i = 0; i < realDim1; ++i){
+        QHBoxLayout* fields = new QHBoxLayout;
+        for(int j = 0; j < realDim2; ++j){
+            QLineEdit* field = new QLineEdit;
+            field->setText(content.at(j+i*realDim2));
+            if(pos == 1){
+                connect(field, &QLineEdit::editingFinished , this, [i, j, field, this](){
+                    Matrix::setM1Data(field->text().toDouble(), i, j);
+                    qDebug().noquote() << Matrix::m1toString();
+                });
+            }else{
+                connect(field, &QLineEdit::editingFinished , this, [i, j, field, this](){
+                    Matrix::setM2Data(field->text().toDouble(), i, j);
+                    qDebug().noquote() << Matrix::m2toString();
+                });
+            }
+
+            field->setMaximumSize(64, 32);
+            fields->addWidget(field);
+        }
+        rows->addLayout(fields);
+    }
+}
+
+void MainWindow::reshapeMatrix(unsigned dim1, unsigned dim2, unsigned pos, QStringList content){//TODO napraviti enum za pos LEFT i RIGHT
+
+    auto [oldDim2, oldDim1] = (pos == 1 ? Matrix::getM1shape() : Matrix::getM2shape());
+
+    unsigned realDim1 = (dim1 <= 25 ? dim1 : 25);
+    unsigned realDim2 = (dim2 <= 25 ? dim2 : 25);
+
+    pos == 1 ? Matrix::reshapeM1(realDim2, realDim1) : Matrix::reshapeM2(realDim2, realDim1);
+    DEBUG << content;
+
+    QVBoxLayout* rows;
+    QWidget* scrollAreaWidget = (pos == 1 ? ui->scrollAreaM1widget : ui->scrollAreaM2widget);
+    if(scrollAreaWidget->children().isEmpty()){
+        rows = new QVBoxLayout;
+        scrollAreaWidget->setLayout(rows);
+    }else{
+        rows = qobject_cast<QVBoxLayout*>(scrollAreaWidget->children().first());
+        while(!rows->isEmpty()){
+            auto row = rows->takeAt(0)->layout();
+            while(!row->isEmpty()){
+                delete row->takeAt(0)->widget();
+            }
+            delete row;
+        }
+    }
+    for(int i = 0; i < realDim1; ++i){
+        QHBoxLayout* fields = new QHBoxLayout;
+        for(int j = 0; j < realDim2; ++j){
+            QLineEdit* field = new QLineEdit;
+            field->setText(content.at(j+i*realDim2));
+            if(pos == 1){
+                connect(field, &QLineEdit::editingFinished , this, [i, j, field, this](){
+                    Matrix::setM1Data(field->text().toDouble(), i, j);
+                    qDebug().noquote() << Matrix::m1toString();
+                });
+            }else{
+                connect(field, &QLineEdit::editingFinished , this, [i, j, field, this](){
+                    Matrix::setM2Data(field->text().toDouble(), i, j);
+                    qDebug().noquote() << Matrix::m2toString();
+                });
+            }
+
+            field->setMaximumSize(64, 32);
+            fields->addWidget(field);
+        }
+        rows->addLayout(fields);
+    }
+}
+
+//void MainWindow::parseMatrix1(){
+void MainWindow::reshapeMatrix1(){//preimenujte reshape -> resize ako vam ima vise smisla
+    int dim1 = ui->leMatrixDim11->text().toInt();
+    int dim2 = ui->leMatrixDim12->text().toInt();
+    reshapeMatrix(dim1, dim2, 1);
+}
+
+void MainWindow::reshapeMatrix2(){//e ovo je bukvalno kopiran kod ajde molim vas da se to izdvoji u funkciju mene trenutno mrzi tako da u "vas" unutar "molim vas" uglavnom spadam ja ali slobodno ako se neko pojavi i ne daj Boze cita komentare
     int dim1 = ui->leMatrixDim21->text().toInt();
     int dim2 = ui->leMatrixDim22->text().toInt();
-    m2 = new Matrix(dim1, dim2);
-
-    std::string in = ui->leMatrixData2->text().toStdString();
-
-    std::vector<double> data = cppSplit(in);
-
-    //TODO exception if data.size() isn't right
-    //TODO fix this?
-    arma::mat A = arma::conv_to<arma::mat>::from(data);
-    A.reshape(dim1, dim2);
-
-    m2->data(A);
-    showMatrix(m2);
+    reshapeMatrix(dim1, dim2, 2);
 }
 
 void MainWindow::calculateMatrixTranspose(){
 
-    m1 = m1->transpose();
-    std::cout << "Transposed matrix: " << std::endl;
-    std::cout << m1 << std::endl;
-    showMatrix(m1);
+//    m1 = m1->transpose();
+//    std::cout << "Transposed matrix: " << std::endl;
+//    std::cout << m1 << std::endl;
+//    showMatrix(m1);
 }
 //TODO exceptions
 void MainWindow::calculateMatrixInverse(){
 
-    m1 = m1->inverse();
-    std::cout << "Inverse" << std::endl;
-    std::cout << m1 << std::endl;
-    showMatrix(m1);
+//    m1 = m1->inverse();
+//    std::cout << "Inverse" << std::endl;
+//    std::cout << m1 << std::endl;
+//    showMatrix(m1);
 }
 
 void MainWindow::calculateMatrixDiag(){
 
-    m1 = m1->diag();
-    std::cout << "Diag" << std::endl;
-    std::cout << m1 << std::endl;
-    showMatrix(m1);
+//    m1 = m1->diag();
+//    std::cout << "Diag" << std::endl;
+//    std::cout << m1 << std::endl;
+//    showMatrix(m1);
 }
 
 void MainWindow::calculateMatrixOne(){
 
-    m1 = m1->ones();
-    std::cout << m1 << std::endl;
-    std::cout << "One" << std::endl;
-    showMatrix(m1);
+//    m1 = m1->ones();
+//    std::cout << m1 << std::endl;
+//    std::cout << "One" << std::endl;
+//    showMatrix(m1);
 }
 
 
 //TODO save this somewhere?
-void MainWindow::calculateMatrixAdd(){
 
-    m1->data((*m1+*m2)->data());
-    std::cout << *m1+*m2 << std::endl;
-    std::cout << "Add" << std::endl;
-    showMatrix(m1);
+void MainWindow::calculateMatrixAdd(){
+    bool sameDim = Matrix::add();
+    if(sameDim){
+        qDebug().noquote() << Matrix::m3toString();
+        //TODO ispisivanje u tekstboks
+    }else{
+        qDebug() << "dimenzije matrica se ne poklapaju";
+        //TODO -||-
+    }
 }
 
 void MainWindow::calculateMatrixSubtract(){
-
-    m1->data((*m1-*m2)->data());
-    std::cout << *m1-*m2 << std::endl;
-    std::cout << "Subtract" << std::endl;
-    showMatrix(m1);
+    bool sameDim = Matrix::subtract();
+    if(sameDim){
+        qDebug().noquote() << Matrix::m3toString();
+        //TODO ispisivanje u tekstboks
+    }else{
+        qDebug() << "dimenzije matrica se ne poklapaju";
+        //TODO -||-
+    }
 }
 
 void MainWindow::calculateMatrixMultiply(){
-
-    m1->data((*m1**m2)->data());
-    std::cout << *m1**m2 << std::endl;
-    std::cout << "Multiply" << std::endl;
-    showMatrix(m1);
+    bool inverseDim = Matrix::multiply();
+    if(inverseDim){
+        qDebug().noquote() << Matrix::m3toString();
+        //TODO ispisivanje u tekstboks
+    }else{
+        qDebug() << "dimenzije matrica se ne poklapaju";
+        //TODO -||-
+    }
 }
 //TODO exceptions
 void MainWindow::calculateMatrixDivide(){
 
-    m1->data((*m1 / *m2)->data());
-    std::cout << *m1 / *m2 << std::endl;
-    std::cout << "Divide" << std::endl;
-    showMatrix(m1);
+//    m1->data((*m1 / *m2)->data());
+//    std::cout << *m1 / *m2 << std::endl;
+//    std::cout << "Divide" << std::endl;
+//    showMatrix(m1);
+}
+void MainWindow::saveMatrix(){
+    unsigned index = Matrix::saveMatrix();
+    QPushButton* loadLeft = new QPushButton("Ucitaj levo");
+    QPushButton* loadRight = new QPushButton("Ucitaj desno");
+    QHBoxLayout* savedM = new QHBoxLayout();
+    auto layout = ui->savedMatricesLayout;
+    layout->addLayout(savedM);
+    QLabel* matrixName = new QLabel("#m");//TODO Mat::getSavedVectorLen.toStr
+    savedM->addWidget(matrixName);
+    savedM->addWidget(loadLeft);
+    savedM->addWidget(loadRight);
+    connect(loadLeft, &QPushButton::clicked, this, [this, index](){
+        auto [d1, d2] = Matrix::loadLeft(index);
+        loadMatrix(1, matrixStringToStringList(Matrix::getSaved(index)->toString()), d1, d2);
+    });
+    connect(loadRight, &QPushButton::clicked, this, [this, index](){
+        auto [d1, d2] = Matrix::loadRight(index);
+        loadMatrix(2, matrixStringToStringList(Matrix::getSaved(index)->toString()), d1, d2);
+    });
+}
+void MainWindow::loadMatrix(unsigned int pos, QStringList strLst, unsigned d1, unsigned d2){
+    reshapeMatrix(d1, d2, pos, strLst);
 }
 
 //////////////////////////////////////////////////////
