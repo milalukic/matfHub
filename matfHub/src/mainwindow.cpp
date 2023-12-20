@@ -218,7 +218,7 @@ void MainWindow::on_openFileToolbarButton_clicked()
     notes->openClicked(ui, this);
 }
 
-void MainWindow::on_saveToolbarButton_clicked()//save/save as? trenutno najlaksa opcija da se sacuva izmena jednog fajla u drugi je ctrl+a ctrl+c ctrl+n ctrl+v ctrl+s (takodje bilo bi kul da se prva tri dugmeta aktiviraju i na ctrl+n ctrl+s i ctrl+o
+void MainWindow::on_saveToolbarButton_clicked()//TODDO save/save as? trenutno najlaksa opcija da se sacuva izmena jednog fajla u drugi je ctrl+a ctrl+c ctrl+n ctrl+v ctrl+s (takodje bilo bi kul da se prva tri dugmeta aktiviraju i na ctrl+n ctrl+s i ctrl+o
 {
     notes->saveClicked(ui, this);
 }
@@ -560,9 +560,6 @@ void MainWindow::reshapeMatrix(unsigned dim1, unsigned dim2, unsigned pos){
 void MainWindow::reshapeMatrix(unsigned dim1, unsigned dim2, unsigned pos, QStringList content){//TODO napraviti enum za pos LEFT i RIGHT
 
     auto [oldDim2, oldDim1] = (pos == 1 ? Matrix::getM1shape() : Matrix::getM2shape());
-    if (dim1 == oldDim1 && dim2 == oldDim2){
-        return;
-    }
 
     unsigned realDim1 = (dim1 <= 25 ? dim1 : 25);
     unsigned realDim2 = (dim2 <= 25 ? dim2 : 25);
@@ -704,21 +701,21 @@ void MainWindow::saveMatrix(){
     QHBoxLayout* savedM = new QHBoxLayout();
     auto layout = ui->savedMatricesLayout;
     layout->addLayout(savedM);
-    QLabel* matrixName = new QLabel("#m");//Mat::getSavedVectorLen.toStr
+    QLabel* matrixName = new QLabel("#m");//TODO Mat::getSavedVectorLen.toStr
     savedM->addWidget(matrixName);
     savedM->addWidget(loadLeft);
     savedM->addWidget(loadRight);
     connect(loadLeft, &QPushButton::clicked, this, [this, index](){
         auto [d1, d2] = Matrix::loadLeft(index);
-        loadMatrix(1, matrixStringToStringList(Matrix::m1toString()), d1, d2, index);
+        loadMatrix(1, matrixStringToStringList(Matrix::getSaved(index)->toString()), d1, d2);
     });
     connect(loadRight, &QPushButton::clicked, this, [this, index](){
         auto [d1, d2] = Matrix::loadRight(index);
-        loadMatrix(2, matrixStringToStringList(Matrix::m2toString()), d1, d2, index);
+        loadMatrix(2, matrixStringToStringList(Matrix::getSaved(index)->toString()), d1, d2);
     });
 }
-void MainWindow::loadMatrix(unsigned int pos, QStringList strLst, unsigned d1, unsigned d2, unsigned index){
-    reshapeMatrix(d1, d2, pos, matrixStringToStringList(Matrix::getSaved(index)->toString()));
+void MainWindow::loadMatrix(unsigned int pos, QStringList strLst, unsigned d1, unsigned d2){
+    reshapeMatrix(d1, d2, pos, strLst);
 }
 
 //////////////////////////////////////////////////////
