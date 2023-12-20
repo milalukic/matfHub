@@ -4,6 +4,7 @@
 #include "../include/filemanager.hpp"
 #include "../include/matrix.hpp"
 #include "../include/parser.hpp"
+#include "../include/calendar.h"
 
 #include <QSplitter>
 #include <QFileSystemModel>
@@ -15,6 +16,10 @@
 #include <memory>
 #include <QDebug>
 #include <string>
+
+#include <fstream>
+#include <map>
+
 
 
 // #include <iostream>
@@ -35,6 +40,10 @@ MainWindow::MainWindow(QWidget *parent)
         QDir().mkdir("MATF");
     }
 
+    // Kalendar
+    calendar = new class Calendar(ui);
+
+    // Notes
     notes = new class Notes();
     QString sPath = ""; //ovde kasnije dodati path i gurnuti ga u setRootPath
 
@@ -382,12 +391,14 @@ void MainWindow::calculateMatrixDivide(){
 
 
 
+void MainWindow::on_calendarWidget_clicked(const QDate &date)
+{
+    calendar->dateChanged(ui, date);
+}
 
 
-
-
-
-
-
-
+void MainWindow::on_pushButton_clicked()
+{
+    calendar->textSaved(ui);
+}
 

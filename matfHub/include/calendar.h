@@ -1,10 +1,21 @@
 #ifndef CALENDAR_H
 #define CALENDAR_H
 
-class calendar
+#include <QString>
+#include <QDateTime>
+
+#include "../ui_mainwindow.h"
+
+class Calendar
 {
 public:
-    calendar();
+    Calendar(Ui::MainWindow* mw);
+
+    QMap<QDate, QString> date_to_note;
+    QDate selectedDate = QDate::currentDate();
+
+    void dateChanged(Ui::MainWindow *ui, QDate);
+    void textSaved(Ui::MainWindow *ui);
 };
 
 #endif // CALENDAR_H

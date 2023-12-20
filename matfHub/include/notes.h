@@ -6,7 +6,6 @@
 
 #include "../ui_mainwindow.h"
 
-
 class Notes
 {
 public:
