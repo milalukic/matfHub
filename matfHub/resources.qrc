@@ -11,4 +11,7 @@
         <file>icons/save-file-icon.png</file>
         <file>icons/undo.png</file>
     </qresource>
+    <qresource prefix="/">
+        <file>dateToText</file>
+    </qresource>
 </RCC>

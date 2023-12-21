@@ -1,6 +1,8 @@
 #include "../include/calendar.h"
 #include "../ui_mainwindow.h"
 
+#include <fstream>
+
 Calendar::Calendar(Ui::MainWindow* ui) {
     ui->calendarWidget->setSelectedDate(selectedDate);
     ui->textEdit_2->setPlainText(date_to_note.value(selectedDate));

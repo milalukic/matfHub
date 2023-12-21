@@ -239,6 +239,20 @@ void MainWindow::on_fileView_customContextMenuRequested(const QPoint &pos)// !!!
 //izlazak iz aplikacije, logicno
 void MainWindow::on_actionExit_triggered()
 {
+    // QFile file("./ubicuse.txt");
+    // file.open(QIODevice::WriteOnly);
+
+    // file.write("test");
+
+    // for(auto date : calendar->date_to_note.keys()){
+    //     file.write("*");
+    //     file.write(date.toString("yyyy.MM.dd").toUtf8());
+    //     file.write(":");
+    //     file.write(calendar->date_to_note[date].toUtf8());
+    // }
+
+    // file.close();
+
     QApplication::quit();
 }
 
@@ -285,7 +299,6 @@ QString MainWindow::currentFilePathGetPath(){
 
 
 int MainWindow::countSelected(const QListView* view){
-
     return view->selectionModel()->selectedIndexes().length();
 
 }
@@ -390,12 +403,11 @@ void MainWindow::calculateMatrixDivide(){
 }
 
 
-
+// Kalendar
 void MainWindow::on_calendarWidget_clicked(const QDate &date)
 {
     calendar->dateChanged(ui, date);
 }
-
 
 void MainWindow::on_pushButton_clicked()
 {
