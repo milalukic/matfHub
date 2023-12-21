@@ -239,19 +239,20 @@ void MainWindow::on_fileView_customContextMenuRequested(const QPoint &pos)// !!!
 //izlazak iz aplikacije, logicno
 void MainWindow::on_actionExit_triggered()
 {
-    // QFile file("./ubicuse.txt");
-    // file.open(QIODevice::WriteOnly);
+    QString fileName = QFileDialog::getSaveFileName(this, "Sacuvaj.");//mislim da treci argument ove f je moze primiti put direktorijuma u kome ce se otvoriti to cudo, treba napraviti geter za hubPath da se ovde prosledi
 
-    // file.write("test");
+    QFile file(fileName);
 
-    // for(auto date : calendar->date_to_note.keys()){
-    //     file.write("*");
-    //     file.write(date.toString("yyyy.MM.dd").toUtf8());
-    //     file.write(":");
-    //     file.write(calendar->date_to_note[date].toUtf8());
-    // }
+    QTextStream out(&file);
 
-    // file.close();
+    for(auto date : calendar->date_to_note.keys()){
+        out << "*";
+        out << date.toString("yyyy.MM.dd").toUtf8();
+        out << ":";
+        out << calendar->date_to_note[date].toUtf8();
+    }
+
+    file.close();
 
     QApplication::quit();
 }
