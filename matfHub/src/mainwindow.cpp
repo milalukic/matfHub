@@ -233,6 +233,10 @@ void MainWindow::on_actionExit_triggered()
     QApplication::quit();
 }
 
+void MainWindow::on_actionDark_Mode_triggered()
+{
+    QApplication::setStyle("Fusion");
+}
 
 void MainWindow::on_smerBox_activated(int index)
 {

@@ -67,6 +67,8 @@ private slots:
 
     void on_actionExit_triggered();
 
+    void on_actionDark_Mode_triggered();
+
     void on_actionChangeHubLocation_triggered();
 
     //calculator things
