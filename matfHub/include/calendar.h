@@ -16,6 +16,8 @@ public:
 
     void dateChanged(Ui::MainWindow *ui, QDate);
     void textSaved(Ui::MainWindow *ui);
+    void saveHistory();
+    void initializeMap();
 };
 
 #endif // CALENDAR_H

@@ -239,28 +239,9 @@ void MainWindow::on_fileView_customContextMenuRequested(const QPoint &pos)// !!!
 //izlazak iz aplikacije, logicno
 void MainWindow::on_actionExit_triggered()
 {
-    QString fileName = "../matfHub/matfHub/map.txt";
-
-    QFile file(fileName);
-    if (!file.open(QFile::WriteOnly | QFile::Text)) {
-        return;
-    }
-
-    QTextStream out(&file);
-
-    for(auto date : calendar->date_to_note.keys()){
-        out << "{";
-        out << date.toString("yyyy.MM.dd").toUtf8();
-        out << ":";
-        out << calendar->date_to_note[date].toUtf8();
-        out<< "}";
-    }
-
-    file.close();
-
+    calendar->saveHistory();
     QApplication::quit();
 }
-
 
 void MainWindow::on_smerBox_activated(int index)
 {
