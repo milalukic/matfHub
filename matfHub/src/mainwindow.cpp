@@ -84,6 +84,7 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     //je l ovde ide "close without saving?"?
+    calendar->saveHistory();
     delete ui;
 }
 
