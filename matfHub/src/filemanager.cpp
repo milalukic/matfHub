@@ -184,67 +184,77 @@ void FileManager::deleteSelectedFiles(const QModelIndexList indices){
     }
 }
 
+void FileManager::setSortCounters(bool value){
+    m_nameSortCounter = value;
+    m_dateSortCounter = value;
+    m_sizeSortCounter = value;
+    m_typeSortCounter = value;
+}
+
+
 void FileManager::sortByName(){
     //qDebug() << "Column 0:" << fileModel->headerData(0, Qt::Horizontal, Qt::DisplayRole);
-    if (nameSortCounter%2==1){
-        fileModel->sort(0, Qt::AscendingOrder);
-        nameSortCounter++;
-    }else{
+    if (m_nameSortCounter){
         fileModel->sort(0, Qt::DescendingOrder);
-        nameSortCounter++;
+        m_nameSortCounter = false;
+    }else{
+        fileModel->sort(0, Qt::AscendingOrder);
+        setSortCounters(false);
+        m_nameSortCounter = true;
     }
 }
 
 void FileManager::sortByDate(){
     //qDebug() << "Column 3:" << fileModel->headerData(3, Qt::Horizontal, Qt::DisplayRole);
-    if (dateSortCounter%2==1){
-        fileModel->sort(3, Qt::AscendingOrder);
-        dateSortCounter++;
-    }else{
+    if (m_dateSortCounter){
         fileModel->sort(3, Qt::DescendingOrder);
-        dateSortCounter++;
+        m_dateSortCounter = false;
+    }else{
+        fileModel->sort(3, Qt::AscendingOrder);
+        setSortCounters(false);
+        m_dateSortCounter = true;
     }
 }
 
 void FileManager::sortBySize(){
     //qDebug() << "Column 1:" << fileModel->headerData(1, Qt::Horizontal, Qt::DisplayRole);
-    if (sizeSortCounter%2==1){
-        fileModel->sort(1, Qt::AscendingOrder);
-        sizeSortCounter++;
-    }else{
+    if (m_sizeSortCounter){
         fileModel->sort(1, Qt::DescendingOrder);
-        sizeSortCounter++;
+        m_sizeSortCounter = false;
+    }else{
+        fileModel->sort(1, Qt::AscendingOrder);
+        setSortCounters(false);
+        m_sizeSortCounter = true;
     }
 }
 
 void FileManager::sortByType(){
     //qDebug() << "Column 2:" << fileModel->headerData(2, Qt::Horizontal, Qt::DisplayRole);
-    if (typeSortCounter%2==1){
-        fileModel->sort(2, Qt::AscendingOrder);
-        typeSortCounter++;
-    }else{
+    if (m_typeSortCounter){
         fileModel->sort(2, Qt::DescendingOrder);
-        typeSortCounter++;
+        m_typeSortCounter = false;
+    }else{
+        fileModel->sort(2, Qt::AscendingOrder);
+        setSortCounters(false);
+        m_typeSortCounter = true;
     }
 }
 
 void FileManager::largerIcons(){
-    if (iconSize < 60){
-        iconSize += 10;
-        m_mainWindow->ui->fileView->setIconSize(QSize(iconSize,iconSize));
-        qDebug() << iconSize;
+    if (m_iconSize < 60){
+        m_iconSize += 10;
     }else{
-        iconSize += 5;
-        m_mainWindow->ui->fileView->setIconSize(QSize(iconSize,iconSize));
-        qDebug() << iconSize;
+        m_iconSize += 5;
     }
+    m_mainWindow->ui->fileView->setIconSize(QSize(m_iconSize,m_iconSize));
+    qDebug() << m_iconSize;
 }
 
 void FileManager::smallerIcons(){
-    iconSize -= 10;
-    if (iconSize < 40){
-        iconSize = 40;
+    m_iconSize -= 10;
+    if (m_iconSize < 40){
+        m_iconSize = 40;
     }
-    m_mainWindow->ui->fileView->setIconSize(QSize(iconSize,iconSize));
-    qDebug() << iconSize;
+    m_mainWindow->ui->fileView->setIconSize(QSize(m_iconSize,m_iconSize));
+    qDebug() << m_iconSize;
 }

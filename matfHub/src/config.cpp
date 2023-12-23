@@ -10,8 +10,8 @@ Config* Config::configPtr = nullptr;
 Config::Config(){
     QString currentPath = QDir::currentPath();
     if(!QFile(currentPath+"/.config/save.json").exists()){
-        qDebug() << "ne posotji";
-        hubPath = "MATF";
+        //qDebug() << "ne posotji";
+        hubPath = currentPath + "/MATF";
         configPath = currentPath + "/.config"; //const
         QDir(currentPath).mkdir(".config");
         setConfig();
@@ -19,9 +19,9 @@ Config::Config(){
         configPath = currentPath + "/.config";
         QFile configFile(configPath + "/save.json");
         if(!configFile.open(QIODevice::ReadOnly)){
-            qDebug() << "nije otvoren??";
+            //qDebug() << "nije otvoren??";
         }else{
-            qDebug() << "otvoren";
+            //qDebug() << "otvoren";
         }
         QByteArray bytes = configFile.readAll();
         QJsonDocument configDocument = QJsonDocument::fromJson(bytes);

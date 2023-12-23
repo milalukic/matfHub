@@ -979,7 +979,7 @@
          <bool>false</bool>
         </property>
        </widget>
-       <widget class="QListView" name="fileView">
+       <widget class="QTableView" name="fileView">
         <property name="geometry">
          <rect>
           <x>340</x>

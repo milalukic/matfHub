@@ -108,9 +108,9 @@ private:
     std::stack<QString> navigationAfter;
     std::unique_ptr<Schedule> schedule;
 
-    int countSelected(const QListView* view);
-    QModelIndex getSelectedIndex(const QListView* view);
-    QModelIndexList getSelectedIndices(const QListView* view);
+    int countSelected(const QTableView* view);
+    QModelIndex getSelectedIndex(const QTableView* view);
+    QModelIndexList getSelectedIndices(const QTableView* view);
 
 };
 #endif // MAINWINDOW_HPP

@@ -19,12 +19,12 @@ public:
     QFileSystemModel *dirModel;
     QFileSystemModel *fileModel;
 
-    int nameSortCounter = 0;
-    int dateSortCounter = 0;
-    int sizeSortCounter = 0;
-    int typeSortCounter = 0;
+    bool m_nameSortCounter = false;
+    bool m_dateSortCounter = false;
+    bool m_sizeSortCounter = false;
+    bool m_typeSortCounter = false;
 
-    int iconSize = 50; //default velicina ikonica
+    int m_iconSize = 50; //default velicina ikonica
 
     std::stack<QString> navigationBefore;
     std::stack<QString> navigationAfter;
@@ -45,13 +45,14 @@ public:
     void renameSelectedFile(const QModelIndex index, const QString newName);
     void deleteSelectedFiles(const QModelIndexList indices);
     void createNewDocument();
+    void setSortCounters(bool value);
     void sortByName();
     void sortByDate();
     void sortBySize();
     void sortByType();
     void largerIcons();
     void smallerIcons();
-    //ako ne gresim pola ovoga treba biti privatno???
+    //ako ne gresim pola ovoga treba biti privatno??? //TODO
 
 private:
     MainWindow *m_mainWindow;

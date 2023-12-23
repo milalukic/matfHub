@@ -54,6 +54,22 @@ MainWindow::MainWindow(QWidget *parent)
     ui->fileView->setRootIndex(m_fileManager->fileModel->setRootPath(m_fileManager->hubPath));
     ui->currentFilePath->setText(m_fileManager->currPath);
     ui->fileView->setSelectionMode(QAbstractItemView::ExtendedSelection);//klik odabere kliknutu i oddabere ostale; shift klik selektuje sve izmedju selektovane i kliknute, ctrl klik odabere kliknutu i ne oddabere ostale
+    ui->fileView->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
+    ui->fileView->horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);//TODO ovo ne radi za prvo pokretanje..
+    ui->fileView->verticalHeader()->setVisible(false);
+
+    connect(ui->fileView, &QTableView::doubleClicked, this, [this](){//TODO koji signal je odgovarajuc? nesto sto odgovara promeni m_currPath i nista drugo? komplikovan nacin bi bio currPath retvoriti u klasu koja pored stringa ima i signal koji se ovde salje pri promeni QStringa ali to me smara trenutno...
+        ui->fileView->horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);
+    });
+    connect(ui->fileView->selectionModel(), &QItemSelectionModel::selectionChanged, this, [this](){
+        qDebug() << "aaaaaa";
+        QModelIndexList selectedList = ui->fileView->selectionModel()->selectedIndexes();//TODO kada se selektuje vise stvari nesto ozbiljno ne valja, nagadjam da je brz fiks da ne kazem ni ne sumnjam B)
+        for(auto selected : selectedList){
+            int row = selected.row();
+            ui->fileView->selectRow(row);
+        }
+    });
+
 
     //TODO FIX THIS!!!
 //    connect(ui->pbMatrixTest, &QPushButton::clicked, this, &MainWindow::pbMatrixTest);
@@ -149,30 +165,35 @@ void MainWindow::on_fileView_doubleClicked(const QModelIndex &index)
 void MainWindow::on_backButton_clicked()
 {
     m_fileManager->backButtonClicked();
+    ui->fileView->horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);
 }
 
 //navigacija u sledece prikazan folder
 void MainWindow::on_forwardButton_clicked()
 {
     m_fileManager->forwardButtonClicked();
+    ui->fileView->horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);
 }
 
 //navigacija u glavni hab folder
 void MainWindow::on_homeButton_clicked()
 {
     m_fileManager->homeButtonClicked();
+    ui->fileView->horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);
 }
 
 //navigacija u roditeljski folder
 void MainWindow::on_dotDotButton_clicked()
 {
     m_fileManager->dotDotButtonClicked();
+    ui->fileView->horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);
 }
 
 //navigacija ka unesenoj putanji, ako postoji folder na tom mestu
 void MainWindow::on_currentFilePath_editingFinished()
 {
     m_fileManager->currentFilePathEditingFinished();
+    ui->fileView->horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);
 }
 
 //kreiranje novog foldera unutar trenutnog
@@ -182,20 +203,18 @@ void MainWindow::on_newFolderButton_clicked()
 }
 
 //kreiranje popapa sa kontekst menijem u desnom pogledu
-void MainWindow::on_fileView_customContextMenuRequested(const QPoint &pos)// !!!!!! ovo bi bilo lepo takodje izmestiti u filemanager.cpp ali prvo connect je iz QObject ili tako necega treba to nasledjivanje srediti drugo poslednja linija funkcije (i jos neke) zove privatne metode privatnih polja iz ui pa bi i to trebalo prebroditi nekako nekim seterom
-{//pored komentara u prethodnoj liniji takodje ova f-ja postaje glomazna, bilo bi lepo mozda razdvojiti je u pozive f-ja koje pojedinacno prave akcije
-    //TODO cut, copy, paste
-    //TODO make new [...]
-    //makar document (.txt) zbog notesa, jos nesto ako ima smisla u odnosu na to sta ostali naprave
+void MainWindow::on_fileView_customContextMenuRequested(const QPoint &pos)// TODO !!!!!! ovo bi bilo lepo takodje izmestiti u filemanager.cpp ali prvo connect je iz QObject ili tako necega treba to nasledjivanje srediti drugo poslednja linija funkcije (i jos neke) zove privatne metode privatnih polja iz ui pa bi i to trebalo prebroditi nekako nekim seterom
+{//TODO pored komentara u prethodnoj liniji takodje ova f-ja postaje glomazna, bilo bi lepo mozda razdvojiti je u pozive f-ja koje pojedinacno prave akcije
+    //TODO cut, copy, paste mozda?
     QMenu* menu = new QMenu(this);
 
     QAction* newFolderAction = new QAction("New Folder", this);
     menu->addAction(newFolderAction);
-    connect(newFolderAction, &QAction::triggered, [=]() {//jednakost u prvim zagradama hvata sve promenjive iz pozivajuce funkcije u pozvanu, ne pitaj koja magija niti zasto je to potrebno..
+    connect(newFolderAction, &QAction::triggered, [=]() {
         m_fileManager->createNewFolder();
     });
 
-    QAction* newDocumentAction = new QAction("Ned Document", this);
+    QAction* newDocumentAction = new QAction("New Document", this);
     menu->addAction(newDocumentAction);
     connect(newDocumentAction, &QAction::triggered, [=](){
         m_fileManager->createNewDocument();
@@ -205,12 +224,10 @@ void MainWindow::on_fileView_customContextMenuRequested(const QPoint &pos)// !!!
     menu->addAction(selectAllAction);
     connect(selectAllAction, &QAction::triggered, [=](){
         ui->fileView->clearSelection();
-        ui->fileView->selectAll();//ovo ne radi kako sam zamislio i blago je reci da mi ide na zivce :)
-        //mozda i radi nego ne prikazuje sve kao plavo, to plavo mozda nije select kako ga mi shvatamo
-        //to plavo tacno jeste selekt kako ga mi shvatamo, samo je trebalo podesiti seleksn mod pogledu. obrisi ova tri komentara kada procitas.
+        ui->fileView->selectAll();
     });
 
-    QMenu* sortSubMenu = new QMenu("Sort by", this);
+    QMenu* sortSubMenu = new QMenu("Sort by", menu);
 
     QAction* sortByName = new QAction("Name", this);
     sortSubMenu->addAction(sortByName);
@@ -238,26 +255,6 @@ void MainWindow::on_fileView_customContextMenuRequested(const QPoint &pos)// !!!
 
     menu->addMenu(sortSubMenu);
 
-
-
-    QMenu* viewSubMenu = new QMenu("View", this);
-
-    QAction* viewLarger = new QAction("Larger icons", this);
-    viewSubMenu->addAction(viewLarger);
-    connect(viewLarger, &QAction::triggered, [=](){
-        m_fileManager->largerIcons();
-    });
-
-    QAction* viewSmaller = new QAction("Smaller icons", this);
-    viewSubMenu->addAction(viewSmaller);
-    connect(viewSmaller, &QAction::triggered, [=](){
-        m_fileManager->smallerIcons();
-    });
-
-    menu->addMenu(viewSubMenu);
-
-    //iz nekog razloga izbacuje warning?? za ove sub-menije, ali ja nemam pojma zasto
-    //pozabaviti se time obavezno u nekom trenutku
 
     int noSelected = countSelected(ui->fileView);
     if(noSelected == 1){
@@ -319,6 +316,7 @@ void MainWindow::on_actionChangeHubLocation_triggered()
     QString newHubPath = QFileDialog::getExistingDirectory(this, "Odaberi direktorijum");
     Config::getConfig()->setHubPath(newHubPath);
     m_fileManager->currPath = newHubPath;
+    m_fileManager->hubPath = newHubPath;
     ui->currentFilePath->setText(m_fileManager->currPath);
     ui->fileView->setRootIndex(m_fileManager->fileModel->setRootPath(m_fileManager->currPath));
 }
@@ -337,17 +335,17 @@ QString MainWindow::currentFilePathGetPath(){
 }
 
 
-int MainWindow::countSelected(const QListView* view){
+int MainWindow::countSelected(const QTableView* view){
 
     return view->selectionModel()->selectedIndexes().length();
 
 }
 
-QModelIndex MainWindow::getSelectedIndex(const QListView* view){
+QModelIndex MainWindow::getSelectedIndex(const QTableView* view){
     return view->selectionModel()->selectedIndexes().first();
 }
 
-QModelIndexList MainWindow::getSelectedIndices(const QListView* view){
+QModelIndexList MainWindow::getSelectedIndices(const QTableView* view){
     return view->selectionModel()->selectedIndexes();
 }
 
