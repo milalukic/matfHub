@@ -36,10 +36,10 @@ void Notes::openFile(QString filePath, Ui::MainWindow *ui, QWidget *parent) {
 }
 
 
-void Notes::newClicked(Ui::MainWindow *ui){
+void Notes::newClicked(Ui::MainWindow *ui, QWidget *parent){
     m_currentFile.clear();
     ui->textEdit->setText(QString());
-//    parent->setWindowTitle(!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!); //TODO
+    parent->setWindowTitle("Untitled");
 
 }
 
@@ -94,9 +94,6 @@ void Notes::changeLanguage(QString fileName){
     } else if(m_highliter){
         delete m_highliter;
     }
-
-
-
 }
 
 void Notes::openClicked(Ui::MainWindow *ui, QWidget *parent){
@@ -193,28 +190,3 @@ void Notes::notesContentChanged(QWidget* parent, Ui::MainWindow* ui){
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

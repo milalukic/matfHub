@@ -24,7 +24,7 @@ public:
 
     void openFile(QString filePath, Ui::MainWindow *ui, QWidget *parent);
 
-    void newClicked(Ui::MainWindow *ui);
+    void newClicked(Ui::MainWindow *ui, QWidget *parent);
     void openClicked(Ui::MainWindow *ui, QWidget *parent);
     void saveClicked(Ui::MainWindow *ui, QWidget *parent);
 
@@ -36,6 +36,10 @@ public:
     void redoClicked(Ui::MainWindow *ui);
 
     void notesContentChanged(QWidget* parent, Ui::MainWindow *ui);
+private slots:
+    void on_tabWidgetMatfHub_tabBarClicked(int index);
+    void on_tabWidgetMatfHub_currentChanged(int index);
+    void on_tabWidgetMatfHub_windowIconChanged(const QIcon &icon);
 };
 
 #endif // NOTES_H

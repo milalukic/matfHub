@@ -35,8 +35,34 @@ MainWindow::MainWindow(QWidget *parent)
         QDir().mkdir("MATF");
     }
 
+    // Notes klasa
     m_notes = new class Notes(ui);
     QString sPath = ""; //ovde kasnije dodati path i gurnuti ga u setRootPath
+
+    // Ctrl+S shortcut za cuvanje datoteke u notesu
+    QShortcut *saveShortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_S), this);
+    connect(saveShortcut, &QShortcut::activated, this, &MainWindow::on_saveToolbarButton_clicked);
+    // Ctrl+O za otvaranje datoteke u notesu
+    QShortcut *openShortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_O), this);
+    connect(openShortcut, &QShortcut::activated, this, &MainWindow::on_openFileToolbarButton_clicked);
+    // Ctrl+N za novu datoteku u notesu
+    QShortcut *newShortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_N), this);
+    connect(newShortcut, &QShortcut::activated, this, &MainWindow::on_newFileToolbarButton_clicked);
+    // Ctrl+C za copy
+    QShortcut *copyShortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_S), this);
+    connect(copyShortcut, &QShortcut::activated, this, &MainWindow::on_copyToolbarButton_clicked);
+    // Ctrl+V za paste
+    QShortcut *pasteShortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_V), this);
+    connect(pasteShortcut, &QShortcut::activated, this, &MainWindow::on_pasteToolbarButton_clicked);
+    // Ctrl+X za cut
+    QShortcut *cutShortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_X), this);
+    connect(cutShortcut, &QShortcut::activated, this, &MainWindow::on_cutToolbarButton_clicked);
+    // Ctrl+Z za undo
+    QShortcut *undoShortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_Z), this);
+    connect(undoShortcut, &QShortcut::activated, this, &MainWindow::on_pasteToolbarButton_clicked);
+    // Ctrl+Y za redo
+    QShortcut *redoShortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_Y), this);
+    connect(redoShortcut, &QShortcut::activated, this, &MainWindow::on_cutToolbarButton_clicked);
 
     ui->dirView->setModel(m_fileManager->dirModel);
     ui->dirView->hideColumn(1);
@@ -83,41 +109,50 @@ MainWindow::~MainWindow()
 }
 
 // Funkcionalnosti Notes toolbara
+
+// Nova Datoteka
 void MainWindow::on_newFileToolbarButton_clicked()
 {
-    m_notes->newClicked(ui);
+    m_notes->newClicked(ui, this);
 }
 
+// Otvori Datoteku
 void MainWindow::on_openFileToolbarButton_clicked()
 {
     m_notes->openClicked(ui, this);
 }
 
+// Sacuvaj Datoteku (Save As ako nije prethodno cuvana, Save ako jeste.)
 void MainWindow::on_saveToolbarButton_clicked()//save/save as? trenutno najlaksa opcija da se sacuva izmena jednog fajla u drugi je ctrl+a ctrl+c ctrl+n ctrl+v ctrl+s (takodje bilo bi kul da se prva tri dugmeta aktiviraju i na ctrl+n ctrl+s i ctrl+o
 {
     m_notes->saveClicked(ui, this);
 }
 
+// Kopiranje teksta
 void MainWindow::on_copyToolbarButton_clicked()
 {
     m_notes->copyClicked(ui);
 }
 
+// Nalepljivanje teksta
 void MainWindow::on_pasteToolbarButton_clicked()
 {
     m_notes->pasteClicked(ui);
 }
 
+// Isecanje teksta
 void MainWindow::on_cutToolbarButton_clicked()
 {
     m_notes->cutClicked(ui);
 }
 
+// Korak unazad
 void MainWindow::on_undoToolbarButton_clicked()
 {
     m_notes->undoClicked(ui);
 }
 
+// Korak unapred
 void MainWindow::on_redoToolbarButton_clicked()
 {
     m_notes->redoClicked(ui);
