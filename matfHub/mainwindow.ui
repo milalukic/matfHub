@@ -48,7 +48,7 @@
           <x>0</x>
           <y>30</y>
           <width>341</width>
-          <height>641</height>
+          <height>651</height>
          </rect>
         </property>
        </widget>
@@ -1924,24 +1924,42 @@
           <normaloff>.</normaloff>.</iconset>
         </property>
        </widget>
-       <widget class="QWidget" name="horizontalLayoutWidget_2">
+       <widget class="QStackedWidget" name="stackedWidgetFM">
         <property name="geometry">
          <rect>
           <x>340</x>
           <y>30</y>
           <width>951</width>
-          <height>641</height>
+          <height>651</height>
          </rect>
         </property>
-        <layout class="QHBoxLayout" name="fileViewLayout">
-         <item>
-          <widget class="QTableView" name="fileView">
-           <property name="contextMenuPolicy">
-            <enum>Qt::CustomContextMenu</enum>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <widget class="QWidget" name="page_4">
+         <widget class="QTableView" name="fileView">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>951</width>
+            <height>651</height>
+           </rect>
+          </property>
+          <property name="contextMenuPolicy">
+           <enum>Qt::CustomContextMenu</enum>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QWidget" name="page_5">
+         <widget class="QListView" name="listFileView">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>951</width>
+            <height>651</height>
+           </rect>
+          </property>
+         </widget>
+        </widget>
        </widget>
       </widget>
       <widget class="QWidget" name="KalkulatorTab">
@@ -2527,7 +2545,7 @@
      <x>0</x>
      <y>0</y>
      <width>1315</width>
-     <height>23</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

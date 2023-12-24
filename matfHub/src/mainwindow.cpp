@@ -235,6 +235,21 @@ void MainWindow::on_fileView_customContextMenuRequested(const QPoint &pos)// TOD
 
     menu->addMenu(sortSubMenu);
 
+    QMenu* viewSubMenu = new QMenu("View", menu);
+
+    QAction* list = new QAction("List", this);
+    viewSubMenu->addAction(list);
+    connect(list, &QAction::triggered, [=](){
+        ui->stackedWidgetFM->setCurrentIndex(0);
+    });
+
+    QAction* table = new QAction("Table", this);
+    viewSubMenu->addAction(table);
+    connect(table, &QAction::triggered, [=](){
+        ui->stackedWidgetFM->setCurrentIndex(1);
+    });
+
+    menu->addMenu(viewSubMenu);
 
     int noSelected = countSelected(ui->fileView);
     if(noSelected == 1){
