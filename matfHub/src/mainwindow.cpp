@@ -47,23 +47,6 @@ MainWindow::MainWindow(QWidget *parent)
     // Ctrl+N za novu datoteku u notesu
     QShortcut *newShortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_N), this);
     connect(newShortcut, &QShortcut::activated, this, &MainWindow::on_newFileToolbarButton_clicked);
-    // Ctrl+C za copy
-    QShortcut *copyShortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_C), this);
-    connect(copyShortcut, &QShortcut::activated, this, &MainWindow::on_copyToolbarButton_clicked);
-    // Ctrl+V za paste
-    QShortcut *pasteShortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_V), this);
-    connect(pasteShortcut, &QShortcut::activated, this, &MainWindow::on_pasteToolbarButton_clicked);
-    // Ctrl+X za cut
-    QShortcut *cutShortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_X), this);
-    connect(cutShortcut, &QShortcut::activated, this, &MainWindow::on_cutToolbarButton_clicked);
-    // Ctrl+Z za undo
-    QShortcut *undoShortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_Z), this);
-    connect(undoShortcut, &QShortcut::activated, this, &MainWindow::on_undoToolbarButton_clicked);
-    // Ctrl+Y za redo
-    QShortcut *redoShortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_Y), this);
-    connect(redoShortcut, &QShortcut::activated, this, &MainWindow::on_redoToolbarButton_clicked);
-
-
 
     ui->dirView->setModel(m_fileManager->dirModel);
     ui->dirView->hideColumn(1);
@@ -136,41 +119,31 @@ void MainWindow::on_saveToolbarButton_clicked()//save/save as? trenutno najlaksa
 // Kopiranje teksta
 void MainWindow::on_copyToolbarButton_clicked()
 {
-   if(ui->tabWidgetMatfHub->currentIndex() == 2){
-        m_notes->copyClicked(ui);
-    }
+    m_notes->copyClicked(ui);
 }
 
 // Nalepljivanje teksta
 void MainWindow::on_pasteToolbarButton_clicked()
 {
-    if(ui->tabWidgetMatfHub->currentIndex() == 2){
-        m_notes->pasteClicked(ui);
-    }
+    m_notes->pasteClicked(ui);
 }
 
 // Isecanje teksta
 void MainWindow::on_cutToolbarButton_clicked()
 {
-    if(ui->tabWidgetMatfHub->currentIndex() == 2){
-        m_notes->cutClicked(ui);
-    }
+    m_notes->cutClicked(ui);
 }
 
 // Korak unazad
 void MainWindow::on_undoToolbarButton_clicked()
 {
-    if(ui->tabWidgetMatfHub->currentIndex() == 2){
-        m_notes->undoClicked(ui);
-    }
+    m_notes->undoClicked(ui);
 }
 
 // Korak unapred
 void MainWindow::on_redoToolbarButton_clicked()
 {
-    if(ui->tabWidgetMatfHub->currentIndex() == 2){
-        m_notes->redoClicked(ui);
-    }
+    m_notes->redoClicked(ui);
 }
 
 
