@@ -6,7 +6,8 @@
 #include <vector>
 
 #include <cmath>
-
+#include <numeric>
+#include <algorithm>
 #include <matplot/matplot.h>
 
 class Plotter{
@@ -22,6 +23,8 @@ public:
     void operator()() const;
 
     void linSpace(double lowerBound, double upperBound, size_t step);
+
+    void transformData(double (*func)(double));
 
     void transformSin();
     void transformCos();

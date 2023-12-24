@@ -762,49 +762,60 @@ void MainWindow::plotSin(){
 
     ui->leState->setText("sin(" + ui->leState->text() + ")" );
 
-    plt->transformSin();
+    plt->transformData(sin);
+
 }
 
 void MainWindow::plotCos(){
 
     ui->leState->setText("cos(" + ui->leState->text() + ")" );
 
-    plt->transformCos();
+    plt->transformData(cos);
 }
 
 void MainWindow::plotTan(){
 
     ui->leState->setText("tan(" + ui->leState->text() + ")" );
 
-    plt->transformTan();
+    plt->transformData(tan);
 }
 
 void MainWindow::plotLn(){
 
     ui->leState->setText("ln(" + ui->leState->text() + ")" );
 
-    plt->transformLn();
+    plt->transformData(log);
 }
 
 void MainWindow::plotLog(){
 
     ui->leState->setText("log(" + ui->leState->text() + ")" );
 
-    plt->transformLog();
+    plt->transformData(log10);
 }
 
 void MainWindow::plotExp(){
 
     ui->leState->setText("e^(" + ui->leState->text() + ")" );
 
-    plt->transformExp();
+    plt->transformData(exp);
 }
 
 void MainWindow::plotAbs(){
 
     ui->leState->setText("|" + ui->leState->text() + "|" );
 
-    plt->transformAbs();
+    plt->transformData(std::abs);
+}
+
+//TODO friendly function?
+double square(double s){
+    return pow(s, 2);
+}
+//TODO friendly function?
+
+double negation(double s){
+    return -s;
 }
 
 void MainWindow::plotNeg(){
@@ -815,23 +826,21 @@ void MainWindow::plotNeg(){
     } else
         ui->leState->setText("-(" + ui->leState->text() + ")" );
 
-    plt->transformNeg();
+    plt->transformData(negation);
 }
 
 void MainWindow::plotSquare(){
 
     ui->leState->setText("(" + ui->leState->text() + ")²" );
 
-    plt->transformSquare();
-    std::cout << history->lastLine() << std::endl;
+    plt->transformData(square);
 }
 
 void MainWindow::plotRoot(){
 
     ui->leState->setText("√(" + ui->leState->text() + ")" );
 
-    plt->transformRoot();
-    std::cout << history->lastLine() << std::endl;
+    plt->transformData(sqrt);
 }
 
 void MainWindow::savePlotting(){

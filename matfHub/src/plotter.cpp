@@ -9,6 +9,7 @@ Plotter::~Plotter(){
     std::cout << "Unisten plotter" << std::endl;
 }
 
+
 void Plotter::operator()() const {
     std::vector<double> zero(this->xData().size());
     std::fill(zero.begin(), zero.end(), 0);
@@ -25,74 +26,10 @@ void Plotter::linSpace(double lowerBound, double upperBound, size_t step){
     this->yData(x);
 }
 
-//TODO refactor code (copy-paste)
-void Plotter::transformSin(){
-    //TODO privremeni vector?
-    std::vector<double>yPrev = this->yData();
-    std::vector<double>y = matplot::transform(yPrev, [](auto yPrev) {return sin(yPrev); });
+void Plotter::transformData(double (*func)(double)){
 
-    this->yData(y);
-}
-
-void Plotter::transformCos(){
-    std::vector<double>yPrev = this->yData();
-    std::vector<double>y = matplot::transform(yPrev, [](auto yPrev) {return cos(yPrev); });
-
-    this->yData(y);
-}
-
-void Plotter::transformTan(){
-    std::vector<double>yPrev = this->yData();
-    std::vector<double>y = matplot::transform(yPrev, [](auto yPrev) {return tan(yPrev); });
-
-    this->yData(y);
-}
-
-void Plotter::transformLn(){
-    std::vector<double>yPrev = this->yData();
-    std::vector<double>y = matplot::transform(yPrev, [](auto yPrev) {return log(yPrev); });
-
-    this->yData(y);
-}
-
-void Plotter::transformLog(){
-    std::vector<double>yPrev = this->yData();
-    std::vector<double>y = matplot::transform(yPrev, [](auto yPrev) {return log10(yPrev); });
-
-    this->yData(y);
-}
-
-void Plotter::transformExp(){
-    std::vector<double>yPrev = this->yData();
-    std::vector<double>y = matplot::transform(yPrev, [](auto yPrev) {return exp(yPrev); });
-
-    this->yData(y);
-}
-
-void Plotter::transformAbs(){
-    std::vector<double>yPrev = this->yData();
-    std::vector<double>y = matplot::transform(yPrev, [](auto yPrev) {return std::abs(yPrev); });
-
-    this->yData(y);
-}
-
-void Plotter::transformNeg(){
-    std::vector<double>yPrev = this->yData();
-    std::vector<double>y = matplot::transform(yPrev, [](auto yPrev) {return -yPrev; });
-
-    this->yData(y);
-}
-
-void Plotter::transformSquare(){
-    std::vector<double>yPrev = this->yData();
-    std::vector<double>y = matplot::transform(yPrev, [](auto yPrev) {return pow(yPrev, 2); });
-
-    this->yData(y);
-}
-
-void Plotter::transformRoot(){
-    std::vector<double>yPrev = this->yData();
-    std::vector<double>y = matplot::transform(yPrev, [](auto yPrev) {return sqrt(yPrev); });
+    std::vector<double>y = this->yData();
+    std::transform(begin(y), end(y), begin(y), [&func](auto yPrev) {return func(yPrev); });
 
     this->yData(y);
 }
