@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_HPP
 #define MAINWINDOW_HPP
 
+#include "history.hpp"
 #include "schedule.h"
 #include <QMainWindow>
 #include <QtCore>
@@ -81,6 +82,7 @@ private slots:
     void changeStackedWidgetPage();
 
         //calc functions
+    void writeToHistoryTB(History* history);
             //regular
     void calculateRegular();
             //matrix

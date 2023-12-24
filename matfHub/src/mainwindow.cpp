@@ -443,8 +443,15 @@ void MainWindow::changeStackedWidgetPage(){
 Calculator *calculator = new Calculator();
 History *history = History::getHistory();
 Parser *parser = new Parser();
-void MainWindow::calculateRegular(){
+int linesWritten = 0;
 
+void MainWindow::writeToHistoryTB(History* history) {
+    auto vecHistory = history->history();
+    for (int i = linesWritten; i < vecHistory.size(); i++)
+        this->ui->tbHistory->append(QString::fromStdString(vecHistory[i]));
+    linesWritten = vecHistory.size();
+}
+void MainWindow::calculateRegular(){
 //    Parser *parser = new Parser();
 
     //TODO so it works with char*
@@ -658,8 +665,9 @@ void MainWindow::calculateMatrixOne(){
 void MainWindow::calculateMatrixAdd(){
     bool sameDim = Matrix::add();
     if(sameDim){
-        qDebug().noquote() << Matrix::m3toString();
-        //TODO ispisivanje u tekstboks
+        // qDebug().noquote() << Matrix::m3toString();
+        history->writeHistory("Sabiranje matrica:", Matrix::m3toString().toStdString());
+        writeToHistoryTB(history);
     }else{
         qDebug() << "dimenzije matrica se ne poklapaju";
         //TODO -||-
@@ -670,7 +678,8 @@ void MainWindow::calculateMatrixSubtract(){
     bool sameDim = Matrix::subtract();
     if(sameDim){
         qDebug().noquote() << Matrix::m3toString();
-        //TODO ispisivanje u tekstboks
+        history->writeHistory("Oduzimanje matrica:", Matrix::m3toString().toStdString());
+        writeToHistoryTB(history);
     }else{
         qDebug() << "dimenzije matrica se ne poklapaju";
         //TODO -||-
@@ -681,7 +690,8 @@ void MainWindow::calculateMatrixMultiply(){
     bool inverseDim = Matrix::multiply();
     if(inverseDim){
         qDebug().noquote() << Matrix::m3toString();
-        //TODO ispisivanje u tekstboks
+        history->writeHistory("Mnozenje matrica:", Matrix::m3toString().toStdString());
+        writeToHistoryTB(history);
     }else{
         qDebug() << "dimenzije matrica se ne poklapaju";
         //TODO -||-
