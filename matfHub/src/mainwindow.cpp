@@ -16,7 +16,6 @@
 #include <QDebug>
 #include <string>
 
-
 // #include <iostream>
 // #include "../include/notes.h"
 
@@ -49,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent)
     QShortcut *newShortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_N), this);
     connect(newShortcut, &QShortcut::activated, this, &MainWindow::on_newFileToolbarButton_clicked);
     // Ctrl+C za copy
-    QShortcut *copyShortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_S), this);
+    QShortcut *copyShortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_C), this);
     connect(copyShortcut, &QShortcut::activated, this, &MainWindow::on_copyToolbarButton_clicked);
     // Ctrl+V za paste
     QShortcut *pasteShortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_V), this);
@@ -59,10 +58,12 @@ MainWindow::MainWindow(QWidget *parent)
     connect(cutShortcut, &QShortcut::activated, this, &MainWindow::on_cutToolbarButton_clicked);
     // Ctrl+Z za undo
     QShortcut *undoShortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_Z), this);
-    connect(undoShortcut, &QShortcut::activated, this, &MainWindow::on_pasteToolbarButton_clicked);
+    connect(undoShortcut, &QShortcut::activated, this, &MainWindow::on_undoToolbarButton_clicked);
     // Ctrl+Y za redo
     QShortcut *redoShortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_Y), this);
-    connect(redoShortcut, &QShortcut::activated, this, &MainWindow::on_cutToolbarButton_clicked);
+    connect(redoShortcut, &QShortcut::activated, this, &MainWindow::on_redoToolbarButton_clicked);
+
+
 
     ui->dirView->setModel(m_fileManager->dirModel);
     ui->dirView->hideColumn(1);
@@ -119,43 +120,57 @@ void MainWindow::on_newFileToolbarButton_clicked()
 // Otvori Datoteku
 void MainWindow::on_openFileToolbarButton_clicked()
 {
-    m_notes->openClicked(ui, this);
+    if(ui->tabWidgetMatfHub->currentIndex() == 2){
+        m_notes->openClicked(ui, this);
+    }
 }
 
 // Sacuvaj Datoteku (Save As ako nije prethodno cuvana, Save ako jeste.)
 void MainWindow::on_saveToolbarButton_clicked()//save/save as? trenutno najlaksa opcija da se sacuva izmena jednog fajla u drugi je ctrl+a ctrl+c ctrl+n ctrl+v ctrl+s (takodje bilo bi kul da se prva tri dugmeta aktiviraju i na ctrl+n ctrl+s i ctrl+o
 {
-    m_notes->saveClicked(ui, this);
+    if(ui->tabWidgetMatfHub->currentIndex() == 2){
+        m_notes->saveClicked(ui, this);
+    }
 }
 
 // Kopiranje teksta
 void MainWindow::on_copyToolbarButton_clicked()
 {
-    m_notes->copyClicked(ui);
+   if(ui->tabWidgetMatfHub->currentIndex() == 2){
+        m_notes->copyClicked(ui);
+    }
 }
 
 // Nalepljivanje teksta
 void MainWindow::on_pasteToolbarButton_clicked()
 {
-    m_notes->pasteClicked(ui);
+    if(ui->tabWidgetMatfHub->currentIndex() == 2){
+        m_notes->pasteClicked(ui);
+    }
 }
 
 // Isecanje teksta
 void MainWindow::on_cutToolbarButton_clicked()
 {
-    m_notes->cutClicked(ui);
+    if(ui->tabWidgetMatfHub->currentIndex() == 2){
+        m_notes->cutClicked(ui);
+    }
 }
 
 // Korak unazad
 void MainWindow::on_undoToolbarButton_clicked()
 {
-    m_notes->undoClicked(ui);
+    if(ui->tabWidgetMatfHub->currentIndex() == 2){
+        m_notes->undoClicked(ui);
+    }
 }
 
 // Korak unapred
 void MainWindow::on_redoToolbarButton_clicked()
 {
-    m_notes->redoClicked(ui);
+    if(ui->tabWidgetMatfHub->currentIndex() == 2){
+        m_notes->redoClicked(ui);
+    }
 }
 
 
@@ -419,15 +434,3 @@ void MainWindow::calculateMatrixMultiply(){
 void MainWindow::calculateMatrixDivide(){
     std::cout << "Divide" << std::endl;
 }
-
-
-
-
-
-
-
-
-
-
-
-

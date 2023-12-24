@@ -36,10 +36,6 @@ public:
     void redoClicked(Ui::MainWindow *ui);
 
     void notesContentChanged(QWidget* parent, Ui::MainWindow *ui);
-private slots:
-    void on_tabWidgetMatfHub_tabBarClicked(int index);
-    void on_tabWidgetMatfHub_currentChanged(int index);
-    void on_tabWidgetMatfHub_windowIconChanged(const QIcon &icon);
 };
 
 #endif // NOTES_H

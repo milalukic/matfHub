@@ -507,8 +507,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="go-previous">
-          <normaloff>.</normaloff>.</iconset>
+         <iconset theme="go-previous"/>
         </property>
        </widget>
        <widget class="QPushButton" name="forwardButton">
@@ -969,8 +968,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="go-next">
-          <normaloff>.</normaloff>.</iconset>
+         <iconset theme="go-next"/>
         </property>
         <property name="autoDefault">
          <bool>false</bool>
@@ -1447,8 +1445,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="go-home">
-          <normaloff>.</normaloff>.</iconset>
+         <iconset theme="go-home"/>
         </property>
        </widget>
        <widget class="QLineEdit" name="currentFilePath">
@@ -1916,8 +1913,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="go-up">
-          <normaloff>.</normaloff>.</iconset>
+         <iconset theme="go-up"/>
         </property>
        </widget>
        <widget class="QPushButton" name="newFolderButton">
@@ -1933,8 +1929,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="folder-new">
-          <normaloff>.</normaloff>.</iconset>
+         <iconset theme="folder-new"/>
         </property>
        </widget>
       </widget>
@@ -2521,7 +2516,7 @@
      <x>0</x>
      <y>0</y>
      <width>1315</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

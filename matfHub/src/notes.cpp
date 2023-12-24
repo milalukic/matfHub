@@ -39,8 +39,7 @@ void Notes::openFile(QString filePath, Ui::MainWindow *ui, QWidget *parent) {
 void Notes::newClicked(Ui::MainWindow *ui, QWidget *parent){
     m_currentFile.clear();
     ui->textEdit->setText(QString());
-    parent->setWindowTitle("Untitled");
-
+    parent->setWindowTitle("Untitled Document");
 }
 
 //void Notes::openClicked(Ui::MainWindow *ui, QWidget *parent){
