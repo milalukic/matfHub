@@ -120,6 +120,7 @@ private slots:
     void plotSquare();
     void plotRoot();
     void plotLinspace();
+    void savePlotting();
 
     //Staistics
     void statCalcMean();

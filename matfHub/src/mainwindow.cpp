@@ -90,6 +90,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pbSquare, &QPushButton::clicked, this, &MainWindow::plotSquare);
     connect(ui->pbRoot, &QPushButton::clicked, this, &MainWindow::plotRoot);
     connect(ui->pbLinspace, &QPushButton::clicked, this, &MainWindow::plotLinspace);
+    connect(ui->pbPlotSave, &QPushButton::clicked, this, &MainWindow::savePlotting);
 
     connect(ui->pbMean, &QPushButton::clicked, this, &MainWindow::statCalcMean);
     connect(ui->pbVariance, &QPushButton::clicked, this, &MainWindow::statCalcVariance);
@@ -831,6 +832,10 @@ void MainWindow::plotRoot(){
 
     plt->transformRoot();
     std::cout << history->lastLine() << std::endl;
+}
+
+void MainWindow::savePlotting(){
+    plt->savePlot();
 }
 
 //stat

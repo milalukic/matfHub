@@ -34,6 +34,8 @@ public:
     void transformRoot();
     void transformExp();
 
+    void savePlot();
+
     //TODO fill
     //getters setters
     void xData(std::vector<double> &newX);

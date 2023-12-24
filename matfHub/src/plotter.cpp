@@ -9,7 +9,6 @@ Plotter::~Plotter(){
     std::cout << "Unisten plotter" << std::endl;
 }
 
-//TODO Magic numbers
 void Plotter::operator()() const {
     std::vector<double> zero(this->xData().size());
     std::fill(zero.begin(), zero.end(), 0);
@@ -19,14 +18,14 @@ void Plotter::operator()() const {
 
 //metode
 
-//TODO change arguments to double
 void Plotter::linSpace(double lowerBound, double upperBound, size_t step){
-    // Promenjena funkcija
+
     std::vector<double>x = matplot::linspace(lowerBound, upperBound, step);
     this->xData(x);
     this->yData(x);
 }
 
+//TODO refactor code (copy-paste)
 void Plotter::transformSin(){
     //TODO privremeni vector?
     std::vector<double>yPrev = this->yData();
@@ -96,6 +95,12 @@ void Plotter::transformRoot(){
     std::vector<double>y = matplot::transform(yPrev, [](auto yPrev) {return sqrt(yPrev); });
 
     this->yData(y);
+}
+
+void Plotter::savePlot(){
+
+    (*this)();
+    matplot::save("../img/chart.jpg");
 }
 
 //set
