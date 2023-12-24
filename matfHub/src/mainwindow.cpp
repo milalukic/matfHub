@@ -73,6 +73,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pbMatrixMultiply, &QPushButton::clicked, this, &MainWindow::calculateMatrixMultiply);
     connect(ui->pbMatrixDivide, &QPushButton::clicked, this, &MainWindow::calculateMatrixDivide);
 
+
+    //connect(ui->listFileView, &QPushButton::clicked, this, &MainWindow::on_fileView_doubleClicked);
+
 }
 
 MainWindow::~MainWindow()
@@ -321,6 +324,7 @@ void MainWindow::on_actionChangeHubLocation_triggered()
 //geteri seteri i ostala narusavanja mejnovih privatnosti
 void MainWindow::fileViewSetPath(const QString path){
     ui->fileView->setRootIndex(m_fileManager->fileModel->setRootPath(path));
+    ui->listFileView->setRootIndex(m_fileManager->fileModel->setRootPath(path));
 }
 void MainWindow::currentFilePathSetPath(const QString path){
     ui->currentFilePath->setText(path);
@@ -345,12 +349,9 @@ QModelIndexList MainWindow::getSelectedIndices(const QTableView* view){
 }
 
 void MainWindow::setUpFileView(/*tipPogleda*/){
-    //if(tip == details){
-    //QTableView* fileView = new itd itd
-    //ui->fileViewLayout->children()->at(0) dilit
-    //ui->fileViewLayout->addWidget(fileView);
+    //fileView za table
     ui->fileView->setModel(m_fileManager->fileModel);
-    ui->fileView->setRootIndex(m_fileManager->fileModel->setRootPath(m_fileManager->hubPath));
+    ui->fileView->setRootIndex(m_fileManager->fileModel->setRootPath(m_fileManager->hubPath + "/" + ".."));
     ui->currentFilePath->setText(m_fileManager->currPath);
     ui->fileView->setSelectionMode(QAbstractItemView::ExtendedSelection);//klik odabere kliknutu i oddabere ostale; shift klik selektuje sve izmedju selektovane i kliknute, ctrl klik odabere kliknutu i ne oddabere ostale
     ui->fileView->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
@@ -369,7 +370,11 @@ void MainWindow::setUpFileView(/*tipPogleda*/){
         }
     });
 
-    //else if(tip = list){ itd itd
+    //fileView za list
+    ui->listFileView->setModel(m_fileManager->fileModel);
+    ui->listFileView->setRootIndex(m_fileManager->fileModel->setRootPath(m_fileManager->hubPath + "/" + ".."));
+    ui->currentFilePath->setText(m_fileManager->currPath);
+    ui->listFileView->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
 }
 

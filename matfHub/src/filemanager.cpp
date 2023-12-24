@@ -2,6 +2,7 @@
 #include "../include/mainwindow.hpp"
 #include "../ui_mainwindow.h"
 #include "../include/config.hpp"
+#include <list>
 
 FileManager::FileManager(MainWindow* mw)
     :m_mainWindow(mw)
