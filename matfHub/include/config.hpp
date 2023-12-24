@@ -20,7 +20,7 @@ private:
 
 public:
     Config(const Config& obj) = delete;
-    Config operator=(const Config& obj﻿) = delete;
+    Config operator=(const Config& obj) = delete;
 
     static Config* getConfig();
     void setHubPath(QString newPath);

@@ -102,8 +102,6 @@ private slots:
     void on_scrapeButton_clicked();
 
 private:
-    QFileSystemModel *dirModel;
-    QFileSystemModel *fileModel;
     std::stack<QString> navigationBefore;
     std::stack<QString> navigationAfter;
     std::unique_ptr<Schedule> schedule;
@@ -111,6 +109,8 @@ private:
     int countSelected(const QTableView* view);
     QModelIndex getSelectedIndex(const QTableView* view);
     QModelIndexList getSelectedIndices(const QTableView* view);
+
+    void setUpFileView(/*enum tipPogleda*/);//funkcija prima enum neki tipa i onda pravi pogled na osnovu enuma i podesava ga, kao sto smo u mejnu radili do sada, zatim brise dete od ui->fileViewLayout i daje mu novo dete, ovo koje je napravio
 
 };
 #endif // MAINWINDOW_HPP

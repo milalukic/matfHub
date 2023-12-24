@@ -48,7 +48,7 @@
           <x>0</x>
           <y>30</y>
           <width>341</width>
-          <height>491</height>
+          <height>641</height>
          </rect>
         </property>
        </widget>
@@ -979,19 +979,6 @@
          <bool>false</bool>
         </property>
        </widget>
-       <widget class="QTableView" name="fileView">
-        <property name="geometry">
-         <rect>
-          <x>340</x>
-          <y>30</y>
-          <width>761</width>
-          <height>491</height>
-         </rect>
-        </property>
-        <property name="contextMenuPolicy">
-         <enum>Qt::CustomContextMenu</enum>
-        </property>
-       </widget>
        <widget class="QPushButton" name="homeButton">
         <property name="geometry">
          <rect>
@@ -1454,9 +1441,9 @@
        <widget class="QLineEdit" name="currentFilePath">
         <property name="geometry">
          <rect>
-          <x>180</x>
+          <x>170</x>
           <y>0</y>
-          <width>921</width>
+          <width>1121</width>
           <height>31</height>
          </rect>
         </property>
@@ -1923,7 +1910,7 @@
        <widget class="QPushButton" name="newFolderButton">
         <property name="geometry">
          <rect>
-          <x>140</x>
+          <x>130</x>
           <y>0</y>
           <width>31</width>
           <height>31</height>
@@ -1936,6 +1923,25 @@
          <iconset theme="folder-new">
           <normaloff>.</normaloff>.</iconset>
         </property>
+       </widget>
+       <widget class="QWidget" name="horizontalLayoutWidget_2">
+        <property name="geometry">
+         <rect>
+          <x>340</x>
+          <y>30</y>
+          <width>951</width>
+          <height>641</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="fileViewLayout">
+         <item>
+          <widget class="QTableView" name="fileView">
+           <property name="contextMenuPolicy">
+            <enum>Qt::CustomContextMenu</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </widget>
       <widget class="QWidget" name="KalkulatorTab">
@@ -2521,7 +2527,7 @@
      <x>0</x>
      <y>0</y>
      <width>1315</width>
-     <height>22</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

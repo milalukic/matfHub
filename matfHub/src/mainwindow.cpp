@@ -46,29 +46,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->dirView->hideColumn(1);
     ui->dirView->hideColumn(2);
     ui->dirView->setColumnWidth(0, 200);
-    //ui->dirView->setRootIndex(dirModel->setRootPath(hubPath));
 
+    setUpFileView();
 
-
-    ui->fileView->setModel(m_fileManager->fileModel);
-    ui->fileView->setRootIndex(m_fileManager->fileModel->setRootPath(m_fileManager->hubPath));
-    ui->currentFilePath->setText(m_fileManager->currPath);
-    ui->fileView->setSelectionMode(QAbstractItemView::ExtendedSelection);//klik odabere kliknutu i oddabere ostale; shift klik selektuje sve izmedju selektovane i kliknute, ctrl klik odabere kliknutu i ne oddabere ostale
-    ui->fileView->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
-    ui->fileView->horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);//TODO ovo ne radi za prvo pokretanje..
-    ui->fileView->verticalHeader()->setVisible(false);
-
-    connect(ui->fileView, &QTableView::doubleClicked, this, [this](){//TODO koji signal je odgovarajuc? nesto sto odgovara promeni m_currPath i nista drugo? komplikovan nacin bi bio currPath retvoriti u klasu koja pored stringa ima i signal koji se ovde salje pri promeni QStringa ali to me smara trenutno...
-        ui->fileView->horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);
-    });
-    connect(ui->fileView->selectionModel(), &QItemSelectionModel::selectionChanged, this, [this](){
-        qDebug() << "aaaaaa";
-        QModelIndexList selectedList = ui->fileView->selectionModel()->selectedIndexes();//TODO kada se selektuje vise stvari nesto ozbiljno ne valja, nagadjam da je brz fiks da ne kazem ni ne sumnjam B)
-        for(auto selected : selectedList){
-            int row = selected.row();
-            ui->fileView->selectRow(row);
-        }
-    });
 
 
     //TODO FIX THIS!!!
@@ -347,6 +327,35 @@ QModelIndex MainWindow::getSelectedIndex(const QTableView* view){
 
 QModelIndexList MainWindow::getSelectedIndices(const QTableView* view){
     return view->selectionModel()->selectedIndexes();
+}
+
+void MainWindow::setUpFileView(/*tipPogleda*/){
+    //if(tip == details){
+    //QTableView* fileView = new itd itd
+    //ui->fileViewLayout->children()->at(0) dilit
+    //ui->fileViewLayout->addWidget(fileView);
+    ui->fileView->setModel(m_fileManager->fileModel);
+    ui->fileView->setRootIndex(m_fileManager->fileModel->setRootPath(m_fileManager->hubPath));
+    ui->currentFilePath->setText(m_fileManager->currPath);
+    ui->fileView->setSelectionMode(QAbstractItemView::ExtendedSelection);//klik odabere kliknutu i oddabere ostale; shift klik selektuje sve izmedju selektovane i kliknute, ctrl klik odabere kliknutu i ne oddabere ostale
+    ui->fileView->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
+    ui->fileView->horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);//TODO ovo ne radi za prvo pokretanje..
+    ui->fileView->verticalHeader()->setVisible(false);
+
+    connect(ui->fileView, &QTableView::doubleClicked, this, [this](){//TODO koji signal je odgovarajuc? nesto sto odgovara promeni m_currPath i nista drugo? komplikovan nacin bi bio currPath retvoriti u klasu koja pored stringa ima i signal koji se ovde salje pri promeni QStringa ali to me smara trenutno...
+        ui->fileView->horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);
+    });
+    connect(ui->fileView->selectionModel(), &QItemSelectionModel::selectionChanged, this, [this](){
+        qDebug() << "aaaaaa";
+        QModelIndexList selectedList = ui->fileView->selectionModel()->selectedIndexes();//TODO kada se selektuje vise stvari nesto ozbiljno ne valja, nagadjam da je brz fiks da ne kazem ni ne sumnjam B)
+        for(auto selected : selectedList){
+            int row = selected.row();
+            ui->fileView->selectRow(row);
+        }
+    });
+
+    //else if(tip = list){ itd itd
+
 }
 
 
