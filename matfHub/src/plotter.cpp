@@ -26,10 +26,20 @@ void Plotter::linSpace(double lowerBound, double upperBound, size_t step){
     this->yData(x);
 }
 
+//void Plotter::transformDataParse(double (*func1)(double, char*), double (*func2)(double, char*)){
+
+//    std::vector<double>y = this->yData();
+//    char* expr = "x=";
+//    expr[2] = 5;
+//    std::transform(begin(y), end(y), begin(y), [&func1, &func2](auto &x) {x = func1(x); return func2(x); });
+
+//    this->yData(y);
+//}
+
 void Plotter::transformData(double (*func)(double)){
 
     std::vector<double>y = this->yData();
-    std::transform(begin(y), end(y), begin(y), [&func](auto yPrev) {return func(yPrev); });
+    std::transform(begin(y), end(y), begin(y), [&func](auto &x) {return func(x); });
 
     this->yData(y);
 }

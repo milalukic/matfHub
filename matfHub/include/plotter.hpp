@@ -10,6 +10,8 @@
 #include <algorithm>
 #include <matplot/matplot.h>
 
+#include <string.h>
+
 class Plotter{
 
 public:
@@ -23,19 +25,8 @@ public:
     void operator()() const;
 
     void linSpace(double lowerBound, double upperBound, size_t step);
-
     void transformData(double (*func)(double));
-
-    void transformSin();
-    void transformCos();
-    void transformTan();
-    void transformLn();
-    void transformLog();
-    void transformAbs();
-    void transformNeg();
-    void transformSquare();
-    void transformRoot();
-    void transformExp();
+    void transformDataParse(double (*func1)(double, char*), double (*func2)(double, char*));
 
     void savePlot();
 

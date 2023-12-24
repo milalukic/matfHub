@@ -119,6 +119,8 @@ private slots:
     void plotNeg();
     void plotSquare();
     void plotRoot();
+    void plotParse();
+
     void plotLinspace();
     void savePlotting();
 

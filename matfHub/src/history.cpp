@@ -24,6 +24,7 @@ History* History::getHistory(){
 void History::writeHistory(std::string title, std::string line){
     title += "\n";
     line += "\n";
+
     this->_history.push_back(title);
     this->_history.push_back(line);
     this->_history.push_back(this->EOC);

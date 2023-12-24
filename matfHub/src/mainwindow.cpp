@@ -89,6 +89,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pbNeg, &QPushButton::clicked, this, &MainWindow::plotNeg);
     connect(ui->pbSquare, &QPushButton::clicked, this, &MainWindow::plotSquare);
     connect(ui->pbRoot, &QPushButton::clicked, this, &MainWindow::plotRoot);
+    connect(ui->pbPlotParse, &QPushButton::clicked, this, &MainWindow::plotParse);
     connect(ui->pbLinspace, &QPushButton::clicked, this, &MainWindow::plotLinspace);
     connect(ui->pbPlotSave, &QPushButton::clicked, this, &MainWindow::savePlotting);
 
@@ -448,7 +449,6 @@ void MainWindow::calculateRegular(){
 
     //TODO so it works with char*
     char *expr = ui->leParser->text().toStdString().data();
-    parser->eval_exp(expr);
     double res = parser->eval_exp(expr);
     QString qres = QString::number(res);
 
@@ -715,6 +715,7 @@ void MainWindow::saveMatrix(){
         loadMatrix(2, matrixStringToStringList(Matrix::getSaved(index)->toString()), d1, d2);
     });
 }
+
 void MainWindow::loadMatrix(unsigned int pos, QStringList strLst, unsigned d1, unsigned d2){
     reshapeMatrix(d1, d2, pos, strLst);
 }
@@ -841,6 +842,36 @@ void MainWindow::plotRoot(){
     ui->leState->setText("√(" + ui->leState->text() + ")" );
 
     plt->transformData(sqrt);
+}
+
+//TODO make this work
+void MainWindow::plotParse(){
+
+
+    //set x
+    //x = set x
+    //parse x
+
+    double value = 5;
+    char* expr1 = "x=5";
+    char *expr = ui->leParser->text().toStdString().data();
+    double x1;
+    std::vector<double>xs = plt->xData();
+    std::vector<double>ys = plt->xData();
+    for(int i = 0; i<xs.size(); i++){
+//        expr1[2] = xs[i];
+        x1 = parser->eval_exp(expr1);
+        ys[i] = parser->eval_exp(expr);
+    }
+
+    std::cout << parser->eval_exp(expr1) << std::endl;
+    std::cout << parser->eval_exp(expr) << std::endl;
+    std::cout << xs[0] << std::endl;
+    std::cout << ys[0] << std::endl;
+    plt->yData(ys);
+    (*plt)();
+
+//    plt->transformDataParser(parser->eval_exp(expr1), parser->eval_exp(expr));
 }
 
 void MainWindow::savePlotting(){
