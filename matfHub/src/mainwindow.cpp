@@ -456,7 +456,7 @@ void MainWindow::calculateRegular(){
 
     //TODO so it works with char*
     char *expr = ui->leParser->text().toStdString().data();
-    double res = parser->eval_exp(expr);
+    double res = parser->evalExpression(expr);
     QString qres = QString::number(res);
 
     history->writeHistory(expr, qres.toStdString());
@@ -863,12 +863,12 @@ void MainWindow::plotParse(){
     std::vector<double>ys = plt->xData();
     for(int i = 0; i<xs.size(); i++){
 //        expr1[2] = xs[i];
-        x1 = parser->eval_exp(expr1);
-        ys[i] = parser->eval_exp(expr);
+        x1 = parser->evalExpression(expr1);
+        ys[i] = parser->evalExpression(expr);
     }
 
-    std::cout << parser->eval_exp(expr1) << std::endl;
-    std::cout << parser->eval_exp(expr) << std::endl;
+    std::cout << parser->evalExpression(expr1) << std::endl;
+    std::cout << parser->evalExpression(expr) << std::endl;
     std::cout << xs[0] << std::endl;
     std::cout << ys[0] << std::endl;
     plt->yData(ys);

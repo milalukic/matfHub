@@ -11,13 +11,13 @@ public:
 
     Parser();
     ~Parser();
-    double eval_exp(char *exp);
+    double evalExpression(char *exp);
     char errorMessage[64];
     
 
 protected:
 
-    void eval_exp1(double &result);
+    void evalToken(double &result);
     void evalAdd(double &result);
     void evalMultiply(double &result);
     void evalPow(double &result);

@@ -21,7 +21,7 @@ Parser::~Parser(){
     std::cout << "Unisten: parser" << std::endl;
 }
 
-double Parser::eval_exp(char *exp){
+double Parser::evalExpression(char *exp){
     errorMessage[0] = '\0';
     double result;
     expressionPtr = exp;
@@ -31,13 +31,13 @@ double Parser::eval_exp(char *exp){
         strcpy(errorMessage, "No Expression Present"); // no expression present
         return (double)0;
     }
-    eval_exp1(result);
+    evalToken(result);
     if (*token) // last token must be null
         strcpy(errorMessage, "Syntax Error");
     return result;
 }
 
-void Parser::eval_exp1(double &result){
+void Parser::evalToken(double &result){
     int slot;
     char temp_token[80];
     if (tokenType == VARIABLE)
