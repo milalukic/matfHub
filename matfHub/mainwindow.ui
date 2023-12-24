@@ -2343,7 +2343,7 @@
          <rect>
           <x>10</x>
           <y>20</y>
-          <width>221</width>
+          <width>241</width>
           <height>61</height>
          </rect>
         </property>
@@ -2371,7 +2371,7 @@
          <rect>
           <x>10</x>
           <y>90</y>
-          <width>221</width>
+          <width>241</width>
           <height>361</height>
          </rect>
         </property>
@@ -2383,7 +2383,7 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>219</width>
+           <width>239</width>
            <height>359</height>
           </rect>
          </property>
@@ -2395,10 +2395,10 @@
         </property>
         <property name="geometry">
          <rect>
-          <x>240</x>
+          <x>260</x>
           <y>20</y>
-          <width>841</width>
-          <height>481</height>
+          <width>1031</width>
+          <height>511</height>
          </rect>
         </property>
         <attribute name="verticalHeaderDefaultSectionSize">
@@ -2436,42 +2436,62 @@
         </column>
         <column>
          <property name="text">
-          <string>New Column</string>
+          <string>9:15-10:00</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>New Column</string>
+          <string>10:15-11:00</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>New Column</string>
+          <string>11:15-12:00</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>New Column</string>
+          <string>12:15-13:00</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>New Column</string>
+          <string>13:15-14:00</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>New Column</string>
+          <string>14:15-15:00</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>New Column</string>
+          <string>15:15-16:00</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>New Column</string>
+          <string>16:15-17:00</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>17:15-18:00</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>18:15-19:00</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>19:15-20:00</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>20:15-21:00</string>
          </property>
         </column>
        </widget>
