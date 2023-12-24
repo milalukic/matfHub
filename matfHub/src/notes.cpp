@@ -91,7 +91,10 @@ void Notes::changeLanguage(QString fileName){
     } else if (fileName.startsWith("#! /bin/bash")) {
         m_highliter->setCurrentLanguage(QSourceHighlite::QSourceHighliter::Language::CodeBash);
     } else if(m_highliter){
+        qDebug() << "1";
         delete m_highliter;
+        qDebug() << "2";
+
     }
 }
 
