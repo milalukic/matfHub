@@ -7,8 +7,8 @@
 #include <QTableWidget>
 
 Generator::Generator(const std::vector<Course>& courseList) : courses(courseList) {
-    // Initialize bitmap for scheduling
-    bitmap.resize(5, std::vector<int>(13, 0)); // Assuming 5 days and 13 time slots
+
+    bitmap.resize(5, std::vector<int>(13, 0));
 }
 
 bool Generator::scheduleFilter(const std::vector<Course>& schedule) {
@@ -45,7 +45,7 @@ void Generator::find() {
 
 void Generator::displaySchedule(QTableWidget* tableWidget) {
     if (!schedules.empty()) {
-        const std::vector<Course>& schedule = schedules.front(); // Displaying the first schedule
+        const std::vector<Course>& schedule = schedules.front();
         int row = 0;
         for (const auto& course : schedule) {
             int day = course.day;
@@ -53,10 +53,10 @@ void Generator::displaySchedule(QTableWidget* tableWidget) {
             int end = course.end;
 
             QTableWidgetItem* item = new QTableWidgetItem(QString::fromStdString(course.description));
-            tableWidget->setItem(row, day, item); // Adjust columns based on day and timeslots
+            tableWidget->setItem(row, day, item);
             for (int i = start; i < end; ++i) {
                 QTableWidgetItem* subItem = new QTableWidgetItem("Busy");
-                tableWidget->setItem(row, i, subItem); // Mark slots as busy
+                tableWidget->setItem(row, i, subItem);
             }
             ++row;
         }
