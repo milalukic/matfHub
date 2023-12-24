@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_HPP
 #define MAINWINDOW_HPP
 
+#include "history.hpp"
 #include "schedule.h"
 #include <QMainWindow>
 #include <QtCore>
@@ -8,9 +9,12 @@
 #include <stack>
 #include <memory>
 #include <QListView>
+#include <QString>
 
 #include "notes.h"
-
+#include "plotter.hpp"
+#include "matrix.hpp"
+#include "statistics.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -27,6 +31,10 @@ public:
     void fileViewSetPath(const QString path);
     void currentFilePathSetPath(const QString path);
     QString currentFilePathGetPath();
+
+    //TODO PITAJ ***********************************************************************
+    Plotter *plt;
+
 
 private slots:
     void on_newFileToolbarButton_clicked();
@@ -76,22 +84,64 @@ private slots:
     void changeStackedWidgetPage();
 
         //calc functions
+    void writeToHistoryTB(History* history);
             //regular
     void calculateRegular();
             //matrix
+    void showMatrix(Matrix *m);
+
     void calculateMatrixTranspose();
     void calculateMatrixInverse();
     void calculateMatrixDiag();
     void calculateMatrixOne();
 
-    void parseMatrix1();
-    void parseMatrix2();
+    QStringList matrixStringToStringList(QString str);
+    void reshapeMatrix(unsigned dim1, unsigned dim2, unsigned pos, QStringList content);
+    void reshapeMatrix(unsigned dim1, unsigned dim2, unsigned pos);
+    void reshapeMatrix1();
+    void reshapeMatrix2();
+    QString readM1Data();
+    QString readM2Data();
 
     void calculateMatrixAdd();
     void calculateMatrixSubtract();
     void calculateMatrixMultiply();
     void calculateMatrixDivide();
 
+    void saveMatrix();
+    void loadMatrix(unsigned int pos, QStringList strLst, unsigned d1, unsigned d2);
+
+        //plotting
+    void plot();
+    void plotSin();
+    void plotCos();
+    void plotTan();
+    void plotLn();
+    void plotLog();
+    void plotExp();
+    void plotAbs();
+    void plotNeg();
+    void plotSquare();
+    void plotRoot();
+    void plotParse();
+
+    void plotLinspace();
+    void savePlotting();
+
+    //Staistics
+    void statCalcMean();
+    void statCalcVariance();
+    void statCalcStd();
+    void statCalcMedian();
+    void statCalcMode();
+    void statPlotHist();
+    void statPlotBar();
+    void statPlotBox();
+
+
+    void historySave();
+
+    //kmiljanify
     void on_smerBox_activated(int index);
 
     void on_rasporedStartButton_clicked();

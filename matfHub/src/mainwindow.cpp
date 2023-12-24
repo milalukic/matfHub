@@ -4,6 +4,9 @@
 #include "../include/filemanager.hpp"
 #include "../include/matrix.hpp"
 #include "../include/parser.hpp"
+#include "../include/plotter.hpp"
+#include "../include/statistics.hpp"
+#include "../include/calculator.h"
 
 #include <QSplitter>
 #include <QFileSystemModel>
@@ -12,12 +15,14 @@
 #include <QMessageBox>
 #include <stack>
 #include <iostream>
+#include <cstdlib>
 #include <memory>
 #include <QDebug>
 #include <string>
+#include <matplot/matplot.h>
 
+#define DEBUG (qDebug() << __FILE__ << ":" << __LINE__ << ":\t")
 
-// #include <iostream>
 // #include "../include/notes.h"
 
 
@@ -54,6 +59,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pbChangeRegular, &QPushButton::clicked, this, &MainWindow::changeStackedWidgetPage);
     connect(ui->pbChangeMatrix, &QPushButton::clicked, this, &MainWindow::changeStackedWidgetPage);
     connect(ui->pbChangePlot, &QPushButton::clicked, this, &MainWindow::changeStackedWidgetPage);
+    connect(ui->pbChangeStat, &QPushButton::clicked, this, &MainWindow::changeStackedWidgetPage);
 
     connect(ui->pbParser, &QPushButton::clicked, this, &MainWindow::calculateRegular);
 
@@ -62,14 +68,139 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pbMatrixDiag, &QPushButton::clicked, this, &MainWindow::calculateMatrixDiag);
     connect(ui->pbMatrixOne, &QPushButton::clicked, this, &MainWindow::calculateMatrixOne);
 
-    connect(ui->pbMatrixLoad1, &QPushButton::clicked, this, &MainWindow::parseMatrix1);
-    connect(ui->pbMatrixLoad2, &QPushButton::clicked, this, &MainWindow::parseMatrix2);
+    connect(ui->pbMatrixLoad1, &QPushButton::clicked, this, &MainWindow::reshapeMatrix1);
+    connect(ui->pbMatrixLoad2, &QPushButton::clicked, this, &MainWindow::reshapeMatrix2);
 
     connect(ui->pbMatrixAdd, &QPushButton::clicked, this, &MainWindow::calculateMatrixAdd);
     connect(ui->pbMatrixSubtract, &QPushButton::clicked, this, &MainWindow::calculateMatrixSubtract);
     connect(ui->pbMatrixMultiply, &QPushButton::clicked, this, &MainWindow::calculateMatrixMultiply);
     connect(ui->pbMatrixDivide, &QPushButton::clicked, this, &MainWindow::calculateMatrixDivide);
 
+    connect(ui->pbSaveMatrix, &QPushButton::clicked, this, &MainWindow::saveMatrix);
+
+    connect(ui->pbPlot, &QPushButton::clicked, this, &MainWindow::plot);
+    connect(ui->pbSin, &QPushButton::clicked, this, &MainWindow::plotSin);
+    connect(ui->pbCos, &QPushButton::clicked, this, &MainWindow::plotCos);
+    connect(ui->pbTan, &QPushButton::clicked, this, &MainWindow::plotTan);
+    connect(ui->pbLn, &QPushButton::clicked, this, &MainWindow::plotLn);
+    connect(ui->pbLog, &QPushButton::clicked, this, &MainWindow::plotLog);
+    connect(ui->pbExp, &QPushButton::clicked, this, &MainWindow::plotExp);
+    connect(ui->pbAbs, &QPushButton::clicked, this, &MainWindow::plotAbs);
+    connect(ui->pbNeg, &QPushButton::clicked, this, &MainWindow::plotNeg);
+    connect(ui->pbSquare, &QPushButton::clicked, this, &MainWindow::plotSquare);
+    connect(ui->pbRoot, &QPushButton::clicked, this, &MainWindow::plotRoot);
+    connect(ui->pbPlotParse, &QPushButton::clicked, this, &MainWindow::plotParse);
+    connect(ui->pbLinspace, &QPushButton::clicked, this, &MainWindow::plotLinspace);
+    connect(ui->pbPlotSave, &QPushButton::clicked, this, &MainWindow::savePlotting);
+
+    connect(ui->pbMean, &QPushButton::clicked, this, &MainWindow::statCalcMean);
+    connect(ui->pbVariance, &QPushButton::clicked, this, &MainWindow::statCalcVariance);
+    connect(ui->pbStd, &QPushButton::clicked, this, &MainWindow::statCalcStd);
+    connect(ui->pbMedian, &QPushButton::clicked, this, &MainWindow::statCalcMedian);
+    connect(ui->pbMode, &QPushButton::clicked, this, &MainWindow::statCalcMode);
+    connect(ui->pbHist, &QPushButton::clicked, this, &MainWindow::statPlotHist);
+    connect(ui->pbBar, &QPushButton::clicked, this, &MainWindow::statPlotBar);
+    connect(ui->pbBox, &QPushButton::clicked, this, &MainWindow::statPlotBox);
+
+    connect(ui->pbHistorySave, &QPushButton::clicked, this, &MainWindow::historySave);
+
+}
+//TODO move this, change serbian to english
+// std::vector<double> cppSplit(std::string &s){
+
+//     std::cout << s << std::endl;
+//     //TODO more flexible?
+//     std::string delimiter = ", ";
+
+//     std::vector<double>niz;
+
+//     size_t pos = 0;
+//     std::string token;
+//     while ((pos = s.find(delimiter)) != std::string::npos) {
+//         token = s.substr(0, pos);
+//         std::cout << token << " " << stod(token) << std::endl;
+//         niz.push_back(stod(token));
+//         s.erase(0, pos + delimiter.length());
+//     }
+//     niz.push_back(stod(s));
+
+//     //TODO pointer?
+//     return niz;
+// }
+
+//TODO study code
+std::vector<double> cppSplit(const std::string &s) {
+    std::cout << s << std::endl;
+
+    // TODO: more flexible?
+    std::string delimiter = ", ";
+
+    std::vector<double> niz;
+
+    std::istringstream ss(s);
+    std::string token;
+
+    // Temporarily set the locale to "C" to ensure '.' is used as the decimal point
+    std::locale defaultLocale = std::locale::global(std::locale("C"));
+
+    while (std::getline(ss, token, ',')) {
+        // Trim whitespaces from the token
+        token.erase(token.find_last_not_of(" \t\n\r\f\v") + 1);
+
+        try {
+            double value = std::stod(token);
+            std::cout << token << " " << std::setprecision(15) << value << std::endl;
+            niz.push_back(value);
+        } catch (const std::invalid_argument& e) {
+            // Handle invalid argument (e.g., if conversion fails)
+            std::cerr << "Invalid argument: " << e.what() << std::endl;
+        } catch (const std::out_of_range& e) {
+            // Handle out of range (e.g., if the value is too large or too small)
+            std::cerr << "Out of range: " << e.what() << std::endl;
+        }
+    }
+
+    // Restore the original locale
+    std::locale::global(defaultLocale);
+
+    // TODO: pointer?
+    return niz;
+}
+
+//TODO change name
+std::vector<std::string> cppSplitString(std::string &s){
+
+    //TODO more flexible?
+    std::string delimiter = ", ";
+
+    std::vector<std::string>niz;
+
+    size_t pos = 0;
+    std::string token;
+    while ((pos = s.find(delimiter)) != std::string::npos) {
+        token = s.substr(0, pos);
+        niz.push_back(token);
+        s.erase(0, pos + delimiter.length());
+    }
+    niz.push_back(s);
+
+    //TODO pointer?
+    return niz;
+}
+
+void MainWindow::showMatrix(Matrix *m){
+
+//    QString history = ui->tbHistory->toPlainText();
+
+//    for(int i = 0; i < m->dimension1(); i++) {
+//        for(int j = 0; j < m->dimension2(); j++) {
+//            history += QString::number(m->data()(i,j));
+//            history += " ";
+//        }
+//        history += '\n';
+//    }
+//    history += "------------------------\n";
+//    ui->tbHistory->setText(history);
 }
 
 MainWindow::~MainWindow()
@@ -89,7 +220,7 @@ void MainWindow::on_openFileToolbarButton_clicked()
     notes->openClicked(ui, this);
 }
 
-void MainWindow::on_saveToolbarButton_clicked()//save/save as? trenutno najlaksa opcija da se sacuva izmena jednog fajla u drugi je ctrl+a ctrl+c ctrl+n ctrl+v ctrl+s (takodje bilo bi kul da se prva tri dugmeta aktiviraju i na ctrl+n ctrl+s i ctrl+o
+void MainWindow::on_saveToolbarButton_clicked()//TODDO save/save as? trenutno najlaksa opcija da se sacuva izmena jednog fajla u drugi je ctrl+a ctrl+c ctrl+n ctrl+v ctrl+s (takodje bilo bi kul da se prva tri dugmeta aktiviraju i na ctrl+n ctrl+s i ctrl+o
 {
     notes->saveClicked(ui, this);
 }
@@ -295,10 +426,7 @@ QModelIndexList MainWindow::getSelectedIndices(const QListView* view){
 
 
 //kalkulator things
-//void MainWindow::pbMatrixTest(){
-//    Matrix *m1 = new Matrix(3, 3);
-//    std::cout << m1 << std::endl;
-//}
+
 
 
 void MainWindow::changeStackedWidgetPage(){
@@ -312,86 +440,561 @@ void MainWindow::changeStackedWidgetPage(){
         ui->stackedWidget->setCurrentIndex(1);
     else if(buttonText == "Plotting calculator")
         ui->stackedWidget->setCurrentIndex(2);
+    else if(buttonText == "Statistics")
+        ui->stackedWidget->setCurrentIndex(3);
 }
+//TODO global
+Calculator *calculator = new Calculator();
+History *history = History::getHistory();
+Parser *parser = new Parser();
+int linesWritten = 0;
 
+void MainWindow::writeToHistoryTB(History* history) {
+    auto vecHistory = history->history();
+    for (int i = linesWritten; i < vecHistory.size(); i++)
+        this->ui->tbHistory->append(QString::fromStdString(vecHistory[i]));
+    linesWritten = vecHistory.size();
+}
 void MainWindow::calculateRegular(){
-
-    //TODO make x+5 work (if possible)
-    Parser *parser = new Parser();
+//    Parser *parser = new Parser();
 
     //TODO so it works with char*
     char *expr = ui->leParser->text().toStdString().data();
-    parser->eval_exp(expr);
-    double res = parser->eval_exp(expr);
+    double res = parser->evalExpression(expr);
     QString qres = QString::number(res);
 
-    QString history = ui->tbParser->toPlainText();
-
-    history += expr;
-    history += "\n";
-    history += qres;
-    history += "\n--------------\n";
+    history->writeHistory(expr, qres.toStdString());
+    writeToHistoryTB(history);
 
     ui->leParser->setText(qres);
-    ui->tbParser->setText(history);
 
-    delete parser; parser = nullptr;
+//    std::cout << calculator->lastLine() << std::endl;
+
+//    delete parser; parser = nullptr;
+}
+
+//TODO what to do with it
+Matrix *m1;
+Matrix *m2;
+
+QString MainWindow::readM1Data(){
+    QString res("");
+    //ovaj kod ce verovatno biti uzasan i pun bagova, radna verzija
+    auto rows = ui->scrollAreaM1widget->children().first();
+    for(auto cols : rows->children()){
+        for(auto field : cols->children()){
+            QLineEdit* lEdit = qobject_cast<QLineEdit*>(field);
+            res += lEdit->text();
+        }
+    }
+    return res;
+}
+QString MainWindow::readM2Data(){
+    QString res("");
+    //ovaj kod ce verovatno biti uzasan i pun bagova, radna verzija
+    auto rows = ui->scrollAreaM2widget->children().first();
+    for(auto cols : rows->children()){
+        for(auto field : cols->children()){
+            QLineEdit* lEdit = qobject_cast<QLineEdit*>(field);
+            res += lEdit->text();
+        }
+    }
+    return res;
+}
+
+QStringList MainWindow::matrixStringToStringList(QString str){
+    str.replace("\n", "");
+    str.replace("|", "");
+    QStringList strLst = str.split("\t");
+    strLst.removeAll("");
+    return strLst;
+}
+
+void MainWindow::reshapeMatrix(unsigned dim1, unsigned dim2, unsigned pos){
+
+    auto [oldDim2, oldDim1] = (pos == 1 ? Matrix::getM1shape() : Matrix::getM2shape());
+    if(dim1 == oldDim1 && dim2 == oldDim2){
+        return;
+    }
+
+    unsigned realDim1 = (dim1 <= 25 ? dim1 : 25);
+    unsigned realDim2 = (dim2 <= 25 ? dim2 : 25);
+
+    pos == 1 ? Matrix::reshapeM1(realDim2, realDim1) : Matrix::reshapeM2(realDim2, realDim1);
+
+    QVBoxLayout* rows;
+    QWidget* scrollAreaWidget = (pos == 1 ? ui->scrollAreaM1widget : ui->scrollAreaM2widget);
+    if(scrollAreaWidget->children().isEmpty()){
+        rows = new QVBoxLayout;
+        scrollAreaWidget->setLayout(rows);
+    }else{
+        rows = qobject_cast<QVBoxLayout*>(scrollAreaWidget->children().first());
+        while(!rows->isEmpty()){
+            auto row = rows->takeAt(0)->layout();
+            while(!row->isEmpty()){
+                delete row->takeAt(0)->widget();
+            }
+            delete row;
+        }
+    }
+    QStringList content = matrixStringToStringList(pos == 1 ? (Matrix::m1toString()) : (Matrix::m2toString()));
+    for(int i = 0; i < realDim1; ++i){
+        QHBoxLayout* fields = new QHBoxLayout;
+        for(int j = 0; j < realDim2; ++j){
+            QLineEdit* field = new QLineEdit;
+            field->setText(content.at(j+i*realDim2));
+            if(pos == 1){
+                connect(field, &QLineEdit::editingFinished , this, [i, j, field, this](){
+                    Matrix::setM1Data(field->text().toDouble(), i, j);
+                    qDebug().noquote() << Matrix::m1toString();
+                });
+            }else{
+                connect(field, &QLineEdit::editingFinished , this, [i, j, field, this](){
+                    Matrix::setM2Data(field->text().toDouble(), i, j);
+                    qDebug().noquote() << Matrix::m2toString();
+                });
+            }
+
+            field->setMaximumSize(64, 32);
+            fields->addWidget(field);
+        }
+        rows->addLayout(fields);
+    }
+}
+
+void MainWindow::reshapeMatrix(unsigned dim1, unsigned dim2, unsigned pos, QStringList content){//TODO napraviti enum za pos LEFT i RIGHT
+
+    auto [oldDim2, oldDim1] = (pos == 1 ? Matrix::getM1shape() : Matrix::getM2shape());
+
+    unsigned realDim1 = (dim1 <= 25 ? dim1 : 25);
+    unsigned realDim2 = (dim2 <= 25 ? dim2 : 25);
+
+    pos == 1 ? Matrix::reshapeM1(realDim2, realDim1) : Matrix::reshapeM2(realDim2, realDim1);
+    DEBUG << content;
+
+    QVBoxLayout* rows;
+    QWidget* scrollAreaWidget = (pos == 1 ? ui->scrollAreaM1widget : ui->scrollAreaM2widget);
+    if(scrollAreaWidget->children().isEmpty()){
+        rows = new QVBoxLayout;
+        scrollAreaWidget->setLayout(rows);
+    }else{
+        rows = qobject_cast<QVBoxLayout*>(scrollAreaWidget->children().first());
+        while(!rows->isEmpty()){
+            auto row = rows->takeAt(0)->layout();
+            while(!row->isEmpty()){
+                delete row->takeAt(0)->widget();
+            }
+            delete row;
+        }
+    }
+    for(int i = 0; i < realDim1; ++i){
+        QHBoxLayout* fields = new QHBoxLayout;
+        for(int j = 0; j < realDim2; ++j){
+            QLineEdit* field = new QLineEdit;
+            field->setText(content.at(j+i*realDim2));
+            if(pos == 1){
+                connect(field, &QLineEdit::editingFinished , this, [i, j, field, this](){
+                    Matrix::setM1Data(field->text().toDouble(), i, j);
+                    qDebug().noquote() << Matrix::m1toString();
+                });
+            }else{
+                connect(field, &QLineEdit::editingFinished , this, [i, j, field, this](){
+                    Matrix::setM2Data(field->text().toDouble(), i, j);
+                    qDebug().noquote() << Matrix::m2toString();
+                });
+            }
+
+            field->setMaximumSize(64, 32);
+            fields->addWidget(field);
+        }
+        rows->addLayout(fields);
+    }
+}
+
+//void MainWindow::parseMatrix1(){
+void MainWindow::reshapeMatrix1(){//preimenujte reshape -> resize ako vam ima vise smisla
+    int dim1 = ui->leMatrixDim11->text().toInt();
+    int dim2 = ui->leMatrixDim12->text().toInt();
+    reshapeMatrix(dim1, dim2, 1);
+}
+
+void MainWindow::reshapeMatrix2(){//e ovo je bukvalno kopiran kod ajde molim vas da se to izdvoji u funkciju mene trenutno mrzi tako da u "vas" unutar "molim vas" uglavnom spadam ja ali slobodno ako se neko pojavi i ne daj Boze cita komentare
+    int dim1 = ui->leMatrixDim21->text().toInt();
+    int dim2 = ui->leMatrixDim22->text().toInt();
+    reshapeMatrix(dim1, dim2, 2);
 }
 
 void MainWindow::calculateMatrixTranspose(){
 
-    //TODO make this work (CMake probably)
-    //    Matrix *m1 = new Matrix(5, 5);
-    std::cout << "Transpose" << std::endl;
+//    m1 = m1->transpose();
+//    std::cout << "Transposed matrix: " << std::endl;
+//    std::cout << m1 << std::endl;
+//    showMatrix(m1);
 }
-
+//TODO exceptions
 void MainWindow::calculateMatrixInverse(){
-    std::cout << "Inverse" << std::endl;
+
+//    m1 = m1->inverse();
+//    std::cout << "Inverse" << std::endl;
+//    std::cout << m1 << std::endl;
+//    showMatrix(m1);
 }
 
 void MainWindow::calculateMatrixDiag(){
-    std::cout << "Diag" << std::endl;
+
+//    m1 = m1->diag();
+//    std::cout << "Diag" << std::endl;
+//    std::cout << m1 << std::endl;
+//    showMatrix(m1);
 }
 
 void MainWindow::calculateMatrixOne(){
-    std::cout << "One" << std::endl;
+
+//    m1 = m1->ones();
+//    std::cout << m1 << std::endl;
+//    std::cout << "One" << std::endl;
+//    showMatrix(m1);
 }
 
-void MainWindow::parseMatrix1(){
-    QString text = "Dim1: " + ui->leMatrixDim11->text() + " Dim2: " + ui->leMatrixDim12->text() + " data: " + ui->leMatrixData1->text();
-    std::cout << text.toStdString() << std::endl;
 
-}
-
-void MainWindow::parseMatrix2(){
-    QString text = "Dim1: " + ui->leMatrixDim21->text() + " Dim2: " + ui->leMatrixDim22->text() + " data: " + ui->leMatrixData2->text();
-    std::cout << text.toStdString() << std::endl;
-}
+//TODO save this somewhere?
 
 void MainWindow::calculateMatrixAdd(){
-    std::cout << "Add" << std::endl;
+    bool sameDim = Matrix::add();
+    if(sameDim){
+        // qDebug().noquote() << Matrix::m3toString();
+        history->writeHistory("Sabiranje matrica:", Matrix::m3toString().toStdString());
+        writeToHistoryTB(history);
+    }else{
+        qDebug() << "dimenzije matrica se ne poklapaju";
+        //TODO -||-
+    }
 }
 
 void MainWindow::calculateMatrixSubtract(){
-    std::cout << "Subtract" << std::endl;
+    bool sameDim = Matrix::subtract();
+    if(sameDim){
+        qDebug().noquote() << Matrix::m3toString();
+        history->writeHistory("Oduzimanje matrica:", Matrix::m3toString().toStdString());
+        writeToHistoryTB(history);
+    }else{
+        qDebug() << "dimenzije matrica se ne poklapaju";
+        //TODO -||-
+    }
 }
 
 void MainWindow::calculateMatrixMultiply(){
-    std::cout << "Multiply" << std::endl;
+    bool inverseDim = Matrix::multiply();
+    if(inverseDim){
+        qDebug().noquote() << Matrix::m3toString();
+        history->writeHistory("Mnozenje matrica:", Matrix::m3toString().toStdString());
+        writeToHistoryTB(history);
+    }else{
+        qDebug() << "dimenzije matrica se ne poklapaju";
+        //TODO -||-
+    }
 }
-
+//TODO exceptions
 void MainWindow::calculateMatrixDivide(){
-    std::cout << "Divide" << std::endl;
+
+//    m1->data((*m1 / *m2)->data());
+//    std::cout << *m1 / *m2 << std::endl;
+//    std::cout << "Divide" << std::endl;
+//    showMatrix(m1);
+}
+void MainWindow::saveMatrix(){
+    unsigned index = Matrix::saveMatrix();
+    QPushButton* loadLeft = new QPushButton("Ucitaj levo");
+    QPushButton* loadRight = new QPushButton("Ucitaj desno");
+    QHBoxLayout* savedM = new QHBoxLayout();
+    auto layout = ui->savedMatricesLayout;
+    layout->addLayout(savedM);
+    QLabel* matrixName = new QLabel("#m");//TODO Mat::getSavedVectorLen.toStr
+    savedM->addWidget(matrixName);
+    savedM->addWidget(loadLeft);
+    savedM->addWidget(loadRight);
+    connect(loadLeft, &QPushButton::clicked, this, [this, index](){
+        auto [d1, d2] = Matrix::loadLeft(index);
+        loadMatrix(1, matrixStringToStringList(Matrix::getSaved(index)->toString()), d1, d2);
+    });
+    connect(loadRight, &QPushButton::clicked, this, [this, index](){
+        auto [d1, d2] = Matrix::loadRight(index);
+        loadMatrix(2, matrixStringToStringList(Matrix::getSaved(index)->toString()), d1, d2);
+    });
+}
+
+void MainWindow::loadMatrix(unsigned int pos, QStringList strLst, unsigned d1, unsigned d2){
+    reshapeMatrix(d1, d2, pos, strLst);
+}
+
+//////////////////////////////////////////////////////
+//TODO global classes?
+
+//plt = new Plotter("dd");
+void MainWindow::plotLinspace(){
+    //TODO GLOBAL CLASSES?
+    plt = new Plotter("dd");
+
+    double lowerBound = ui->leLinspaceLB->text().toDouble();
+    double upperBound = ui->leLinspaceUB->text().toDouble();
+    double numOfDots = ui->leLinspaceS->text().toDouble();
+    plt->linSpace(lowerBound, upperBound, numOfDots);
+
+    ui->leState->setText("x");
+    ui->lbLin->setText("Vektor je uspesno ucitan");
+    std::cerr << "Resetovan y" << std::endl;
+    std::cerr <<"Postavljen linspace" << std::endl;
+}
+
+void MainWindow::plot(){
+//    Plotter *plt = new Plotter("sin");
+
+    (*plt)();
+    std::cerr <<"Crtanje: " << std::endl;
+    std::cerr << "\t" << ui->leLinspaceLB->text().toStdString() << " ";
+    std::cerr << ui->leLinspaceUB->text().toStdString() << std::endl;
+
+    std::string lowerBound = ui->leLinspaceLB->text().toStdString();
+    std::string upperBound = ui->leLinspaceLB->text().toStdString();
+    std::string numOfDots = ui->leLinspaceS->text().toStdString();
+    std::string function = ui->leState->text().toStdString();
+    std::string linspaceString = "Plot: (" + lowerBound + ", " + upperBound + ")";
+    linspaceString += " Dots: " + numOfDots;
+
+    history->writeHistory(linspaceString, function);
+
 }
 
 
+void MainWindow::plotSin(){
 
+    ui->leState->setText("sin(" + ui->leState->text() + ")" );
 
+    plt->transformData(sin);
 
+}
 
+void MainWindow::plotCos(){
 
+    ui->leState->setText("cos(" + ui->leState->text() + ")" );
 
+    plt->transformData(cos);
+}
 
+void MainWindow::plotTan(){
 
+    ui->leState->setText("tan(" + ui->leState->text() + ")" );
 
+    plt->transformData(tan);
+}
 
+void MainWindow::plotLn(){
+
+    ui->leState->setText("ln(" + ui->leState->text() + ")" );
+
+    plt->transformData(log);
+}
+
+void MainWindow::plotLog(){
+
+    ui->leState->setText("log(" + ui->leState->text() + ")" );
+
+    plt->transformData(log10);
+}
+
+void MainWindow::plotExp(){
+
+    ui->leState->setText("e^(" + ui->leState->text() + ")" );
+
+    plt->transformData(exp);
+}
+
+void MainWindow::plotAbs(){
+
+    ui->leState->setText("|" + ui->leState->text() + "|" );
+
+    plt->transformData(std::abs);
+}
+
+//TODO friendly function?
+double square(double s){
+    return pow(s, 2);
+}
+//TODO friendly function?
+
+double negation(double s){
+    return -s;
+}
+
+void MainWindow::plotNeg(){
+    std::string state = ui->leState->text().toStdString();
+    if (state[0] == '-') {
+        std::string new_state = state.substr(2, state.length()-3);
+        ui->leState->setText(QString::fromStdString(new_state));
+    } else
+        ui->leState->setText("-(" + ui->leState->text() + ")" );
+
+    plt->transformData(negation);
+}
+
+void MainWindow::plotSquare(){
+
+    ui->leState->setText("(" + ui->leState->text() + ")²" );
+
+    plt->transformData(square);
+}
+
+void MainWindow::plotRoot(){
+
+    ui->leState->setText("√(" + ui->leState->text() + ")" );
+
+    plt->transformData(sqrt);
+}
+
+//TODO make this work
+void MainWindow::plotParse(){
+
+    char *expr = strdup(ui->leState->text().toStdString().c_str());
+
+    double tmp;
+    std::vector<double> xs = plt->xData();
+    std::vector<double> ys = plt->xData();
+
+    std::cout << expr << std::endl;
+    for (int i = 0; i < xs.size(); i++) {
+        char tmp1[20]; // Adjust the size based on your needs
+        strcpy(tmp1, "x=");
+        strcat(tmp1, std::to_string(xs[i]).c_str());
+
+        tmp = parser->evalExpression(tmp1);
+
+        // expr remains unchanged
+        std::cout << expr << std::endl;
+        ys[i] = parser->evalExpression(expr);
+    }
+
+    // Don't forget to free the memory allocated for expr after its last usage
+    free(expr);
+//    std::cout << parser->evalExpression(expr) << std::endl;
+    std::cout << xs[99] << std::endl;
+    std::cout << ys[99] << std::endl;
+    plt->yData(ys);
+    (*plt)();
+
+//    plt->transformDataParser(parser->eval_exp(expr1), parser->eval_exp(expr));
+}
+
+void MainWindow::savePlotting(){
+    plt->savePlot();
+}
+
+//stat
+//TODO global?
+Statistics *stat = new Statistics();
+
+void MainWindow::statCalcMean(){
+
+    auto input = ui->leStat->text().toStdString();
+    stat->xData(cppSplit(input));
+
+    auto result = stat->mean();
+
+    //TODO ploymorph
+    std::string hOutput = "Mean: \n" + input;
+    history->writeHistory(hOutput, std::to_string(result));
+    writeToHistoryTB(history);
+}
+
+void MainWindow::statCalcVariance(){
+
+    auto input = ui->leStat->text().toStdString();
+    stat->xData(cppSplit(input));
+
+    auto result = stat->variance();
+
+    //TODO ploymorph
+    std::string hOutput = "Variance: \n" + input;
+    history->writeHistory(hOutput, std::to_string(result));
+    writeToHistoryTB(history);
+}
+
+void MainWindow::statCalcStd(){
+
+    auto input = ui->leStat->text().toStdString();
+    stat->xData(cppSplit(input));
+
+    auto result = stat->std();
+
+    //TODO ploymorph
+    std::string hOutput = "Std: \n" + input;
+    history->writeHistory(hOutput, std::to_string(result));
+    writeToHistoryTB(history);
+}
+
+void MainWindow::statCalcMedian(){
+
+    //TODO razmisli
+    // stat->loadData();
+    
+    auto input = ui->leStat->text().toStdString();
+    stat->xData(cppSplit(input));
+
+    auto result = stat->median();
+
+    //TODO ploymorph
+    std::string hOutput = "Median: \n" + input;
+    history->writeHistory(hOutput, std::to_string(result));
+    writeToHistoryTB(history);
+}
+
+void MainWindow::statCalcMode(){
+
+    auto input = ui->leStat->text().toStdString();
+    stat->xData(cppSplit(input));
+
+    auto result = stat->mode();
+
+    std::string hOutput = "Mode: \n" + input;
+    history->writeHistory(hOutput, std::to_string(result));
+    writeToHistoryTB(history);
+}
+
+void MainWindow::statPlotHist(){
+
+    auto input = ui->leStat->text().toStdString();
+    stat->xData(cppSplit(input));
+    
+    stat->histogram();
+
+    history->writeHistory("Histogram", input);
+}
+
+void MainWindow::statPlotBar(){
+
+    auto input1 = ui->leStat->text().toStdString();
+    auto input2 = ui->leStatNames->text().toStdString();
+    stat->xData(cppSplit(input1));
+    stat->textData(cppSplitString(input2));
+
+    stat->barplot();
+
+    history->writeHistory("Barplot", input1 + input2);
+}
+
+void MainWindow::statPlotBox(){
+    auto input1 = ui->leStat->text().toStdString();
+    auto input2 = ui->leStatNames->text().toStdString();
+    stat->xData(cppSplit(input1));
+    stat->textData(cppSplitString(input2));
+
+    stat->boxplot();
+
+    history->writeHistory("Boxplot", input1 + input2);
+}
+
+//HISTORY
+
+void MainWindow::historySave(){
+    history->saveHistory();
+    std::cout << "History saved!" << std::endl;
+}
