@@ -15,7 +15,8 @@ Statistics::~Statistics(){
 double Statistics::mean(){
 
     auto data = this->xData();
-    return std::accumulate(cbegin(data), cend(data), 0.0) / (data.size() - 1);
+
+    return std::accumulate(cbegin(data), cend(data), 0.0) / (data.size());
 }
 
 double Statistics::variance(){

@@ -13,7 +13,9 @@ Plotter::~Plotter(){
 void Plotter::operator()() const {
     std::vector<double> zero(this->xData().size());
     std::fill(zero.begin(), zero.end(), 0);
-    matplot::plot(zero, this->xData(), this->xData(), zero, this->xData(), this->yData());
+    auto p = matplot::plot(zero, this->xData(), this->xData(), zero, this->xData(), this->yData());
+    p[2]->line_width(3);
+    p[2]->color("red");
     matplot::show();
 }
 

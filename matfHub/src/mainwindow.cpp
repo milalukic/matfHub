@@ -460,16 +460,9 @@ void MainWindow::calculateRegular(){
     QString qres = QString::number(res);
 
     history->writeHistory(expr, qres.toStdString());
-
-    QString history = ui->tbHistory->toPlainText();
-
-    history += expr;
-    history += "\n";
-    history += qres;
-    history += "\n--------------\n";
+    writeToHistoryTB(history);
 
     ui->leParser->setText(qres);
-    ui->tbHistory->setText(history);
 
 //    std::cout << calculator->lastLine() << std::endl;
 
@@ -898,11 +891,11 @@ void MainWindow::statCalcMean(){
     stat->xData(cppSplit(input));
 
     auto result = stat->mean();
-    ui->tbHistory->setText(QString::number(result));
 
     //TODO ploymorph
     std::string hOutput = "Mean: \n" + input;
     history->writeHistory(hOutput, std::to_string(result));
+    writeToHistoryTB(history);
 }
 
 void MainWindow::statCalcVariance(){
@@ -911,11 +904,11 @@ void MainWindow::statCalcVariance(){
     stat->xData(cppSplit(input));
 
     auto result = stat->variance();
-    ui->tbHistory->setText(QString::number(result));
 
     //TODO ploymorph
     std::string hOutput = "Variance: \n" + input;
     history->writeHistory(hOutput, std::to_string(result));
+    writeToHistoryTB(history);
 }
 
 void MainWindow::statCalcStd(){
@@ -924,11 +917,11 @@ void MainWindow::statCalcStd(){
     stat->xData(cppSplit(input));
 
     auto result = stat->std();
-    ui->tbHistory->setText(QString::number(result));
 
     //TODO ploymorph
     std::string hOutput = "Std: \n" + input;
     history->writeHistory(hOutput, std::to_string(result));
+    writeToHistoryTB(history);
 }
 
 void MainWindow::statCalcMedian(){
@@ -940,11 +933,11 @@ void MainWindow::statCalcMedian(){
     stat->xData(cppSplit(input));
 
     auto result = stat->median();
-    ui->tbHistory->setText(QString::number(result));
 
     //TODO ploymorph
     std::string hOutput = "Median: \n" + input;
     history->writeHistory(hOutput, std::to_string(result));
+    writeToHistoryTB(history);
 }
 
 void MainWindow::statCalcMode(){
@@ -953,10 +946,10 @@ void MainWindow::statCalcMode(){
     stat->xData(cppSplit(input));
 
     auto result = stat->mode();
-    ui->tbHistory->setText(QString::number(result));
 
     std::string hOutput = "Mode: \n" + input;
     history->writeHistory(hOutput, std::to_string(result));
+    writeToHistoryTB(history);
 }
 
 void MainWindow::statPlotHist(){
