@@ -850,27 +850,30 @@ void MainWindow::plotRoot(){
 //TODO make this work
 void MainWindow::plotParse(){
 
+    char *expr = strdup(ui->leState->text().toStdString().c_str());
 
-    //set x
-    //x = set x
-    //parse x
+    double tmp;
+    std::vector<double> xs = plt->xData();
+    std::vector<double> ys = plt->xData();
 
-    double value = 5;
-    char* expr1 = "x=5";
-    char *expr = ui->leParser->text().toStdString().data();
-    double x1;
-    std::vector<double>xs = plt->xData();
-    std::vector<double>ys = plt->xData();
-    for(int i = 0; i<xs.size(); i++){
-//        expr1[2] = xs[i];
-        x1 = parser->evalExpression(expr1);
+    std::cout << expr << std::endl;
+    for (int i = 0; i < xs.size(); i++) {
+        char tmp1[20]; // Adjust the size based on your needs
+        strcpy(tmp1, "x=");
+        strcat(tmp1, std::to_string(xs[i]).c_str());
+
+        tmp = parser->evalExpression(tmp1);
+
+        // expr remains unchanged
+        std::cout << expr << std::endl;
         ys[i] = parser->evalExpression(expr);
     }
 
-    std::cout << parser->evalExpression(expr1) << std::endl;
-    std::cout << parser->evalExpression(expr) << std::endl;
-    std::cout << xs[0] << std::endl;
-    std::cout << ys[0] << std::endl;
+    // Don't forget to free the memory allocated for expr after its last usage
+    free(expr);
+//    std::cout << parser->evalExpression(expr) << std::endl;
+    std::cout << xs[99] << std::endl;
+    std::cout << ys[99] << std::endl;
     plt->yData(ys);
     (*plt)();
 

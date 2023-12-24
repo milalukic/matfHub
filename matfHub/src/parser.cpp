@@ -149,17 +149,18 @@ void Parser::evalParantheses(double &result){
 void Parser::evalFunc(double &result, char* token){
 
     if (!strcmp(token, "SIN"))
-        result = sin(PI / 180 * result);
+        //PI / 180 * result
+        result = sin(result);
     else if (!strcmp(token, "COS"))
-        result = cos(PI / 180 * result);
+        result = cos(result);
     else if (!strcmp(token, "TAN"))
-        result = tan(PI / 180 * result);
+        result = tan(result);
     else if (!strcmp(token, "ASIN"))
-        result = 180 / PI*asin(result);
+        result = asin(result);
     else if (!strcmp(token, "ACOS"))
-        result = 180 / PI*acos(result);
+        result = acos(result);
     else if (!strcmp(token, "ATAN"))
-        result = 180 / PI*atan(result);
+        result = atan(result);
     else if (!strcmp(token, "SINH"))
         result = sinh(result);
     else if (!strcmp(token, "COSH"))
@@ -182,8 +183,10 @@ void Parser::evalFunc(double &result, char* token){
         result = sqrt(result);
     else if (!strcmp(token, "SQR"))
         result = result*result;
-    else if (!strcmp(token, "ROUND"))
-        result = round(result);
+    else if (!strcmp(token, "INT"))
+        result = floor(result);
+    else if (!strcmp(token, "ABS"))
+        result = abs(result);
     else if (!strcmp(token, "INT"))
         result = floor(result);
     else if (!strcmp(token, "PI"))
