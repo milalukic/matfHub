@@ -10,7 +10,7 @@ TEST_CASE("Parser, regular expressions (not regex)", "[class]"){
         Parser parser = Parser();
         char* expression = "ad+wada*/ad";
 
-        auto output = parser.eval_exp(expression);
+        auto output = parser.evalExpression(expression);
 
         REQUIRE(std::isnan(output));
     }
@@ -20,7 +20,7 @@ TEST_CASE("Parser, regular expressions (not regex)", "[class]"){
         char* expression = "5 +* 3";
         const double expectedOutput = 5;
 
-        auto output = parser.eval_exp(expression);
+        auto output = parser.evalExpression(expression);
 
         REQUIRE(expectedOutput == output);
     }
@@ -30,7 +30,7 @@ TEST_CASE("Parser, regular expressions (not regex)", "[class]"){
         char* expression = "5.3 + -3.3";
         const double expectedOutput = 2;
 
-        auto output = parser.eval_exp(expression);
+        auto output = parser.evalExpression(expression);
 
         REQUIRE(expectedOutput == output);
     }
@@ -40,7 +40,7 @@ TEST_CASE("Parser, regular expressions (not regex)", "[class]"){
         char* expression = "5 +* 3";
         const double expectedOutput = 5;
 
-        auto output = parser.eval_exp(expression);
+        auto output = parser.evalExpression(expression);
 
         REQUIRE(expectedOutput == output);
     }
@@ -50,7 +50,7 @@ TEST_CASE("Parser, regular expressions (not regex)", "[class]"){
         char* expression = "2.5 * -2.5/1";
         const double expectedOutput = -6.25;
 
-        auto output = parser.eval_exp(expression);
+        auto output = parser.evalExpression(expression);
 
         REQUIRE(expectedOutput == output);
     }
@@ -60,7 +60,7 @@ TEST_CASE("Parser, regular expressions (not regex)", "[class]"){
         char* expression = "dasd(4)";
         const double expectedOutput = 4;
 
-        auto output = parser.eval_exp(expression);
+        auto output = parser.evalExpression(expression);
 
         REQUIRE(expectedOutput == output);
     }
@@ -69,7 +69,7 @@ TEST_CASE("Parser, regular expressions (not regex)", "[class]"){
         Parser parser = Parser();
         char* expression = "sqrt(-1)";
 
-        auto output = parser.eval_exp(expression);
+        auto output = parser.evalExpression(expression);
 
         REQUIRE(std::isnan(output));
     }
@@ -79,17 +79,7 @@ TEST_CASE("Parser, regular expressions (not regex)", "[class]"){
         char* expression = "sqrt(4)";
         const double expectedOutput = 2;
 
-        auto output = parser.eval_exp(expression);
-
-        REQUIRE(expectedOutput == output);
-    }
-
-    SECTION("method evalExpression returns 0, if the parantheses are not paired correctly"){
-        Parser parser = Parser();
-        char* expression = ")5+3())";
-        const double expectedOutput = 0;
-
-        auto output = parser.eval_exp(expression);
+        auto output = parser.evalExpression(expression);
 
         REQUIRE(expectedOutput == output);
     }
@@ -97,10 +87,10 @@ TEST_CASE("Parser, regular expressions (not regex)", "[class]"){
     //TODO fix
     SECTION("method evalExpression returns 0, if the parantheses are not paired correctly"){
         Parser parser = Parser();
-        char* expression = "())5+3())";
+        char* expression = ")5+3())";
         const double expectedOutput = 0;
 
-        auto output = parser.eval_exp(expression);
+        auto output = parser.evalExpression(expression);
 
         REQUIRE(expectedOutput == output);
     }
@@ -110,7 +100,7 @@ TEST_CASE("Parser, regular expressions (not regex)", "[class]"){
         char* expression = "(5+3)";
         const double expectedOutput = 8;
 
-        auto output = parser.eval_exp(expression);
+        auto output = parser.evalExpression(expression);
 
         REQUIRE(expectedOutput == output);
     }
@@ -122,7 +112,7 @@ TEST_CASE("Parser, variable initialization", "[class]"){
         char* expression = "x";
         const double expectedOutput = 0;
 
-        auto output = parser.eval_exp(expression);
+        auto output = parser.evalExpression(expression);
 
         REQUIRE(expectedOutput == output);
     }
@@ -132,7 +122,7 @@ TEST_CASE("Parser, variable initialization", "[class]"){
         char* expression = "x=5";
         const double expectedOutput = 5;
 
-        auto output = parser.eval_exp(expression);
+        auto output = parser.evalExpression(expression);
 
         REQUIRE(expectedOutput == output);
     }
@@ -144,9 +134,9 @@ TEST_CASE("Parser, variable initialization", "[class]"){
         char* expression = "x+y";
         const double expectedOutput = 11;
 
-        auto expr1 = parser.eval_exp(tmp1);
-        auto expr2 = parser.eval_exp(tmp2);
-        auto output = parser.eval_exp(expression); 
+        auto expr1 = parser.evalExpression(tmp1);
+        auto expr2 = parser.evalExpression(tmp2);
+        auto output = parser.evalExpression(expression); 
 
         REQUIRE(expectedOutput == output);
     }

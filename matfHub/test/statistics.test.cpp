@@ -9,7 +9,7 @@ TEST_CASE("Statistics", "[class]"){
     SECTION("method mean returns -nan, if there are no values"){
         Statistics stat = Statistics();
         std::vector<double> input = std::vector<double>();
-        tat.xData(input);
+        stat.xData(input);
 
         auto output = stat.mean();
 
@@ -19,8 +19,8 @@ TEST_CASE("Statistics", "[class]"){
     SECTION("method mean returns the value, if there is one value in the dataset"){
         Statistics stat = Statistics();
         std::vector<double> input = {1};
-        tat.xData(input);
-        const double expectedOutput = 0;
+        stat.xData(input);
+        const double expectedOutput = 1;
 
         auto output = stat.mean();
 
@@ -30,7 +30,7 @@ TEST_CASE("Statistics", "[class]"){
     SECTION("method mean returns the mean of the data, if the data is valid"){
         Statistics stat = Statistics();
         std::vector<double> input = {1, 2, 3};
-        tat.xData(input);
+        stat.xData(input);
         const double expectedOutput = 2;
 
         auto output = stat.mean();
@@ -49,6 +49,7 @@ TEST_CASE("Statistics", "[class]"){
         REQUIRE(expectedOutput == output);
     }
 
+    //TODO fix
     SECTION("method variance returns nan, if there is one value in the dataset"){
         Statistics stat = Statistics();
         std::vector<double> input = {1};
