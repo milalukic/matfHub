@@ -14,9 +14,10 @@ private:
 
     Ui::MainWindow* m_mw;
     QSourceHighlite::QSourceHighliter* m_highliter;
+    QTextCharFormat m_defaultFormat;
     QString* m_fileContentUnchanged;
 
-    void changeLanguage(QString fileName);
+    void changeLanguage(QString fileName, Ui::MainWindow *ui);
 
 public:
     Notes(Ui::MainWindow* mw);

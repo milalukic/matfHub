@@ -49,7 +49,7 @@ void Notes::newClicked(Ui::MainWindow *ui, QWidget *parent){
 
 
 
-void Notes::changeLanguage(QString fileName){
+void Notes::changeLanguage(QString fileName, Ui::MainWindow *ui){
 
     std::map<QString,  QSourceHighlite::QSourceHighliter::Language> extToLanguageMap = {
         { ".cpp",  QSourceHighlite::QSourceHighliter::Language::CodeCpp },
@@ -92,7 +92,8 @@ void Notes::changeLanguage(QString fileName){
         m_highliter->setCurrentLanguage(QSourceHighlite::QSourceHighliter::Language::CodeBash);
     } else if(m_highliter){
         qDebug() << "1";
-        delete m_highliter;
+        m_defaultFormat.setForeground(Qt::black);  // Adjust color as needed
+        ui->textEdit->setCurrentCharFormat(m_defaultFormat);
         qDebug() << "2";
 
     }
@@ -112,7 +113,7 @@ void Notes::openClicked(Ui::MainWindow *ui, QWidget *parent){
         QTextStream in(&file);
         QString text = in.readAll();
 
-        changeLanguage(fileName);
+        changeLanguage(fileName, ui);
 
         if(m_fileContentUnchanged){
             delete m_fileContentUnchanged;
@@ -160,7 +161,7 @@ void Notes::saveClicked(Ui::MainWindow *ui, QWidget *parent){
         file.close();
     }
     parent->setWindowTitle(m_currentFile.right(m_currentFile.length() - m_currentFile.lastIndexOf("/")-1));
-    changeLanguage(m_currentFile);
+    changeLanguage(m_currentFile, ui);
     //nesto mi se cini da ovo ne radi, ako je to tacno treba jelte popraviti
 }
 
