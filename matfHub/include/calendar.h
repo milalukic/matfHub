@@ -11,11 +11,13 @@ class Calendar
 public:
     Calendar(Ui::MainWindow* mw);
 
-    QMap<QDate, QString> date_to_note;
+    QMap<QDate, QList<QString>> date_to_note;
     QDate selectedDate = QDate::currentDate();
 
     void dateChanged(Ui::MainWindow *ui, QDate);
-    void textSaved(Ui::MainWindow *ui);
+    void taskAdded(Ui::MainWindow *ui);
+    void removeTask(Ui::MainWindow *ui);
+    void removeAll(Ui::MainWindow *ui);
     void saveHistory();
     void initializeMap();
 };

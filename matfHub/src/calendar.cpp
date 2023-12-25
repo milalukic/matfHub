@@ -1,23 +1,58 @@
 #include "../include/calendar.h"
 #include "../ui_mainwindow.h"
+#include "qjsonarray.h"
 #include "qjsondocument.h"
 #include "qjsonobject.h"
 
 #include <QFile>
+#include <QDateEdit>
+#include <QDate>
 
 Calendar::Calendar(Ui::MainWindow* ui) {
     initializeMap();
     ui->calendarWidget->setSelectedDate(selectedDate);
-    ui->textEdit_2->setPlainText(date_to_note.value(selectedDate));
+    ui->calendarWidget->setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
+    ui->calendarWidget->setFirstDayOfWeek(Qt::DayOfWeek::Monday);
+
+    ui->dateEdit->QDateEdit::setDate(selectedDate);
+
+    for (auto item : date_to_note[selectedDate]){
+        if(item != "\n")
+            ui->listWidget->addItem(item);
+    }
 }
 
 void Calendar::dateChanged(Ui::MainWindow *ui, QDate date) {
     selectedDate = date;
-    ui->textEdit_2->setPlainText(date_to_note.value(selectedDate));
+    ui->dateEdit->QDateEdit::setDate(selectedDate);
+    ui->listWidget->clear();
+
+    for (auto item : date_to_note[selectedDate]){
+        if(item != "\n")
+            ui->listWidget->addItem(item);
+    }
 }
 
-void Calendar::textSaved(Ui::MainWindow *ui){
-    date_to_note[selectedDate] = ui->textEdit_2->toPlainText();
+void Calendar::taskAdded(Ui::MainWindow *ui){
+
+    QString itemString = ui->timeEdit->time().toString("HH:mm") + " " + ui->textEdit_3->toPlainText();
+
+    QListWidgetItem* item = new QListWidgetItem(itemString, ui->listWidget);
+
+
+    date_to_note[selectedDate].append(itemString);
+    item->setFlags(item->flags() | Qt::ItemIsEditable);
+    ui->textEdit_3->clear();
+    ui->textEdit_3->setFocus();
+}
+
+void Calendar::removeTask(Ui::MainWindow *ui){
+    QListWidgetItem* item = ui->listWidget->takeItem(ui->listWidget->currentRow());
+    delete item;
+}
+
+void Calendar::removeAll(Ui::MainWindow *ui){
+    ui->listWidget->clear();
 }
 
 // Cuvamo mapu u JSON formatu pri izlasku iz aplikacije
@@ -35,7 +70,7 @@ void Calendar::saveHistory(){
     QMap<QString, QVariant> jsonMap;
     for (auto it = date_to_note.begin(); it != date_to_note.end(); ++it) {
         QString dateString = it.key().toString("yyyy-MM-dd");
-        jsonMap.insert(dateString, it.value());
+        jsonMap.insert(dateString, it.value().join("\n"));
     }
 
     QJsonObject jsonObject = QJsonObject::fromVariantMap(jsonMap);
@@ -68,7 +103,7 @@ void Calendar::initializeMap(){
     for (auto it = jsonObject.begin(); it != jsonObject.end(); ++it) {
         QString dateString = it.key();
         QDate date = QDate::fromString(dateString, "yyyy-MM-dd"); // Parse string back to QDate
-        QString note = it.value().toString();
+        QList<QString> note = it.value().toString().split("\n");
         date_to_note.insert(date, note);
     }
 }

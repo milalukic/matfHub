@@ -79,7 +79,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pbMatrixMultiply, &QPushButton::clicked, this, &MainWindow::calculateMatrixMultiply);
     connect(ui->pbMatrixDivide, &QPushButton::clicked, this, &MainWindow::calculateMatrixDivide);
 
-}
+ }
 
 MainWindow::~MainWindow()
 {
@@ -87,6 +87,7 @@ MainWindow::~MainWindow()
     calendar->saveHistory();
     delete ui;
 }
+
 
 // Funkcionalnosti Notes toolbara
 void MainWindow::on_newFileToolbarButton_clicked()
@@ -398,6 +399,18 @@ void MainWindow::on_calendarWidget_clicked(const QDate &date)
 
 void MainWindow::on_pushButton_clicked()
 {
-    calendar->textSaved(ui);
+    calendar->taskAdded(ui);
+}
+
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    calendar->removeTask(ui);
+}
+
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    calendar->removeAll(ui);
 }
 

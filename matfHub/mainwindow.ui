@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1315</width>
-    <height>772</height>
+    <width>1156</width>
+    <height>766</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -2504,49 +2504,142 @@
        <attribute name="title">
         <string>Kalendar</string>
        </attribute>
-       <widget class="QWidget" name="horizontalLayoutWidget_2">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>50</y>
-          <width>1211</width>
-          <height>601</height>
-         </rect>
-        </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
-         <item>
-          <widget class="QTextEdit" name="textEdit_2">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCalendarWidget" name="calendarWidget">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
        <widget class="QPushButton" name="pushButton">
         <property name="geometry">
          <rect>
-          <x>10</x>
-          <y>20</y>
-          <width>61</width>
+          <x>940</x>
+          <y>650</y>
+          <width>161</width>
           <height>21</height>
          </rect>
         </property>
         <property name="text">
-         <string>Save</string>
+         <string>Dodaj Stavku u Kalendar</string>
+        </property>
+       </widget>
+       <widget class="QTimeEdit" name="timeEdit">
+        <property name="geometry">
+         <rect>
+          <x>810</x>
+          <y>650</y>
+          <width>121</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="displayFormat">
+         <string>HH:mm</string>
+        </property>
+        <property name="time">
+         <time>
+          <hour>12</hour>
+          <minute>0</minute>
+          <second>0</second>
+         </time>
+        </property>
+       </widget>
+       <widget class="QDateEdit" name="dateEdit">
+        <property name="geometry">
+         <rect>
+          <x>660</x>
+          <y>650</y>
+          <width>141</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="date">
+         <date>
+          <year>2023</year>
+          <month>12</month>
+          <day>25</day>
+         </date>
+        </property>
+       </widget>
+       <widget class="QTextEdit" name="textEdit_3">
+        <property name="geometry">
+         <rect>
+          <x>660</x>
+          <y>550</y>
+          <width>461</width>
+          <height>91</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_2">
+        <property name="geometry">
+         <rect>
+          <x>100</x>
+          <y>650</y>
+          <width>80</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Ukloni</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_3">
+        <property name="geometry">
+         <rect>
+          <x>200</x>
+          <y>650</y>
+          <width>80</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Ukloni sve</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_9">
+        <property name="geometry">
+         <rect>
+          <x>660</x>
+          <y>530</y>
+          <width>151</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>NOVA STAVKA</string>
+        </property>
+       </widget>
+       <widget class="QListWidget" name="listWidget">
+        <property name="geometry">
+         <rect>
+          <x>660</x>
+          <y>50</y>
+          <width>461</width>
+          <height>471</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_10">
+        <property name="geometry">
+         <rect>
+          <x>660</x>
+          <y>30</y>
+          <width>151</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>PLANER</string>
+        </property>
+       </widget>
+       <widget class="QCalendarWidget" name="calendarWidget">
+        <property name="geometry">
+         <rect>
+          <x>70</x>
+          <y>30</y>
+          <width>549</width>
+          <height>609</height>
+         </rect>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
        </widget>
       </widget>
@@ -2560,7 +2653,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1315</width>
+     <width>1156</width>
      <height>21</height>
     </rect>
    </property>
