@@ -65,10 +65,8 @@ double Statistics::mode(){
 }
 
 //PLOTTER 
-//TODO "calculator" this
-
 void Statistics::histogram(){
-        auto data = xData();
+    auto data = xData();
     matplot::hist(data);
     matplot::show();
 }
@@ -82,7 +80,6 @@ void Statistics::barplot(){
     matplot::gca()->x_axis().ticklabels(names);
 
     matplot::show();
-
 }
 
 void Statistics::boxplot(){
@@ -91,10 +88,9 @@ void Statistics::boxplot(){
     auto names = this->textData();
     matplot::boxplot(data, names);
     matplot::show();
-
 }
 
-//getters setters
+//getters
 
 std::vector<double> Statistics::xData() const{
     return this->_xData;
@@ -103,6 +99,8 @@ std::vector<double> Statistics::xData() const{
 std::vector<std::string> Statistics::textData() const{
     return this->_textData;
 }
+
+//setters
 
 void Statistics::xData(const std::vector<double> &newX){
     this->_xData = newX;

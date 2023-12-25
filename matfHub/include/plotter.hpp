@@ -16,12 +16,11 @@ class Plotter{
 
 public:
     //konstruktor
-    Plotter(std::string func);
+    Plotter();
     //destruktor
     ~Plotter();
 
     //metode
-    void plot();
     void operator()() const;
 
     void linSpace(double lowerBound, double upperBound, size_t step);
@@ -40,13 +39,8 @@ public:
     std::vector<double> yData() const;
     std::string output() const;
 
-
-
 private:
-    std::string _func;
-
-    //TODO fix naming and comments
-    std::vector<double> _xData; //linspace data
+    std::vector<double> _xData;
     std::vector<double> _yData;
 
     std::string _output;
