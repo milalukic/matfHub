@@ -122,21 +122,52 @@ void Matrix::reshapeMatrix(unsigned col, unsigned row){
     m_rows = row;
 }
 
-//operators
+//methods
+//TODO polymorph these
+Matrix *Matrix::transpose() {
+    Matrix* newMatrix = new Matrix(this->columns(), this->rows());
+    arma::mat tmp = arma::trans(this->data());
+    newMatrix->data(tmp);
 
-// bool Matrix::add(){
-//     if(m_M1->m_columns != m_M2->m_columns || m_M1->m_rows != m_M2->m_rows){
-//         return false;
-//     }
-//     if(m_M3){
-//         delete m_M3;
-//     }
-//     m_M3 = *m_M1 + *m_M2;
-//     return true;
-// }
+    return newMatrix;
+}
+
+Matrix *Matrix::ones(){
+    Matrix* newMatrix = new Matrix(this->rows(), this->columns());
+    arma::mat tmp = this->data().ones();
+    newMatrix->data(tmp);
+
+    return newMatrix;
+}
+
+Matrix *Matrix::eye(){
+//    if(!(this->columns() == this->rows()))
+//        throw std::invalid_argument("Matrice dimensions are not the same");
+
+    Matrix* newMatrix = new Matrix(this->rows(), this->columns());
+    arma::mat tmp = this->data().eye();
+    newMatrix->data(tmp);
+
+    return newMatrix;
+}
+
+Matrix *Matrix::inverse(){
+    if(!(this->columns() == this->rows()))
+        throw std::invalid_argument("Matrice dimensions are not the same");
+
+    Matrix* newMatrix = new Matrix(this->rows(), this->columns());
+    arma::mat tmp = arma::inv(this->data());
+    newMatrix->data(tmp);
+
+    return newMatrix;
+ }
+
+
+//operators
 
 //TODO & ? -> .
 //TODO polymorph?
+
 Matrix* Matrix::operator + (const Matrix &other) const{
     if(this->columns() != other.columns() || this->rows ()!= other.rows()){
         throw std::invalid_argument("Matrices are not the same size");
@@ -144,8 +175,10 @@ Matrix* Matrix::operator + (const Matrix &other) const{
 
     Matrix* newMat = new Matrix(this->rows(), this->columns());
     arma::mat *newData = new arma::mat(this->rows(), this->columns());
+
     *newData = this->data() + other.data();
     newMat->data(*newData);
+
     return newMat;
 }
 
@@ -156,8 +189,10 @@ Matrix* Matrix::operator - (const Matrix &other) const{
 
     Matrix* newMat = new Matrix(this->rows(), this->columns());
     arma::mat *newData = new arma::mat(this->rows(), this->columns());
+
     *newData = this->data() - other.data();
     newMat->data(*newData);
+
     return newMat;
 }
 
@@ -168,8 +203,10 @@ Matrix* Matrix::operator * (const Matrix &other) const{
 
     Matrix* newMat = new Matrix(this->rows(), this->columns());
     arma::mat *newData = new arma::mat(this->rows(), this->columns());
+
     *newData = this->data() * other.data();
     newMat->data(*newData);
+
     return newMat;
 }
 
@@ -179,17 +216,20 @@ Matrix* Matrix::operator * (const Matrix &other) const{
 
 Matrix &Matrix::operator = (const Matrix &other) {
 
+    //    m_columns = other.m_columns;
+    //    m_rows = other.m_rows;
+    //    m_data->reshape(m_rows, m_columns);
+    //    *m_data = *(other.m_data);
+
     this->columns(other.columns());
     this->rows(other.rows());
+
     arma::mat tmp = this->data();
     tmp.reshape(this->rows(), this->columns());
 
-//    m_columns = other.m_columns;
-//    m_rows = other.m_rows;
-//    m_data->reshape(m_rows, m_columns);
-//    *m_data = *(other.m_data);
     return *this;
 }
+
 
 //getters
 unsigned Matrix::rows() const{
@@ -204,7 +244,6 @@ unsigned Matrix::columns() const{
 arma::mat Matrix::data() const{
     return *m_data;
 }
-
 
 //setters
 

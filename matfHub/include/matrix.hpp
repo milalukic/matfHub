@@ -46,15 +46,12 @@ public:
     std::pair<unsigned, unsigned> loadRight(unsigned index);
 
     //functions
-    static bool divide();
-    static void increment();
-    static void decrement();
-    static void negate();
 
     Matrix *transpose();
     Matrix *inverse();
     Matrix *ones();
-    Matrix *diag();
+    Matrix *eye();
+
     //operators
     Matrix *operator + (const Matrix &other) const;
     Matrix *operator - (const Matrix &other) const;
@@ -82,11 +79,8 @@ private:
     unsigned m_columns;
     arma::mat* m_data;
 
-    static Matrix* m_M1;
-
+    //TODO this...
     static std::vector<Matrix*> m_savedMatrices;
-
-
 
 };
 

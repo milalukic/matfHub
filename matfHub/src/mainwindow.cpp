@@ -63,7 +63,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->pbMatrixTranspose, &QPushButton::clicked, this, &MainWindow::calculateMatrixTranspose);
     connect(ui->pbMatrixInverse, &QPushButton::clicked, this, &MainWindow::calculateMatrixInverse);
-    connect(ui->pbMatrixDiag, &QPushButton::clicked, this, &MainWindow::calculateMatrixDiag);
+    connect(ui->pbMatrixEye, &QPushButton::clicked, this, &MainWindow::calculateMatrixEye);
     connect(ui->pbMatrixOne, &QPushButton::clicked, this, &MainWindow::calculateMatrixOne);
 
     connect(ui->pbMatrixLoad1, &QPushButton::clicked, this, &MainWindow::reshapeMatrix1);
@@ -509,19 +509,14 @@ QStringList MainWindow::matrixStringToStringList(QString str){
 
 void MainWindow::reshapeMatrix(unsigned dim1, unsigned dim2, unsigned pos){
 
-    std::cout << "DDDDD1" << std::endl;
     auto [oldDim2, oldDim1] = (pos == 1 ? m1->getShape() : m2->getShape());
-    std::cout << "DDDDD2" << std::endl;
     if(dim1 == oldDim1 && dim2 == oldDim2){
         return;
     }
 
     unsigned realDim1 = (dim1 <= 25 ? dim1 : 25);
     unsigned realDim2 = (dim2 <= 25 ? dim2 : 25);
-    std::cout << "DDDDD3" << std::endl;
     pos == 1 ? m1->reshapeMatrix(realDim2, realDim1) : m2->reshapeMatrix(realDim2, realDim1);
-
-    std::cout << "DDDDD4" << std::endl;
 
     QVBoxLayout* rows;
     QWidget* scrollAreaWidget = (pos == 1 ? ui->scrollAreaM1widget : ui->scrollAreaM2widget);
@@ -616,7 +611,6 @@ void MainWindow::reshapeMatrix(unsigned dim1, unsigned dim2, unsigned pos, QStri
 void MainWindow::reshapeMatrix1(){//preimenujte reshape -> resize ako vam ima vise smisla
     int dim1 = ui->leMatrixDim11->text().toInt();
     int dim2 = ui->leMatrixDim12->text().toInt();
-    std::cout << "DDDDDx" << std::endl;
     reshapeMatrix(dim1, dim2, 1);
 }
 
@@ -628,34 +622,35 @@ void MainWindow::reshapeMatrix2(){//e ovo je bukvalno kopiran kod ajde molim vas
 
 void MainWindow::calculateMatrixTranspose(){
 
-//    m1 = m1->transpose();
-//    std::cout << "Transposed matrix: " << std::endl;
-//    std::cout << m1 << std::endl;
-//    showMatrix(m1);
+
+    m3 = m1->transpose();
+    std::cout << m1->toString().toStdString() << std::endl;
+    std::cout << m3->toString().toStdString() << std::endl;
+    history->writeHistory("Transponovanje matrice:", m3->toString().toStdString());
+    writeToHistoryTB(history);
 }
-//TODO exceptions
 void MainWindow::calculateMatrixInverse(){
 
-//    m1 = m1->inverse();
-//    std::cout << "Inverse" << std::endl;
-//    std::cout << m1 << std::endl;
-//    showMatrix(m1);
+    m3 = m1->inverse();
+    std::cout << m3->toString().toStdString() << std::endl;
+    history->writeHistory("Inverz matrice:", m3->toString().toStdString());
+    writeToHistoryTB(history);
 }
 
-void MainWindow::calculateMatrixDiag(){
+void MainWindow::calculateMatrixEye(){
 
-//    m1 = m1->diag();
-//    std::cout << "Diag" << std::endl;
-//    std::cout << m1 << std::endl;
-//    showMatrix(m1);
+    m3 = m1->eye();
+    std::cout << m3->toString().toStdString() << std::endl;
+    history->writeHistory("Dijagonala matrica:", m3->toString().toStdString());
+    writeToHistoryTB(history);
 }
 
 void MainWindow::calculateMatrixOne(){
 
-//    m1 = m1->ones();
-//    std::cout << m1 << std::endl;
-//    std::cout << "One" << std::endl;
-//    showMatrix(m1);
+    m3 = m1->ones();
+    std::cout << m3->toString().toStdString() << std::endl;
+    history->writeHistory("Jedinice matrica:", m3->toString().toStdString());
+    writeToHistoryTB(history);
 }
 
 

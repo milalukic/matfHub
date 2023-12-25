@@ -92,7 +92,7 @@ private slots:
 
     void calculateMatrixTranspose();
     void calculateMatrixInverse();
-    void calculateMatrixDiag();
+    void calculateMatrixEye();
     void calculateMatrixOne();
 
     QStringList matrixStringToStringList(QString str);
