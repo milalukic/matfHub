@@ -16,43 +16,57 @@ Calendar::Calendar(Ui::MainWindow* ui) {
 
     ui->dateEdit->QDateEdit::setDate(selectedDate);
 
-    for (auto item : date_to_note[selectedDate]){
-        if(item != "\n")
-            ui->listWidget->addItem(item);
+    for (auto itemStr : date_to_note[selectedDate]){
+        QListWidgetItem* item = new QListWidgetItem(itemStr, ui->listWidget);
+        item->setFlags(item->flags() | Qt::ItemIsEditable);
     }
 }
 
 void Calendar::dateChanged(Ui::MainWindow *ui, QDate date) {
     selectedDate = date;
     ui->dateEdit->QDateEdit::setDate(selectedDate);
+    ui->calendarWidget->setSelectedDate(date);
     ui->listWidget->clear();
 
-    for (auto item : date_to_note[selectedDate]){
-        if(item != "\n")
-            ui->listWidget->addItem(item);
+    for (auto itemStr : date_to_note[selectedDate]){
+        QListWidgetItem* item = new QListWidgetItem(itemStr, ui->listWidget);
+        item->setFlags(item->flags() | Qt::ItemIsEditable);
     }
 }
 
 void Calendar::taskAdded(Ui::MainWindow *ui){
 
+    if(ui->dateEdit->date() != selectedDate){
+        dateChanged(ui, ui->dateEdit->date());
+    }
+
     QString itemString = ui->timeEdit->time().toString("HH:mm") + " " + ui->textEdit_3->toPlainText();
-
-    QListWidgetItem* item = new QListWidgetItem(itemString, ui->listWidget);
-
-
     date_to_note[selectedDate].append(itemString);
-    item->setFlags(item->flags() | Qt::ItemIsEditable);
+    date_to_note[selectedDate].sort();
+
+    ui->listWidget->clear();
+
+    for (auto itemStr : date_to_note[selectedDate]){
+        QListWidgetItem* item = new QListWidgetItem(itemStr, ui->listWidget);
+        item->setFlags(item->flags() | Qt::ItemIsEditable);
+    }
+
     ui->textEdit_3->clear();
     ui->textEdit_3->setFocus();
 }
 
 void Calendar::removeTask(Ui::MainWindow *ui){
+
+    QString itemString = ui->listWidget->currentItem()->text();
+    date_to_note[selectedDate].removeOne(itemString);
+
     QListWidgetItem* item = ui->listWidget->takeItem(ui->listWidget->currentRow());
     delete item;
 }
 
 void Calendar::removeAll(Ui::MainWindow *ui){
     ui->listWidget->clear();
+    date_to_note[selectedDate].clear();
 }
 
 // Cuvamo mapu u JSON formatu pri izlasku iz aplikacije
