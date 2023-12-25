@@ -241,7 +241,7 @@ void FileManager::sortByType(){
     }
 }
 
-void FileManager::largerIcons(){
+/*void FileManager::largerIcons(){
     if (m_iconSize < 60){
         m_iconSize += 10;
     }else{
@@ -259,3 +259,4 @@ void FileManager::smallerIcons(){
     m_mainWindow->ui->fileView->setIconSize(QSize(m_iconSize,m_iconSize));
     qDebug() << m_iconSize;
 }
+*/

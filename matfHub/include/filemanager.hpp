@@ -12,39 +12,27 @@ public:
     FileManager(MainWindow* mw);
 
     // putanje koje se koriste za navigaciju
-    QString oldPath;
-    QString appPath;
-    QString hubPath;
-    QString currPath;
+    QString oldPath;//TODO private
+    QString appPath;//vrv private
+    QString hubPath;//realno isto private ali mozda geter
+    QString currPath;//brate realno private i sigurno geter
 
     //modeli koje prikazujemo u levom i desnom delu prozora
-    QFileSystemModel *dirModel;
-    QFileSystemModel *fileModel;
+    QFileSystemModel *dirModel;//private
+    QFileSystemModel *fileModel;//private
 
     // pocetne promenljive za sort i reverse sort
-    bool m_nameSortCounter = false;
+    bool m_nameSortCounter = false;//sve ovo isto private
     bool m_dateSortCounter = false;
     bool m_sizeSortCounter = false;
     bool m_typeSortCounter = false;
 
     // pocetna velicina ikonica
-    int m_iconSize = 50;    // Ovde nije bio problem to sto su se lose menjale velicine
-        //vec taj da sam hteo da se povecava za +-5 piksela, ali
-        //iz nekog razloga QListView, ili sta vec, nije registrovao
-        //promene na rasponu od 40-60 pixela.
-        //Drugim recima ako bih isao 50+5, ne bi se nista desilo,
-        //ali sledeci put kad kliknes da povecas skocilo bi na 60px
-        //i ikonice bi se povecale za 10px, sto je bas vidno velika promena,
-        //vise izlgeda kao da se dupliraju u velicini nego da se doda 20% na nju
-        //ali nakon toga onda radi normalno za +5.
-        //Iz tog razloga je bio onaj cudan uslov da prvo poveca/smanji za 10,
-        //pa nakon toga ide po 5. U svakom slucaju, slazem se da je bilo ruzno,
-        //ali mislim da je to bag na nivou okruzenja (potencijalno mozda samo QListView klase?)
-        //tj. ne verujem da mozemo ista da uradimo povodom toga
+    int m_iconSize = 50;//priv
 
     // stekovi u kojima cuvamo istoriju kretanja
-    std::stack<QString> navigationBefore;
-    std::stack<QString> navigationAfter;
+    std::stack<QString> navigationBefore;//def priv
+    std::stack<QString> navigationAfter;//-||-
 
     // jasno imenovane funkcije fmanagera
     void changeDir(const QString path);
@@ -69,7 +57,6 @@ public:
     void sortByType();
     void largerIcons();
     void smallerIcons();
-    //ako ne gresim pola ovoga treba biti privatno??? //TODO
 
 private:
     MainWindow *m_mainWindow;

@@ -1924,7 +1924,7 @@
           <normaloff>.</normaloff>.</iconset>
         </property>
        </widget>
-       <widget class="QStackedWidget" name="stackedWidgetFM">
+       <widget class="QStackedWidget" name="stackedWidgetFileView">
         <property name="geometry">
          <rect>
           <x>340</x>
@@ -1934,7 +1934,7 @@
          </rect>
         </property>
         <widget class="QWidget" name="page_4">
-         <widget class="QTableView" name="fileView">
+         <widget class="QTableView" name="detailsFileView">
           <property name="geometry">
            <rect>
             <x>0</x>
@@ -1950,6 +1950,18 @@
         </widget>
         <widget class="QWidget" name="page_5">
          <widget class="QListView" name="listFileView">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>951</width>
+            <height>651</height>
+           </rect>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QWidget" name="page_6">
+         <widget class="QTableView" name="thumbnailsFileView">
           <property name="geometry">
            <rect>
             <x>0</x>
