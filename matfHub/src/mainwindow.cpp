@@ -749,6 +749,7 @@ void MainWindow::plot(){
     linspaceString += " Dots: " + numOfDots;
 
     history->writeHistory(linspaceString, function);
+    writeToHistoryTB(history);
 }
 
 
@@ -863,6 +864,17 @@ void MainWindow::plotParse(){
 
     plt->yData(ys);
     (*plt)();
+
+    std::string lowerBound = ui->leLinspaceLB->text().toStdString();
+    std::string upperBound = ui->leLinspaceLB->text().toStdString();
+    std::string numOfDots = ui->leLinspaceS->text().toStdString();
+    std::string function = ui->leState->text().toStdString();
+
+    std::string linspaceString = "Plot: (" + lowerBound + ", " + upperBound + ")";
+    linspaceString += " Dots: " + numOfDots;
+
+    history->writeHistory(linspaceString, function);
+    writeToHistoryTB(history);
 }
 
 void MainWindow::savePlotting(){
