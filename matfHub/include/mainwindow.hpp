@@ -34,28 +34,33 @@ public:
 
 
 private slots:
+    void actionExitTriggered();
+    void actionChangeHubLocationTriggered();
+
     //notes slots
-    void on_newFileToolbarButton_clicked();
-    void on_openFileToolbarButton_clicked();
-    void on_saveToolbarButton_clicked();
-    void on_copyToolbarButton_clicked();
-    void on_pasteToolbarButton_clicked();
-    void on_cutToolbarButton_clicked();
-    void on_undoToolbarButton_clicked();
-    void on_redoToolbarButton_clicked();
+    void on_newFileNotesButton_clicked();
+    void on_openFileNotesButton_clicked();
+    void on_saveNotesButton_clicked();
+    void on_copyNotesButton_clicked();
+    void on_pasteNotesButton_clicked();
+    void on_cutNotesButton_clicked();
+    void on_undoNotesButton_clicked();
+    void on_redoNotesButton_clicked();
+
     //fmanager slots
-    void on_dirView_doubleClicked(const QModelIndex &index);
-    void on_backButton_clicked();
-    void on_forwardButton_clicked();
-    void on_homeButton_clicked();
+    void dirViewDoubleClicked(const QModelIndex &index);
+
+    void backButtonClicked();
+    void forwardButtonClicked();
+    void homeButtonClicked();
+    void dotDotButtonClicked();
+    void newFolderButtonClicked();
+
+    void currentFilePathEditingFinished();
+
     void fileViewDoubleClicked(const QModelIndex &index);
-    void on_dirView_clicked(const QModelIndex &index);
-    void on_currentFilePath_editingFinished();
-    void on_dotDotButton_clicked();
-    void on_newFolderButton_clicked();
-    void on_fileView_customContextMenuRequested(const QPoint &pos);
-    void on_actionExit_triggered();
-    void on_actionChangeHubLocation_triggered();
+    void fileViewCustomContextMenuRequested(const QPoint &pos);
+
     //calculator slots
 //    void pbMatrixTest();
     void changeStackedWidgetPage();
@@ -88,9 +93,10 @@ private:
     std::stack<QString> navigationAfter;
     std::unique_ptr<Schedule> schedule;
 
-    int countSelected(const QTableView* view);
-    QModelIndex getSelectedIndex(const QTableView* view);
-    QModelIndexList getSelectedIndices(const QTableView* view);
+    int countSelected(const QAbstractItemView* view);
+    QModelIndex getSelectedIndex(const QAbstractItemView* view);
+    QModelIndexList getSelectedIndices(const QAbstractItemView* view);
+    QAbstractItemView* m_activeFileView;
 
     void setUpFileView(/*enum tipPogleda*/);//funkcija prima enum neki tipa i onda pravi pogled na osnovu enuma i podesava ga, kao sto smo u mejnu radili do sada, zatim brise dete od ui->fileViewLayout i daje mu novo dete, ovo koje je napravio
 

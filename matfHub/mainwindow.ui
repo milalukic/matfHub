@@ -2268,7 +2268,7 @@
         </property>
         <layout class="QHBoxLayout" name="toolbarLayout">
          <item>
-          <widget class="QPushButton" name="newFileToolbarButton">
+          <widget class="QPushButton" name="newFileNotesButton">
            <property name="styleSheet">
             <string notr="true"/>
            </property>
@@ -2282,7 +2282,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="saveToolbarButton">
+          <widget class="QPushButton" name="saveNotesButton">
            <property name="styleSheet">
             <string notr="true"/>
            </property>
@@ -2296,7 +2296,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="openFileToolbarButton">
+          <widget class="QPushButton" name="openFileNotesButton">
            <property name="styleSheet">
             <string notr="true"/>
            </property>
@@ -2310,7 +2310,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="copyToolbarButton">
+          <widget class="QPushButton" name="copyNotesButton">
            <property name="text">
             <string/>
            </property>
@@ -2321,7 +2321,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pasteToolbarButton">
+          <widget class="QPushButton" name="pasteNotesButton">
            <property name="text">
             <string/>
            </property>
@@ -2332,7 +2332,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="cutToolbarButton">
+          <widget class="QPushButton" name="cutNotesButton">
            <property name="text">
             <string/>
            </property>
@@ -2343,7 +2343,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="undoToolbarButton">
+          <widget class="QPushButton" name="undoNotesButton">
            <property name="text">
             <string/>
            </property>
@@ -2354,7 +2354,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="redoToolbarButton">
+          <widget class="QPushButton" name="redoNotesButton">
            <property name="text">
             <string/>
            </property>
