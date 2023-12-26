@@ -2002,685 +2002,563 @@
            </layout>
           </widget>
           <widget class="QWidget" name="page_2">
-           <widget class="QWidget" name="formLayoutWidget">
-            <property name="geometry">
-             <rect>
-              <x>10</x>
-              <y>30</y>
-              <width>152</width>
-              <height>91</height>
-             </rect>
-            </property>
-            <layout class="QFormLayout" name="formLayout">
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_5">
-               <property name="text">
-                <string>Br. vrsta</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QLineEdit" name="leMatrixDim11"/>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_6">
-               <property name="text">
-                <string>Br. kolona</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QLineEdit" name="leMatrixDim12"/>
-             </item>
-             <item row="2" column="0" colspan="2">
-              <widget class="QPushButton" name="pbMatrixLoad1">
-               <property name="text">
-                <string>Ucitaj dimenzije</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-           <widget class="QWidget" name="formLayoutWidget_2">
-            <property name="geometry">
-             <rect>
-              <x>550</x>
-              <y>30</y>
-              <width>152</width>
-              <height>91</height>
-             </rect>
-            </property>
-            <layout class="QFormLayout" name="formLayout_2">
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_7">
-               <property name="text">
-                <string>Br. vrsta</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QLineEdit" name="leMatrixDim21"/>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_8">
-               <property name="text">
-                <string>Br. kolona</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QLineEdit" name="leMatrixDim22"/>
-             </item>
-             <item row="2" column="0" colspan="2">
-              <widget class="QPushButton" name="pbMatrixLoad2">
-               <property name="text">
-                <string>Ucitaj dimenzije</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-           <widget class="QWidget" name="gridLayoutWidget_2">
-            <property name="geometry">
-             <rect>
-              <x>10</x>
-              <y>200</y>
-              <width>531</width>
-              <height>131</height>
-             </rect>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_2">
-             <item row="0" column="1">
-              <widget class="QPushButton" name="pbMatrixSubtract">
-               <property name="text">
-                <string>Oduzmi</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0">
-              <widget class="QPushButton" name="pbMatrixAdd">
-               <property name="text">
-                <string>Saberi</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QPushButton" name="pbMatrixMultiply">
-               <property name="text">
-                <string>Pomnozi</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QPushButton" name="pbMatrixDivide">
-               <property name="text">
-                <string>Divide</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-           <widget class="QWidget" name="gridLayoutWidget">
-            <property name="geometry">
-             <rect>
-              <x>550</x>
-              <y>200</y>
-              <width>521</width>
-              <height>131</height>
-             </rect>
-            </property>
-            <layout class="QGridLayout" name="gridLayout">
-             <item row="0" column="1">
-              <widget class="QPushButton" name="pbMatrixInverse">
-               <property name="text">
-                <string>Inverse</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QPushButton" name="pbMatrixOne">
-               <property name="text">
-                <string>One</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QPushButton" name="pbMatrixEye">
-               <property name="text">
-                <string>Eye</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0">
-              <widget class="QPushButton" name="pbMatrixTranspose">
-               <property name="text">
-                <string>Transpose</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-           <widget class="QScrollArea" name="scrollAreaM1">
-            <property name="geometry">
-             <rect>
-              <x>170</x>
-              <y>10</y>
-              <width>371</width>
-              <height>171</height>
-             </rect>
-            </property>
-            <property name="widgetResizable">
-             <bool>true</bool>
-            </property>
-            <widget class="QWidget" name="scrollAreaM1widget">
-             <property name="geometry">
-              <rect>
-               <x>0</x>
-               <y>0</y>
-               <width>369</width>
-               <height>169</height>
-              </rect>
-             </property>
-            </widget>
-           </widget>
-           <widget class="QScrollArea" name="scrollAreaM2">
-            <property name="geometry">
-             <rect>
-              <x>710</x>
-              <y>10</y>
-              <width>361</width>
-              <height>171</height>
-             </rect>
-            </property>
-            <property name="widgetResizable">
-             <bool>true</bool>
-            </property>
-            <widget class="QWidget" name="scrollAreaM2widget">
-             <property name="geometry">
-              <rect>
-               <x>0</x>
-               <y>0</y>
-               <width>359</width>
-               <height>169</height>
-              </rect>
-             </property>
-            </widget>
-           </widget>
-           <widget class="QWidget" name="verticalLayoutWidget_2">
-            <property name="geometry">
-             <rect>
-              <x>1080</x>
-              <y>10</y>
-              <width>191</width>
-              <height>321</height>
-             </rect>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_3">
-             <item>
-              <widget class="QScrollArea" name="scrollAreaSavedM">
-               <property name="widgetResizable">
-                <bool>true</bool>
-               </property>
-               <widget class="QWidget" name="scrollAreaSavedMWidget">
-                <property name="geometry">
-                 <rect>
-                  <x>0</x>
-                  <y>0</y>
-                  <width>187</width>
-                  <height>289</height>
-                 </rect>
+           <layout class="QHBoxLayout" name="horizontalLayout_15">
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_9" stretch="0,0">
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_13">
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_12">
+                  <item>
+                   <layout class="QFormLayout" name="formLayout">
+                    <item row="1" column="1">
+                     <widget class="QLineEdit" name="leMatrixDim12"/>
+                    </item>
+                    <item row="1" column="0">
+                     <widget class="QLabel" name="label_6">
+                      <property name="text">
+                       <string>Columns:</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="1">
+                     <widget class="QLineEdit" name="leMatrixDim11"/>
+                    </item>
+                    <item row="0" column="0">
+                     <widget class="QLabel" name="label_5">
+                      <property name="text">
+                       <string>Rows:</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="2" column="0" colspan="2">
+                     <widget class="QPushButton" name="pbMatrixLoad1">
+                      <property name="text">
+                       <string>Load matrix</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <widget class="QScrollArea" name="scrollAreaM1">
+                    <property name="minimumSize">
+                     <size>
+                      <width>350</width>
+                      <height>350</height>
+                     </size>
+                    </property>
+                    <property name="widgetResizable">
+                     <bool>true</bool>
+                    </property>
+                    <widget class="QWidget" name="scrollAreaM1widget">
+                     <property name="geometry">
+                      <rect>
+                       <x>0</x>
+                       <y>0</y>
+                       <width>348</width>
+                       <height>348</height>
+                      </rect>
+                     </property>
+                    </widget>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QFormLayout" name="formLayout_2">
+                  <item row="0" column="0">
+                   <widget class="QLabel" name="label_7">
+                    <property name="text">
+                     <string>Rows:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="1">
+                   <widget class="QLineEdit" name="leMatrixDim21"/>
+                  </item>
+                  <item row="1" column="0">
+                   <widget class="QLabel" name="label_8">
+                    <property name="text">
+                     <string>Columns:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="1">
+                   <widget class="QLineEdit" name="leMatrixDim22"/>
+                  </item>
+                  <item row="2" column="0" colspan="2">
+                   <widget class="QPushButton" name="pbMatrixLoad2">
+                    <property name="text">
+                     <string>Load matrix</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <widget class="QScrollArea" name="scrollAreaM2">
+                  <property name="minimumSize">
+                   <size>
+                    <width>350</width>
+                    <height>350</height>
+                   </size>
+                  </property>
+                  <property name="widgetResizable">
+                   <bool>true</bool>
+                  </property>
+                  <widget class="QWidget" name="scrollAreaM2widget">
+                   <property name="geometry">
+                    <rect>
+                     <x>0</x>
+                     <y>0</y>
+                     <width>348</width>
+                     <height>350</height>
+                    </rect>
+                   </property>
+                  </widget>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_14">
+                <item>
+                 <layout class="QGridLayout" name="gridLayout_2">
+                  <item row="0" column="0">
+                   <widget class="QPushButton" name="pbMatrixAdd">
+                    <property name="text">
+                     <string>Saberi</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="0">
+                   <widget class="QPushButton" name="pbMatrixMultiply">
+                    <property name="text">
+                     <string>Pomnozi</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="1">
+                   <widget class="QPushButton" name="pbMatrixDivide">
+                    <property name="text">
+                     <string>Divide</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="1">
+                   <widget class="QPushButton" name="pbMatrixSubtract">
+                    <property name="text">
+                     <string>Oduzmi</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QGridLayout" name="gridLayout">
+                  <item row="0" column="0">
+                   <widget class="QPushButton" name="pbMatrixTranspose">
+                    <property name="text">
+                     <string>Transpose</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="1">
+                   <widget class="QPushButton" name="pbMatrixInverse">
+                    <property name="text">
+                     <string>Inverse</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="0">
+                   <widget class="QPushButton" name="pbMatrixEye">
+                    <property name="text">
+                     <string>Eye</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="1">
+                   <widget class="QPushButton" name="pbMatrixOne">
+                    <property name="text">
+                     <string>One</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_3">
+              <item>
+               <widget class="QScrollArea" name="scrollAreaSavedM">
+                <property name="widgetResizable">
+                 <bool>true</bool>
                 </property>
-                <widget class="QWidget" name="verticalLayoutWidget_3">
+                <widget class="QWidget" name="scrollAreaSavedMWidget">
                  <property name="geometry">
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>181</width>
-                   <height>281</height>
+                   <width>187</width>
+                   <height>384</height>
                   </rect>
                  </property>
-                 <layout class="QVBoxLayout" name="savedMatricesLayout"/>
+                 <layout class="QVBoxLayout" name="verticalLayout_7">
+                  <item>
+                   <layout class="QVBoxLayout" name="savedMatricesLayout"/>
+                  </item>
+                 </layout>
                 </widget>
                </widget>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="pbSaveMatrix">
-               <property name="text">
-                <string>Ucitaj rezultat u listu</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pbSaveMatrix">
+                <property name="text">
+                 <string>Ucitaj rezultat u listu</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
           </widget>
           <widget class="QWidget" name="page_3">
-           <widget class="QLabel" name="label_4">
-            <property name="geometry">
-             <rect>
-              <x>20</x>
-              <y>20</y>
-              <width>41</width>
-              <height>16</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Plotting</string>
-            </property>
-           </widget>
-           <widget class="QPushButton" name="pbPlot">
-            <property name="geometry">
-             <rect>
-              <x>290</x>
-              <y>230</y>
-              <width>171</width>
-              <height>25</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Plot</string>
-            </property>
-           </widget>
-           <widget class="QLineEdit" name="leLinspaceLB">
-            <property name="geometry">
-             <rect>
-              <x>70</x>
-              <y>70</y>
-              <width>113</width>
-              <height>22</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>-10</string>
-            </property>
-           </widget>
-           <widget class="QLineEdit" name="leLinspaceUB">
-            <property name="geometry">
-             <rect>
-              <x>70</x>
-              <y>110</y>
-              <width>113</width>
-              <height>22</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>10</string>
-            </property>
-           </widget>
-           <widget class="QLineEdit" name="leLinspaceS">
-            <property name="geometry">
-             <rect>
-              <x>70</x>
-              <y>150</y>
-              <width>113</width>
-              <height>22</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>100</string>
-            </property>
-           </widget>
-           <widget class="QLabel" name="labelState">
-            <property name="geometry">
-             <rect>
-              <x>520</x>
-              <y>20</y>
-              <width>91</width>
-              <height>21</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Trenutno stanje: </string>
-            </property>
-           </widget>
-           <widget class="QLineEdit" name="leState">
-            <property name="geometry">
-             <rect>
-              <x>630</x>
-              <y>20</y>
-              <width>113</width>
-              <height>22</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>x</string>
-            </property>
-           </widget>
-           <widget class="QPushButton" name="pbLinspace">
-            <property name="geometry">
-             <rect>
-              <x>70</x>
-              <y>180</y>
-              <width>111</width>
-              <height>21</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>LinSpace</string>
-            </property>
-           </widget>
-           <widget class="QPushButton" name="pbSin">
-            <property name="geometry">
-             <rect>
-              <x>490</x>
-              <y>70</y>
-              <width>80</width>
-              <height>22</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Sin</string>
-            </property>
-           </widget>
-           <widget class="QLabel" name="lbLin">
-            <property name="geometry">
-             <rect>
-              <x>200</x>
-              <y>100</y>
-              <width>111</width>
-              <height>61</height>
-             </rect>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::NoFrame</enum>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-            <property name="wordWrap">
-             <bool>true</bool>
-            </property>
-           </widget>
-           <widget class="QPushButton" name="pbCos">
-            <property name="geometry">
-             <rect>
-              <x>590</x>
-              <y>70</y>
-              <width>80</width>
-              <height>22</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Cos</string>
-            </property>
-           </widget>
-           <widget class="QPushButton" name="pbTan">
-            <property name="geometry">
-             <rect>
-              <x>690</x>
-              <y>70</y>
-              <width>80</width>
-              <height>22</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Tan</string>
-            </property>
-           </widget>
-           <widget class="QPushButton" name="pbLn">
-            <property name="geometry">
-             <rect>
-              <x>490</x>
-              <y>110</y>
-              <width>80</width>
-              <height>22</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Ln</string>
-            </property>
-           </widget>
-           <widget class="QPushButton" name="pbLog">
-            <property name="geometry">
-             <rect>
-              <x>590</x>
-              <y>110</y>
-              <width>80</width>
-              <height>22</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Log</string>
-            </property>
-           </widget>
-           <widget class="QPushButton" name="pbExp">
-            <property name="geometry">
-             <rect>
-              <x>690</x>
-              <y>110</y>
-              <width>80</width>
-              <height>22</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Exp</string>
-            </property>
-           </widget>
-           <widget class="QPushButton" name="pbAbs">
-            <property name="geometry">
-             <rect>
-              <x>490</x>
-              <y>150</y>
-              <width>80</width>
-              <height>22</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Abs</string>
-            </property>
-           </widget>
-           <widget class="QPushButton" name="pbSquare">
-            <property name="geometry">
-             <rect>
-              <x>690</x>
-              <y>150</y>
-              <width>80</width>
-              <height>22</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Square</string>
-            </property>
-           </widget>
-           <widget class="QPushButton" name="pbNeg">
-            <property name="geometry">
-             <rect>
-              <x>590</x>
-              <y>150</y>
-              <width>80</width>
-              <height>22</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>-</string>
-            </property>
-           </widget>
-           <widget class="QPushButton" name="pbRoot">
-            <property name="geometry">
-             <rect>
-              <x>590</x>
-              <y>190</y>
-              <width>80</width>
-              <height>22</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Root</string>
-            </property>
-           </widget>
-           <widget class="QPushButton" name="pbPlotSave">
-            <property name="geometry">
-             <rect>
-              <x>490</x>
-              <y>230</y>
-              <width>161</width>
-              <height>22</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Save</string>
-            </property>
-           </widget>
-           <widget class="QPushButton" name="pbPlotParse">
-            <property name="geometry">
-             <rect>
-              <x>690</x>
-              <y>190</y>
-              <width>80</width>
-              <height>22</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Parse</string>
-            </property>
-           </widget>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_5">
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_4">
+                <item>
+                 <widget class="QLabel" name="label">
+                  <property name="text">
+                   <string>Lower bound:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="leLinspaceLB">
+                  <property name="text">
+                   <string>-10</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_5">
+                <item>
+                 <widget class="QLabel" name="label_3">
+                  <property name="text">
+                   <string>Upper bound:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="leLinspaceUB">
+                  <property name="text">
+                   <string>10</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_6">
+                <item>
+                 <widget class="QLabel" name="label_4">
+                  <property name="text">
+                   <string>Num of dots:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="leLinspaceS">
+                  <property name="text">
+                   <string>100</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pbLinspace">
+                <property name="text">
+                 <string>LinSpace</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <layout class="QFormLayout" name="formLayout_3">
+              <item row="0" column="0">
+               <widget class="QLabel" name="labelState">
+                <property name="text">
+                 <string>Current state:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLineEdit" name="leState">
+                <property name="text">
+                 <string>x</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QPushButton" name="pbPlotParse">
+                <property name="text">
+                 <string>Parse</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QPushButton" name="pbPlotSave">
+                <property name="text">
+                 <string>Save</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <spacer name="verticalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QLabel" name="lbLin">
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::NoFrame</enum>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <layout class="QGridLayout" name="gridLayout_3">
+              <item row="1" column="2">
+               <widget class="QPushButton" name="pbExp">
+                <property name="text">
+                 <string>Exp</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QPushButton" name="pbTan">
+                <property name="text">
+                 <string>Tan</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QPushButton" name="pbSin">
+                <property name="text">
+                 <string>Sin</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QPushButton" name="pbLog">
+                <property name="text">
+                 <string>Log</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QPushButton" name="pbNeg">
+                <property name="text">
+                 <string>-</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QPushButton" name="pbCos">
+                <property name="text">
+                 <string>Cos</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="2">
+               <widget class="QPushButton" name="pbSquare">
+                <property name="text">
+                 <string>Square</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="0" colspan="3">
+               <widget class="QPushButton" name="pbPlot">
+                <property name="text">
+                 <string>Plot</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QPushButton" name="pbLn">
+                <property name="text">
+                 <string>Ln</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QPushButton" name="pbAbs">
+                <property name="text">
+                 <string>Abs</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QPushButton" name="pbRoot">
+                <property name="text">
+                 <string>Root</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
           </widget>
           <widget class="QWidget" name="page_4">
-           <widget class="QLineEdit" name="leStat">
-            <property name="geometry">
-             <rect>
-              <x>160</x>
-              <y>100</y>
-              <width>831</width>
-              <height>21</height>
-             </rect>
-            </property>
-           </widget>
-           <widget class="QLabel" name="label_9">
-            <property name="geometry">
-             <rect>
-              <x>530</x>
-              <y>70</y>
-              <width>58</width>
-              <height>15</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Input</string>
-            </property>
-           </widget>
-           <widget class="QPushButton" name="pbMean">
-            <property name="geometry">
-             <rect>
-              <x>230</x>
-              <y>170</y>
-              <width>101</width>
-              <height>31</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Mean</string>
-            </property>
-           </widget>
-           <widget class="QPushButton" name="pbVariance">
-            <property name="geometry">
-             <rect>
-              <x>640</x>
-              <y>170</y>
-              <width>101</width>
-              <height>31</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Variance</string>
-            </property>
-           </widget>
-           <widget class="QPushButton" name="pbMedian">
-            <property name="geometry">
-             <rect>
-              <x>430</x>
-              <y>170</y>
-              <width>101</width>
-              <height>31</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Median</string>
-            </property>
-           </widget>
-           <widget class="QPushButton" name="pbMode">
-            <property name="geometry">
-             <rect>
-              <x>830</x>
-              <y>170</y>
-              <width>101</width>
-              <height>31</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Mode</string>
-            </property>
-           </widget>
-           <widget class="QPushButton" name="pbHist">
-            <property name="geometry">
-             <rect>
-              <x>430</x>
-              <y>230</y>
-              <width>101</width>
-              <height>31</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Histogram</string>
-            </property>
-           </widget>
-           <widget class="QPushButton" name="pbBar">
-            <property name="geometry">
-             <rect>
-              <x>630</x>
-              <y>230</y>
-              <width>101</width>
-              <height>31</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Bar Plot</string>
-            </property>
-           </widget>
-           <widget class="QLineEdit" name="leStatNames">
-            <property name="geometry">
-             <rect>
-              <x>160</x>
-              <y>140</y>
-              <width>831</width>
-              <height>21</height>
-             </rect>
-            </property>
-           </widget>
-           <widget class="QPushButton" name="pbBox">
-            <property name="geometry">
-             <rect>
-              <x>840</x>
-              <y>220</y>
-              <width>101</width>
-              <height>31</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>BoxPlot</string>
-            </property>
-           </widget>
-           <widget class="QPushButton" name="pbStd">
-            <property name="geometry">
-             <rect>
-              <x>230</x>
-              <y>230</y>
-              <width>111</width>
-              <height>31</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Standard deviation</string>
-            </property>
-           </widget>
+           <layout class="QVBoxLayout" name="verticalLayout_6">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_7">
+              <item>
+               <widget class="QLabel" name="label_9">
+                <property name="text">
+                 <string>Input:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="leStat"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_8">
+              <item>
+               <widget class="QLabel" name="label_10">
+                <property name="text">
+                 <string>Names:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="leStatNames"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QGridLayout" name="gridLayout_4">
+              <item row="0" column="2">
+               <widget class="QPushButton" name="pbVariance">
+                <property name="text">
+                 <string>Variance</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QPushButton" name="pbMean">
+                <property name="text">
+                 <string>Mean</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QPushButton" name="pbMedian">
+                <property name="text">
+                 <string>Median</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="3">
+               <widget class="QPushButton" name="pbMode">
+                <property name="text">
+                 <string>Mode</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="QPushButton" name="pbHist">
+                <property name="text">
+                 <string>Histogram</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="3">
+               <widget class="QPushButton" name="pbBar">
+                <property name="text">
+                 <string>Bar Plot</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="4">
+               <widget class="QPushButton" name="pbStd">
+                <property name="text">
+                 <string>Standard deviation</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QPushButton" name="pbBox">
+                <property name="text">
+                 <string>BoxPlot</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
           </widget>
          </widget>
         </item>
