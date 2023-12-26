@@ -2685,6 +2685,9 @@
          </widget>
         </item>
         <item>
+         <widget class="QLineEdit" name="leError"/>
+        </item>
+        <item>
          <widget class="QTextBrowser" name="tbHistory"/>
         </item>
         <item>

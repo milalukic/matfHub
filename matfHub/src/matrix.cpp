@@ -141,9 +141,6 @@ Matrix *Matrix::ones(){
 }
 
 Matrix *Matrix::eye(){
-//    if(!(this->columns() == this->rows()))
-//        throw std::invalid_argument("Matrice dimensions are not the same");
-
     Matrix* newMatrix = new Matrix(this->rows(), this->columns());
     arma::mat tmp = this->data().eye();
     newMatrix->data(tmp);
@@ -152,9 +149,6 @@ Matrix *Matrix::eye(){
 }
 
 Matrix *Matrix::inverse(){
-    if(!(this->columns() == this->rows()))
-        throw std::invalid_argument("Matrice dimensions are not the same");
-
     Matrix* newMatrix = new Matrix(this->rows(), this->columns());
     arma::mat tmp = arma::inv(this->data());
     newMatrix->data(tmp);
@@ -162,16 +156,12 @@ Matrix *Matrix::inverse(){
     return newMatrix;
  }
 
-
 //operators
 
 //TODO & ? -> .
 //TODO polymorph?
 
 Matrix* Matrix::operator + (const Matrix &other) const{
-    if(this->columns() != other.columns() || this->rows ()!= other.rows()){
-        throw std::invalid_argument("Matrices are not the same size");
-    }
 
     Matrix* newMat = new Matrix(this->rows(), this->columns());
     arma::mat *newData = new arma::mat(this->rows(), this->columns());
@@ -183,9 +173,6 @@ Matrix* Matrix::operator + (const Matrix &other) const{
 }
 
 Matrix* Matrix::operator - (const Matrix &other) const{
-    if(this->columns() != other.columns() || this->rows ()!= other.rows()){
-        throw std::invalid_argument("Matrices are not the same size");
-    }
 
     Matrix* newMat = new Matrix(this->rows(), this->columns());
     arma::mat *newData = new arma::mat(this->rows(), this->columns());
@@ -197,9 +184,6 @@ Matrix* Matrix::operator - (const Matrix &other) const{
 }
 
 Matrix* Matrix::operator * (const Matrix &other) const{
-    if(this->columns() != other.rows()){
-        throw std::invalid_argument("Matrices sizes are not compatable");
-    }
 
     Matrix* newMat = new Matrix(this->rows(), this->columns());
     arma::mat *newData = new arma::mat(this->rows(), this->columns());

@@ -72,7 +72,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pbMatrixAdd, &QPushButton::clicked, this, &MainWindow::calculateMatrixAdd);
     connect(ui->pbMatrixSubtract, &QPushButton::clicked, this, &MainWindow::calculateMatrixSubtract);
     connect(ui->pbMatrixMultiply, &QPushButton::clicked, this, &MainWindow::calculateMatrixMultiply);
-    connect(ui->pbMatrixDivide, &QPushButton::clicked, this, &MainWindow::calculateMatrixDivide);
 
     connect(ui->pbSaveMatrix, &QPushButton::clicked, this, &MainWindow::saveMatrix);
 
@@ -609,14 +608,13 @@ void MainWindow::reshapeMatrix(unsigned dim1, unsigned dim2, unsigned pos, QStri
     }
 }
 
-//void MainWindow::parseMatrix1(){
-void MainWindow::reshapeMatrix1(){//preimenujte reshape -> resize ako vam ima vise smisla
+void MainWindow::reshapeMatrix1(){
     int dim1 = ui->leMatrixDim11->text().toInt();
     int dim2 = ui->leMatrixDim12->text().toInt();
     reshapeMatrix(dim1, dim2, 1);
 }
 
-void MainWindow::reshapeMatrix2(){//e ovo je bukvalno kopiran kod ajde molim vas da se to izdvoji u funkciju mene trenutno mrzi tako da u "vas" unutar "molim vas" uglavnom spadam ja ali slobodno ako se neko pojavi i ne daj Boze cita komentare
+void MainWindow::reshapeMatrix2(){
     int dim1 = ui->leMatrixDim21->text().toInt();
     int dim2 = ui->leMatrixDim22->text().toInt();
     reshapeMatrix(dim1, dim2, 2);
@@ -624,17 +622,21 @@ void MainWindow::reshapeMatrix2(){//e ovo je bukvalno kopiran kod ajde molim vas
 
 void MainWindow::calculateMatrixTranspose(){
 
-
     m3 = m1->transpose();
-    std::cout << m1->toString().toStdString() << std::endl;
-    std::cout << m3->toString().toStdString() << std::endl;
+
     history->writeHistory("Transponovanje matrice:", m3->toString().toStdString());
     writeToHistoryTB(history);
 }
+//TODO singular matrices
 void MainWindow::calculateMatrixInverse(){
 
+    if(m1->rows() != m1->columns()){
+        ui->leError->setText("Matrix is not square");
+        return;
+    }
+
     m3 = m1->inverse();
-    std::cout << m3->toString().toStdString() << std::endl;
+
     history->writeHistory("Inverz matrice:", m3->toString().toStdString());
     writeToHistoryTB(history);
 }
@@ -642,7 +644,7 @@ void MainWindow::calculateMatrixInverse(){
 void MainWindow::calculateMatrixEye(){
 
     m3 = m1->eye();
-    std::cout << m3->toString().toStdString() << std::endl;
+
     history->writeHistory("Dijagonala matrica:", m3->toString().toStdString());
     writeToHistoryTB(history);
 }
@@ -650,7 +652,7 @@ void MainWindow::calculateMatrixEye(){
 void MainWindow::calculateMatrixOne(){
 
     m3 = m1->ones();
-    std::cout << m3->toString().toStdString() << std::endl;
+
     history->writeHistory("Jedinice matrica:", m3->toString().toStdString());
     writeToHistoryTB(history);
 }
@@ -659,6 +661,12 @@ void MainWindow::calculateMatrixOne(){
 //TODO save this somewhere?
 
 void MainWindow::calculateMatrixAdd(){
+
+    if(m1->columns() != m2->columns() || m1->rows ()!= m2->rows()){
+        ui->leError->setText("Matrices are not the same size");
+        return;
+    }
+
     m3 = *m1 + *m2;
 
     history->writeHistory("Sabiranje matrica:", m3->toString().toStdString());
@@ -666,26 +674,31 @@ void MainWindow::calculateMatrixAdd(){
 }
 
 void MainWindow::calculateMatrixSubtract(){
+
+    if(m1->columns() != m2->columns() || m1->rows ()!= m2->rows()){
+        ui->leError->setText("Matrices are not the same size");
+        return;
+    }
+
     m3 = *m1 - *m2;
 
-    history->writeHistory("Sabiranje matrica:", m3->toString().toStdString());
+    history->writeHistory("Oduzimanje matrica:", m3->toString().toStdString());
     writeToHistoryTB(history);
 }
 
 void MainWindow::calculateMatrixMultiply(){
+
+    if(m1->columns() != m2->rows()){
+        ui->leError->setText("First matrix columns not the same as second matrix rows");
+        return;
+    }
+
     m3 = *m1 * *m2;
 
-    history->writeHistory("Sabiranje matrica:", m3->toString().toStdString());
+    history->writeHistory("Mnozenje matrica:", m3->toString().toStdString());
     writeToHistoryTB(history);
 }
-//TODO exceptions
-void MainWindow::calculateMatrixDivide(){
 
-//    m1->data((*m1 / *m2)->data());
-//    std::cout << *m1 / *m2 << std::endl;
-//    std::cout << "Divide" << std::endl;
-//    showMatrix(m1);
-}
 void MainWindow::saveMatrix(){
     unsigned index = m3->saveMatrix();
     QPushButton* loadLeft = new QPushButton("Ucitaj levo");
@@ -812,6 +825,7 @@ double negation(double s){
 
 void MainWindow::plotNeg(){
     std::string state = ui->leState->text().toStdString();
+
     if (state[0] == '-') {
         std::string new_state = state.substr(2, state.length()-3);
         ui->leState->setText(QString::fromStdString(new_state));

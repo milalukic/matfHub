@@ -106,7 +106,6 @@ private slots:
     void calculateMatrixAdd();
     void calculateMatrixSubtract();
     void calculateMatrixMultiply();
-    void calculateMatrixDivide();
 
     void saveMatrix();
     void loadMatrix(unsigned int pos, QStringList strLst, unsigned d1, unsigned d2);
