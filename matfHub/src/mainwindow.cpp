@@ -53,8 +53,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->currentFilePath->setText(m_fileManager->currPath);
     ui->fileView->setSelectionMode(QAbstractItemView::ExtendedSelection);//klik odabere kliknutu i oddabere ostale; shift klik selektuje sve izmedju selektovane i kliknute, ctrl klik odabere kliknutu i ne oddabere ostale
 
-    //TODO FIX THIS!!!
-
     plt = new Plotter();
     stat = new Statistics();
 
@@ -429,8 +427,8 @@ void MainWindow::changeStackedWidgetPage(){
     else if(buttonText == "Statistics")
         ui->stackedWidget->setCurrentIndex(3);
 }
-//TODO global
 
+//TODO global
 int linesWritten = 0;
 
 void MainWindow::writeToHistoryTB(History* history) {
@@ -721,10 +719,7 @@ void MainWindow::loadMatrix(unsigned int pos, QStringList strLst, unsigned d1, u
 //////////////////////////////////////////////////////
 //TODO global classes?
 
-//plt = new Plotter("dd");
 void MainWindow::plotLinspace(){
-    //TODO GLOBAL CLASSES?
-    plt = new Plotter();
 
     double lowerBound = ui->leLinspaceLB->text().toDouble();
     double upperBound = ui->leLinspaceUB->text().toDouble();
@@ -738,7 +733,6 @@ void MainWindow::plotLinspace(){
 }
 
 void MainWindow::plot(){
-//    Plotter *plt = new Plotter("sin");
 
     (*plt)();
     std::cerr <<"Crtanje: " << std::endl;
@@ -749,11 +743,11 @@ void MainWindow::plot(){
     std::string upperBound = ui->leLinspaceLB->text().toStdString();
     std::string numOfDots = ui->leLinspaceS->text().toStdString();
     std::string function = ui->leState->text().toStdString();
+
     std::string linspaceString = "Plot: (" + lowerBound + ", " + upperBound + ")";
     linspaceString += " Dots: " + numOfDots;
 
     history->writeHistory(linspaceString, function);
-
 }
 
 
@@ -808,12 +802,12 @@ void MainWindow::plotAbs(){
 }
 
 //TODO friendly function?
-double square(double s){
+inline double square(double s){
     return pow(s, 2);
 }
-//TODO friendly function?
 
-double negation(double s){
+//TODO friendly function?
+inline double negation(double s){
     return -s;
 }
 
@@ -854,20 +848,18 @@ void MainWindow::plotParse(){
 
     std::cout << expr << std::endl;
     for (int i = 0; i < xs.size(); i++) {
-        char tmp1[20]; // Adjust the size based on your needs
+        char tmp1[20];
         strcpy(tmp1, "x=");
         strcat(tmp1, std::to_string(xs[i]).c_str());
 
         tmp = parser->evalExpression(tmp1);
 
-        // expr remains unchanged
         std::cout << expr << std::endl;
         ys[i] = parser->evalExpression(expr);
     }
 
-    // Don't forget to free the memory allocated for expr after its last usage
     free(expr);
-//    std::cout << parser->evalExpression(expr) << std::endl;
+
     plt->yData(ys);
     (*plt)();
 }
@@ -877,9 +869,6 @@ void MainWindow::savePlotting(){
 }
 
 //stat
-//TODO global?
-Statistics *stat = new Statistics();
-
 void MainWindow::statCalcMean(){
 
     auto input = ui->leStat->text().toStdString();
@@ -913,7 +902,6 @@ void MainWindow::statCalcStd(){
 
     auto result = stat->std();
 
-    //TODO ploymorph
     std::string hOutput = "Std: \n" + input;
     history->writeHistory(hOutput, std::to_string(result));
     writeToHistoryTB(history);
@@ -925,11 +913,16 @@ void MainWindow::statCalcMedian(){
     // stat->loadData();
     
     auto input = ui->leStat->text().toStdString();
+
+    if(input.size() == 0){
+        ui->leError->setText("Nisu uneti podaci");
+        return;
+    }
+
     stat->xData(cppSplit(input));
 
     auto result = stat->median();
 
-    //TODO ploymorph
     std::string hOutput = "Median: \n" + input;
     history->writeHistory(hOutput, std::to_string(result));
     writeToHistoryTB(history);
@@ -950,6 +943,12 @@ void MainWindow::statCalcMode(){
 void MainWindow::statPlotHist(){
 
     auto input = ui->leStat->text().toStdString();
+
+    if(input.size() == 0){
+        ui->leError->setText("Nisu uneti podaci");
+        return;
+    }
+
     stat->xData(cppSplit(input));
     
     stat->histogram();
@@ -960,6 +959,12 @@ void MainWindow::statPlotHist(){
 void MainWindow::statPlotBar(){
 
     auto input1 = ui->leStat->text().toStdString();
+
+    if(input1.size() == 0){
+        ui->leError->setText("Nisu uneti podaci");
+        return;
+    }
+
     auto input2 = ui->leStatNames->text().toStdString();
     stat->xData(cppSplit(input1));
     stat->textData(cppSplitString(input2));
