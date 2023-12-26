@@ -47,6 +47,11 @@ void History::editLastLine(std::string line){
     this->history(history);
 }
 
+void History::addMatrix(Matrix *m){
+
+    this->_savedMatrices.push_back(m);
+}
+
 void History::saveHistory(){
     QFile file("../hist.txt");
     file.open(QIODevice::WriteOnly);

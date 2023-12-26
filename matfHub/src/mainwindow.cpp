@@ -54,6 +54,18 @@ MainWindow::MainWindow(QWidget *parent)
     ui->fileView->setSelectionMode(QAbstractItemView::ExtendedSelection);//klik odabere kliknutu i oddabere ostale; shift klik selektuje sve izmedju selektovane i kliknute, ctrl klik odabere kliknutu i ne oddabere ostale
 
     //TODO FIX THIS!!!
+
+    plt = new Plotter();
+    stat = new Statistics();
+
+    parser = new Parser();
+
+    m1 = new Matrix(1, 1);
+    m2 = new Matrix(1, 1);
+    m3 = new Matrix(1, 1);
+
+    history = History::getHistory();
+
     connect(ui->pbChangeRegular, &QPushButton::clicked, this, &MainWindow::changeStackedWidgetPage);
     connect(ui->pbChangeMatrix, &QPushButton::clicked, this, &MainWindow::changeStackedWidgetPage);
     connect(ui->pbChangePlot, &QPushButton::clicked, this, &MainWindow::changeStackedWidgetPage);
@@ -104,28 +116,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pbHistorySave, &QPushButton::clicked, this, &MainWindow::historySave);
 
 }
-//TODO move this, change serbian to english
-// std::vector<double> cppSplit(std::string &s){
-
-//     std::cout << s << std::endl;
-//     //TODO more flexible?
-//     std::string delimiter = ", ";
-
-//     std::vector<double>niz;
-
-//     size_t pos = 0;
-//     std::string token;
-//     while ((pos = s.find(delimiter)) != std::string::npos) {
-//         token = s.substr(0, pos);
-//         std::cout << token << " " << stod(token) << std::endl;
-//         niz.push_back(stod(token));
-//         s.erase(0, pos + delimiter.length());
-//     }
-//     niz.push_back(stod(s));
-
-//     //TODO pointer?
-//     return niz;
-// }
 
 //TODO study code
 std::vector<double> cppSplit(const std::string &s) {
@@ -440,9 +430,7 @@ void MainWindow::changeStackedWidgetPage(){
         ui->stackedWidget->setCurrentIndex(3);
 }
 //TODO global
-Calculator *calculator = new Calculator();
-History *history = History::getHistory();
-Parser *parser = new Parser();
+
 int linesWritten = 0;
 
 void MainWindow::writeToHistoryTB(History* history) {
@@ -453,7 +441,6 @@ void MainWindow::writeToHistoryTB(History* history) {
     linesWritten = vecHistory.size();
 }
 void MainWindow::calculateRegular(){
-//    Parser *parser = new Parser();
 
     //TODO so it works with char*
     char *expr = ui->leParser->text().toStdString().data();
@@ -464,16 +451,8 @@ void MainWindow::calculateRegular(){
     writeToHistoryTB(history);
 
     ui->leParser->setText(qres);
-
-//    std::cout << calculator->lastLine() << std::endl;
-
-//    delete parser; parser = nullptr;
 }
 
-//TODO what to do with it
-Matrix *m1 = new Matrix(0, 0);
-Matrix *m2 = new Matrix(0, 0);
-Matrix *m3 = new Matrix(0, 0);
 
 QString MainWindow::readM1Data(){
     QString res("");

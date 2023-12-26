@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include "./matrix.hpp"
 
 class History
 {
@@ -15,6 +16,8 @@ public:
     std::string lastLine();
     void editLastLine(std::string line);
     
+    void addMatrix(Matrix *m);
+
     void saveHistory();
 
     //
@@ -28,6 +31,8 @@ public:
 private:
     History(std::vector<std::string>h = std::vector<std::string>());
     static History* historyPtr;
+
+    std::vector<Matrix*> _savedMatrices;
 
     std::vector<std::string> _history;
 };

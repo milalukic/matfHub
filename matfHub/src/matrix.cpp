@@ -1,6 +1,4 @@
 #include "../include/matrix.hpp"
-//TODO throw, string doens't do the job
-//TODO use camelCase
 
 #include <QStringList>
 #include <QDebug>
@@ -123,7 +121,6 @@ void Matrix::reshapeMatrix(unsigned col, unsigned row){
 }
 
 //methods
-//TODO polymorph these
 Matrix *Matrix::transpose() {
     Matrix* newMatrix = new Matrix(this->columns(), this->rows());
     arma::mat tmp = arma::trans(this->data());
@@ -231,7 +228,6 @@ unsigned Matrix::columns() const{
     return this->m_columns;
 }
 
-//TODO pointer this
 arma::mat Matrix::data() const{
     return *m_data;
 }

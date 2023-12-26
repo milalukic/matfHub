@@ -15,6 +15,8 @@
 #include "plotter.hpp"
 #include "matrix.hpp"
 #include "statistics.hpp"
+#include "parser.hpp"
+#include "calculator.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -30,11 +32,7 @@ public:
     ~MainWindow();
     void fileViewSetPath(const QString path);
     void currentFilePathSetPath(const QString path);
-    QString currentFilePathGetPath();
-
-    //TODO PITAJ ***********************************************************************
-    Plotter *plt;
-
+    QString currentFilePathGetPath();    
 
 private slots:
     void on_newFileToolbarButton_clicked();
@@ -157,6 +155,14 @@ private:
     std::unique_ptr<Schedule> schedule;
 
     Notes *notes;
+
+    Plotter *plt;
+    Statistics *stat;
+    History *history;
+    Parser *parser;
+    Matrix *m1;
+    Matrix *m2;
+    Matrix *m3;
 
     FileManager* m_fileManager;
     int countSelected(const QListView* view);
