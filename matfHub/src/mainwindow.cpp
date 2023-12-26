@@ -72,6 +72,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pbMatrixAdd, &QPushButton::clicked, this, &MainWindow::calculateMatrixAdd);
     connect(ui->pbMatrixSubtract, &QPushButton::clicked, this, &MainWindow::calculateMatrixSubtract);
     connect(ui->pbMatrixMultiply, &QPushButton::clicked, this, &MainWindow::calculateMatrixMultiply);
+    connect(ui->pbMatrixDiagonal, &QPushButton::clicked, this, &MainWindow::calculateMatrixDiag);
+
 
     connect(ui->pbSaveMatrix, &QPushButton::clicked, this, &MainWindow::saveMatrix);
 
@@ -620,42 +622,6 @@ void MainWindow::reshapeMatrix2(){
     reshapeMatrix(dim1, dim2, 2);
 }
 
-void MainWindow::calculateMatrixTranspose(){
-
-    m3 = m1->transpose();
-
-    history->writeHistory("Transponovanje matrice:", m3->toString().toStdString());
-    writeToHistoryTB(history);
-}
-//TODO singular matrices
-void MainWindow::calculateMatrixInverse(){
-
-    if(m1->rows() != m1->columns()){
-        ui->leError->setText("Matrix is not square");
-        return;
-    }
-
-    m3 = m1->inverse();
-
-    history->writeHistory("Inverz matrice:", m3->toString().toStdString());
-    writeToHistoryTB(history);
-}
-
-void MainWindow::calculateMatrixEye(){
-
-    m3 = m1->eye();
-
-    history->writeHistory("Dijagonala matrica:", m3->toString().toStdString());
-    writeToHistoryTB(history);
-}
-
-void MainWindow::calculateMatrixOne(){
-
-    m3 = m1->ones();
-
-    history->writeHistory("Jedinice matrica:", m3->toString().toStdString());
-    writeToHistoryTB(history);
-}
 
 
 //TODO save this somewhere?
@@ -698,6 +664,55 @@ void MainWindow::calculateMatrixMultiply(){
     history->writeHistory("Mnozenje matrica:", m3->toString().toStdString());
     writeToHistoryTB(history);
 }
+
+void MainWindow::calculateMatrixDiag(){
+    if(m1->rows() != m1->columns()){
+        ui->leError->setText("Matrix is not square");
+        return;
+    }
+
+    m3 = m1->diag();
+    history->writeHistory("Dijagonalna matrica:", m3->toString().toStdString());
+    writeToHistoryTB(history);
+}
+
+void MainWindow::calculateMatrixTranspose(){
+
+    m3 = m1->transpose();
+
+    history->writeHistory("Transponovanje matrice:", m3->toString().toStdString());
+    writeToHistoryTB(history);
+}
+//TODO singular matrices
+void MainWindow::calculateMatrixInverse(){
+
+    if(m1->rows() != m1->columns()){
+        ui->leError->setText("Matrix is not square");
+        return;
+    }
+
+    m3 = m1->inverse();
+
+    history->writeHistory("Inverz matrice:", m3->toString().toStdString());
+    writeToHistoryTB(history);
+}
+
+void MainWindow::calculateMatrixEye(){
+
+    m3 = m1->eye();
+
+    history->writeHistory("Dijagonala matrica:", m3->toString().toStdString());
+    writeToHistoryTB(history);
+}
+
+void MainWindow::calculateMatrixOne(){
+
+    m3 = m1->ones();
+
+    history->writeHistory("Jedinice matrica:", m3->toString().toStdString());
+    writeToHistoryTB(history);
+}
+
 
 void MainWindow::saveMatrix(){
     unsigned index = m3->saveMatrix();

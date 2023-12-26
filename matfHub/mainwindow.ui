@@ -1983,13 +1983,6 @@
           <widget class="QWidget" name="page">
            <layout class="QVBoxLayout" name="verticalLayout_4">
             <item>
-             <widget class="QLabel" name="label_2">
-              <property name="text">
-               <string>Regular</string>
-              </property>
-             </widget>
-            </item>
-            <item>
              <widget class="QLineEdit" name="leParser"/>
             </item>
             <item>
@@ -2033,6 +2026,12 @@
                     </item>
                     <item row="2" column="0" colspan="2">
                      <widget class="QPushButton" name="pbMatrixLoad1">
+                      <property name="minimumSize">
+                       <size>
+                        <width>100</width>
+                        <height>15</height>
+                       </size>
+                      </property>
                       <property name="text">
                        <string>Load matrix</string>
                       </property>
@@ -2089,6 +2088,12 @@
                   </item>
                   <item row="2" column="0" colspan="2">
                    <widget class="QPushButton" name="pbMatrixLoad2">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>15</height>
+                     </size>
+                    </property>
                     <property name="text">
                      <string>Load matrix</string>
                     </property>
@@ -2140,9 +2145,9 @@
                    </widget>
                   </item>
                   <item row="1" column="1">
-                   <widget class="QPushButton" name="pbMatrixDivide">
+                   <widget class="QPushButton" name="pbMatrixDiagonal">
                     <property name="text">
-                     <string>Divide</string>
+                     <string>Diagonal</string>
                     </property>
                    </widget>
                   </item>

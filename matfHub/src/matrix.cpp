@@ -154,13 +154,20 @@ Matrix *Matrix::inverse(){
     newMatrix->data(tmp);
 
     return newMatrix;
- }
+}
+
+Matrix *Matrix::diag(){
+    Matrix* newMatrix = new Matrix(this->rows(), this->columns());
+    arma::mat tmp = arma::diagmat(this->data());
+    newMatrix->data(tmp);
+
+    return newMatrix;
+}
 
 //operators
 
 //TODO & ? -> .
 //TODO polymorph?
-
 Matrix* Matrix::operator + (const Matrix &other) const{
 
     Matrix* newMat = new Matrix(this->rows(), this->columns());

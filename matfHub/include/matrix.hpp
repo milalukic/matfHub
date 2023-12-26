@@ -51,6 +51,7 @@ public:
     Matrix *inverse();
     Matrix *ones();
     Matrix *eye();
+    Matrix *diag();
 
     //operators
     Matrix *operator + (const Matrix &other) const;

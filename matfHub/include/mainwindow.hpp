@@ -90,11 +90,6 @@ private slots:
             //matrix
     void showMatrix(Matrix *m);
 
-    void calculateMatrixTranspose();
-    void calculateMatrixInverse();
-    void calculateMatrixEye();
-    void calculateMatrixOne();
-
     QStringList matrixStringToStringList(QString str);
     void reshapeMatrix(unsigned dim1, unsigned dim2, unsigned pos, QStringList content);
     void reshapeMatrix(unsigned dim1, unsigned dim2, unsigned pos);
@@ -106,6 +101,12 @@ private slots:
     void calculateMatrixAdd();
     void calculateMatrixSubtract();
     void calculateMatrixMultiply();
+    void calculateMatrixDiag();
+
+    void calculateMatrixTranspose();
+    void calculateMatrixInverse();
+    void calculateMatrixEye();
+    void calculateMatrixOne();
 
     void saveMatrix();
     void loadMatrix(unsigned int pos, QStringList strLst, unsigned d1, unsigned d2);
