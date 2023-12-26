@@ -53,14 +53,15 @@ MainWindow::MainWindow(QWidget *parent)
     ui->currentFilePath->setText(m_fileManager->currPath);
     ui->fileView->setSelectionMode(QAbstractItemView::ExtendedSelection);//klik odabere kliknutu i oddabere ostale; shift klik selektuje sve izmedju selektovane i kliknute, ctrl klik odabere kliknutu i ne oddabere ostale
 
-    plt = new Plotter();
-    stat = new Statistics();
+    plt = Plotter::getPlotter();
+    stat = Statistics::getStatistics();
 
     parser = new Parser();
+    parserPlot = new Parser();
 
-    m1 = new Matrix(1, 1);
-    m2 = new Matrix(1, 1);
-    m3 = new Matrix(1, 1);
+    m1 = new Matrix(0, 0);
+    m2 = new Matrix(0, 0);
+    m3 = new Matrix(0, 0);
 
     history = History::getHistory();
 
@@ -727,7 +728,7 @@ void MainWindow::plotLinspace(){
     plt->linSpace(lowerBound, upperBound, numOfDots);
 
     ui->leState->setText("x");
-    ui->lbLin->setText("Vektor je uspesno ucitan");
+    ui->leError->setText("Vektor je uspesno ucitan");
     std::cerr << "Resetovan y" << std::endl;
     std::cerr <<"Postavljen linspace" << std::endl;
 }
@@ -852,10 +853,10 @@ void MainWindow::plotParse(){
         strcpy(tmp1, "x=");
         strcat(tmp1, std::to_string(xs[i]).c_str());
 
-        tmp = parser->evalExpression(tmp1);
+        tmp = parserPlot->evalExpression(tmp1);
 
         std::cout << expr << std::endl;
-        ys[i] = parser->evalExpression(expr);
+        ys[i] = parserPlot->evalExpression(expr);
     }
 
     free(expr);

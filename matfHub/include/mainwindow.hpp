@@ -156,13 +156,15 @@ private:
 
     Notes *notes;
 
-    Plotter *plt;
-    Statistics *stat;
-    History *history;
     Parser *parser;
+    Parser *parserPlot;
     Matrix *m1;
     Matrix *m2;
     Matrix *m3;
+    Plotter *plt;
+    Statistics *stat;
+    History *history;
+
 
     FileManager* m_fileManager;
     int countSelected(const QListView* view);

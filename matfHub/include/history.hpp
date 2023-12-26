@@ -17,7 +17,6 @@ public:
     void editLastLine(std::string line);
     
     void addMatrix(Matrix *m);
-
     void saveHistory();
 
     //

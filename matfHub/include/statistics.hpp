@@ -14,10 +14,11 @@
 class Statistics{
 
 public:
-    //konstruktor
-    Statistics(std::vector<double> const &xData = std::vector<double>());
+
     //destruktor
     ~Statistics();
+
+    static Statistics* getStatistics();
 
     //metode
     double mean();
@@ -30,15 +31,18 @@ public:
     void barplot();
     void histogram();
 
-    
-    //getters setters
+    //setters
     void xData(const std::vector<double> &newX);
     void textData(const std::vector<std::string> &newTextData);
-    
+
+    //getters
     std::vector<double> xData() const;
     std::vector<std::string> textData() const;
 
 private:
+
+    Statistics(std::vector<double> const &xData = std::vector<double>());
+    static Statistics* statPtr;
 
     std::vector<double> _xData;
     std::vector<std::string> _textData;

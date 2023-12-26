@@ -15,12 +15,11 @@
 class Plotter{
 
 public:
-    //konstruktor
-    Plotter();
     //destruktor
     ~Plotter();
 
-    //metode
+    static Plotter* getPlotter();
+
     void operator()() const;
 
     void linSpace(double lowerBound, double upperBound, size_t step);
@@ -29,17 +28,22 @@ public:
 
     void savePlot();
 
-    //TODO fill
-    //getters setters
+    //setters
     void xData(std::vector<double> &newX);
     void yData(std::vector<double> &newY);
     void output(std::string text);
 
+    //getters
     std::vector<double> xData() const;
     std::vector<double> yData() const;
     std::string output() const;
 
 private:
+
+    //konstruktor
+    Plotter();
+    static Plotter* plotPtr;
+
     std::vector<double> _xData;
     std::vector<double> _yData;
 

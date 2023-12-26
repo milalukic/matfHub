@@ -1,6 +1,7 @@
 
 #include "../include/statistics.hpp"
 
+Statistics* Statistics::statPtr = nullptr;
 
 //konstruktor
 Statistics::Statistics(std::vector<double> const &xData)
@@ -9,6 +10,13 @@ Statistics::Statistics(std::vector<double> const &xData)
 //destruktor
 Statistics::~Statistics(){
     std::cout << "Unisten statistics" << std::endl;
+}
+
+Statistics* Statistics::getStatistics(){
+    if(statPtr == nullptr){
+        statPtr = new Statistics();
+    }
+    return statPtr;
 }
 
 //metode

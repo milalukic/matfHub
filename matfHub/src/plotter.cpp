@@ -1,5 +1,6 @@
 #include "../include/plotter.hpp"
 
+Plotter* Plotter::plotPtr = nullptr;
 
 //konstruktor
 Plotter::Plotter(){}
@@ -8,6 +9,12 @@ Plotter::~Plotter(){
     std::cout << "Unisten plotter" << std::endl;
 }
 
+Plotter* Plotter::getPlotter(){
+    if(plotPtr == nullptr){
+        plotPtr = new Plotter();
+    }
+    return plotPtr;
+}
 
 void Plotter::operator()() const {
 
