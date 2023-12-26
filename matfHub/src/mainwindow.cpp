@@ -589,11 +589,13 @@ void MainWindow::reshapeMatrix(unsigned dim1, unsigned dim2, unsigned pos, QStri
             QLineEdit* field = new QLineEdit;
             field->setText(content.at(j+i*realDim2));
             if(pos == 1){
+                m1->setValue(field->text().toDouble(), i, j);
                 connect(field, &QLineEdit::editingFinished , this, [i, j, field, this](){
                     m1->setValue(field->text().toDouble(), i, j);
                     qDebug().noquote() << m1->toString();
                 });
             }else{
+                m1->setValue(field->text().toDouble(), i, j);
                 connect(field, &QLineEdit::editingFinished , this, [i, j, field, this](){
                     m2->setValue(field->text().toDouble(), i, j);
                     qDebug().noquote() << m2->toString();
