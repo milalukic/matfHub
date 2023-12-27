@@ -1,62 +1,96 @@
-//#ifndef MATRIX_HPP
+#ifndef MATRIX_HPP
 
-//#define MATRIX_HPP
+#define MATRIX_HPP
 
-//#include <iostream>
-//#include <vector>
-//#include <armadillo>
+#include <iostream>
+#include <vector>
 
-//class Matrix{
+#include <QString>
 
-//public:
-////konstruktori
-//    Matrix(unsigned dimension1 = 1, unsigned dimension2 = 1, std::string matrixName = "matrix name");
-//    //destruktor
-//    ~Matrix();
+#include <armadillo>
 
-//    //get
-//    unsigned dimension1() const;
-//    unsigned dimension2() const;
-//    std::string matrixName() const;
-//    arma::mat data() const;
+class Matrix{
 
-//    //set
-//    void dimension1(unsigned u);
-//    void dimension2(unsigned u);
-//    void matrixName(std::string name);
-//    void data(arma::mat Matrix);
+public:
+//konstruktori
+    Matrix(const unsigned rows = 1, const unsigned columns = 1);
+    Matrix(const unsigned rows, const unsigned columns, const QString data);
+    Matrix(const Matrix &other);
+    //destruktor
+    ~Matrix();
 
-//    //functions
-//    Matrix *transpose();
-//    Matrix *inverse();
-//    Matrix *ones();
-//    Matrix *diag();
+    //get
+    static std::pair<unsigned, unsigned> getM1shape();
+    static std::pair<unsigned, unsigned> getM2shape();
+    QString toString();
+    static QString m1toString();
+    static QString m2toString();
+    static QString m3toString();
+    static Matrix* getSaved(unsigned index);
 
-//    //operators
-//    Matrix *operator + (const Matrix &other) const;
-//    Matrix *operator + (const double &number) const;
-//    Matrix *operator - (const Matrix &other) const;
-//    Matrix *operator - (const double &number) const;
-//    Matrix *operator *(const Matrix &other) const;
-//    Matrix *operator /(const Matrix &other) const;
-//    Matrix *operator ++();
-//    Matrix *operator ++(int);
-//    Matrix *operator --();
-//    Matrix *operator --(int);
-//    Matrix *operator-() const;
 
-//    bool operator == (const Matrix &other) const;
-//    bool operator != (const Matrix &other) const;
+
+    //set
+    static void setM1Data(double value, unsigned i, unsigned j);
+    static void reshapeM1(int col, int row);
+    static void setM2Data(double value, unsigned i, unsigned j);
+    static void reshapeM2(int col, int row);
+    static unsigned saveMatrix();
+    static std::pair<unsigned, unsigned> loadLeft(unsigned index);
+    static std::pair<unsigned, unsigned> loadRight(unsigned index);
+
+    //functions
+    static bool add();
+    static bool subtract();
+    static bool multiply();
+    static bool divide();
+    static void increment();
+    static void decrement();
+    static void negate();
+
+    Matrix *transpose();
+    Matrix *inverse();
+    Matrix *ones();
+    Matrix *diag();
+    //operators
+    Matrix *operator + (const Matrix &other) const;
+    Matrix *operator - (const Matrix &other) const;
+    Matrix *operator * (const Matrix &other) const;
+    Matrix *operator * (const double number) const;
+    Matrix *operator-() const;
+
+    Matrix *operator ++();
+    Matrix *operator ++(int);
+    Matrix *operator --();
+    Matrix *operator --(int);
+    Matrix *operator + (const double &number) const;
+    Matrix *operator - (const double &number) const;
+    Matrix *operator /(const Matrix &other) const;
+
+    bool operator == (const Matrix &other) const;
+    bool operator != (const Matrix &other) const;
+
+    Matrix &operator = (const Matrix &other);
 
     
-//private:
-//    unsigned _dimension1;
-//    unsigned _dimension2;
-//    std::string _matrixName;
-//    arma::mat *_data;
-//};
+private:
 
-//std::ostream &operator<<(std::ostream &out, const Matrix *value);
-//std::istream &operator>>(std::istream &in, Matrix &value);
+    unsigned m_rows;
+    unsigned m_columns;
+    arma::mat* m_data;
 
-//#endif //MATRIX_HPP
+    static Matrix* m_M1;
+    static Matrix* m_M2;
+    static Matrix* m_M3;
+
+    static std::vector<Matrix*> m_savedMatrices;
+
+    void setData(QString data);
+    void reshapeMatrix(unsigned col, unsigned row);
+
+};
+
+std::ostream &operator<<(std::ostream &out, const Matrix *value);
+std::istream &operator>>(std::istream &in, Matrix &value);
+
+#endif //MATRIX_HPP

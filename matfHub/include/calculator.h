@@ -1,19 +1,24 @@
 #ifndef CALCULATOR_H
 #define CALCULATOR_H
 
-#include <QString>
-#include <QFileDialog>
-
-#include "../ui_mainwindow.h"
-#include "./matrix.hpp"
-
+#include <iostream>
+#include <vector>
+#include "../include/history.hpp"
 
 class Calculator
 {
 public:
     Calculator();
+    ~Calculator();
 
-    void matrixTest();
+    //
+
+    //
+//    History history() const;
+
+private:
+//    History _history;
 };
+
 
 #endif // CALCULATOR_H

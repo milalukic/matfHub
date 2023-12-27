@@ -1,9 +1,14 @@
-//#include "../include/calculator.h"
-//#include "../ui_mainwindow.h"
+#include "../include/calculator.h"
 
-//Calculator::Calculator() {}
+#include <fstream>
 
+Calculator::Calculator(){}
 
-//void Calculator::matrixTest(){
+Calculator::~Calculator(){
+    std::cout << "Calculator unisten" << std::endl;
+}
 
+//History Calculator::history() const{
+//    return this->_history;
 //}
+
