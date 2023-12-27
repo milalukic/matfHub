@@ -59,7 +59,8 @@ private slots:
     void currentFilePathEditingFinished();
 
     void fileViewDoubleClicked(const QModelIndex &index);
-    void fileViewCustomContextMenuRequested(const QPoint &pos);
+    void fileViewCustomContextMenuRequested(const QPoint &pos, QAbstractItemView* view);
+    void showFileView(QAbstractItemView* view);
 
     //calculator slots
 //    void pbMatrixTest();

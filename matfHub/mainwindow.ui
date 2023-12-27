@@ -1924,7 +1924,7 @@
           <normaloff>.</normaloff>.</iconset>
         </property>
        </widget>
-       <widget class="QStackedWidget" name="stackedWidgetFileView">
+       <widget class="QWidget" name="verticalLayoutWidget_2">
         <property name="geometry">
          <rect>
           <x>340</x>
@@ -1933,45 +1933,29 @@
           <height>651</height>
          </rect>
         </property>
-        <widget class="QWidget" name="page_4">
-         <widget class="QTableView" name="detailsFileView">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>951</width>
-            <height>651</height>
-           </rect>
-          </property>
-          <property name="contextMenuPolicy">
-           <enum>Qt::CustomContextMenu</enum>
-          </property>
-         </widget>
-        </widget>
-        <widget class="QWidget" name="page_5">
-         <widget class="QListView" name="listFileView">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>951</width>
-            <height>651</height>
-           </rect>
-          </property>
-         </widget>
-        </widget>
-        <widget class="QWidget" name="page_6">
-         <widget class="QTableView" name="thumbnailsFileView">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>951</width>
-            <height>651</height>
-           </rect>
-          </property>
-         </widget>
-        </widget>
+        <layout class="QVBoxLayout" name="fileViewLayout">
+         <item>
+          <widget class="QListView" name="listFileView">
+           <property name="contextMenuPolicy">
+            <enum>Qt::CustomContextMenu</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QListView" name="thumbnailsFileView">
+           <property name="contextMenuPolicy">
+            <enum>Qt::CustomContextMenu</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QTableView" name="detailsFileView">
+           <property name="contextMenuPolicy">
+            <enum>Qt::CustomContextMenu</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </widget>
       <widget class="QWidget" name="KalkulatorTab">
@@ -2007,7 +1991,7 @@
         <item>
          <widget class="QStackedWidget" name="stackedWidget">
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="page">
            <layout class="QVBoxLayout" name="verticalLayout_4">
