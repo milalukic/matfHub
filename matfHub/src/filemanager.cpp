@@ -4,6 +4,8 @@
 #include "../include/config.hpp"
 #include <list>
 
+#define DEBUG (qDebug() << __FILE__ << ":" << __LINE__ << ":\t")
+
 FileManager::FileManager(MainWindow* mw)
     :m_mainWindow(mw)
 {

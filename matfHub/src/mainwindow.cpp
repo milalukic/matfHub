@@ -29,11 +29,13 @@
 #include <fstream>
 #include <map>
 
-
 #define DEBUG (qDebug() << __FILE__ << ":" << __LINE__ << ":\t")
 
+// #include <iostream>
 // #include "../include/notes.h"
 
+#define __FILENAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
+#define DEBUG (qDebug() << __FILENAME__ << ":" << __LINE__ << ":\t")
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -63,7 +65,18 @@ MainWindow::MainWindow(QWidget *parent)
     ui->dirView->hideColumn(2);
     ui->dirView->setColumnWidth(0, 200);
 
+    connect(ui->dirView, &QTreeView::doubleClicked, this, &MainWindow::dirViewDoubleClicked);
+
+    connect(ui->backButton, &QPushButton::clicked, this, &MainWindow::backButtonClicked);
+    connect(ui->forwardButton, &QPushButton::clicked, this, &MainWindow::forwardButtonClicked);
+    connect(ui->homeButton, &QPushButton::clicked, this, &MainWindow::homeButtonClicked);
+    connect(ui->dotDotButton, &QPushButton::clicked, this, &MainWindow::dotDotButtonClicked);
+    connect(ui->newFolderButton, &QPushButton::clicked, this, &MainWindow::newFolderButtonClicked);
+
+    connect(ui->currentFilePath, &QLineEdit::editingFinished, this, &MainWindow::currentFilePathEditingFinished);
+
     setUpFileView();
+
 
 
 
@@ -231,55 +244,53 @@ MainWindow::~MainWindow()
 
 
 // Funkcionalnosti Notes toolbara
-void MainWindow::on_newFileToolbarButton_clicked()
+void MainWindow::on_newFileNotesButton_clicked()
 {
     notes->newClicked(ui);
 }
 
-void MainWindow::on_openFileToolbarButton_clicked()
+void MainWindow::on_openFileNotesButton_clicked()
 {
     notes->openClicked(ui, this);
 }
 
-void MainWindow::on_saveToolbarButton_clicked()//TODDO save/save as? trenutno najlaksa opcija da se sacuva izmena jednog fajla u drugi je ctrl+a ctrl+c ctrl+n ctrl+v ctrl+s (takodje bilo bi kul da se prva tri dugmeta aktiviraju i na ctrl+n ctrl+s i ctrl+o
+
+void MainWindow::on_saveNotesButton_clicked()//save/save as? trenutno najlaksa opcija da se sacuva izmena jednog fajla u drugi je ctrl+a ctrl+c ctrl+n ctrl+v ctrl+s (takodje bilo bi kul da se prva tri dugmeta aktiviraju i na ctrl+n ctrl+s i ctrl+o
 {
     notes->saveClicked(ui, this);
 }
 
-void MainWindow::on_copyToolbarButton_clicked()
+void MainWindow::on_copyNotesButton_clicked()
 {
     notes->copyClicked(ui);
 }
 
-void MainWindow::on_pasteToolbarButton_clicked()
+void MainWindow::on_pasteNotesButton_clicked()
 {
     notes->pasteClicked(ui);
 }
 
-void MainWindow::on_cutToolbarButton_clicked()
+void MainWindow::on_cutNotesButton_clicked()
 {
     notes->cutClicked(ui);
 }
 
-void MainWindow::on_undoToolbarButton_clicked()
+void MainWindow::on_undoNotesButton_clicked()
 {
     notes->undoClicked(ui);
 }
 
-void MainWindow::on_redoToolbarButton_clicked()
+void MainWindow::on_redoNotesButton_clicked()
 {
     notes->redoClicked(ui);
 }
 
 
 // funkc fMenadzera
-void MainWindow::on_dirView_clicked(const QModelIndex &index)
-{
-//ovo nam vr ne treba
-}
+
 
 //u levom pogledu dupli klik na folder smesta desni pogled u njega
-void MainWindow::on_dirView_doubleClicked(const QModelIndex &index)
+void MainWindow::dirViewDoubleClicked(const QModelIndex &index)
 {
     m_fileManager->dirViewDoubleClicked(index);
 }
@@ -291,94 +302,99 @@ void MainWindow::fileViewDoubleClicked(const QModelIndex &index)
 }
 
 //navigacija u prethodno prikazani folder
-void MainWindow::on_backButton_clicked()
+void MainWindow::backButtonClicked()
 {
     m_fileManager->backButtonClicked();
     ui->detailsFileView->horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);
 }
 
 //navigacija u sledece prikazan folder
-void MainWindow::on_forwardButton_clicked()
+void MainWindow::forwardButtonClicked()
 {
     m_fileManager->forwardButtonClicked();
     ui->detailsFileView->horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);
 }
 
 //navigacija u glavni hab folder
-void MainWindow::on_homeButton_clicked()
+void MainWindow::homeButtonClicked()
 {
     m_fileManager->homeButtonClicked();
     ui->detailsFileView->horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);
 }
 
 //navigacija u roditeljski folder
-void MainWindow::on_dotDotButton_clicked()
+void MainWindow::dotDotButtonClicked()
 {
     m_fileManager->dotDotButtonClicked();
     ui->detailsFileView->horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);
 }
 
 //navigacija ka unesenoj putanji, ako postoji folder na tom mestu
-void MainWindow::on_currentFilePath_editingFinished()
+void MainWindow::currentFilePathEditingFinished()
 {
     m_fileManager->currentFilePathEditingFinished();
     ui->detailsFileView->horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);
 }
 
 //kreiranje novog foldera unutar trenutnog
-void MainWindow::on_newFolderButton_clicked()
+void MainWindow::newFolderButtonClicked()
 {
     m_fileManager->createNewFolder();
 }
 
 //kreiranje popapa sa kontekst menijem u desnom pogledu
-void MainWindow::on_fileView_customContextMenuRequested(const QPoint &pos)// TODO !!!!!! ovo bi bilo lepo takodje izmestiti u filemanager.cpp ali prvo connect je iz QObject ili tako necega treba to nasledjivanje srediti drugo poslednja linija funkcije (i jos neke) zove privatne metode privatnih polja iz ui pa bi i to trebalo prebroditi nekako nekim seterom
+void MainWindow::fileViewCustomContextMenuRequested(const QPoint &pos, QAbstractItemView* view)// TODO !!!!!! ovo bi bilo lepo takodje izmestiti u filemanager.cpp ali prvo connect je iz QObject ili tako necega treba to nasledjivanje srediti drugo poslednja linija funkcije (i jos neke) zove privatne metode privatnih polja iz ui pa bi i to trebalo prebroditi nekako nekim seterom
 {//TODO pored komentara u prethodnoj liniji takodje ova f-ja postaje glomazna, bilo bi lepo mozda razdvojiti je u pozive f-ja koje pojedinacno prave akcije
     //TODO cut, copy, paste mozda?
+
     QMenu* menu = new QMenu(this);
 
     QAction* newFolderAction = new QAction("New Folder", this);
     menu->addAction(newFolderAction);
-    connect(newFolderAction, &QAction::triggered, [=]() {
+    connect(newFolderAction, &QAction::triggered, this, [=]() {
         m_fileManager->createNewFolder();
     });
 
     QAction* newDocumentAction = new QAction("New Document", this);
     menu->addAction(newDocumentAction);
-    connect(newDocumentAction, &QAction::triggered, [=](){
+    connect(newDocumentAction, &QAction::triggered, this, [=](){
         m_fileManager->createNewDocument();
     });
 
     QAction* selectAllAction = new QAction("Select All", this);
     menu->addAction(selectAllAction);
-    connect(selectAllAction, &QAction::triggered, [=](){
-        ui->detailsFileView->clearSelection();
-        ui->detailsFileView->selectAll();
+    connect(selectAllAction, &QAction::triggered, this, [=](){
+        for(int i = 0; i <  ui->fileViewLayout->count(); ++i){
+            auto widget = ui->fileViewLayout->itemAt(i)->widget();
+            QAbstractItemView* view = static_cast<QAbstractItemView*>(widget);
+            view->clearSelection();
+            view->selectAll();
+        }
     });
 
     QMenu* sortSubMenu = new QMenu("Sort by", menu);
 
     QAction* sortByName = new QAction("Name", this);
     sortSubMenu->addAction(sortByName);
-    connect(sortByName, &QAction::triggered, [=](){
+    connect(sortByName, &QAction::triggered, this, [=](){
         m_fileManager->sortByName();
     });
 
     QAction* sortByDate = new QAction("Date", this);
     sortSubMenu->addAction(sortByDate);
-    connect(sortByDate, &QAction::triggered, [=](){
+    connect(sortByDate, &QAction::triggered, this, [=](){
         m_fileManager->sortByDate();
     });
 
     QAction* sortBySize = new QAction("Size", this);
     sortSubMenu->addAction(sortBySize);
-    connect(sortBySize, &QAction::triggered, [=](){
+    connect(sortBySize, &QAction::triggered, this, [=](){
         m_fileManager->sortBySize();
     });
 
     QAction* sortByType = new QAction("Type", this);
     sortSubMenu->addAction(sortByType);
-    connect(sortByType, &QAction::triggered, [=](){
+    connect(sortByType, &QAction::triggered, this, [=](){
         m_fileManager->sortByType();
     });
 
@@ -386,26 +402,24 @@ void MainWindow::on_fileView_customContextMenuRequested(const QPoint &pos)// TOD
 
     QMenu* viewSubMenu = new QMenu("View", menu);
 
-    QAction* list = new QAction("List", this);
+    QAction* list = new QAction("List", this);//ovo mozda ima smisla smestiti u petlju samo bi onda naziv akcije morao nekako da se dobije od parsiranja naziva ovih pogleda TOTO?
     viewSubMenu->addAction(list);
-    connect(list, &QAction::triggered, [=](){
-        ui->stackedWidgetFileView->setCurrentIndex(0);
-    });
-
-    QAction* table = new QAction("Table", this);
+    connect(list, &QAction::triggered, this, [this](){MainWindow::showFileView(ui->listFileView);});
+    QAction* table = new QAction("Details", this);
     viewSubMenu->addAction(table);
-    connect(table, &QAction::triggered, [=](){
-        ui->stackedWidgetFileView->setCurrentIndex(1);
-    });
+    connect(table, &QAction::triggered, this, [this](){MainWindow::showFileView(ui->detailsFileView);});
+    QAction* thumbnails = new QAction("Thumbnails", this);
+    viewSubMenu->addAction(thumbnails);
+    connect(thumbnails, &QAction::triggered, this, [this](){MainWindow::showFileView(ui->thumbnailsFileView);});
 
     menu->addMenu(viewSubMenu);
 
-    int noSelected = countSelected(ui->detailsFileView);
+    int noSelected = countSelected(view);
     if(noSelected == 1){
         QAction* renameAction = new QAction("Rename", this);
         menu->addAction(renameAction);
-        connect(renameAction, &QAction::triggered, [=](){
-            QModelIndex selectedIndex = getSelectedIndex(ui->detailsFileView);
+        connect(renameAction, &QAction::triggered, this, [=](){
+            QModelIndex selectedIndex = getSelectedIndex(view);
             QString oldName = m_fileManager->getNameFromIndex(selectedIndex);
             QString newName = QInputDialog::getText(this, "Preimenuj fajl", "Nov Naziv:", QLineEdit::Normal, oldName);
             m_fileManager->renameSelectedFile(selectedIndex, newName);
@@ -415,23 +429,28 @@ void MainWindow::on_fileView_customContextMenuRequested(const QPoint &pos)// TOD
     if(noSelected > 0){
         QAction* deleteAction = new QAction("Delete", this);
         menu->addAction(deleteAction);
-        connect(deleteAction, &QAction::triggered, [=](){
-            QModelIndexList selectedIndices = getSelectedIndices(ui->detailsFileView); //meni se indices vise svidja kao mnozina od index nego indexes ali Bojane slobodno promeni ako zelis nije mi bitno
+        connect(deleteAction, &QAction::triggered, this, [=](){
+            QModelIndexList selectedIndices = getSelectedIndices(view); //meni se indices vise svidja kao mnozina od index nego indexes ali Bojane slobodno promeni ako zelis nije mi bitno
             m_fileManager->deleteSelectedFiles(selectedIndices);
         });
     }
 
-
-    menu->popup(ui->detailsFileView->viewport()->mapToGlobal(pos));
-
+    menu->popup(view->viewport()->mapToGlobal(pos));
 
 }
 
+void MainWindow::showFileView(QAbstractItemView* view){
 
-//naredne dve funkcije mozda treba pomeriti u filemanager klasu ali mislim da je to pametnije uraditi kada krenemo da spajamo grane u zavisnosti od toga sta odlucimo kako ce se ponasati meni bar glavnog prozora
+    for(int i = 0; i < ui->fileViewLayout->count(); ++i){
+        QAbstractItemView* widget = static_cast<QAbstractItemView*>(ui->fileViewLayout->itemAt(i)->widget());
+        widget->hide();
+    }
+    view->show();
+
+}
 
 //izlazak iz aplikacije, logicno
-void MainWindow::on_actionExit_triggered()
+void MainWindow::actionExitTriggered()
 {
     calendar->saveHistory();
     QApplication::quit();
@@ -461,7 +480,7 @@ void MainWindow::on_scrapeButton_clicked()
 }
 
 //promena glavnog hab foldera
-void MainWindow::on_actionChangeHubLocation_triggered()
+void MainWindow::actionChangeHubLocationTriggered()
 {
     QString newHubPath = QFileDialog::getExistingDirectory(this, "Odaberi direktorijum");
     Config::getConfig()->setHubPath(newHubPath);
@@ -475,8 +494,13 @@ void MainWindow::on_actionChangeHubLocation_triggered()
 
 //geteri seteri i ostala narusavanja mejnovih privatnosti
 void MainWindow::fileViewSetPath(const QString path){
-    ui->detailsFileView->setRootIndex(m_fileManager->fileModel->setRootPath(path));
-    ui->listFileView->setRootIndex(m_fileManager->fileModel->setRootPath(path));
+    for(int i = 0; i < ui->fileViewLayout->count(); ++i){
+        auto view = static_cast<QAbstractItemView*>(ui->fileViewLayout->itemAt(i)->widget());
+        view->setRootIndex(m_fileManager->fileModel->setRootPath(path));
+        if(QTableView* table = dynamic_cast<QTableView*>(view)){
+            table->horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);//TODO iz nekog razloga cini mi se da ovo ne radi UVEK ako se prvi put ulazi u neki folder?
+        }
+    }
 }
 void MainWindow::currentFilePathSetPath(const QString path){
     ui->currentFilePath->setText(path);
@@ -487,48 +511,77 @@ QString MainWindow::currentFilePathGetPath(){
 
 
 
-int MainWindow::countSelected(const QTableView* view){
-
+int MainWindow::countSelected(const QAbstractItemView* view){
     return view->selectionModel()->selectedIndexes().length();
-
 }
 
-QModelIndex MainWindow::getSelectedIndex(const QTableView* view){
+QModelIndex MainWindow::getSelectedIndex(const QAbstractItemView* view){
     return view->selectionModel()->selectedIndexes().first();
 }
 
-QModelIndexList MainWindow::getSelectedIndices(const QTableView* view){
+QModelIndexList MainWindow::getSelectedIndices(const QAbstractItemView* view){
     return view->selectionModel()->selectedIndexes();
 }
 
 void MainWindow::setUpFileView(/*tipPogleda*/){
-    //fileView za details
-    ui->detailsFileView->setModel(m_fileManager->fileModel);
-    ui->detailsFileView->setRootIndex(m_fileManager->fileModel->setRootPath(m_fileManager->hubPath + "/" + ".."));
-    ui->currentFilePath->setText(m_fileManager->currPath);
-    ui->detailsFileView->setSelectionMode(QAbstractItemView::ExtendedSelection);//klik odabere kliknutu i oddabere ostale; shift klik selektuje sve izmedju selektovane i kliknute, ctrl klik odabere kliknutu i ne oddabere ostale
-    ui->detailsFileView->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
-    ui->detailsFileView->horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);//TODO ovo ne radi za prvo pokretanje..
-    ui->detailsFileView->verticalHeader()->setVisible(false);
 
-    connect(ui->detailsFileView, &QTableView::doubleClicked, this, &MainWindow::fileViewDoubleClicked);
+    ui->currentFilePath->setText(m_fileManager->currPath);
 
     connect(ui->detailsFileView, &QTableView::doubleClicked, this, [this](){//TODO koji signal je odgovarajuc? nesto sto odgovara promeni m_currPath i nista drugo? komplikovan nacin bi bio currPath retvoriti u klasu koja pored stringa ima i signal koji se ovde salje pri promeni QStringa ali to me smara trenutno...
         ui->detailsFileView->horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);
     });
-    connect(ui->detailsFileView->selectionModel(), &QItemSelectionModel::selectionChanged, this, [this](){
-        QModelIndexList selectedList = ui->detailsFileView->selectionModel()->selectedIndexes();//TODO kada se selektuje vise stvari nesto ozbiljno ne valja, nagadjam da je brz fiks da ne kazem ni ne sumnjam B)
-        for(auto selected : selectedList){
-            int row = selected.row();
-            ui->detailsFileView->selectRow(row);
-        }
-    });
 
-    //fileView za list
-    ui->listFileView->setModel(m_fileManager->fileModel);
-    ui->listFileView->setRootIndex(m_fileManager->fileModel->setRootPath(m_fileManager->hubPath + "/" + ".."));
-    ui->currentFilePath->setText(m_fileManager->currPath);
-    ui->listFileView->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    for(int i = 0; i < ui->fileViewLayout->count(); ++i){
+        auto widget = ui->fileViewLayout->itemAt(i)->widget();
+        QAbstractItemView* view = static_cast<QAbstractItemView*>(widget);//auto ga vec kastuje u konkretan tip dakle QTableView, QListView itd B) ali kompajler u daljem kodu to ne zna nego je u fazonu ok ovo ce sigurno biti bar QObject tako da ipak mora da se kastuje sto je idiotski ali tako je D: jednom kada naprave funkcionalne procesore koji lenjo izracunavaju i kada ceo svet predje na normalne funkcionalne interpretirane jezike ovo nece biti problem ;)
+        //qDebug() << view;//apdejt: i ovaj staticki kast ga kastuje u klasu koja treba da bude, nagadjam jer je AbstractView apstraktna klasa TODO nauci vise o cppu
+
+        view->setModel(m_fileManager->fileModel);
+        view->setRootIndex(m_fileManager->fileModel->setRootPath(m_fileManager->hubPath));
+        view->setSelectionMode(QAbstractItemView::ExtendedSelection);
+
+        //connect(ui->detailsFileView, &QTableView::doubleClicked, m_fileManager, &FileManager::fileViewDoubleClicked); ovo ne radi a zelim da proradi, TODO istraziti
+        connect(view, &QAbstractItemView::doubleClicked, this, &MainWindow::fileViewDoubleClicked);
+        connect(view, &QAbstractItemView::customContextMenuRequested, this, [this, view](QPoint pos){
+            fileViewCustomContextMenuRequested(pos, view);
+        });
+
+        if(auto tableView = dynamic_cast<QTableView*>(view)){
+
+            //tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
+            //connect(tableView, &QTableView::doubleClicked, this, [tableView](){tableView->horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);}); //TODO ovo ne radi dovoljno lepo
+            tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
+//            tableView->horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);//TODO ovo ne radi za prvo pokretanje..
+
+            tableView->verticalHeader()->setVisible(false);
+
+            tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+
+        }else if(auto listView = dynamic_cast<QListView*>(view)){
+
+            if(listView == ui->thumbnailsFileView){
+                auto thumbnail = static_cast<QListView*>(view);
+                thumbnail->setViewMode(QListView::IconMode);
+#define viewSize 96 //mnogo vece od ovoga (vec 128) smara jer New Document 1.txt staje ceo tekst, 96 mi je taman za dibagovanje ovog elide/wordWrap koji pokusavam da namestim. ako je tebi drugacije promeni slobodno
+                //TODO bojane pls treba napraviti slot koji se aktivira na signal ctrl+'+' i ctrl+scrollUp koji povecava viewSize, analogno za '-'
+                //takodje smisli neki lepsi naziv hshshs koji pocinje sa m_ i logicno premesti ga u lokalnu privatnu, hvala <3
+                thumbnail->setGridSize(QSize(1.5*viewSize, viewSize));
+                thumbnail->setIconSize(QSize(0.75*viewSize, 0.75*viewSize));
+                thumbnail->setSpacing(16); //debljina tapacirunga izmedju polja grida, nepotrebno posto tapacirung simuliramo smanjenjem velicine ikone na 0.75 velicine polja ili koliko nam se vec svidi
+                thumbnail->setMovement(QListView::Snap);
+                thumbnail->setTextElideMode(Qt::ElideMiddle);//ElideNone
+                thumbnail->setWordWrap(false); //true
+                //poslednje dve linije ne rade kako treba... probaj sve 4 kombinacije elideNone elideMiddle wrapTrue wrapFalse i sta znam.. ja bih voleo da wordWrap true znaci da ispisuje u narednom redu ono sto ne staje ali nije tako... opcije su jos i ElideRight sto ima smisla mada ako imas vise fajlova sa slicnim pocetkom a razlikama na kraju sta znam npr bas za ovo New Folder 5 meni se vise svidja da vidim i kraj, pritom onda vidis ekstenzije nmp.. i cetvrta opcija ElideLeft koja je hahaa samo glupa
+            }
+
+            listView->setSelectionRectVisible(true);
+
+        }//else if (auto blablaView = dynamic_cast<QBlaView*>(view)){}itd itd //sad razumem potrebu za nekim qt stylesheetom, pogledi u zavisnosti od toga kako se podese mogu biti istog tipa a potpuno drugacijih zeljenih ponasanja a budimo realni i ovaj dinamicki kas koliko god kul bio radi se tokom rantajma i spor je
+
+    }
+
+    //naredna linija zakomentarisana za lakse dibagovanje, TODO obrisati je kad tad
+    //showFileView(ui->listFileView);
 
 }
 
