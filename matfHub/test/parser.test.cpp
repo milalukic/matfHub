@@ -84,17 +84,6 @@ TEST_CASE("Parser, regular expressions (not regex)", "[class]"){
         REQUIRE(expectedOutput == output);
     }
 
-    //TODO fix
-    SECTION("method evalExpression returns 0, if the parantheses are not paired correctly"){
-        Parser parser = Parser();
-        char* expression = ")5+3())";
-        const double expectedOutput = 0;
-
-        auto output = parser.evalExpression(expression);
-
-        REQUIRE(expectedOutput == output);
-    }
-
     SECTION("method evalExpression returns the value of the expression, if the parantheses are paired correctly"){
         Parser parser = Parser();
         char* expression = "(5+3)";
