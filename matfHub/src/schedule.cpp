@@ -99,13 +99,15 @@ void Schedule::downloadSchedule(Ui::MainWindow *ui){
 
 void Schedule::scrapeSchedule(Ui::MainWindow *ui){
     QString oldText = ui->scrapeButton->text();
-    ui->scrapeButton->setText("Scraping...");
+    ui->scrapeButton->setText("Ucitavanje...");
     downloadSchedule(ui);
     ui->scrapeButton->setText(oldText);
     ui->rasporedStartButton->setEnabled(true);
     ui->scheduleTable->setEnabled(true);
     ui->smerBox->setEnabled(true);
     ui->examArea->setEnabled(true);
+    ui->SacuvajButton->setEnabled(true);
+    ui->sledeciButton->setEnabled(true);
 }
 
 void Schedule::nextSchedule(Ui::MainWindow *ui){
@@ -119,5 +121,6 @@ void Schedule::nextSchedule(Ui::MainWindow *ui){
 }
 
 void Schedule::saveSchedule(Ui::MainWindow *ui){
-    m_gen.displaySchedule(ui->scheduleTable, brojRasporeda);
+//    cuva raspored u json
+//    m_gen.displaySchedule(ui->scheduleTable, brojRasporeda);
 }

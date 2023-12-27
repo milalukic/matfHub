@@ -77,7 +77,6 @@ void Generator::displaySchedule(QTableWidget* tableWidget, int brojRasporeda) {
         }
 
         saved = schedule;
-        std::cout << schedule[brojRasporeda].classroom << " " << schedule[brojRasporeda].description << " " << schedule[brojRasporeda].day << std::endl;
     }
 }
 
