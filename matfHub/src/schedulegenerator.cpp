@@ -1,4 +1,5 @@
 #include "../include/schedulegenerator.h"
+#include "../include/schedule.h"
 #include <vector>
 #include <algorithm>
 #include <random>
@@ -54,10 +55,16 @@ void Generator::find(StrMap<StrMap<CourseSet>> courseTypeTermMap) {
     std::cout << "Schedules found: " << schedules.size() << std::endl;
 }
 
-void Generator::displaySchedule(QTableWidget* tableWidget) {
+void Generator::displaySchedule(QTableWidget* tableWidget, int brojRasporeda) {
+
+    std::cout << schedules.size() << " " << brojRasporeda << std::endl;
+
+    tableWidget->clearContents();
     if (!schedules.empty()) {
-        const std::vector<Course>& schedule = schedules.front();
-        for (const auto& course : schedule) {
+
+        std::vector<Course>& schedule = schedules[brojRasporeda];
+
+        for (auto& course : schedule) {
             int day = course.day;
             int start = course.start;
             int end = course.end;
@@ -68,6 +75,9 @@ void Generator::displaySchedule(QTableWidget* tableWidget) {
                 tableWidget->setItem(day, i, subItem);
             }
         }
+
+        saved = schedule;
+        std::cout << schedule[brojRasporeda].classroom << " " << schedule[brojRasporeda].description << " " << schedule[brojRasporeda].day << std::endl;
     }
 }
 

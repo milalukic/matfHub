@@ -70,6 +70,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pbMatrixMultiply, &QPushButton::clicked, this, &MainWindow::calculateMatrixMultiply);
     connect(ui->pbMatrixDivide, &QPushButton::clicked, this, &MainWindow::calculateMatrixDivide);
 
+    //raspored konektovi
+
+
+
 }
 
 MainWindow::~MainWindow()
@@ -234,6 +238,8 @@ void MainWindow::on_actionExit_triggered()
 }
 
 
+//raspored stvari
+
 void MainWindow::on_smerBox_activated(int index)
 {
     schedule->changeModule(ui, index);
@@ -249,6 +255,16 @@ void MainWindow::on_rasporedStartButton_clicked()
 void MainWindow::on_scrapeButton_clicked()
 {
     schedule->scrapeSchedule(ui);
+}
+
+void MainWindow::on_sledeciButton_clicked()
+{
+    schedule->nextSchedule(ui);
+}
+
+void MainWindow::on_SacuvajButton_clicked()
+{
+    schedule->saveSchedule(ui);
 }
 
 //promena glavnog hab foldera
@@ -379,6 +395,12 @@ void MainWindow::calculateMatrixMultiply(){
 void MainWindow::calculateMatrixDivide(){
     std::cout << "Divide" << std::endl;
 }
+
+
+
+
+
+
 
 
 

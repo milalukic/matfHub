@@ -19,6 +19,10 @@ public:
     void downloadSchedule(Ui::MainWindow *ui);
     void scrapeSchedule(Ui::MainWindow *ui);
     void clearTable(Ui::MainWindow *ui);
+    void nextSchedule(Ui::MainWindow *ui);
+    void saveSchedule(Ui::MainWindow *ui);
+    int brojRasporeda;
+    Generator m_gen;
 
 private:
     std::unique_ptr<KmiljanScraper> kmiljanScraper;
@@ -26,6 +30,7 @@ private:
     std::vector<std::string> modules;
     std::unordered_set<std::string> selectedCourses;
     std::string selectedModule;
+
 //    State defaultTableState;
 };
 

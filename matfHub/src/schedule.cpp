@@ -11,6 +11,7 @@
 #include <iostream>
 #include <set>
 
+
 Schedule::Schedule(){
     kmiljanScraper = std::make_unique<KmiljanScraper>();
 }
@@ -55,6 +56,10 @@ void Schedule::clearTable(Ui::MainWindow *ui) {
 }
 
 void Schedule::findSchedule(Ui::MainWindow *ui){
+    brojRasporeda = 0;
+    while(!m_gen.schedules.empty()){
+        m_gen.schedules.erase(m_gen.schedules.begin());
+    }
     clearTable(ui);
     QString oldText = ui->rasporedStartButton->text();
     ui->rasporedStartButton->setText("...");
@@ -66,9 +71,8 @@ void Schedule::findSchedule(Ui::MainWindow *ui){
             reducedMap[courseName] = courseMap;
         }
     }
-    Generator scheduleGenerator;
-    scheduleGenerator.find(reducedMap);
-    scheduleGenerator.displaySchedule(ui->scheduleTable);
+    m_gen.find(reducedMap);
+    m_gen.displaySchedule(ui->scheduleTable, brojRasporeda);
     ui->rasporedStartButton->setText(oldText);
 }
 
@@ -102,4 +106,18 @@ void Schedule::scrapeSchedule(Ui::MainWindow *ui){
     ui->scheduleTable->setEnabled(true);
     ui->smerBox->setEnabled(true);
     ui->examArea->setEnabled(true);
+}
+
+void Schedule::nextSchedule(Ui::MainWindow *ui){
+    brojRasporeda++;
+
+    if(brojRasporeda == m_gen.schedules.size()){
+        brojRasporeda = 0;
+    }
+
+    m_gen.displaySchedule(ui->scheduleTable, brojRasporeda);
+}
+
+void Schedule::saveSchedule(Ui::MainWindow *ui){
+    m_gen.displaySchedule(ui->scheduleTable, brojRasporeda);
 }

@@ -29,8 +29,8 @@
    <property name="layoutDirection">
     <enum>Qt::LeftToRight</enum>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <item>
+   <layout class="QGridLayout" name="gridLayout_4">
+    <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidgetMatfHub">
       <property name="contextMenuPolicy">
        <enum>Qt::DefaultContextMenu</enum>
@@ -2335,195 +2335,193 @@
        <attribute name="title">
         <string>Raspored</string>
        </attribute>
-       <widget class="QComboBox" name="smerBox">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>20</y>
-          <width>241</width>
-          <height>61</height>
-         </rect>
-        </property>
-        <property name="layoutDirection">
-         <enum>Qt::LeftToRight</enum>
-        </property>
-        <property name="currentText">
-         <string/>
-        </property>
-        <property name="currentIndex">
-         <number>-1</number>
-        </property>
-        <property name="placeholderText">
-         <string/>
-        </property>
-        <property name="duplicatesEnabled">
-         <bool>false</bool>
-        </property>
-       </widget>
-       <widget class="QScrollArea" name="examArea">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>90</y>
-          <width>241</width>
-          <height>361</height>
-         </rect>
-        </property>
-        <property name="widgetResizable">
-         <bool>true</bool>
-        </property>
-        <widget class="QWidget" name="scrollAreaWidgetContents">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>239</width>
-           <height>359</height>
-          </rect>
-         </property>
-        </widget>
-       </widget>
-       <widget class="QTableWidget" name="scheduleTable">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>260</x>
-          <y>20</y>
-          <width>1031</width>
-          <height>511</height>
-         </rect>
-        </property>
-        <attribute name="verticalHeaderDefaultSectionSize">
-         <number>86</number>
-        </attribute>
-        <row>
-         <property name="text">
-          <string>Pon</string>
-         </property>
-        </row>
-        <row>
-         <property name="text">
-          <string>Uto</string>
-         </property>
-        </row>
-        <row>
-         <property name="text">
-          <string>Sre</string>
-         </property>
-        </row>
-        <row>
-         <property name="text">
-          <string>Cet</string>
-         </property>
-        </row>
-        <row>
-         <property name="text">
-          <string>Pet</string>
-         </property>
-        </row>
-        <column>
-         <property name="text">
-          <string>8:15-9:00</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>9:15-10:00</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>10:15-11:00</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>11:15-12:00</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>12:15-13:00</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>13:15-14:00</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>14:15-15:00</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>15:15-16:00</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>16:15-17:00</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>17:15-18:00</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>18:15-19:00</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>19:15-20:00</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>20:15-21:00</string>
-         </property>
-        </column>
-       </widget>
-       <widget class="QPushButton" name="rasporedStartButton">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>120</x>
-          <y>460</y>
-          <width>111</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Prikazi</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="scrapeButton">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>460</y>
-          <width>101</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Scrape</string>
-        </property>
-       </widget>
+       <layout class="QGridLayout" name="gridLayout_3">
+        <item row="3" column="0" colspan="3">
+         <layout class="QVBoxLayout" name="verticalLayout_3"/>
+        </item>
+        <item row="1" column="0" colspan="3">
+         <widget class="QScrollArea" name="examArea">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="widgetResizable">
+           <bool>true</bool>
+          </property>
+          <widget class="QWidget" name="scrollAreaWidgetContents">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>170</width>
+             <height>558</height>
+            </rect>
+           </property>
+          </widget>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QPushButton" name="scrapeButton">
+          <property name="text">
+           <string>Pokreni</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3" rowspan="5">
+         <layout class="QVBoxLayout" name="rasporedLayout">
+          <item>
+           <widget class="QTableWidget" name="scheduleTable">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <attribute name="verticalHeaderDefaultSectionSize">
+             <number>110</number>
+            </attribute>
+            <row>
+             <property name="text">
+              <string>Pon</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>Uto</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>Sre</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>Cet</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>Pet</string>
+             </property>
+            </row>
+            <column>
+             <property name="text">
+              <string>8:15-9:00</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>9:15-10:00</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>10:15-11:00</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>11:15-12:00</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>12:15-13:00</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>13:15-14:00</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>14:15-15:00</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>15:15-16:00</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>16:15-17:00</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>17:15-18:00</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>18:15-19:00</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>19:15-20:00</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>20:15-21:00</string>
+             </property>
+            </column>
+            <item row="3" column="1">
+             <property name="flags">
+              <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="0" column="0" colspan="3">
+         <widget class="QComboBox" name="smerBox">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="currentText">
+           <string/>
+          </property>
+          <property name="currentIndex">
+           <number>-1</number>
+          </property>
+          <property name="placeholderText">
+           <string/>
+          </property>
+          <property name="duplicatesEnabled">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QPushButton" name="sledeciButton">
+          <property name="text">
+           <string>Sledeci</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QPushButton" name="rasporedStartButton">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Prikazi</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QPushButton" name="SacuvajButton">
+          <property name="text">
+           <string>Sacuvaj</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="KalendarTab">
        <attribute name="title">

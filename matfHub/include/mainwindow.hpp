@@ -96,6 +96,10 @@ private slots:
 
     void on_scrapeButton_clicked();
 
+    void on_sledeciButton_clicked();
+
+    void on_SacuvajButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     QFileSystemModel *dirModel;
