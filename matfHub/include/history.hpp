@@ -13,14 +13,14 @@ public:
     static History* getHistory();
     //
     void writeHistory(std::string title, std::string line);
-    std::string lastLine();
+    auto lastLine();
     void editLastLine(std::string line);
     
     void addMatrix(Matrix *m);
     void saveHistory();
 
     //
-    std::vector<std::string> history() const;
+    auto history() const;
 
     void history(std::vector<std::string> &newHistory);
 

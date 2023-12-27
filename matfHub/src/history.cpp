@@ -31,7 +31,7 @@ void History::writeHistory(std::string title, std::string line){
 }
 
 
-std::string History::lastLine(){
+auto History::lastLine(){
     auto history = this->history();
     int numOfLastLine = history.size()-1;
     return history[numOfLastLine];
@@ -62,7 +62,7 @@ void History::saveHistory(){
 }
 
 //get
-std::vector<std::string> History::history() const{
+auto History::history() const{
     return this->_history;
 }
 

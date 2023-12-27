@@ -18,14 +18,14 @@ public:
     //destruktor
     ~Statistics();
 
-    static Statistics* getStatistics();
+    static auto getStatistics();
 
     //metode
-    double mean();
-    double variance();
-    double std();
-    double median();
-    double mode();
+    auto mean() -> double;
+    auto variance() -> double;
+    auto std() -> double;
+    auto median() -> double;
+    auto mode() -> double;
     
     void boxplot();
     void barplot();
@@ -36,8 +36,8 @@ public:
     void textData(const std::vector<std::string> &newTextData);
 
     //getters
-    std::vector<double> xData() const;
-    std::vector<std::string> textData() const;
+    auto xData() const;
+    auto textData() const;
 
 private:
 

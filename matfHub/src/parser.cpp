@@ -1,7 +1,7 @@
 #include "../include/parser.hpp"
 #include "../include/parserEnum.hpp"
 #include <cstring>
-#include <math.h> 
+#include <cmath> 
 
 //TODO refactor code
 
@@ -10,7 +10,7 @@
 Parser::Parser(){
     vars = new double[NUMVARS];
     int i;
-    expressionPtr = NULL;
+    expressionPtr = nullptr;
     for (i = 0; i < NUMVARS; i++)
         vars[i] = 0.0;
     errorMessage[0] = '\0';
@@ -21,7 +21,7 @@ Parser::~Parser(){
     std::cout << "Unisten: parser" << std::endl;
 }
 
-double Parser::evalExpression(char *exp){
+auto Parser::evalExpression(char *exp) -> double { 
     errorMessage[0] = '\0';
     double result;
     expressionPtr = exp;
@@ -39,19 +39,19 @@ double Parser::evalExpression(char *exp){
 
 void Parser::evalToken(double &result){
     int slot;
-    char temp_token[80];
+    char tmpToken[80];
     if (tokenType == VARIABLE)
     {
         // save old token
-        char *t_ptr = expressionPtr;
-        strcpy(temp_token, token);
+        char *tmpPtr = expressionPtr;
+        strcpy(tmpToken, token);
         // compute the index of the variable
         slot = *token - 'A';
         getToken();
         if (*token != '=') 
         {
-            expressionPtr = t_ptr; // return current token
-            strcpy(token, temp_token); // restore old token
+            expressionPtr = tmpPtr; // return current token
+            strcpy(token, tmpToken); // restore old token
             tokenType = VARIABLE;
         }
         else {
@@ -114,10 +114,10 @@ void Parser::evalUnar(double &result){
 // Fja, zagrade, promenljiva
 void Parser::evalParantheses(double &result){
     bool isfunc = (tokenType == FUNCTION);
-    char temp_token[80];
+    char tmpToken[80];
     if (isfunc)
     {
-        strcpy(temp_token, token);
+        strcpy(tmpToken, token);
         getToken();
     } 
     if (*token == '(')
@@ -127,7 +127,7 @@ void Parser::evalParantheses(double &result){
         if (*token != ')')
             strcpy(errorMessage, "Unbalanced Parentheses");
         if (isfunc)
-            evalFunc(result, temp_token);
+            evalFunc(result, tmpToken);
         getToken();
     }
     else

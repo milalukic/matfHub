@@ -11,7 +11,7 @@ public:
 
     Parser();
     ~Parser();
-    double evalExpression(char *exp);
+    auto evalExpression(char *exp) -> double;
     char errorMessage[64];
     
 
