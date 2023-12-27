@@ -1,7 +1,8 @@
 #ifndef GENERATOR_H
 #define GENERATOR_H
 
-#include "../include/course.h"
+#include "course.h"
+#include "helpers.h"
 #include <vector>
 #include <algorithm>
 #include <random>
@@ -14,24 +15,18 @@ private:
     std::vector<Course> courses;
     std::vector<std::vector<Course>> schedules;
     std::unordered_set<std::string> placed;
-    std::vector<std::vector<int>> bitmap;
+    std::vector<std::vector<bool>> bitmap;
 
 public:
-    Generator(const std::vector<Course>& courseList);
-
+    Generator();
     bool scheduleFilter(const std::vector<Course>& schedule);
-
-    void find();
-
+    void find(StrMap<StrMap<CourseSet>> courseTypeTermMap);
     void displaySchedule(QTableWidget* tableWidget);
 
 private:
-    void _find(size_t i);
-
+    void _find(StrMap<StrMap<CourseSet>>& courseTypeTermMap, std::vector<Course>& placedList, int i, int stop);
     bool conflict(const Course& term);
-
     void place(const Course& term);
-
     void remove(const Course& term);
 };
 

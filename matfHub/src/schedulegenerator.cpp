@@ -5,10 +5,13 @@
 #include <unordered_set>
 #include <QDebug>
 #include <QTableWidget>
+#include <iostream>
 
-Generator::Generator(const std::vector<Course>& courseList) : courses(courseList) {
+#define ROWS 5
+#define COLUMNS 13
 
-    bitmap.resize(5, std::vector<int>(13, 0));
+Generator::Generator() {
+    bitmap.resize(ROWS, std::vector<bool>(COLUMNS, 0));
 }
 
 bool Generator::scheduleFilter(const std::vector<Course>& schedule) {
@@ -33,61 +36,76 @@ bool Generator::scheduleFilter(const std::vector<Course>& schedule) {
     return true;
 }
 
-void Generator::find() {
-    _find(0);
+void Generator::find(StrMap<StrMap<CourseSet>> courseTypeTermMap) {
+    int stop = 0;
+    // koliko stvari treba da stavimo
+    for(const auto& pair : courseTypeTermMap) {
+        StrMap<CourseSet> types = pair.second;
+        stop += types.size();
+    }
+    std::vector<Course> placedList;
+    _find(courseTypeTermMap, placedList, 0, stop);
     std::sort(schedules.begin(), schedules.end(), [](const auto& lhs, const auto& rhs) {
         return std::accumulate(lhs.begin(), lhs.end(), 0,
                                [](int sum, const Course& course) { return sum + course.start; }) <
                std::accumulate(rhs.begin(), rhs.end(), 0,
                    [](int sum, const Course& course) { return sum + course.start; });
     });
+    std::cout << "Schedules found: " << schedules.size() << std::endl;
 }
 
 void Generator::displaySchedule(QTableWidget* tableWidget) {
     if (!schedules.empty()) {
         const std::vector<Course>& schedule = schedules.front();
-        int row = 0;
         for (const auto& course : schedule) {
             int day = course.day;
             int start = course.start;
             int end = course.end;
 
-            QTableWidgetItem* item = new QTableWidgetItem(QString::fromStdString(course.description));
-            tableWidget->setItem(row, day, item);
             for (int i = start; i < end; ++i) {
-                QTableWidgetItem* subItem = new QTableWidgetItem("Busy");
-                tableWidget->setItem(row, i, subItem);
+                QTableWidgetItem* subItem = new QTableWidgetItem(QString::fromStdString(course.description + '\n' + course.course_type +
+                                                                                        '\n' + course.classroom));
+                tableWidget->setItem(day, i, subItem);
             }
-            ++row;
         }
     }
 }
 
-void Generator::_find(size_t i) {
-    if (i == courses.size()) {
-        std::vector<Course> placedList;
-        std::sort(placedList.begin(), placedList.end(), [](const auto& lhs, const auto& rhs) {
-            return std::tie(lhs.day, lhs.end) > std::tie(rhs.day, rhs.end);
-        });
-
-        if (scheduleFilter(placedList)) {
-            schedules.push_back(placedList);
-        }
+void Generator::_find(StrMap<StrMap<CourseSet>>& courseTypeTermMap, std::vector<Course>& placedList, int i, int stop) {
+    if (i == stop) {
+        std::cerr << "Shouldnt be reachable" << std::endl;
         return;
     }
 
-//        for (const auto& term : courses[i].possibleTerms) {
-//            if (schedules.size() < 200 && !conflict(term)) {
-//                place(term);
-//                _find(i + 1);
-//                remove(term);
-//            }
-//        }
+    for (const auto& pair : courseTypeTermMap) {
+        std::string course = pair.first;
+        StrMap<CourseSet> typeTermMap = pair.second;
+        for (const auto& pair : typeTermMap) {
+            std::string type = pair.first;
+            CourseSet terms = pair.second;
+            for (const auto& term : terms) {
+                bool notPlacedYet = placed.find(term.description + term.course_type) == placed.end();
+                if (schedules.size() < 200 && notPlacedYet && !conflict(term)) {
+                    place(term);
+                    placedList.push_back(term);
+                    if(placedList.size() == stop) {
+                        schedules.push_back(placedList);
+                    }
+                    else {
+                        _find(courseTypeTermMap, placedList, i + 1, stop);
+                    }
+                    remove(term);
+                    placedList.pop_back();
+                }
+            }
+        }
+    }
+    return;
 }
 
 bool Generator::conflict(const Course& term) {
     for (int i = term.start; i < term.end; ++i) {
-        if (bitmap[term.day][i] == 1) {
+        if (bitmap[term.day][i] == true) {
             return true;
         }
     }
@@ -96,14 +114,14 @@ bool Generator::conflict(const Course& term) {
 
 void Generator::place(const Course& term) {
     for (int i = term.start; i < term.end; ++i) {
-        bitmap[term.day][i] = 1;
+        bitmap[term.day][i] = true;
     }
-    placed.insert(term.description);
+    placed.insert(term.description + term.course_type);
 }
 
 void Generator::remove(const Course& term) {
     for (int i = term.start; i < term.end; ++i) {
-        bitmap[term.day][i] = 0;
+        bitmap[term.day][i] = false;
     }
-    placed.erase(term.description);
+    placed.erase(term.description + term.course_type);
 }
