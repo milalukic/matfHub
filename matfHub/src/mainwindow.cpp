@@ -4,6 +4,9 @@
 #include "../include/filemanager.hpp"
 #include "../include/matrix.hpp"
 #include "../include/parser.hpp"
+
+#include "../include/calendar.h"
+
 #include "../include/plotter.hpp"
 #include "../include/statistics.hpp"
 #include "../include/calculator.h"
@@ -20,6 +23,10 @@
 #include <QDebug>
 #include <string>
 #include <matplot/matplot.h>
+
+#include <fstream>
+#include <map>
+
 
 #define DEBUG (qDebug() << __FILE__ << ":" << __LINE__ << ":\t")
 
@@ -40,6 +47,10 @@ MainWindow::MainWindow(QWidget *parent)
         QDir().mkdir("MATF");
     }
 
+    // Kalendar
+    calendar = new class Calendar(ui);
+
+    // Notes
     notes = new class Notes();
     QString sPath = ""; //ovde kasnije dodati path i gurnuti ga u setRootPath
 
@@ -75,6 +86,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pbMatrixSubtract, &QPushButton::clicked, this, &MainWindow::calculateMatrixSubtract);
     connect(ui->pbMatrixMultiply, &QPushButton::clicked, this, &MainWindow::calculateMatrixMultiply);
     connect(ui->pbMatrixDivide, &QPushButton::clicked, this, &MainWindow::calculateMatrixDivide);
+
+}
 
     connect(ui->pbSaveMatrix, &QPushButton::clicked, this, &MainWindow::saveMatrix);
 
@@ -206,8 +219,10 @@ void MainWindow::showMatrix(Matrix *m){
 MainWindow::~MainWindow()
 {
     //je l ovde ide "close without saving?"?
+    calendar->saveHistory();
     delete ui;
 }
+
 
 // Funkcionalnosti Notes toolbara
 void MainWindow::on_newFileToolbarButton_clicked()
@@ -361,8 +376,10 @@ void MainWindow::on_fileView_customContextMenuRequested(const QPoint &pos)// !!!
 //izlazak iz aplikacije, logicno
 void MainWindow::on_actionExit_triggered()
 {
+    calendar->saveHistory();
     QApplication::quit();
 }
+
 
 void MainWindow::on_actionDark_Mode_triggered()
 {
@@ -411,7 +428,6 @@ QString MainWindow::currentFilePathGetPath(){
 
 
 int MainWindow::countSelected(const QListView* view){
-
     return view->selectionModel()->selectedIndexes().length();
 
 }
@@ -766,13 +782,33 @@ void MainWindow::plot(){
 }
 
 
+// Kalendar
+void MainWindow::on_calendarWidget_clicked(const QDate &date)
+{
+    calendar->dateChanged(ui, date);
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    calendar->taskAdded(ui);
+}
+
 void MainWindow::plotSin(){
 
     ui->leState->setText("sin(" + ui->leState->text() + ")" );
 
+void MainWindow::on_pushButton_2_clicked()
+{
+    calendar->removeTask(ui);
+}
+
     plt->transformData(sin);
 
 }
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    calendar->removeAll(ui);
 
 void MainWindow::plotCos(){
 

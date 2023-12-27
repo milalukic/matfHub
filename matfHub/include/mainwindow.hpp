@@ -12,6 +12,8 @@
 #include <QString>
 
 #include "notes.h"
+#include "calendar.h"
+
 #include "plotter.hpp"
 #include "matrix.hpp"
 #include "statistics.hpp"
@@ -148,6 +150,14 @@ private slots:
 
     void on_scrapeButton_clicked();
 
+    void on_calendarWidget_clicked(const QDate &date);
+
+    void on_pushButton_clicked();
+
+    void on_pushButton_2_clicked();
+
+    void on_pushButton_3_clicked();
+
 private:
     Ui::MainWindow *ui;
     QFileSystemModel *dirModel;
@@ -157,6 +167,7 @@ private:
     std::unique_ptr<Schedule> schedule;
 
     Notes *notes;
+    Calendar *calendar;
 
     FileManager* m_fileManager;
     int countSelected(const QListView* view);
