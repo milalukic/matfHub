@@ -102,7 +102,7 @@ Course KmiljanScraper::tdToCourse(QString tdHtml, int day, int start){
     return Course(name.toStdString(),
                   day,
                   staff.toStdString(),
-                  start,
+                  start-8,
                   length,
                   lectureType.toStdString(),
                   groups,

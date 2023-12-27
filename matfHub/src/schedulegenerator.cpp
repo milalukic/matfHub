@@ -11,7 +11,7 @@
 #define COLUMNS 13
 
 Generator::Generator() {
-    bitmap.resize(ROWS, std::vector<bool>(COLUMNS, 0));
+    bitmap.resize(ROWS, std::vector<bool>(COLUMNS, false));
 }
 
 bool Generator::scheduleFilter(const std::vector<Course>& schedule) {
@@ -90,6 +90,7 @@ void Generator::_find(StrMap<StrMap<CourseSet>>& courseTypeTermMap, std::vector<
                     placedList.push_back(term);
                     if(placedList.size() == stop) {
                         schedules.push_back(placedList);
+                        std::cout << placedList[0].start + 8 << " " << placedList[0].end + 8 << " " << placedList[0].day << std::endl;
                     }
                     else {
                         _find(courseTypeTermMap, placedList, i + 1, stop);
