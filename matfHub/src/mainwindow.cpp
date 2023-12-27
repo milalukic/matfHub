@@ -29,8 +29,6 @@
 #include <fstream>
 #include <map>
 
-#define DEBUG (qDebug() << __FILE__ << ":" << __LINE__ << ":\t")
-
 // #include <iostream>
 // #include "../include/notes.h"
 

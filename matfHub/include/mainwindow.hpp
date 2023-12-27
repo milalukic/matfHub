@@ -72,16 +72,7 @@ private slots:
 
     void fileViewDoubleClicked(const QModelIndex &index);
 
-    void on_dirView_clicked(const QModelIndex &index);
-    void on_currentFilePath_editingFinished();
-    void on_dotDotButton_clicked();
-    void on_newFolderButton_clicked();
-    void on_fileView_customContextMenuRequested(const QPoint &pos);
-    void on_actionExit_triggered();
-
     void on_actionDark_Mode_triggered();
-
-    void on_actionChangeHubLocation_triggered();
 
     void fileViewCustomContextMenuRequested(const QPoint &pos, QAbstractItemView* view);
     void showFileView(QAbstractItemView* view);
