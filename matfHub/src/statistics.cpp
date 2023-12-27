@@ -12,7 +12,7 @@ Statistics::~Statistics(){
     std::cout << "Unisten statistics" << std::endl;
 }
 
-auto Statistics::getStatistics(){
+Statistics* Statistics::getStatistics(){
     if(statPtr == nullptr){
         statPtr = new Statistics();
     }
@@ -100,11 +100,11 @@ void Statistics::boxplot(){
 
 //getters
 
-auto Statistics::xData() const{
+std::vector<double> Statistics::xData() const{
     return this->_xData;
 }
 
-auto Statistics::textData() const{
+std::vector<std::string> Statistics::textData() const{
     return this->_textData;
 }
 

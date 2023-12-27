@@ -18,7 +18,7 @@ public:
     //destruktor
     ~Statistics();
 
-    static auto getStatistics();
+    static Statistics* getStatistics();
 
     //metode
     auto mean() -> double;
@@ -36,8 +36,8 @@ public:
     void textData(const std::vector<std::string> &newTextData);
 
     //getters
-    auto xData() const;
-    auto textData() const;
+    std::vector<double> xData() const;
+    std::vector<std::string> textData() const;
 
 private:
 
