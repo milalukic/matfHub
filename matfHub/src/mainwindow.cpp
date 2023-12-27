@@ -4,6 +4,7 @@
 #include "../include/filemanager.hpp"
 #include "../include/matrix.hpp"
 #include "../include/parser.hpp"
+#include "../include/config.hpp"
 
 #include "../include/calendar.h"
 
@@ -16,6 +17,7 @@
 #include <QFileDialog>
 #include <QInputDialog>
 #include <QMessageBox>
+#include <QSortFilterProxyModel>
 #include <stack>
 #include <iostream>
 #include <cstdlib>
@@ -42,9 +44,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     m_fileManager = new FileManager(this);
 
+    QString hubPath = Config::getConfig()->getHubPath();
+
     // ako ne postoji dir MATF, pravimo ga
-    if(!QDir("MATF").exists()){
-        QDir().mkdir("MATF");
+    if(!QDir(hubPath).exists()){//-||-
+        qDebug() << hubPath;
+        QDir().mkdir(hubPath);
     }
 
     // Kalendar
@@ -52,21 +57,19 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Notes
     notes = new class Notes();
-    QString sPath = ""; //ovde kasnije dodati path i gurnuti ga u setRootPath
 
     ui->dirView->setModel(m_fileManager->dirModel);
     ui->dirView->hideColumn(1);
     ui->dirView->hideColumn(2);
     ui->dirView->setColumnWidth(0, 200);
-    //ui->dirView->setRootIndex(dirModel->setRootPath(hubPath));
-    ui->fileView->setModel(m_fileManager->fileModel);
-    ui->fileView->setRootIndex(m_fileManager->fileModel->setRootPath(m_fileManager->hubPath));
-    ui->currentFilePath->setText(m_fileManager->currPath);
-    ui->fileView->setSelectionMode(QAbstractItemView::ExtendedSelection);//klik odabere kliknutu i oddabere ostale; shift klik selektuje sve izmedju selektovane i kliknute, ctrl klik odabere kliknutu i ne oddabere ostale
+
+    setUpFileView();
+
+
 
     //TODO FIX THIS!!!
 //    connect(ui->pbMatrixTest, &QPushButton::clicked, this, &MainWindow::pbMatrixTest);
-
+//TODO mozda neki connectCalc(this) koji ovo sve zove da bi konstruktor bio cistiji? slicno za ostale konekcije
     connect(ui->pbChangeRegular, &QPushButton::clicked, this, &MainWindow::changeStackedWidgetPage);
     connect(ui->pbChangeMatrix, &QPushButton::clicked, this, &MainWindow::changeStackedWidgetPage);
     connect(ui->pbChangePlot, &QPushButton::clicked, this, &MainWindow::changeStackedWidgetPage);
@@ -86,6 +89,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pbMatrixSubtract, &QPushButton::clicked, this, &MainWindow::calculateMatrixSubtract);
     connect(ui->pbMatrixMultiply, &QPushButton::clicked, this, &MainWindow::calculateMatrixMultiply);
     connect(ui->pbMatrixDivide, &QPushButton::clicked, this, &MainWindow::calculateMatrixDivide);
+
+
+    //connect(ui->listFileView, &QPushButton::clicked, this, &MainWindow::on_fileView_doubleClicked);
 
 }
 
@@ -279,7 +285,7 @@ void MainWindow::on_dirView_doubleClicked(const QModelIndex &index)
 }
 
 //u desnom pogledu dupli klik na stavku vrsi odgovarajucu akciju
-void MainWindow::on_fileView_doubleClicked(const QModelIndex &index)
+void MainWindow::fileViewDoubleClicked(const QModelIndex &index)
 {
     m_fileManager->fileViewDoubleClicked(index);
 }
@@ -288,30 +294,35 @@ void MainWindow::on_fileView_doubleClicked(const QModelIndex &index)
 void MainWindow::on_backButton_clicked()
 {
     m_fileManager->backButtonClicked();
+    ui->detailsFileView->horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);
 }
 
 //navigacija u sledece prikazan folder
 void MainWindow::on_forwardButton_clicked()
 {
     m_fileManager->forwardButtonClicked();
+    ui->detailsFileView->horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);
 }
 
 //navigacija u glavni hab folder
 void MainWindow::on_homeButton_clicked()
 {
     m_fileManager->homeButtonClicked();
+    ui->detailsFileView->horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);
 }
 
 //navigacija u roditeljski folder
 void MainWindow::on_dotDotButton_clicked()
 {
     m_fileManager->dotDotButtonClicked();
+    ui->detailsFileView->horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);
 }
 
 //navigacija ka unesenoj putanji, ako postoji folder na tom mestu
 void MainWindow::on_currentFilePath_editingFinished()
 {
     m_fileManager->currentFilePathEditingFinished();
+    ui->detailsFileView->horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);
 }
 
 //kreiranje novog foldera unutar trenutnog
@@ -321,34 +332,80 @@ void MainWindow::on_newFolderButton_clicked()
 }
 
 //kreiranje popapa sa kontekst menijem u desnom pogledu
-void MainWindow::on_fileView_customContextMenuRequested(const QPoint &pos)// !!!!!! ovo bi bilo lepo takodje izmestiti u filemanager.cpp ali prvo connect je iz QObject ili tako necega treba to nasledjivanje srediti drugo poslednja linija funkcije (i jos neke) zove privatne metode privatnih polja iz ui pa bi i to trebalo prebroditi nekako nekim seterom
-{//pored komentara u prethodnoj liniji takodje ova f-ja postaje glomazna, bilo bi lepo mozda razdvojiti je u pozive f-ja koje pojedinacno prave akcije
-    //TODO cut, copy, paste
-    //TODO make new [...]
-    //makar document (.txt) zbog notesa, jos nesto ako ima smisla u odnosu na to sta ostali naprave
+void MainWindow::on_fileView_customContextMenuRequested(const QPoint &pos)// TODO !!!!!! ovo bi bilo lepo takodje izmestiti u filemanager.cpp ali prvo connect je iz QObject ili tako necega treba to nasledjivanje srediti drugo poslednja linija funkcije (i jos neke) zove privatne metode privatnih polja iz ui pa bi i to trebalo prebroditi nekako nekim seterom
+{//TODO pored komentara u prethodnoj liniji takodje ova f-ja postaje glomazna, bilo bi lepo mozda razdvojiti je u pozive f-ja koje pojedinacno prave akcije
+    //TODO cut, copy, paste mozda?
     QMenu* menu = new QMenu(this);
 
     QAction* newFolderAction = new QAction("New Folder", this);
     menu->addAction(newFolderAction);
-    connect(newFolderAction, &QAction::triggered, [=]() {//jednakost u prvim zagradama hvata sve promenjive iz pozivajuce funkcije u pozvanu, ne pitaj koja magija niti zasto je to potrebno..
+    connect(newFolderAction, &QAction::triggered, [=]() {
         m_fileManager->createNewFolder();
+    });
+
+    QAction* newDocumentAction = new QAction("New Document", this);
+    menu->addAction(newDocumentAction);
+    connect(newDocumentAction, &QAction::triggered, [=](){
+        m_fileManager->createNewDocument();
     });
 
     QAction* selectAllAction = new QAction("Select All", this);
     menu->addAction(selectAllAction);
     connect(selectAllAction, &QAction::triggered, [=](){
-        ui->fileView->clearSelection();
-        ui->fileView->selectAll();//ovo ne radi kako sam zamislio i blago je reci da mi ide na zivce :)
-        //mozda i radi nego ne prikazuje sve kao plavo, to plavo mozda nije select kako ga mi shvatamo
-        //to plavo tacno jeste selekt kako ga mi shvatamo, samo je trebalo podesiti seleksn mod pogledu. obrisi ova tri komentara kada procitas.
+        ui->detailsFileView->clearSelection();
+        ui->detailsFileView->selectAll();
     });
 
-    int noSelected = countSelected(ui->fileView);
+    QMenu* sortSubMenu = new QMenu("Sort by", menu);
+
+    QAction* sortByName = new QAction("Name", this);
+    sortSubMenu->addAction(sortByName);
+    connect(sortByName, &QAction::triggered, [=](){
+        m_fileManager->sortByName();
+    });
+
+    QAction* sortByDate = new QAction("Date", this);
+    sortSubMenu->addAction(sortByDate);
+    connect(sortByDate, &QAction::triggered, [=](){
+        m_fileManager->sortByDate();
+    });
+
+    QAction* sortBySize = new QAction("Size", this);
+    sortSubMenu->addAction(sortBySize);
+    connect(sortBySize, &QAction::triggered, [=](){
+        m_fileManager->sortBySize();
+    });
+
+    QAction* sortByType = new QAction("Type", this);
+    sortSubMenu->addAction(sortByType);
+    connect(sortByType, &QAction::triggered, [=](){
+        m_fileManager->sortByType();
+    });
+
+    menu->addMenu(sortSubMenu);
+
+    QMenu* viewSubMenu = new QMenu("View", menu);
+
+    QAction* list = new QAction("List", this);
+    viewSubMenu->addAction(list);
+    connect(list, &QAction::triggered, [=](){
+        ui->stackedWidgetFileView->setCurrentIndex(0);
+    });
+
+    QAction* table = new QAction("Table", this);
+    viewSubMenu->addAction(table);
+    connect(table, &QAction::triggered, [=](){
+        ui->stackedWidgetFileView->setCurrentIndex(1);
+    });
+
+    menu->addMenu(viewSubMenu);
+
+    int noSelected = countSelected(ui->detailsFileView);
     if(noSelected == 1){
         QAction* renameAction = new QAction("Rename", this);
         menu->addAction(renameAction);
         connect(renameAction, &QAction::triggered, [=](){
-            QModelIndex selectedIndex = getSelectedIndex(ui->fileView);
+            QModelIndex selectedIndex = getSelectedIndex(ui->detailsFileView);
             QString oldName = m_fileManager->getNameFromIndex(selectedIndex);
             QString newName = QInputDialog::getText(this, "Preimenuj fajl", "Nov Naziv:", QLineEdit::Normal, oldName);
             m_fileManager->renameSelectedFile(selectedIndex, newName);
@@ -359,13 +416,13 @@ void MainWindow::on_fileView_customContextMenuRequested(const QPoint &pos)// !!!
         QAction* deleteAction = new QAction("Delete", this);
         menu->addAction(deleteAction);
         connect(deleteAction, &QAction::triggered, [=](){
-            QModelIndexList selectedIndices = getSelectedIndices(ui->fileView); //meni se indices vise svidja kao mnozina od index nego indexes ali Bojane slobodno promeni ako zelis nije mi bitno
+            QModelIndexList selectedIndices = getSelectedIndices(ui->detailsFileView); //meni se indices vise svidja kao mnozina od index nego indexes ali Bojane slobodno promeni ako zelis nije mi bitno
             m_fileManager->deleteSelectedFiles(selectedIndices);
         });
     }
 
 
-    menu->popup(ui->fileView->viewport()->mapToGlobal(pos));
+    menu->popup(ui->detailsFileView->viewport()->mapToGlobal(pos));
 
 
 }
@@ -407,17 +464,19 @@ void MainWindow::on_scrapeButton_clicked()
 void MainWindow::on_actionChangeHubLocation_triggered()
 {
     QString newHubPath = QFileDialog::getExistingDirectory(this, "Odaberi direktorijum");
-    m_fileManager->hubPath = newHubPath;   //hubPath treba uciniti trajnim nakon zatvaranja programa
-    m_fileManager->currPath = m_fileManager->hubPath;
+    Config::getConfig()->setHubPath(newHubPath);
+    m_fileManager->currPath = newHubPath;
+    m_fileManager->hubPath = newHubPath;
     ui->currentFilePath->setText(m_fileManager->currPath);
-    ui->fileView->setRootIndex(m_fileManager->fileModel->setRootPath(m_fileManager->currPath));
+    ui->detailsFileView->setRootIndex(m_fileManager->fileModel->setRootPath(m_fileManager->currPath));
 }
 
 
 
 //geteri seteri i ostala narusavanja mejnovih privatnosti
 void MainWindow::fileViewSetPath(const QString path){
-    ui->fileView->setRootIndex(m_fileManager->fileModel->setRootPath(path));
+    ui->detailsFileView->setRootIndex(m_fileManager->fileModel->setRootPath(path));
+    ui->listFileView->setRootIndex(m_fileManager->fileModel->setRootPath(path));
 }
 void MainWindow::currentFilePathSetPath(const QString path){
     ui->currentFilePath->setText(path);
@@ -427,17 +486,50 @@ QString MainWindow::currentFilePathGetPath(){
 }
 
 
-int MainWindow::countSelected(const QListView* view){
+
+int MainWindow::countSelected(const QTableView* view){
+
     return view->selectionModel()->selectedIndexes().length();
 
 }
 
-QModelIndex MainWindow::getSelectedIndex(const QListView* view){
+QModelIndex MainWindow::getSelectedIndex(const QTableView* view){
     return view->selectionModel()->selectedIndexes().first();
 }
 
-QModelIndexList MainWindow::getSelectedIndices(const QListView* view){
+QModelIndexList MainWindow::getSelectedIndices(const QTableView* view){
     return view->selectionModel()->selectedIndexes();
+}
+
+void MainWindow::setUpFileView(/*tipPogleda*/){
+    //fileView za details
+    ui->detailsFileView->setModel(m_fileManager->fileModel);
+    ui->detailsFileView->setRootIndex(m_fileManager->fileModel->setRootPath(m_fileManager->hubPath + "/" + ".."));
+    ui->currentFilePath->setText(m_fileManager->currPath);
+    ui->detailsFileView->setSelectionMode(QAbstractItemView::ExtendedSelection);//klik odabere kliknutu i oddabere ostale; shift klik selektuje sve izmedju selektovane i kliknute, ctrl klik odabere kliknutu i ne oddabere ostale
+    ui->detailsFileView->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
+    ui->detailsFileView->horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);//TODO ovo ne radi za prvo pokretanje..
+    ui->detailsFileView->verticalHeader()->setVisible(false);
+
+    connect(ui->detailsFileView, &QTableView::doubleClicked, this, &MainWindow::fileViewDoubleClicked);
+
+    connect(ui->detailsFileView, &QTableView::doubleClicked, this, [this](){//TODO koji signal je odgovarajuc? nesto sto odgovara promeni m_currPath i nista drugo? komplikovan nacin bi bio currPath retvoriti u klasu koja pored stringa ima i signal koji se ovde salje pri promeni QStringa ali to me smara trenutno...
+        ui->detailsFileView->horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);
+    });
+    connect(ui->detailsFileView->selectionModel(), &QItemSelectionModel::selectionChanged, this, [this](){
+        QModelIndexList selectedList = ui->detailsFileView->selectionModel()->selectedIndexes();//TODO kada se selektuje vise stvari nesto ozbiljno ne valja, nagadjam da je brz fiks da ne kazem ni ne sumnjam B)
+        for(auto selected : selectedList){
+            int row = selected.row();
+            ui->detailsFileView->selectRow(row);
+        }
+    });
+
+    //fileView za list
+    ui->listFileView->setModel(m_fileManager->fileModel);
+    ui->listFileView->setRootIndex(m_fileManager->fileModel->setRootPath(m_fileManager->hubPath + "/" + ".."));
+    ui->currentFilePath->setText(m_fileManager->currPath);
+    ui->listFileView->setSelectionMode(QAbstractItemView::ExtendedSelection);
+
 }
 
 

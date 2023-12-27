@@ -11,18 +11,30 @@ class FileManager
 public:
     FileManager(MainWindow* mw);
 
-    QString oldPath;
-    QString appPath;
-    QString hubPath;
-    QString currPath;
+    // putanje koje se koriste za navigaciju
+    QString oldPath;//TODO private
+    QString appPath;//vrv private
+    QString hubPath;//realno isto private ali mozda geter
+    QString currPath;//brate realno private i sigurno geter
 
-    QFileSystemModel *dirModel;
-    QFileSystemModel *fileModel;
+    //modeli koje prikazujemo u levom i desnom delu prozora
+    QFileSystemModel *dirModel;//private
+    QFileSystemModel *fileModel;//private
 
-    std::stack<QString> navigationBefore;
-    std::stack<QString> navigationAfter;
+    // pocetne promenljive za sort i reverse sort
+    bool m_nameSortCounter = false;//sve ovo isto private
+    bool m_dateSortCounter = false;
+    bool m_sizeSortCounter = false;
+    bool m_typeSortCounter = false;
 
+    // pocetna velicina ikonica
+    int m_iconSize = 50;//priv
 
+    // stekovi u kojima cuvamo istoriju kretanja
+    std::stack<QString> navigationBefore;//def priv
+    std::stack<QString> navigationAfter;//-||-
+
+    // jasno imenovane funkcije fmanagera
     void changeDir(const QString path);
     void createNewFolder();
 
@@ -37,6 +49,14 @@ public:
     QString getNameFromIndex(const QModelIndex index);
     void renameSelectedFile(const QModelIndex index, const QString newName);
     void deleteSelectedFiles(const QModelIndexList indices);
+    void createNewDocument();
+    void setSortCounters(bool value);
+    void sortByName();
+    void sortByDate();
+    void sortBySize();
+    void sortByType();
+    void largerIcons();
+    void smallerIcons();
 
 private:
     MainWindow *m_mainWindow;

@@ -11,6 +11,8 @@
 #include <QListView>
 #include <QString>
 
+#include <QSortFilterProxyModel>
+
 #include "notes.h"
 #include "calendar.h"
 
@@ -31,57 +33,45 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void fileViewSetPath(const QString path);
-    void currentFilePathSetPath(const QString path);
-    QString currentFilePathGetPath();
+    void currentFilePathSetPath(const QString path);// v
+    QString currentFilePathGetPath();//znam, ruzno ime... currentFilePath je lajn edit koji bi trebalo u svakom momentu da sadrzi putanju u kojoj se nalazi menadzer
+    Notes *notes;
+    FileManager* m_fileManager;
+    Ui::MainWindow *ui;
+
+
 
     //TODO PITAJ ***********************************************************************
     Plotter *plt;
 
 
 private slots:
+    //notes slots
     void on_newFileToolbarButton_clicked();
-
     void on_openFileToolbarButton_clicked();
-
     void on_saveToolbarButton_clicked();
-
     void on_copyToolbarButton_clicked();
-
     void on_pasteToolbarButton_clicked();
-
     void on_cutToolbarButton_clicked();
-
     void on_undoToolbarButton_clicked();
-
     void on_redoToolbarButton_clicked();
-
+    //fmanager slots
     void on_dirView_doubleClicked(const QModelIndex &index);
-
     void on_backButton_clicked();
-
     void on_forwardButton_clicked();
-
     void on_homeButton_clicked();
-
-    void on_fileView_doubleClicked(const QModelIndex &index);
-
+    void fileViewDoubleClicked(const QModelIndex &index);
     void on_dirView_clicked(const QModelIndex &index);
-
     void on_currentFilePath_editingFinished();
-
     void on_dotDotButton_clicked();
-
     void on_newFolderButton_clicked();
-
     void on_fileView_customContextMenuRequested(const QPoint &pos);
-
     void on_actionExit_triggered();
 
     void on_actionDark_Mode_triggered();
 
     void on_actionChangeHubLocation_triggered();
-
-    //calculator things
+    //calculator slots
 //    void pbMatrixTest();
     void changeStackedWidgetPage();
 
@@ -159,9 +149,6 @@ private slots:
     void on_pushButton_3_clicked();
 
 private:
-    Ui::MainWindow *ui;
-    QFileSystemModel *dirModel;
-    QFileSystemModel *fileModel;
     std::stack<QString> navigationBefore;
     std::stack<QString> navigationAfter;
     std::unique_ptr<Schedule> schedule;
@@ -169,10 +156,11 @@ private:
     Notes *notes;
     Calendar *calendar;
 
-    FileManager* m_fileManager;
-    int countSelected(const QListView* view);
-    QModelIndex getSelectedIndex(const QListView* view);
-    QModelIndexList getSelectedIndices(const QListView* view);
+    int countSelected(const QTableView* view);
+    QModelIndex getSelectedIndex(const QTableView* view);
+    QModelIndexList getSelectedIndices(const QTableView* view);
+
+    void setUpFileView(/*enum tipPogleda*/);//funkcija prima enum neki tipa i onda pravi pogled na osnovu enuma i podesava ga, kao sto smo u mejnu radili do sada, zatim brise dete od ui->fileViewLayout i daje mu novo dete, ovo koje je napravio
 
 };
 #endif // MAINWINDOW_HPP
