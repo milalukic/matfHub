@@ -21,9 +21,9 @@ if(NOT matplotplusplus_POPULATED)
 endif()
 
 
-add_executable(myexec statistics.test.cpp ../src/statistics.cpp )
+add_executable(test_stat statistics.test.cpp ../src/statistics.cpp )
 
-target_link_libraries(myexec PUBLIC matplot)
+target_link_libraries(test_stat PUBLIC matplot)
 
 
 

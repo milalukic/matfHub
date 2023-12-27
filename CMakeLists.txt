@@ -22,7 +22,7 @@ include_directories(${ARMADILLO_INCLUDE_DIRS})
 include(FetchContent)
 FetchContent_Declare(matplotplusplus
         GIT_REPOSITORY https://github.com/alandefreitas/matplotplusplus
-        GIT_TAG origin/master) # or whatever tag you want
+        GIT_TAG origin/master)
 
 FetchContent_GetProperties(matplotplusplus)
 if(NOT matplotplusplus_POPULATED)
@@ -33,13 +33,13 @@ endif()
 #find_package(Matplot++ REQUIRED)
 
 
-###############################33
+###############################
 
 file(GLOB PROJECT_SOURCES
         "matfHub/src/*.cpp"
         "matfHub/include/*.hpp"
         "matfHub/include/*.h"
-	"matfHub/*.ui"
+	    "matfHub/*.ui"
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -51,10 +51,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         matfHub/resources.qrc
         matfHub/src/calculator.cpp
         matfHub/include/calculator.h
+)
 
 
-
-    )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET matfHub APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
 #                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
@@ -73,9 +72,13 @@ else()
     endif()
 endif()
 
-target_link_libraries(matfHub PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Network Qt${QT_VERSION_MAJOR}::Core PUBLIC Matplot++::matplot ${ARMADILLO_LIBRARIES})
-# target_link_libraries(matfHub PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
-# target_link_libraries(matfHub PRIVATE Qt${QT_VERSION_MAJOR}::Widgets ${ARMADILLO_LIBRARIES})
+target_link_libraries(
+    matfHub PRIVATE Qt${QT_VERSION_MAJOR}::Widgets 
+    Qt${QT_VERSION_MAJOR}::Network 
+    Qt${QT_VERSION_MAJOR}::Core 
+    PUBLIC Matplot++::matplot ${ARMADILLO_LIBRARIES}
+)
+
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an

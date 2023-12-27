@@ -9,7 +9,7 @@ make
 
 echo "Program running"
 
-./myexec
+./test_stat
 
 
 
