@@ -153,7 +153,6 @@ private:
     std::stack<QString> navigationAfter;
     std::unique_ptr<Schedule> schedule;
 
-    Notes *notes;
     Calendar *calendar;
 
     int countSelected(const QTableView* view);

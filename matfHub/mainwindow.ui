@@ -36,7 +36,7 @@
        <enum>Qt::DefaultContextMenu</enum>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="FileManagerTab">
        <attribute name="title">
@@ -507,7 +507,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="go-previous"/>
+         <iconset theme="go-previous">
+          <normaloff>.</normaloff>.</iconset>
         </property>
        </widget>
        <widget class="QPushButton" name="forwardButton">
@@ -968,7 +969,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="go-next"/>
+         <iconset theme="go-next">
+          <normaloff>.</normaloff>.</iconset>
         </property>
         <property name="autoDefault">
          <bool>false</bool>
@@ -1432,7 +1434,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="go-home"/>
+         <iconset theme="go-home">
+          <normaloff>.</normaloff>.</iconset>
         </property>
        </widget>
        <widget class="QLineEdit" name="currentFilePath">
@@ -1900,7 +1903,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="go-up"/>
+         <iconset theme="go-up">
+          <normaloff>.</normaloff>.</iconset>
         </property>
        </widget>
        <widget class="QPushButton" name="newFolderButton">
@@ -1916,7 +1920,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="folder-new"/>
+         <iconset theme="folder-new">
+          <normaloff>.</normaloff>.</iconset>
         </property>
        </widget>
        <widget class="QStackedWidget" name="stackedWidgetFileView">
@@ -2009,7 +2014,7 @@
         <item>
          <widget class="QStackedWidget" name="stackedWidget">
           <property name="currentIndex">
-           <number>2</number>
+           <number>3</number>
           </property>
           <widget class="QWidget" name="page">
            <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -2257,8 +2262,8 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>187</width>
-                  <height>289</height>
+                  <width>98</width>
+                  <height>28</height>
                  </rect>
                 </property>
                 <widget class="QWidget" name="verticalLayoutWidget_3">
@@ -2585,7 +2590,7 @@
              </rect>
             </property>
            </widget>
-           <widget class="QLabel" name="label_9">
+           <widget class="QLabel" name="leInput">
             <property name="geometry">
              <rect>
               <x>530</x>
@@ -3120,7 +3125,7 @@
          <string>Ukloni sve</string>
         </property>
        </widget>
-       <widget class="QLabel" name="label_9">
+       <widget class="QLabel" name="novaStavkaLabel">
         <property name="geometry">
          <rect>
           <x>660</x>
@@ -3184,7 +3189,7 @@
      <x>0</x>
      <y>0</y>
      <width>1156</width>
-     <height>21</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

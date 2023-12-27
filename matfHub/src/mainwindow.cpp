@@ -93,7 +93,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     //connect(ui->listFileView, &QPushButton::clicked, this, &MainWindow::on_fileView_doubleClicked);
 
-}
+    //kalk
 
     connect(ui->pbSaveMatrix, &QPushButton::clicked, this, &MainWindow::saveMatrix);
 
@@ -889,18 +889,20 @@ void MainWindow::plotSin(){
 
     ui->leState->setText("sin(" + ui->leState->text() + ")" );
 
+    plt->transformData(sin);
+
+}
+
 void MainWindow::on_pushButton_2_clicked()
 {
     calendar->removeTask(ui);
 }
 
-    plt->transformData(sin);
-
-}
-
 void MainWindow::on_pushButton_3_clicked()
 {
     calendar->removeAll(ui);
+
+}
 
 void MainWindow::plotCos(){
 
