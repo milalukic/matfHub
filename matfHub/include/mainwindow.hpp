@@ -16,7 +16,6 @@
 #include "matrix.hpp"
 #include "statistics.hpp"
 #include "parser.hpp"
-#include "calculator.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

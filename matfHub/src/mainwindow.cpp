@@ -6,7 +6,6 @@
 #include "../include/parser.hpp"
 #include "../include/plotter.hpp"
 #include "../include/statistics.hpp"
-#include "../include/calculator.h"
 
 #include <QSplitter>
 #include <QFileSystemModel>
@@ -116,10 +115,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 }
 
-//TODO study code
 std::vector<double> cppSplit(const std::string &s) {
 
-    // TODO: more flexible?
     std::string delimiter = ", ";
 
     std::vector<double> niz;
@@ -127,11 +124,9 @@ std::vector<double> cppSplit(const std::string &s) {
     std::istringstream ss(s);
     std::string token;
 
-    // Temporarily set the locale to "C" to ensure '.' is used as the decimal point
     std::locale defaultLocale = std::locale::global(std::locale("C"));
 
     while (std::getline(ss, token, ',')) {
-        // Trim whitespaces from the token
         token.erase(token.find_last_not_of(" \t\n\r\f\v") + 1);
 
         try {
@@ -139,25 +134,19 @@ std::vector<double> cppSplit(const std::string &s) {
             std::cout << token << " " << std::setprecision(15) << value << std::endl;
             niz.push_back(value);
         } catch (const std::invalid_argument& e) {
-            // Handle invalid argument (e.g., if conversion fails)
             std::cerr << "Invalid argument: " << e.what() << std::endl;
         } catch (const std::out_of_range& e) {
-            // Handle out of range (e.g., if the value is too large or too small)
             std::cerr << "Out of range: " << e.what() << std::endl;
         }
     }
 
-    // Restore the original locale
     std::locale::global(defaultLocale);
 
-    // TODO: pointer?
     return niz;
 }
 
-//TODO change name
 std::vector<std::string> cppSplitString(std::string &s){
 
-    //TODO more flexible?
     std::string delimiter = ", ";
 
     std::vector<std::string>niz;
@@ -171,18 +160,18 @@ std::vector<std::string> cppSplitString(std::string &s){
     }
     niz.push_back(s);
 
-    //TODO pointer?
     return niz;
 }
 
-inline double square(double s){
+inline auto square(double s) -> double{
     return pow(s, 2);
 }
 
-inline double negation(double s){
+inline auto negation(double s) -> double{
     return -s;
 }
 
+//TODO delete?
 void MainWindow::showMatrix(Matrix *m){
 
 //    QString history = ui->tbHistory->toPlainText();
@@ -349,7 +338,6 @@ void MainWindow::on_fileView_customContextMenuRequested(const QPoint &pos)// !!!
 
 
 }
-
 
 //naredne dve funkcije mozda treba pomeriti u filemanager klasu ali mislim da je to pametnije uraditi kada krenemo da spajamo grane u zavisnosti od toga sta odlucimo kako ce se ponasati meni bar glavnog prozora
 
@@ -666,6 +654,7 @@ void MainWindow::calculateMatrixTranspose(){
     history->writeHistory("Transponovanje matrice:", m3->toString().toStdString());
     writeToHistoryTB(history);
 }
+
 //TODO singular matrices
 void MainWindow::calculateMatrixInverse(){
 
@@ -837,7 +826,6 @@ void MainWindow::plotRoot(){
     plt->transformData(sqrt);
 }
 
-//TODO make this work
 void MainWindow::plotParse(){
 
     char *expr = strdup(ui->leState->text().toStdString().c_str());
@@ -889,7 +877,6 @@ void MainWindow::statCalcMean(){
 
     auto result = stat->mean();
 
-    //TODO ploymorph
     std::string hOutput = "Mean: \n" + input;
     history->writeHistory(hOutput, std::to_string(result));
     writeToHistoryTB(history);
@@ -902,7 +889,6 @@ void MainWindow::statCalcVariance(){
 
     auto result = stat->variance();
 
-    //TODO ploymorph
     std::string hOutput = "Variance: \n" + input;
     history->writeHistory(hOutput, std::to_string(result));
     writeToHistoryTB(history);
@@ -921,9 +907,6 @@ void MainWindow::statCalcStd(){
 }
 
 void MainWindow::statCalcMedian(){
-
-    //TODO razmisli
-    // stat->loadData();
     
     auto input = ui->leStat->text().toStdString();
 

@@ -49,8 +49,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         matfHub/include/notes.h
         matfHub/src/notes.cpp
         matfHub/resources.qrc
-        matfHub/src/calculator.cpp
-        matfHub/include/calculator.h
+
+
 )
 
 
