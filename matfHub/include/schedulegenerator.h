@@ -9,6 +9,10 @@
 #include <unordered_set>
 #include <QDebug>
 #include <QTableWidget>
+#include <QJsonDocument>
+#include <QFile>
+#include <QJsonObject>
+#include <QJsonArray>
 
 class Generator {
 private:
@@ -23,6 +27,7 @@ public:
     bool scheduleFilter(const std::vector<Course>& schedule);
     void find(StrMap<StrMap<CourseSet>> courseTypeTermMap);
     void displaySchedule(QTableWidget* tableWidget, int brojRasporeda);
+    void saveCoursesToJson(const QString& filePath);
 
 private:
     void _find(StrMap<StrMap<CourseSet>>& courseTypeTermMap, std::vector<Course>& placedList, int i, int stop);

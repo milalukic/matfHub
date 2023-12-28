@@ -6,6 +6,10 @@
 #include <unordered_set>
 #include <QDebug>
 #include <QTableWidget>
+#include <QJsonDocument>
+#include <QFile>
+#include <QJsonObject>
+#include <QJsonArray>
 #include <iostream>
 
 #define ROWS 5
@@ -134,4 +138,58 @@ void Generator::remove(const Course& term) {
         bitmap[term.day][i] = false;
     }
     placed.erase(term.description + term.course_type);
+}
+
+void Generator::saveCoursesToJson(const QString& filePath) {
+
+    QJsonArray coursesArray;
+
+    for (auto& course : saved) {
+        QJsonObject courseObject;
+        courseObject["description"] = QString::fromStdString(course.description);
+        courseObject["day"] = course.day;
+        courseObject["teacher"] = QString::fromStdString(course.teacher);
+        courseObject["start"] = course.start;
+        courseObject["duration"] = course.duration;
+        courseObject["end"] = course.end;
+        courseObject["course_type"] = QString::fromStdString(course.course_type);
+
+        QJsonArray groupsArray;
+        for (const auto& grp : course.groups) {
+            groupsArray.append(QString::fromStdString(grp));
+        }
+        courseObject["groups"] = groupsArray;
+
+        courseObject["classroom"] = QString::fromStdString(course.classroom);
+
+        QJsonArray modulesArray;
+        for (const auto& mod : course.modules) {
+            modulesArray.append(QString::fromStdString(mod));
+        }
+        courseObject["modules"] = modulesArray;
+
+        QJsonArray yearsArray;
+        for (const auto& yr : course.years) {
+            yearsArray.append(yr);
+        }
+        courseObject["years"] = yearsArray;
+
+        QJsonArray subgroupsArray;
+        for (const auto& subgrp : course.subgroups) {
+            subgroupsArray.append(QString::fromStdString(subgrp));
+        }
+        courseObject["subgroups"] = subgroupsArray;
+
+        coursesArray.append(courseObject);
+    }
+
+    QJsonDocument doc(coursesArray);
+    QFile file(filePath);
+    if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QTextStream out(&file);
+        out << doc.toJson();
+        file.close();
+    } else {
+        qDebug() << "Failed to open file for writing";
+    }
 }

@@ -7,6 +7,7 @@
 #include <QObject>
 #include <QCheckBox>
 #include <QString>
+#include <vector>
 #include <string>
 #include <iostream>
 #include <set>
@@ -111,7 +112,7 @@ void Schedule::scrapeSchedule(Ui::MainWindow *ui){
 }
 
 void Schedule::nextSchedule(Ui::MainWindow *ui){
-    brojRasporeda++;
+    brojRasporeda+=2;
 
     if(brojRasporeda == m_gen.schedules.size()){
         brojRasporeda = 0;
@@ -121,6 +122,7 @@ void Schedule::nextSchedule(Ui::MainWindow *ui){
 }
 
 void Schedule::saveSchedule(Ui::MainWindow *ui){
-//    cuva raspored u json
-//    m_gen.displaySchedule(ui->scheduleTable, brojRasporeda);
+    const QString& filePath = "../matfHub/raspored.json";
+    m_gen.saveCoursesToJson(filePath);
+
 }
