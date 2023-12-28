@@ -100,6 +100,8 @@ private slots:
 
     void on_SacuvajButton_clicked();
 
+    void on_prethodniButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     QFileSystemModel *dirModel;

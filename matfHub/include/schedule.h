@@ -20,6 +20,7 @@ public:
     void scrapeSchedule(Ui::MainWindow *ui);
     void clearTable(Ui::MainWindow *ui);
     void nextSchedule(Ui::MainWindow *ui);
+    void prevSchedule(Ui::MainWindow *ui);
     void saveSchedule(Ui::MainWindow *ui);
     int brojRasporeda;
     Generator m_gen;

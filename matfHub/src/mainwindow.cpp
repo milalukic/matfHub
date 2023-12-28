@@ -262,6 +262,11 @@ void MainWindow::on_sledeciButton_clicked()
     schedule->nextSchedule(ui);
 }
 
+void MainWindow::on_prethodniButton_clicked()
+{
+    schedule->prevSchedule(ui);
+}
+
 void MainWindow::on_SacuvajButton_clicked()
 {
     schedule->saveSchedule(ui);
@@ -395,21 +400,3 @@ void MainWindow::calculateMatrixMultiply(){
 void MainWindow::calculateMatrixDivide(){
     std::cout << "Divide" << std::endl;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

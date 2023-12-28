@@ -121,6 +121,17 @@ void Schedule::nextSchedule(Ui::MainWindow *ui){
     m_gen.displaySchedule(ui->scheduleTable, brojRasporeda);
 }
 
+void Schedule::prevSchedule(Ui::MainWindow *ui){
+    brojRasporeda--;
+
+    if(brojRasporeda == -1){
+        brojRasporeda = m_gen.schedules.size() - 1;
+    }
+
+    m_gen.displaySchedule(ui->scheduleTable, brojRasporeda);
+}
+
+
 void Schedule::saveSchedule(Ui::MainWindow *ui){
     const QString& filePath = "../matfHub/raspored.json";
     m_gen.saveCoursesToJson(filePath);
