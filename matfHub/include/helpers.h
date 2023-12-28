@@ -1,10 +1,10 @@
 #ifndef HELPERS_H
 #define HELPERS_H
 
-#include <unordered_map>
+#include <map>
 #include <string>
 
 template<typename T>
-using StrMap = std::unordered_map<std::string, T>;
+using StrMap = std::map<std::string, T>;
 
 #endif // HELPERS_H

@@ -49,7 +49,8 @@ void Generator::find(StrMap<StrMap<CourseSet>> courseTypeTermMap) {
         stop += types.size();
     }
     std::vector<Course> placedList;
-    _find(courseTypeTermMap, placedList, 0, stop);
+    std::unordered_set<std::string> alreadySearched;
+    _find(courseTypeTermMap, placedList, 0, stop, alreadySearched);
     std::sort(schedules.begin(), schedules.end(), [](const auto& lhs, const auto& rhs) {
         return std::accumulate(lhs.begin(), lhs.end(), 0,
                                [](int sum, const Course& course) { return sum + course.start; }) <
@@ -84,7 +85,8 @@ void Generator::displaySchedule(QTableWidget* tableWidget, int brojRasporeda) {
     }
 }
 
-void Generator::_find(StrMap<StrMap<CourseSet>>& courseTypeTermMap, std::vector<Course>& placedList, int i, int stop) {
+void Generator::_find(StrMap<StrMap<CourseSet>>& courseTypeTermMap, std::vector<Course>& placedList, int i, int stop,
+                      std::unordered_set<std::string> alreadySearched) {
     if (i == stop) {
         std::cerr << "Shouldnt be reachable" << std::endl;
         return;
@@ -96,6 +98,9 @@ void Generator::_find(StrMap<StrMap<CourseSet>>& courseTypeTermMap, std::vector<
         for (const auto& pair : typeTermMap) {
             std::string type = pair.first;
             CourseSet terms = pair.second;
+            if (alreadySearched.find(course + type) != alreadySearched.end()) {
+                continue;
+            }
             for (const auto& term : terms) {
                 bool notPlacedYet = placed.find(term.description + term.course_type) == placed.end();
                 if (schedules.size() < 200 && notPlacedYet && !conflict(term)) {
@@ -103,15 +108,16 @@ void Generator::_find(StrMap<StrMap<CourseSet>>& courseTypeTermMap, std::vector<
                     placedList.push_back(term);
                     if(placedList.size() == stop) {
                         schedules.push_back(placedList);
-                        std::cout << placedList[0].start + 8 << " " << placedList[0].end + 8 << " " << placedList[0].day << std::endl;
+//                        std::cout << placedList[0].start + 8 << " " << placedList[0].end + 8 << " " << placedList[0].day << std::endl;
                     }
                     else {
-                        _find(courseTypeTermMap, placedList, i + 1, stop);
+                        _find(courseTypeTermMap, placedList, i + 1, stop, alreadySearched);
                     }
                     remove(term);
                     placedList.pop_back();
                 }
             }
+            alreadySearched.insert(course + type);
         }
     }
     return;
@@ -147,7 +153,7 @@ void Generator::saveCoursesToJson(const QString& filePath) {
     for (auto& course : saved) {
         QJsonObject courseObject;
         courseObject["description"] = QString::fromStdString(course.description);
-        courseObject["day"] = course.day;
+        courseObject["day"] = course.day+8;
         courseObject["teacher"] = QString::fromStdString(course.teacher);
         courseObject["start"] = course.start;
         courseObject["duration"] = course.duration;

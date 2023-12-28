@@ -112,7 +112,7 @@ void Schedule::scrapeSchedule(Ui::MainWindow *ui){
 }
 
 void Schedule::nextSchedule(Ui::MainWindow *ui){
-    brojRasporeda+=2;
+    brojRasporeda++;
 
     if(brojRasporeda == m_gen.schedules.size()){
         brojRasporeda = 0;

@@ -30,7 +30,8 @@ public:
     void saveCoursesToJson(const QString& filePath);
 
 private:
-    void _find(StrMap<StrMap<CourseSet>>& courseTypeTermMap, std::vector<Course>& placedList, int i, int stop);
+    void _find(StrMap<StrMap<CourseSet>>& courseTypeTermMap, std::vector<Course>& placedList, int i, int stop,
+               std::unordered_set<std::string> alreadySearched);
     bool conflict(const Course& term);
     void place(const Course& term);
     void remove(const Course& term);

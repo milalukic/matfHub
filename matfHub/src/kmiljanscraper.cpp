@@ -6,11 +6,46 @@
 #include <iostream>
 #include <QRegularExpression>
 #include <QXmlStreamReader>
+#include <fstream>
+
 
 
 KmiljanScraper::KmiljanScraper(){
     baseLink = "http://poincare.matf.bg.ac.rs/~miljan.knezevic/raspored/sve/";
 };
+
+//std::string KmiljanScraper::loadHtmlFromFile(const std::string& filePath) {
+//    std::ifstream file(filePath);
+//    if (file.is_open()) {
+//        std::string content((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+//        file.close();
+//        return content;
+//        std::cout << "Html ucitan iz fajla" << std::endl;
+//    }
+//    return "";
+//}
+
+//void KmiljanScraper::saveHtmlToFile(const std::string& filePath, const std::string& content) {
+//    std::ofstream file(filePath);
+//    if (file.is_open()) {
+//        file << content;
+//        file.close();
+//        std::cout << "Html sacuvan u fajl" << std::endl;
+//    }
+//}
+
+//std::string KmiljanScraper::getHtmlContent() {
+//    std::string filePath = "../matfHub/raspored.html";
+//    std::string htmlContent = loadHtmlFromFile(filePath);
+//    if (htmlContent.empty()) {
+//        MaybeHtml maybeHtml = requestHandler.getMaybeHtml(baseLink);
+//        if (maybeHtml.has_value()) {
+//            htmlContent = maybeHtml.value();
+//            saveHtmlToFile(filePath, htmlContent);
+//        }
+//    }
+//    return htmlContent;
+//}
 
 std::unordered_map<std::string, std::string> KmiljanScraper::getRooms(std::string baseHtml){
     std::unordered_map<std::string, std::string> roomUrlMap;
@@ -201,14 +236,14 @@ CourseSet KmiljanScraper::getAllCourses(std::unordered_map<std::string, std::str
         std::string roomLink = room.second;
         QString htmlString = QString::fromStdString(requestHandler.getHtml(roomLink));
         QRegularExpression tableRegex(R"(<table border="1" bordercolor="#000000" cellspacing="0" cellpadding="0">(.*)</table>)",
-                                 QRegularExpression::DotMatchesEverythingOption);
+                                      QRegularExpression::DotMatchesEverythingOption);
         QRegularExpressionMatch match = tableRegex.match(htmlString);
         QString tableContent;
         if (match.hasMatch()) {
             tableContent = match.captured(1);
             qDebug() << "Extracted table content: " << roomLink;
-//            qDebug().noquote() << tableContent;
-//            exit(1);
+            //            qDebug().noquote() << tableContent;
+            //            exit(1);
         } else {
             qDebug() << "Table not found in HTML. " << roomLink;
             continue;
@@ -219,33 +254,34 @@ CourseSet KmiljanScraper::getAllCourses(std::unordered_map<std::string, std::str
         allCourses.insert(roomCourses.begin(), roomCourses.end());
 
     }
-//    for (auto& i : allCourses){
-//        std::cout<< i.description<<std::endl;
-//        std::cout<< i.day<<std::endl;
-//        std::cout<< i.teacher<<std::endl;
-//        std::cout<< i.start<<std::endl;
-//        std::cout<< i.duration<<std::endl;
-//        std::cout<< i.end<<std::endl;
-//        std::cout<< i.course_type<<std::endl;
-//        for (auto& it : i.groups){
-//            std::cout<< it <<std::endl;
-//        }
-//        std::cout<< i.classroom<<std::endl;
-//        std::cout<< "---" << std::endl;
-//        for (auto& it : i.modules){
-//            std::cout<< it<<std::endl;
-//        }
-//        std::cout<< "---" << std::endl;
-//        for (auto& it : i.years){
-//            std::cout<< it<<std::endl;
-//        }
-//        for (auto& it : i.subgroups){
-//            std::cout<< it<<std::endl;
-//        }
-//        std::cout<< "-----------------"<<std::endl;
-//    }
+    //    for (auto& i : allCourses){
+    //        std::cout<< i.description<<std::endl;
+    //        std::cout<< i.day<<std::endl;
+    //        std::cout<< i.teacher<<std::endl;
+    //        std::cout<< i.start<<std::endl;
+    //        std::cout<< i.duration<<std::endl;
+    //        std::cout<< i.end<<std::endl;
+    //        std::cout<< i.course_type<<std::endl;
+    //        for (auto& it : i.groups){
+    //            std::cout<< it <<std::endl;
+    //        }
+    //        std::cout<< i.classroom<<std::endl;
+    //        std::cout<< "---" << std::endl;
+    //        for (auto& it : i.modules){
+    //            std::cout<< it<<std::endl;
+    //        }
+    //        std::cout<< "---" << std::endl;
+    //        for (auto& it : i.years){
+    //            std::cout<< it<<std::endl;
+    //        }
+    //        for (auto& it : i.subgroups){
+    //            std::cout<< it<<std::endl;
+    //        }
+    //        std::cout<< "-----------------"<<std::endl;
+    //    }
     return allCourses;
 }
+
 
 std::unordered_map<std::string, CourseSet> KmiljanScraper::download() noexcept(false){
     std::string baseHtml = requestHandler.getHtml(baseLink);

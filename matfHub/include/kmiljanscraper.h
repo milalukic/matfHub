@@ -10,6 +10,10 @@ class KmiljanScraper{
 public:
     KmiljanScraper();
     std::unordered_map<std::string, CourseSet> download() noexcept(false);
+    std::string loadHtmlFromFile(const std::string& filePath);
+    void saveHtmlToFile(const std::string& filePath, const std::string& content);
+    std::string getHtmlContent();
+
 
 private:
     std::string baseLink;
