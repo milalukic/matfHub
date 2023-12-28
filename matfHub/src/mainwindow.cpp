@@ -547,35 +547,10 @@ void MainWindow::setUpFileView(/*tipPogleda*/){
 
         if(auto tableView = dynamic_cast<QTableView*>(view)){
 
-            //tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
-            //connect(tableView, &QTableView::doubleClicked, this, [tableView](){tableView->horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);}); //TODO ovo ne radi dovoljno lepo
-            tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
-//            tableView->horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);//TODO ovo ne radi za prvo pokretanje..
+             tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
 
             tableView->verticalHeader()->setVisible(false);
-
-            tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
-
-        }else if(auto listView = dynamic_cast<QListView*>(view)){
-
-            if(listView == ui->thumbnailsFileView){
-                auto thumbnail = static_cast<QListView*>(view);
-                thumbnail->setViewMode(QListView::IconMode);
-#define viewSize 96 //mnogo vece od ovoga (vec 128) smara jer New Document 1.txt staje ceo tekst, 96 mi je taman za dibagovanje ovog elide/wordWrap koji pokusavam da namestim. ako je tebi drugacije promeni slobodno
-                //TODO bojane pls treba napraviti slot koji se aktivira na signal ctrl+'+' i ctrl+scrollUp koji povecava viewSize, analogno za '-'
-                //takodje smisli neki lepsi naziv hshshs koji pocinje sa m_ i logicno premesti ga u lokalnu privatnu, hvala <3
-                thumbnail->setGridSize(QSize(1.5*viewSize, viewSize));
-                thumbnail->setIconSize(QSize(0.75*viewSize, 0.75*viewSize));
-                thumbnail->setSpacing(16); //debljina tapacirunga izmedju polja grida, nepotrebno posto tapacirung simuliramo smanjenjem velicine ikone na 0.75 velicine polja ili koliko nam se vec svidi
-                thumbnail->setMovement(QListView::Snap);
-                thumbnail->setTextElideMode(Qt::ElideMiddle);//ElideNone
-                thumbnail->setWordWrap(false); //true
-                //poslednje dve linije ne rade kako treba... probaj sve 4 kombinacije elideNone elideMiddle wrapTrue wrapFalse i sta znam.. ja bih voleo da wordWrap true znaci da ispisuje u narednom redu ono sto ne staje ali nije tako... opcije su jos i ElideRight sto ima smisla mada ako imas vise fajlova sa slicnim pocetkom a razlikama na kraju sta znam npr bas za ovo New Folder 5 meni se vise svidja da vidim i kraj, pritom onda vidis ekstenzije nmp.. i cetvrta opcija ElideLeft koja je hahaa samo glupa
-            }
-
-            listView->setSelectionRectVisible(true);
-
-        }//else if (auto blablaView = dynamic_cast<QBlaView*>(view)){}itd itd //sad razumem potrebu za nekim qt stylesheetom, pogledi u zavisnosti od toga kako se podese mogu biti istog tipa a potpuno drugacijih zeljenih ponasanja a budimo realni i ovaj dinamicki kas koliko god kul bio radi se tokom rantajma i spor je
+        }
 
     }
 

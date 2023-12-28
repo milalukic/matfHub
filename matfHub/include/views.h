@@ -32,6 +32,8 @@ protected:
 
 private:
     int sizeThumbnail;
+    int spacing;
+    int grid;
 };
 
 
@@ -42,10 +44,10 @@ public:
     myGridView(QWidget *parent = nullptr);
 
 protected:
-    void keyPressEvent(QKeyEvent *event) override;
+    //void keyPressEvent(QKeyEvent *event) override;
 
 private:
-    int sizeGrid;
+    //int sizeGrid;
 };
 
 #endif // VIEWS_H
