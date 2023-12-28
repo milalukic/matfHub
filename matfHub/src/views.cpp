@@ -70,6 +70,8 @@ myGridView::myGridView(QWidget *parent) : QTableView(parent) {
     this->setSelectionBehavior(QAbstractItemView::SelectRows);
 }
 
+//ovo je ipak na kraju ispalo kao malo nepotrebna funkcionalnost
+
 //void myGridView::keyPressEvent(QKeyEvent *event){
 //    if (event->modifiers() == Qt::ControlModifier && event->key() == Qt::Key_Plus){
 //        this->sizeGrid += 5;
