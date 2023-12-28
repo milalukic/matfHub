@@ -195,7 +195,85 @@ void Generator::saveCoursesToJson(const QString& filePath) {
         QTextStream out(&file);
         out << doc.toJson();
         file.close();
+        std::cout << "Raspored sacuvan" << std::endl;
     } else {
-        qDebug() << "Failed to open file for writing";
+        qDebug() << "Greska u ispisu";
+    }
+}
+
+std::vector<Course> Generator::loadCoursesFromJson(const QString& filePath) {
+    std::vector<Course> loadedCourses;
+
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "Greska pri otvoranju";
+        return loadedCourses;
+
+    QByteArray jsonData = file.readAll();
+    file.close();
+
+    QJsonDocument doc = QJsonDocument::fromJson(jsonData);
+    if (!doc.isArray()) {
+            std::cout << "JSON nije u dobrom formatu" << std::endl;
+        return loadedCourses;
+    }
+
+    QJsonArray coursesArray = doc.array();
+    for (const auto& courseValue : coursesArray) {
+        if (!courseValue.isObject()) {
+            qDebug() << "Pogresan format";
+            continue;
+        }
+
+        QJsonObject courseObject = courseValue.toObject();
+
+        std::string desc = courseObject["description"].toString().toStdString();
+        int d = courseObject["day"].toInt() - 8;
+        std::string t = courseObject["teacher"].toString().toStdString();
+        int s = courseObject["start"].toInt();
+        int dur = courseObject["duration"].toInt();
+        std::string type = courseObject["course_type"].toString().toStdString();
+
+        std::set<std::string> grps;
+        QJsonArray groupsArray = courseObject["groups"].toArray();
+        for (const auto& groupValue : groupsArray) {
+            if (groupValue.isString()) {
+                grps.insert(groupValue.toString().toStdString());
+            }
+        }
+
+        std::string clsrm = courseObject["classroom"].toString().toStdString();
+
+        std::set<std::string> mods;
+        QJsonArray modulesArray = courseObject["modules"].toArray();
+        for (const auto& modValue : modulesArray) {
+            if (modValue.isString()) {
+                mods.insert(modValue.toString().toStdString());
+            }
+        }
+
+        std::set<int> yrs;
+        QJsonArray yearsArray = courseObject["years"].toArray();
+        for (const auto& yrValue : yearsArray) {
+            if (yrValue.isDouble()) {
+                yrs.insert(static_cast<int>(yrValue.toDouble()));
+            }
+        }
+
+        std::set<std::string> subgrps;
+        QJsonArray subgroupsArray = courseObject["subgroups"].toArray();
+        for (const auto& subgrpValue : subgroupsArray) {
+            if (subgrpValue.isString()) {
+                subgrps.insert(subgrpValue.toString().toStdString());
+            }
+        }
+
+        Course loadedCourse(desc, d, t, s, dur, type, grps, clsrm, mods, yrs, subgrps);
+        std::cout << loadedCourse.description << " " << loadedCourse.day << " " << loadedCourse.classroom << std::endl;
+        loadedCourses.push_back(loadedCourse);
+    }
+
+    return loadedCourses;
+    std::cout << "Ucitan postojeci raspored" << std::endl;
     }
 }

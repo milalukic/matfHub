@@ -137,3 +137,11 @@ void Schedule::saveSchedule(Ui::MainWindow *ui){
     m_gen.saveCoursesToJson(filePath);
 
 }
+
+void Schedule::loadSchedule(Ui::MainWindow *ui){
+    const QString& filePath = "../matfHub/raspored.json";
+    std::vector<Course> load = m_gen.loadCoursesFromJson(filePath);
+    m_gen.schedules.push_back(load);
+    m_gen.displaySchedule(ui->scheduleTable,0); //FIX: bitmapa??
+    m_gen.schedules.pop_back();
+}

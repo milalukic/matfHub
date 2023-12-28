@@ -240,6 +240,13 @@ void MainWindow::on_actionExit_triggered()
 
 //raspored stvari
 
+
+void MainWindow::on_tabWidgetMatfHub_tabBarClicked(int index)
+{
+    schedule->loadSchedule(ui);
+}
+
+
 void MainWindow::on_smerBox_activated(int index)
 {
     schedule->changeModule(ui, index);
@@ -400,3 +407,9 @@ void MainWindow::calculateMatrixMultiply(){
 void MainWindow::calculateMatrixDivide(){
     std::cout << "Divide" << std::endl;
 }
+
+
+
+
+
+

@@ -22,6 +22,7 @@ public:
     void nextSchedule(Ui::MainWindow *ui);
     void prevSchedule(Ui::MainWindow *ui);
     void saveSchedule(Ui::MainWindow *ui);
+    void loadSchedule(Ui::MainWindow *ui);
     int brojRasporeda;
     Generator m_gen;
 

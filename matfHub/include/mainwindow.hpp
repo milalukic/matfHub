@@ -102,6 +102,10 @@ private slots:
 
     void on_prethodniButton_clicked();
 
+    void on_tabWidgetMatfHub_currentChanged(int index);
+
+    void on_tabWidgetMatfHub_tabBarClicked(int index);
+
 private:
     Ui::MainWindow *ui;
     QFileSystemModel *dirModel;
