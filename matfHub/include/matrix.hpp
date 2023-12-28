@@ -57,19 +57,7 @@ public:
     Matrix *operator + (const Matrix &other) const;
     Matrix *operator - (const Matrix &other) const;
     Matrix *operator * (const Matrix &other) const;
-    Matrix *operator * (const double number) const;
-    Matrix *operator-() const;
 
-    Matrix *operator ++();
-    Matrix *operator ++(int);
-    Matrix *operator --();
-    Matrix *operator --(int);
-    Matrix *operator + (const double &number) const;
-    Matrix *operator - (const double &number) const;
-    Matrix *operator /(const Matrix &other) const;
-
-    bool operator == (const Matrix &other) const;
-    bool operator != (const Matrix &other) const;
 
     Matrix &operator = (const Matrix &other);
 

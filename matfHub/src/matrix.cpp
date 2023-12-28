@@ -104,7 +104,6 @@ std::pair<unsigned, unsigned> Matrix::loadRight(unsigned index){
 
 
     //functions
-
 void Matrix::reshapeMatrix(unsigned col, unsigned row){
     arma::mat* newMat = new arma::mat(row, col);//namerno je kontra, don't worry about it
     newMat->fill(0);
@@ -162,9 +161,6 @@ Matrix *Matrix::diag(){
 }
 
 //operators
-
-//TODO & ? -> .
-//TODO polymorph?
 Matrix* Matrix::operator + (const Matrix &other) const{
 
     Matrix* newMat = new Matrix(this->rows(), this->columns());
@@ -198,16 +194,8 @@ Matrix* Matrix::operator * (const Matrix &other) const{
     return newMat;
 }
 
-//Matrix* Matrix::operator - () const{
-//    return *this * -1.0;
-//}
 
 Matrix &Matrix::operator = (const Matrix &other) {
-
-    //    m_columns = other.m_columns;
-    //    m_rows = other.m_rows;
-    //    m_data->reshape(m_rows, m_columns);
-    //    *m_data = *(other.m_data);
 
     this->columns(other.columns());
     this->rows(other.rows());

@@ -118,7 +118,6 @@ MainWindow::MainWindow(QWidget *parent)
 
 //TODO study code
 std::vector<double> cppSplit(const std::string &s) {
-    std::cout << s << std::endl;
 
     // TODO: more flexible?
     std::string delimiter = ", ";
@@ -174,6 +173,14 @@ std::vector<std::string> cppSplitString(std::string &s){
 
     //TODO pointer?
     return niz;
+}
+
+inline double square(double s){
+    return pow(s, 2);
+}
+
+inline double negation(double s){
+    return -s;
 }
 
 void MainWindow::showMatrix(Matrix *m){
@@ -602,8 +609,6 @@ void MainWindow::reshapeMatrix2(){
 
 
 
-//TODO save this somewhere?
-
 void MainWindow::calculateMatrixAdd(){
 
     if(m1->columns() != m2->columns() || m1->rows ()!= m2->rows()){
@@ -718,7 +723,6 @@ void MainWindow::loadMatrix(unsigned int pos, QStringList strLst, unsigned d1, u
 }
 
 //////////////////////////////////////////////////////
-//TODO global classes?
 
 void MainWindow::plotLinspace(){
 
@@ -735,6 +739,10 @@ void MainWindow::plotLinspace(){
 
 void MainWindow::plot(){
 
+    if(plt->xData().size() == 0){
+        ui->leError->setText("No dots to draw");
+        return;
+    }
     (*plt)();
     std::cerr <<"Crtanje: " << std::endl;
     std::cerr << "\t" << ui->leLinspaceLB->text().toStdString() << " ";
@@ -803,16 +811,6 @@ void MainWindow::plotAbs(){
     plt->transformData(std::abs);
 }
 
-//TODO friendly function?
-inline double square(double s){
-    return pow(s, 2);
-}
-
-//TODO friendly function?
-inline double negation(double s){
-    return -s;
-}
-
 void MainWindow::plotNeg(){
     std::string state = ui->leState->text().toStdString();
 
@@ -846,9 +844,12 @@ void MainWindow::plotParse(){
 
     double tmp;
     std::vector<double> xs = plt->xData();
+    if(xs.size() == 0){
+        ui->leError->setText("No dots to draw");
+        return;
+    }
     std::vector<double> ys = plt->xData();
 
-    std::cout << expr << std::endl;
     for (int i = 0; i < xs.size(); i++) {
         char tmp1[20];
         strcpy(tmp1, "x=");
@@ -856,7 +857,6 @@ void MainWindow::plotParse(){
 
         tmp = parserPlot->evalExpression(tmp1);
 
-        std::cout << expr << std::endl;
         ys[i] = parserPlot->evalExpression(expr);
     }
 

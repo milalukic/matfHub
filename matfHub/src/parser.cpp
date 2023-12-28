@@ -248,9 +248,6 @@ void Parser::checkOperator(double &result, char op, double temp){
 
 }
 
-void calculate(){
-
-}
 
 
 
