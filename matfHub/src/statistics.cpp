@@ -1,6 +1,7 @@
 
 #include "../include/statistics.hpp"
 
+Statistics* Statistics::statPtr = nullptr;
 
 //konstruktor
 Statistics::Statistics(std::vector<double> const &xData)
@@ -11,15 +12,22 @@ Statistics::~Statistics(){
     std::cout << "Unisten statistics" << std::endl;
 }
 
+Statistics* Statistics::getStatistics(){
+    if(statPtr == nullptr){
+        statPtr = new Statistics();
+    }
+    return statPtr;
+}
+
 //metode
-double Statistics::mean(){
+auto Statistics::mean() -> double{
 
     auto data = this->xData();
 
     return std::accumulate(cbegin(data), cend(data), 0.0) / (data.size());
 }
 
-double Statistics::variance(){
+auto Statistics::variance() -> double{
 
     auto data = this->xData();
     auto mean = this->mean();
@@ -29,11 +37,11 @@ double Statistics::variance(){
     return std::accumulate(cbegin(diff), cend(diff), 0.0) / (data.size() - 1);
 }
 
-double Statistics::std(){
+auto Statistics::std() -> double{
     return std::sqrt(this->variance());
 }
 
-double Statistics::median(){
+auto Statistics::median() -> double{
 
     auto data = this->xData();
     auto n = data.size() / 2;
@@ -49,7 +57,7 @@ double Statistics::median(){
     return med;
 }
 
-double Statistics::mode(){
+auto Statistics::mode() -> double{
 
     std::map<double, int> occurences;
     auto data = this->xData();
@@ -65,10 +73,8 @@ double Statistics::mode(){
 }
 
 //PLOTTER 
-//TODO "calculator" this
-
 void Statistics::histogram(){
-        auto data = xData();
+    auto data = xData();
     matplot::hist(data);
     matplot::show();
 }
@@ -82,7 +88,6 @@ void Statistics::barplot(){
     matplot::gca()->x_axis().ticklabels(names);
 
     matplot::show();
-
 }
 
 void Statistics::boxplot(){
@@ -91,10 +96,9 @@ void Statistics::boxplot(){
     auto names = this->textData();
     matplot::boxplot(data, names);
     matplot::show();
-
 }
 
-//getters setters
+//getters
 
 std::vector<double> Statistics::xData() const{
     return this->_xData;
@@ -103,6 +107,8 @@ std::vector<double> Statistics::xData() const{
 std::vector<std::string> Statistics::textData() const{
     return this->_textData;
 }
+
+//setters
 
 void Statistics::xData(const std::vector<double> &newX){
     this->_xData = newX;

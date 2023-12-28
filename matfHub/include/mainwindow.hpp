@@ -20,6 +20,7 @@
 #include "matrix.hpp"
 #include "statistics.hpp"
 #include "views.h"
+#include "parser.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -35,16 +36,11 @@ public:
     ~MainWindow();
     void fileViewSetPath(const QString path);
     void currentFilePathSetPath(const QString path);// v
-    QString currentFilePathGetPath();//znam, ruzno ime... currentFilePath je lajn edit koji bi trebalo u svakom momentu da sadrzi putanju u kojoj se nalazi menadzer
     Notes *notes;
     FileManager* m_fileManager;
     Ui::MainWindow *ui;
 
-
-
-    //TODO PITAJ ***********************************************************************
-    Plotter *plt;
-
+    QString currentFilePathGetPath();    
 
 private slots:
     void actionExitTriggered();
@@ -79,7 +75,6 @@ private slots:
     void showFileView(QAbstractItemView* view);
 
     //calculator slots
-//    void pbMatrixTest();
     void changeStackedWidgetPage();
 
         //calc functions
@@ -88,11 +83,6 @@ private slots:
     void calculateRegular();
             //matrix
     void showMatrix(Matrix *m);
-
-    void calculateMatrixTranspose();
-    void calculateMatrixInverse();
-    void calculateMatrixDiag();
-    void calculateMatrixOne();
 
     QStringList matrixStringToStringList(QString str);
     void reshapeMatrix(unsigned dim1, unsigned dim2, unsigned pos, QStringList content);
@@ -105,7 +95,12 @@ private slots:
     void calculateMatrixAdd();
     void calculateMatrixSubtract();
     void calculateMatrixMultiply();
-    void calculateMatrixDivide();
+    void calculateMatrixDiag();
+
+    void calculateMatrixTranspose();
+    void calculateMatrixInverse();
+    void calculateMatrixEye();
+    void calculateMatrixOne();
 
     void saveMatrix();
     void loadMatrix(unsigned int pos, QStringList strLst, unsigned d1, unsigned d2);
@@ -168,6 +163,20 @@ private:
     QAbstractItemView* m_activeFileView;
 
     void setUpFileView(/*enum tipPogleda*/);//funkcija prima enum neki tipa i onda pravi pogled na osnovu enuma i podesava ga, kao sto smo u mejnu radili do sada, zatim brise dete od ui->fileViewLayout i daje mu novo dete, ovo koje je napravio
+
+    Parser *parser;
+    Parser *parserPlot;
+    Matrix *m1;
+    Matrix *m2;
+    Matrix *m3;
+    Plotter *plt;
+    Statistics *stat;
+    History *history;
+
+
+    int countSelected(const QListView* view);
+    QModelIndex getSelectedIndex(const QListView* view);
+    QModelIndexList getSelectedIndices(const QListView* view);
 
 };
 #endif // MAINWINDOW_HPP

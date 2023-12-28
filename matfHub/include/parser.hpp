@@ -11,7 +11,7 @@ public:
 
     Parser();
     ~Parser();
-    double evalExpression(char *exp);
+    auto evalExpression(char *exp) -> double;
     char errorMessage[64];
     
 
@@ -36,6 +36,3 @@ protected:
 
 
 };
-
-
-std::ostream &operator<<(std::ostream &out, const Parser &value);

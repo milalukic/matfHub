@@ -20,7 +20,7 @@ History* History::getHistory(){
     return historyPtr;
 }
 
-    //TODO enkapsulacija? friendly?
+//friendly?
 void History::writeHistory(std::string title, std::string line){
     title += "\n";
     line += "\n";
@@ -47,6 +47,11 @@ void History::editLastLine(std::string line){
     this->history(history);
 }
 
+void History::addMatrix(Matrix *m){
+
+    this->_savedMatrices.push_back(m);
+}
+
 void History::saveHistory(){
     QFile file("../hist.txt");
     file.open(QIODevice::WriteOnly);
@@ -56,10 +61,12 @@ void History::saveHistory(){
     }
 }
 
+//get
 std::vector<std::string> History::history() const{
     return this->_history;
 }
 
+//set
 void History::history(std::vector<std::string> &newHistory){
     this->_history = newHistory;
 }

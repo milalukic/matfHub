@@ -109,3 +109,4 @@ CMakeLists.txt.user*
 # Testing
 test.cpp
 proba.cpp
+build*

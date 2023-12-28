@@ -1,15 +1,10 @@
 #include "../include/matrix.hpp"
-//TODO throw, string doens't do the job
-//TODO use camelCase
 
 #include <QStringList>
 #include <QDebug>
 
 #define DEBUG (qDebug() << __FILE__ << ":" << __LINE__ << ":\t")
 
-Matrix* Matrix::m_M1 = new Matrix(0,0);
-Matrix* Matrix::m_M2 = new Matrix(0,0);
-Matrix* Matrix::m_M3 = new Matrix(0,0);
 std::vector<Matrix*> Matrix::m_savedMatrices;
 
 
@@ -35,11 +30,9 @@ Matrix::~Matrix(){
 }
 
     //getteri
-std::pair<unsigned, unsigned> Matrix::getM1shape(){
-    return {m_M1->m_columns, m_M1->m_rows};
-}
-std::pair<unsigned, unsigned> Matrix::getM2shape(){
-    return {m_M2->m_columns, m_M2->m_rows};
+//TODO kontra?
+std::pair<unsigned, unsigned> Matrix::getShape(){
+    return {this->columns(), this->rows()};
 }
 
 QString Matrix::toString(){
@@ -57,24 +50,19 @@ QString Matrix::toString(){
     }
     return res;
 }
-QString Matrix::m1toString(){
-    return m_M1->toString();
-}
-QString Matrix::m2toString(){
-    return m_M2->toString();
-}
-QString Matrix::m3toString(){
-    return m_M3->toString();
-}
+
 Matrix* Matrix::getSaved(unsigned int index){
     return m_savedMatrices[index];
 }
 
-    // setteri
+   // setteri
 
 void Matrix::setData(QString data){
     int r=0, c=0;
-    for(auto value : data.split(" ")){
+
+    auto values = data.split(" ");
+
+    for(auto &value : values){
         (*(this->m_data))(r, c) = value.toDouble();
         c++;
         if(c == m_columns){
@@ -83,47 +71,39 @@ void Matrix::setData(QString data){
         }
     }
 }
+//moze metod
+void Matrix::setValue(double value, unsigned i, unsigned j){
+    (*(this->m_data))(i, j) = value;
+}
 
-void Matrix::setM1Data(double value, unsigned i, unsigned j){
-    (*(Matrix::m_M1->m_data))(i, j) = value;
-}
-void Matrix::reshapeM1(int col, int row){
-    m_M1->reshapeMatrix(col, row);
-}
-void Matrix::setM2Data(double value, unsigned i, unsigned j){
-    (*(Matrix::m_M2->m_data))(i, j) = value;
-
-}
-void Matrix::reshapeM2(int col, int row){
-    m_M2->reshapeMatrix(col, row);
-}
 unsigned Matrix::saveMatrix(){
-    Matrix* toSave = new Matrix(m_M3->m_rows, m_M3->m_columns);
-    toSave->m_data = m_M3->m_data;
+    Matrix* toSave = new Matrix(this->rows(), this->columns());
+    arma::mat tmp = this->data();
+    toSave->data(tmp);
     qDebug().noquote() << toSave->toString();
     m_savedMatrices.push_back(toSave);
+
     return m_savedMatrices.size()-1;
 }
 std::pair<unsigned, unsigned> Matrix::loadLeft(unsigned index){
     Matrix* toLoad = m_savedMatrices[index];
     qDebug().noquote() << toLoad->toString();
-    m_M1->reshapeMatrix(toLoad->m_columns, toLoad->m_rows);
-    *m_M1 = *(toLoad);
-    qDebug().noquote() << m_M1->toString();
+    this->reshapeMatrix(toLoad->m_columns, toLoad->m_rows);
+    *this = *(toLoad);
+    qDebug().noquote() << this->toString();
     return {toLoad->m_columns, toLoad->m_rows};
 }
 std::pair<unsigned, unsigned> Matrix::loadRight(unsigned index){
     Matrix* toLoad = m_savedMatrices[index];
     qDebug().noquote() << toLoad->toString();
-    m_M2->reshapeMatrix(toLoad->m_columns, toLoad->m_rows);
-    *m_M2 = *(toLoad);
-    qDebug().noquote() << m_M2->toString();
+    this->reshapeMatrix(toLoad->m_columns, toLoad->m_rows);
+    *this = *(toLoad);
+    qDebug().noquote() << this->toString();
     return {toLoad->m_columns, toLoad->m_rows};
 }
 
 
     //functions
-
 void Matrix::reshapeMatrix(unsigned col, unsigned row){
     arma::mat* newMat = new arma::mat(row, col);//namerno je kontra, don't worry about it
     newMat->fill(0);
@@ -139,87 +119,117 @@ void Matrix::reshapeMatrix(unsigned col, unsigned row){
     m_rows = row;
 }
 
-bool Matrix::add(){
-    if(m_M1->m_columns != m_M2->m_columns || m_M1->m_rows != m_M2->m_rows){
-        return false;
-    }
-    if(m_M3){
-        delete m_M3;
-    }
-    m_M3 = *m_M1 + *m_M2;
-    return true;
-}
-bool Matrix::subtract(){
-    if(m_M1->m_columns != m_M2->m_columns || m_M1->m_rows != m_M2->m_rows){
-        return false;
-    }
-    if(m_M3){
-        delete m_M3;
-    }
-    m_M3 = *m_M1 - *m_M2;
-    return true;
-}
-bool Matrix::multiply(){
-    if(m_M1->m_columns != m_M2->m_rows || m_M1->m_rows != m_M2->m_columns){
-        return false;
-    }
-    if(m_M3){
-        delete m_M3;
-    }
-    m_M3 = (*m_M1) * (*m_M2);
-    return true;
-}
-bool Matrix::divide(){
-    return false;
-}
-void Matrix::increment(){
+//methods
+Matrix *Matrix::transpose() {
+    Matrix* newMatrix = new Matrix(this->columns(), this->rows());
+    arma::mat tmp = arma::trans(this->data());
+    newMatrix->data(tmp);
 
+    return newMatrix;
 }
-void Matrix::decrement(){
 
+Matrix *Matrix::ones(){
+    Matrix* newMatrix = new Matrix(this->rows(), this->columns());
+    arma::mat tmp = this->data().ones();
+    newMatrix->data(tmp);
+
+    return newMatrix;
 }
-void Matrix::negate(){
 
+Matrix *Matrix::eye(){
+    Matrix* newMatrix = new Matrix(this->rows(), this->columns());
+    arma::mat tmp = this->data().eye();
+    newMatrix->data(tmp);
+
+    return newMatrix;
+}
+
+Matrix *Matrix::inverse(){
+    Matrix* newMatrix = new Matrix(this->rows(), this->columns());
+    arma::mat tmp = arma::inv(this->data());
+    newMatrix->data(tmp);
+
+    return newMatrix;
+}
+
+Matrix *Matrix::diag(){
+    Matrix* newMatrix = new Matrix(this->rows(), this->columns());
+    arma::mat tmp = arma::diagmat(this->data());
+    newMatrix->data(tmp);
+
+    return newMatrix;
 }
 
 //operators
-
 Matrix* Matrix::operator + (const Matrix &other) const{
-    Matrix* newMat = new Matrix(m_rows, m_columns);
-    newMat->m_data = new arma::mat(m_rows, m_columns);
-    *(newMat->m_data) = *m_data + *(other.m_data);
+
+    Matrix* newMat = new Matrix(this->rows(), this->columns());
+    arma::mat *newData = new arma::mat(this->rows(), this->columns());
+
+    *newData = this->data() + other.data();
+    newMat->data(*newData);
+
     return newMat;
 }
+
 Matrix* Matrix::operator - (const Matrix &other) const{
-    Matrix* newMat = new Matrix(m_rows, m_columns);
-    newMat->m_data = new arma::mat(m_rows, m_columns);
-    *(newMat->m_data) = *m_data - *(other.m_data);
+
+    Matrix* newMat = new Matrix(this->rows(), this->columns());
+    arma::mat *newData = new arma::mat(this->rows(), this->columns());
+
+    *newData = this->data() - other.data();
+    newMat->data(*newData);
+
     return newMat;
 }
+
 Matrix* Matrix::operator * (const Matrix &other) const{
-    Matrix* newMat = new Matrix(m_rows, other.m_columns);
-    newMat->m_data = new arma::mat(m_rows, other.m_columns);
-    *(newMat->m_data) = (*m_data) * (*(other.m_data));
+
+    Matrix* newMat = new Matrix(this->rows(), this->columns());
+    arma::mat *newData = new arma::mat(this->rows(), this->columns());
+
+    *newData = this->data() * other.data();
+    newMat->data(*newData);
+
     return newMat;
 }
-Matrix* Matrix::operator * (const double number) const{
-    Matrix* newMat = new Matrix(m_rows, m_columns);
-    newMat->m_data = new arma::mat(m_rows, m_columns);
-    *(newMat->m_data) = (*m_data) * number;
-    return newMat;
-}
-Matrix* Matrix::operator - () const{
-    return *this * -1.0;
-}
+
+
 Matrix &Matrix::operator = (const Matrix &other) {
-    m_columns = other.m_columns;
-    m_rows = other.m_rows;
-    m_data->reshape(m_rows, m_columns);
-    *m_data = *(other.m_data);
+
+    this->columns(other.columns());
+    this->rows(other.rows());
+
+    arma::mat tmp = this->data();
+    tmp.reshape(this->rows(), this->columns());
+
     return *this;
 }
 
-//TODO make this work
-// std::istream &operator>>(std::istream &in, Matrix &value){
 
-// }
+//getters
+unsigned Matrix::rows() const{
+    return this->m_rows;
+}
+
+unsigned Matrix::columns() const{
+    return this->m_columns;
+}
+
+arma::mat Matrix::data() const{
+    return *m_data;
+}
+
+//setters
+
+void Matrix::rows(unsigned u){
+    this->m_rows = u;
+}
+
+void Matrix::columns(unsigned u){
+    this->m_columns = u;
+}
+
+void Matrix::data(arma::mat &newData){
+    *(this->m_data) = newData;
+}

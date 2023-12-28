@@ -1,0 +1,14 @@
+/home/dzzz/kofultet/4.godina/rs/pr/matfHub/matfHub/src/../include/./matrix.hpp:8:10: error: 'QString' file not found [clang-diagnostic-error]
+#include <QString>
+         ^~~~~~~~~
+/home/dzzz/kofultet/4.godina/rs/pr/matfHub/matfHub/src/history.cpp:16:19: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+History* History::getHistory(){
+~~~~~~~~          ^
+auto                           -> History*
+/home/dzzz/kofultet/4.godina/rs/pr/matfHub/matfHub/src/history.cpp:34:22: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+std::string History::lastLine(){
+~~~~~~~~~~~          ^
+auto                            -> std::string
+/home/dzzz/kofultet/4.godina/rs/pr/matfHub/matfHub/src/history.cpp:65:35: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+std::vector<std::string> History::history() const{
+                                  ^
