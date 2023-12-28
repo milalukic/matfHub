@@ -53,8 +53,10 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         matfHub/include/calculator.h
         matfHub/include/calendar.h
         matfHub/src/calendar.cpp
-		matfHub/include/config.hpp
-		matfHub/src/config.cpp
+        matfHub/include/config.hpp
+        matfHub/include/views.h
+        matfHub/src/config.cpp
+        matfHub/src/views.cpp
     )
 
 # Define target properties for Android with Qt 6 as:

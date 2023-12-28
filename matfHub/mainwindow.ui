@@ -36,7 +36,7 @@
        <enum>Qt::DefaultContextMenu</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="FileManagerTab">
        <attribute name="title">
@@ -1935,21 +1935,21 @@
         </property>
         <layout class="QVBoxLayout" name="fileViewLayout">
          <item>
-          <widget class="QListView" name="listFileView">
+          <widget class="myListView" name="listFileView">
            <property name="contextMenuPolicy">
             <enum>Qt::CustomContextMenu</enum>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QListView" name="thumbnailsFileView">
+          <widget class="myThumbnailView" name="thumbnailsFileView">
            <property name="contextMenuPolicy">
             <enum>Qt::CustomContextMenu</enum>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QTableView" name="detailsFileView">
+          <widget class="myGridView" name="detailsFileView">
            <property name="contextMenuPolicy">
             <enum>Qt::CustomContextMenu</enum>
            </property>
@@ -2246,8 +2246,8 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>98</width>
-                  <height>28</height>
+                  <width>187</width>
+                  <height>286</height>
                  </rect>
                 </property>
                 <widget class="QWidget" name="verticalLayoutWidget_3">
@@ -3173,7 +3173,7 @@
      <x>0</x>
      <y>0</y>
      <width>1156</width>
-     <height>23</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -3206,6 +3206,23 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>myListView</class>
+   <extends>QListView</extends>
+   <header>../../matfHub/matfHub/include/views.h</header>
+  </customwidget>
+  <customwidget>
+   <class>myGridView</class>
+   <extends>QTableView</extends>
+   <header>../../matfHub/matfHub/include/views.h</header>
+  </customwidget>
+  <customwidget>
+   <class>myThumbnailView</class>
+   <extends>QListView</extends>
+   <header>../../matfHub/matfHub/include/views.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="resources.qrc"/>
  </resources>

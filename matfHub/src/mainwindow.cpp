@@ -11,6 +11,7 @@
 #include "../include/plotter.hpp"
 #include "../include/statistics.hpp"
 #include "../include/calculator.h"
+#include "../include/views.h"
 
 #include <QSplitter>
 #include <QFileSystemModel>
@@ -579,7 +580,7 @@ void MainWindow::setUpFileView(/*tipPogleda*/){
     }
 
     //naredna linija zakomentarisana za lakse dibagovanje, TODO obrisati je kad tad
-    //showFileView(ui->listFileView);
+    showFileView(ui->listFileView);
 
 }
 

@@ -1,0 +1,52 @@
+#ifndef VIEWS_H
+#define VIEWS_H
+
+#include <QAbstractItemView>
+#include <QListView>
+#include <QTableView>
+#include <QKeyEvent>
+#include <QDebug>
+
+class myListView : public QListView{
+    Q_OBJECT
+
+public:
+    myListView(QWidget *parent = nullptr);
+
+protected:
+    void keyPressEvent(QKeyEvent *event) override;
+
+private:
+    int sizeList;
+};
+
+
+class myThumbnailView : public QListView{
+    Q_OBJECT
+
+public:
+    myThumbnailView(QWidget *parent = nullptr);
+
+protected:
+    void keyPressEvent(QKeyEvent *event) override;
+
+private:
+    int sizeThumbnail;
+};
+
+
+class myGridView : public QTableView{
+    Q_OBJECT
+
+public:
+    myGridView(QWidget *parent = nullptr);
+
+protected:
+    void keyPressEvent(QKeyEvent *event) override;
+
+private:
+    int sizeGrid;
+};
+
+#endif // VIEWS_H
+
