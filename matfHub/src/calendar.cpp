@@ -9,6 +9,9 @@
 #include <QDateEdit>
 #include <QDate>
 
+#define __FILENAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
+#define DEBUG (qDebug() << __FILENAME__ << ":" << __LINE__ << ":\t")
+
 Calendar::Calendar(Ui::MainWindow* ui) {
     initializeMap();
     ui->calendarWidget->setSelectedDate(selectedDate);
@@ -52,6 +55,13 @@ void Calendar::taskAdded(Ui::MainWindow *ui){
     date_to_note[selectedDate].sort();
 
     ui->listWidget->clear();
+
+    if(!day_to_class[selectedDate.day()].empty()){
+        for(QString it : day_to_class[selectedDate.day()]){
+            QListWidgetItem* item = new QListWidgetItem(it, ui->listWidget);
+            item->setFlags(item->flags() | Qt::ItemIsEditable);
+        }
+    }
 
     for (auto itemStr : date_to_note[selectedDate]){
         QListWidgetItem* item = new QListWidgetItem(itemStr, ui->listWidget);
@@ -147,6 +157,7 @@ void Calendar::initializeMap(){
     }
 
     QByteArray jsonDataSchedule = schedulePath.readAll();
+    //DEBUG << jsonDataSchedule;
     schedulePath.close();
 
     QJsonDocument jsonDocSchedule = QJsonDocument::fromJson(jsonDataSchedule);
@@ -155,7 +166,9 @@ void Calendar::initializeMap(){
     }
 
     QJsonArray coursesArray = jsonDocSchedule.array();
+    //DEBUG << coursesArray;
 
+    int i = 0;
     for (const auto& courseData : coursesArray) {
         QJsonObject courseObject = courseData.toObject();
 
@@ -166,7 +179,11 @@ void Calendar::initializeMap(){
         QString teacher = courseObject["teacher"].toString();
         QString classroom = courseObject["classroom"].toString();
 
-        int d = courseObject["day"].toInt();
+        int d = courseObject["day"].toInt()+1;
+
+        if(start<8){
+            start+=12;
+        }
 
         QString itemStr = QString::number(start) + ":15 - " + QString::number(start+dur) + ":00 " + desc + "\n" + teacher + " " + classroom;
 
