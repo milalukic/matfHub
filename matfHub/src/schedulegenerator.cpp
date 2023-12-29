@@ -88,6 +88,8 @@ void Generator::displaySchedule(QTableWidget* tableWidget, int brojRasporeda) {
         }
 
         saved = schedule;
+    } else {
+        std::cout << "Ne postoji raspored" << std::endl;
     }
 }
 
