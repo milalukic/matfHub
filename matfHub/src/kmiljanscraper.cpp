@@ -6,6 +6,8 @@
 #include <iostream>
 #include <QRegularExpression>
 #include <QXmlStreamReader>
+#include <fstream>
+
 
 
 KmiljanScraper::KmiljanScraper(){
@@ -60,6 +62,10 @@ Course KmiljanScraper::tdToCourse(QString tdHtml, int day, int start){
     QStringList qsubgroups = soup[2].split(",");
     std::set<std::string> subgroups;
     for(auto& subgr : qsubgroups){
+        if (subgr == ""){                  //cisto da ne ostaje prazno
+            subgr = "- cela grupa -";
+        }
+        //std::cout<<subgr.toStdString()<<std::endl;
         subgroups.insert(subgr.simplified().toStdString());
     }
     QString staff = soup.length() > 3 ? soup[3].simplified() : "NULL";
@@ -75,13 +81,14 @@ Course KmiljanScraper::tdToCourse(QString tdHtml, int day, int start){
         {"V", "Aktuarska"},
         {"L", "Profesor"}
     };
-    for(auto sg : qsubgroups){
-        sg = sg.replace("O", "RMNVL");
+    for(auto sg : qgroups){
+        sg = sg.replace(QString::fromStdString("O"), QString::fromStdString("RMNVL"));
         for(auto& kv : moduleMap){
             if(sg.contains(QString::fromStdString(kv.first))){
                 modules.insert(kv.second);
             }
         }
+
     }
     for(auto& g : groups){
         int year = g[0]-'0';
@@ -91,7 +98,7 @@ Course KmiljanScraper::tdToCourse(QString tdHtml, int day, int start){
     return Course(name.toStdString(),
                   day,
                   staff.toStdString(),
-                  start,
+                  start-8,
                   length,
                   lectureType.toStdString(),
                   groups,
@@ -104,12 +111,12 @@ QStringList splitByTd(QString text){
     QStringList lines;
     int startPos = 0;
     while ((startPos = text.indexOf("<td", startPos)) != -1) {
-        int endPos = text.indexOf("<td", startPos + 1);
+        int endPos = text.indexOf("<td", startPos+1);
         if (endPos != -1) {
             lines << text.mid(startPos, endPos - startPos);
             startPos = endPos;
         } else {
-            lines << text.mid(startPos); // Add the remaining part to the list
+            lines << text.mid(startPos);
             break;
         }
     }
@@ -146,25 +153,24 @@ QString  convertCyrillicToLatin(const QString& input) {
 
 CourseSet KmiljanScraper::tableToCourses(QString tableHtml, std::string classroom){
     CourseSet courses;
-//    QStringList lines = tableHtml.split(QRegularExpression("[\r\n]"), Qt::SkipEmptyParts);
     tableHtml = tableHtml.replace(QRegularExpression("[\n\r]"), "");
     tableHtml = tableHtml.simplified();
     QStringList lines = splitByTd(tableHtml);
     QStringList days = {"Ponedeljak", "Utorak", "Sreda", "Četvrtak", "Petak"};
     int dayIdx = 0;
-    int hour = 0;
+    int hour = 8;           //prvo predavanje moze biti tek u 8
     for(auto& line : lines) {
-        if(line.contains("Превођење")){
-            std::cout << 3;
-        }
-        if(line.contains("Prevođenje")){
-            std::cout << 2;
-        }
-        std::cout << line.toStdString() << std::endl;
+//        if(line.contains("Превођење")){                        //Ovo je vrv neko debugovanje bilo, printa ceo html
+//            std::cout << 3;
+//        }
+//        if(line.contains("Prevođenje")){
+//            std::cout << 2;
+//        }
+//        std::cout << line.toStdString() << std::endl;
         if(line.startsWith("<td")){
             if(dayIdx < 5 && line.contains(">"+days[dayIdx]+"<")){
                 dayIdx++;
-                hour = 0;
+                hour = 8;
             } else if(dayIdx == 0) {
                 continue; // Trazimo ponedeljak...
             } else if(line.contains("&nbsp;")){
@@ -190,14 +196,14 @@ CourseSet KmiljanScraper::getAllCourses(std::unordered_map<std::string, std::str
         std::string roomLink = room.second;
         QString htmlString = QString::fromStdString(requestHandler.getHtml(roomLink));
         QRegularExpression tableRegex(R"(<table border="1" bordercolor="#000000" cellspacing="0" cellpadding="0">(.*)</table>)",
-                                 QRegularExpression::DotMatchesEverythingOption);
+                                      QRegularExpression::DotMatchesEverythingOption);
         QRegularExpressionMatch match = tableRegex.match(htmlString);
         QString tableContent;
         if (match.hasMatch()) {
             tableContent = match.captured(1);
             qDebug() << "Extracted table content: " << roomLink;
-//            qDebug().noquote() << tableContent;
-//            exit(1);
+            //            qDebug().noquote() << tableContent;
+            //            exit(1);
         } else {
             qDebug() << "Table not found in HTML. " << roomLink;
             continue;
@@ -208,8 +214,34 @@ CourseSet KmiljanScraper::getAllCourses(std::unordered_map<std::string, std::str
         allCourses.insert(roomCourses.begin(), roomCourses.end());
 
     }
+    //    for (auto& i : allCourses){
+    //        std::cout<< i.description<<std::endl;
+    //        std::cout<< i.day<<std::endl;
+    //        std::cout<< i.teacher<<std::endl;
+    //        std::cout<< i.start<<std::endl;
+    //        std::cout<< i.duration<<std::endl;
+    //        std::cout<< i.end<<std::endl;
+    //        std::cout<< i.course_type<<std::endl;
+    //        for (auto& it : i.groups){
+    //            std::cout<< it <<std::endl;
+    //        }
+    //        std::cout<< i.classroom<<std::endl;
+    //        std::cout<< "---" << std::endl;
+    //        for (auto& it : i.modules){
+    //            std::cout<< it<<std::endl;
+    //        }
+    //        std::cout<< "---" << std::endl;
+    //        for (auto& it : i.years){
+    //            std::cout<< it<<std::endl;
+    //        }
+    //        for (auto& it : i.subgroups){
+    //            std::cout<< it<<std::endl;
+    //        }
+    //        std::cout<< "-----------------"<<std::endl;
+    //    }
     return allCourses;
 }
+
 
 std::unordered_map<std::string, CourseSet> KmiljanScraper::download() noexcept(false){
     std::string baseHtml = requestHandler.getHtml(baseLink);

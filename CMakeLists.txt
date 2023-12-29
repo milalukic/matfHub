@@ -34,9 +34,9 @@ endif()
 ###############################
 
 file(GLOB PROJECT_SOURCES
-        "matfHub/src/*.cpp"
-        "matfHub/include/*.hpp"
-        "matfHub/include/*.h"
+    "matfHub/src/*.cpp"
+    "matfHub/include/*.hpp"
+    "matfHub/include/*.h"
 	"matfHub/*.ui"
 	"matfHub/QSourceHighlite/*.cpp"
 	"matfHub/QSourceHighlite/*.h"
@@ -49,6 +49,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         matfHub/include/notes.h
         matfHub/src/notes.cpp
         matfHub/resources.qrc
+        matfHub/src/schedulegenerator.cpp
+        matfHub/include/schedulegenerator.h
+        matfHub/include/helpers.h
         matfHub/include/calendar.h
         matfHub/src/calendar.cpp
         matfHub/include/config.hpp

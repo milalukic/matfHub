@@ -2,10 +2,14 @@
 #define SCHEDULE_H
 
 #include "../ui_mainwindow.h"
-#include "../include/course.h"
+#include "config.hpp"
+#include "helpers.h"
+#include "course.h"
+#include "schedulegenerator.h"
 #include "kmiljanscraper.h"
 #include <memory>
 #include <unordered_map>
+#include <unordered_set>
 
 class Schedule
 {
@@ -15,11 +19,23 @@ public:
     void findSchedule(Ui::MainWindow *ui);
     void downloadSchedule(Ui::MainWindow *ui);
     void scrapeSchedule(Ui::MainWindow *ui);
+    void clearTable(Ui::MainWindow *ui);
+    void nextSchedule(Ui::MainWindow *ui);
+    void prevSchedule(Ui::MainWindow *ui);
+    void saveSchedule(Ui::MainWindow *ui);
+    void loadSchedule(Ui::MainWindow *ui);
+    int brojRasporeda;
+    Generator m_gen;
 
 private:
     std::unique_ptr<KmiljanScraper> kmiljanScraper;
-    std::unordered_map<std::string, CourseSet> moduleCourseMap;
+    StrMap<StrMap<StrMap<CourseSet>>> moduleCourseTypeTermMap;
     std::vector<std::string> modules;
+    std::unordered_set<std::string> selectedCourses;
+    std::string selectedModule;
+    QString filePath;
+
+//    State defaultTableState;
 };
 
 #endif // SCHEDULE_H

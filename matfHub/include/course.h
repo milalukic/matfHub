@@ -36,8 +36,24 @@ public:
 };
 
 struct CourseComparator {
-    bool operator()(const Course& lhs, const Course& rhs) const {
-        return lhs.description < rhs.description;
+    bool operator()(const Course& firstCourse, const Course& secondCourse) const {
+        if (firstCourse.description != secondCourse.description){
+            return firstCourse.description < secondCourse.description;
+        }else{
+            if (firstCourse.course_type != secondCourse.course_type){
+                return firstCourse.course_type < secondCourse.course_type;
+            }else{
+                if (firstCourse.modules != secondCourse.modules){
+                    return firstCourse.modules < secondCourse.modules;
+                }else{
+                    if (firstCourse.groups != secondCourse.groups){
+                        return firstCourse.groups < secondCourse.groups;
+                    }else{
+                        return firstCourse.subgroups < secondCourse.subgroups;
+                    }
+                }
+            }
+        }
     }
 };
 

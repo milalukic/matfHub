@@ -60,6 +60,13 @@ MainWindow::MainWindow(QWidget *parent)
     m_notes = new class Notes(ui);
     QString sPath = ""; //ovde kasnije dodati path i gurnuti ga u setRootPath
 
+    //Ucitavanje rasporeda
+    QString schedulePath = Config::getConfig()->getConfigPath() + "/raspored.json";
+    QFile scheduleFile(schedulePath);
+    if (scheduleFile.exists() && scheduleFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        schedule->loadSchedule(ui);
+        scheduleFile.close();
+    }
     // Ctrl+S shortcut za cuvanje datoteke u notesu
     QShortcut *saveShortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_S), this);
     connect(saveShortcut, &QShortcut::activated, this, &MainWindow::on_saveNotesButton_clicked);
@@ -221,6 +228,10 @@ inline auto negation(double s) -> double{
 void MainWindow::showMatrix(Matrix *m){
 
 //    QString history = ui->tbHistory->toPlainText();
+
+    //raspored konektovi
+
+
 
 //    for(int i = 0; i < m->dimension1(); i++) {
 //        for(int j = 0; j < m->dimension2(); j++) {
@@ -489,6 +500,21 @@ void MainWindow::on_rasporedStartButton_clicked()
 void MainWindow::on_scrapeButton_clicked()
 {
     schedule->scrapeSchedule(ui);
+}
+
+void MainWindow::on_sledeciButton_clicked()
+{
+    schedule->nextSchedule(ui);
+}
+
+void MainWindow::on_prethodniButton_clicked()
+{
+    schedule->prevSchedule(ui);
+}
+
+void MainWindow::on_SacuvajButton_clicked()
+{
+    schedule->saveSchedule(ui);
 }
 
 //promena glavnog hab foldera

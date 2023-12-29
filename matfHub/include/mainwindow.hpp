@@ -144,6 +144,12 @@ private slots:
 
     void on_scrapeButton_clicked();
 
+    void on_sledeciButton_clicked();
+
+    void on_SacuvajButton_clicked();
+
+    void on_prethodniButton_clicked();
+
     void on_calendarWidget_clicked(const QDate &date);
 
     void on_addToCalendarButton_clicked();
