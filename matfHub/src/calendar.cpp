@@ -10,7 +10,7 @@
 #include <QDate>
 
 Calendar::Calendar(Ui::MainWindow* ui) {
-    initializeMap(ui);
+    initializeMap();
     ui->calendarWidget->setSelectedDate(selectedDate);
     ui->calendarWidget->setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
     ui->calendarWidget->setFirstDayOfWeek(Qt::DayOfWeek::Monday);
@@ -29,6 +29,12 @@ void Calendar::dateChanged(Ui::MainWindow *ui, QDate date) {
     ui->calendarWidget->setSelectedDate(date);
     ui->listWidget->clear();
 
+    if(!day_to_class[selectedDate.day()].empty()){
+        for(QString it : day_to_class[selectedDate.day()]){
+            QListWidgetItem* item = new QListWidgetItem(it, ui->listWidget);
+            item->setFlags(item->flags() | Qt::ItemIsEditable);
+        }
+    }
     for (auto itemStr : date_to_note[selectedDate]){
         QListWidgetItem* item = new QListWidgetItem(itemStr, ui->listWidget);
         item->setFlags(item->flags() | Qt::ItemIsEditable);
@@ -101,7 +107,7 @@ void Calendar::saveHistory(){
 
 void Calendar::addCourse(QDate next_d, QString desc){
         if(date_to_note[next_d].empty()){
-            QList<QString> note = {desc};
+        QList<QString> note = {desc};
             date_to_note.insert(next_d, note);
 
         }else {
@@ -110,7 +116,7 @@ void Calendar::addCourse(QDate next_d, QString desc){
 
 }
 
-void Calendar::initializeMap(Ui::MainWindow *ui){
+void Calendar::initializeMap(){
     QFile jsonFile(Config::getConfig()->getConfigPath() + "/map.txt");
 
     if (!jsonFile.open(QIODevice::ReadOnly)) {
@@ -134,7 +140,6 @@ void Calendar::initializeMap(Ui::MainWindow *ui){
         date_to_note.insert(date, note);
     }
 
-
     QFile schedulePath(Config::getConfig()->getConfigPath() + "/raspored.json");
 
     if (!schedulePath.open(QIODevice::ReadOnly)) {
@@ -152,18 +157,24 @@ void Calendar::initializeMap(Ui::MainWindow *ui){
     QJsonArray coursesArray = jsonDocSchedule.array();
 
     for (const auto& courseData : coursesArray) {
-        QJsonObject courseObject = jsonDocSchedule.object();
+        QJsonObject courseObject = courseData.toObject();
 
         QString desc = courseObject["description"].toString();
+
+        int start = courseObject["start"].toInt() - 8;
+        int dur = courseObject["duration"].toInt();
+        QString teacher = courseObject["teacher"].toString();
+        QString classroom = courseObject["classroom"].toString();
+
         int d = courseObject["day"].toInt();
 
-        QDate today = QDate::currentDate();
-        QDate next_d = today.addDays(7+d-today.dayOfWeek());
+        QString itemStr = QString::number(start) + ":15 - " + QString::number(start+dur) + ":00 " + desc + "\n" + teacher + " " + classroom;
 
-        while(next_d < ui->calendarWidget->maximumDate()){
-            addCourse(next_d, desc);
-            next_d = next_d.addDays(7);
+        if(day_to_class[d].empty()){
+            day_to_class[d] = {};
         }
-        }
+        day_to_class[d].append(itemStr);
     }
+
+}
 

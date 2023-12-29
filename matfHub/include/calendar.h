@@ -12,6 +12,7 @@ public:
     Calendar(Ui::MainWindow* mw);
 
     QMap<QDate, QList<QString>> date_to_note;
+    QMap<int, QList<QString>> day_to_class;
     QDate selectedDate = QDate::currentDate();
 
     void dateChanged(Ui::MainWindow *ui, QDate);
@@ -20,7 +21,7 @@ public:
     void removeAll(Ui::MainWindow *ui);
     void saveHistory();
     // Inicijalizuje mapu sa prethodnom istorijom
-    void initializeMap(Ui::MainWindow *ui);
+    void initializeMap();
     void addCourse(QDate next_d, QString desc);
 
 };
