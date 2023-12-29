@@ -9,11 +9,12 @@ myListView::myListView(QWidget *parent) : QListView(parent) {
 }
 
 void myListView::keyPressEvent(QKeyEvent *event){
-    if (event->modifiers() == Qt::ControlModifier && event->key() == Qt::Key_Plus){
+    if (event->modifiers() == (Qt::ControlModifier | Qt::ShiftModifier) && event->key() == Qt::Key_Plus){
         this->sizeList += 5;
         this->setIconSize(QSize(this->sizeList, this->sizeList));
         //qDebug() << "povecavamList" << sizeList;
-    }else if(event->modifiers() == Qt::ControlModifier && event->key() == Qt::Key_Minus){
+    }else if((event->modifiers() == (Qt::ControlModifier | Qt::ShiftModifier) && event->key() == Qt::Key_Minus)||
+               (event->modifiers() == (Qt::ControlModifier | Qt::ShiftModifier) && event->key() == Qt::Key_Underscore)){
         if (this->sizeList > 60){
             this->sizeList -= 5;
             this->setIconSize(QSize(this->sizeList, this->sizeList));
@@ -41,7 +42,7 @@ myThumbnailView::myThumbnailView(QWidget *parent) : QListView(parent) {
 }
 
 void myThumbnailView::keyPressEvent(QKeyEvent *event){
-    if (event->modifiers() == Qt::ControlModifier && event->key() == Qt::Key_Plus){
+    if (event->modifiers() == (Qt::ControlModifier | Qt::ShiftModifier) && event->key() == Qt::Key_Plus){
         this->sizeThumbnail += 5;
         this->setIconSize(QSize(this->sizeThumbnail, this->sizeThumbnail));
         grid += 5;
@@ -49,7 +50,8 @@ void myThumbnailView::keyPressEvent(QKeyEvent *event){
         spacing += 5;
         this->setSpacing(spacing);
         //qDebug() << "povecavamThumbnail" << sizeThumbnail;
-    }else if(event->modifiers() == Qt::ControlModifier && event->key() == Qt::Key_Minus){
+    }else if((event->modifiers() == (Qt::ControlModifier | Qt::ShiftModifier) && event->key() == Qt::Key_Minus)||
+               (event->modifiers() == (Qt::ControlModifier | Qt::ShiftModifier) && event->key() == Qt::Key_Underscore)){
         if (this->sizeThumbnail > 60){
             this->sizeThumbnail -= 5;
             this->setIconSize(QSize(this->sizeThumbnail, this->sizeThumbnail));
