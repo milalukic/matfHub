@@ -22,8 +22,9 @@ endif()
 
 
 add_executable(test_stat statistics.test.cpp ../src/statistics.cpp )
-
 target_link_libraries(test_stat PUBLIC matplot)
 
+add_executable(test_plot plotter.test.cpp ../src/plotter.cpp)
+target_link_libraries(test_plot PUBLIC matplot)
 
 
