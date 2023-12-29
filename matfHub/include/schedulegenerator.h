@@ -24,6 +24,7 @@ public:
     Generator();
     std::vector<std::vector<Course>> schedules;
     std::vector<Course> saved;
+    void showPopupWithText(const QString& text);
     void place(const Course& term);
     void remove(const Course& term);
     bool scheduleFilter(const std::vector<Course>& schedule);
@@ -31,6 +32,7 @@ public:
     void displaySchedule(QTableWidget* tableWidget, int brojRasporeda);
     void saveCoursesToJson(const QString& filePath);
     std::vector<Course> loadCoursesFromJson(const QString& filePath);
+
 
 private:
     void _find(StrMap<StrMap<CourseSet>>& courseTypeTermMap, std::vector<Course>& placedList, int i, int stop,
