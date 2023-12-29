@@ -36,13 +36,14 @@ public:
     ~MainWindow();
     void fileViewSetPath(const QString path);
     void currentFilePathSetPath(const QString path);// v
-    Notes *notes;
+    Notes* m_notes;
     FileManager* m_fileManager;
     Ui::MainWindow *ui;
 
     QString currentFilePathGetPath();    
 
 private slots:
+
     void actionExitTriggered();
     void actionChangeHubLocationTriggered();
 
@@ -74,7 +75,8 @@ private slots:
     void fileViewCustomContextMenuRequested(const QPoint &pos, QAbstractItemView* view);
     void showFileView(QAbstractItemView* view);
 
-    //calculator slots
+    //calculator things
+
     void changeStackedWidgetPage();
 
         //calc functions
@@ -144,13 +146,14 @@ private slots:
 
     void on_calendarWidget_clicked(const QDate &date);
 
-    void on_pushButton_clicked();
+    void on_addToCalendarButton_clicked();
 
-    void on_pushButton_2_clicked();
+    void on_removeItemButton_clicked();
 
-    void on_pushButton_3_clicked();
+    void on_removeAllButton_clicked();
 
 private:
+
     std::stack<QString> navigationBefore;
     std::stack<QString> navigationAfter;
     std::unique_ptr<Schedule> schedule;
@@ -172,7 +175,6 @@ private:
     Plotter *plt;
     Statistics *stat;
     History *history;
-
 
     int countSelected(const QListView* view);
     QModelIndex getSelectedIndex(const QListView* view);

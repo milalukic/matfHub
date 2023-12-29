@@ -64,3 +64,7 @@ void Config::setConfig(){
     configFile.close();
 
 }
+
+QString Config::getConfigPath(){
+    return configPath;
+}

@@ -25,6 +25,7 @@ public:
     static Config* getConfig();
     void setHubPath(QString newPath);
     QString getHubPath();
+    QString getConfigPath();
 
 };
 

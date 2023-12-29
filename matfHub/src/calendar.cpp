@@ -1,5 +1,6 @@
 #include "../include/calendar.h"
 #include "../ui_mainwindow.h"
+#include "../include/config.hpp"
 #include "qjsonarray.h"
 #include "qjsondocument.h"
 #include "qjsonobject.h"
@@ -40,7 +41,7 @@ void Calendar::taskAdded(Ui::MainWindow *ui){
         dateChanged(ui, ui->dateEdit->date());
     }
 
-    QString itemString = ui->timeEdit->time().toString("HH:mm") + " " + ui->textEdit_3->toPlainText();
+    QString itemString = ui->timeEdit->time().toString("HH:mm") + " " + ui->newItemEdit->toPlainText();
     date_to_note[selectedDate].append(itemString);
     date_to_note[selectedDate].sort();
 
@@ -51,17 +52,19 @@ void Calendar::taskAdded(Ui::MainWindow *ui){
         item->setFlags(item->flags() | Qt::ItemIsEditable);
     }
 
-    ui->textEdit_3->clear();
-    ui->textEdit_3->setFocus();
+    ui->newItemEdit->clear();
+    ui->newItemEdit->setFocus();
 }
 
 void Calendar::removeTask(Ui::MainWindow *ui){
 
-    QString itemString = ui->listWidget->currentItem()->text();
-    date_to_note[selectedDate].removeOne(itemString);
+    if(ui->listWidget->currentItem()){
+        QString itemString = ui->listWidget->currentItem()->text();
+        date_to_note[selectedDate].removeOne(itemString);
+        QListWidgetItem* item = ui->listWidget->takeItem(ui->listWidget->currentRow());
+        delete item;
+    }
 
-    QListWidgetItem* item = ui->listWidget->takeItem(ui->listWidget->currentRow());
-    delete item;
 }
 
 void Calendar::removeAll(Ui::MainWindow *ui){
@@ -71,7 +74,7 @@ void Calendar::removeAll(Ui::MainWindow *ui){
 
 // Cuvamo mapu u JSON formatu pri izlasku iz aplikacije
 void Calendar::saveHistory(){
-    QString fileName = "../matfHub/matfHub/map.txt";
+    QString fileName = Config::getConfig()->getConfigPath() + "/map.txt";
 
     QFile file(fileName);
     if (!file.open(QFile::WriteOnly | QFile::Text)) {
@@ -98,7 +101,7 @@ void Calendar::saveHistory(){
 
 // Inicijalizuje mapu sa prethodnom istorijom
 void Calendar::initializeMap(){
-    QFile jsonFile("../matfHub/matfHub/map.txt");
+    QFile jsonFile(Config::getConfig()->getConfigPath() + "/map.txt");
 
     if (!jsonFile.open(QIODevice::ReadOnly)) {
         return;

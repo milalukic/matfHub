@@ -1,12 +1,19 @@
 #include "../include/notes.h"
+#include "../include/mainwindow.hpp"
 #include "../ui_mainwindow.h"
+#include "../QSourceHighlite/qsourcehighliter.h"
 
-Notes::Notes() {
+
+
+Notes::Notes(Ui::MainWindow* mw)
+    :m_mw(mw)
+{
+    m_fileContentUnchanged = new QString("");
 }
 
 void Notes::openFile(QString filePath, Ui::MainWindow *ui, QWidget *parent) {
-    QFile file(filePath);
 
+    QFile file(filePath);
 
     if(!file.open(QIODevice::ReadOnly | QFile::Text)){
         return;
@@ -17,14 +24,22 @@ void Notes::openFile(QString filePath, Ui::MainWindow *ui, QWidget *parent) {
     QString text = in.readAll();
 
     ui->textEdit->setText(text);
-    currentFile = filePath;
+
+    if(m_fileContentUnchanged){
+        delete m_fileContentUnchanged;
+    }
+    m_fileContentUnchanged = new QString(text);
+
+    m_currentFile = filePath;
     file.close();
+
 }
 
 
-void Notes::newClicked(Ui::MainWindow *ui){
-    currentFile.clear();
+void Notes::newClicked(Ui::MainWindow *ui, QWidget *parent){
+    m_currentFile.clear();
     ui->textEdit->setText(QString());
+    parent->setWindowTitle("Untitled Document");
 }
 
 //void Notes::openClicked(Ui::MainWindow *ui, QWidget *parent){
@@ -32,28 +47,88 @@ void Notes::newClicked(Ui::MainWindow *ui){
 //    openFile(fileName, ui, parent);
 //}
 
+
+
+void Notes::changeLanguage(QString fileName, Ui::MainWindow *ui){
+
+    std::map<QString,  QSourceHighlite::QSourceHighliter::Language> extToLanguageMap = {
+        { ".cpp",  QSourceHighlite::QSourceHighliter::Language::CodeCpp },
+        { ".hpp", QSourceHighlite::QSourceHighliter::Language::CodeCpp },
+        { ".js", QSourceHighlite::QSourceHighliter::Language::CodeJs },
+        { ".c", QSourceHighlite::QSourceHighliter::Language::CodeC },
+        { ".h", QSourceHighlite::QSourceHighliter::Language::CodeC },
+        { ".php", QSourceHighlite::QSourceHighliter::Language::CodePHP },
+        { ".qml", QSourceHighlite::QSourceHighliter::Language::CodeQML },
+        { ".py", QSourceHighlite::QSourceHighliter::Language::CodePython },
+        { ".rs", QSourceHighlite::QSourceHighliter::Language::CodeRust },
+        { ".java", QSourceHighlite::QSourceHighliter::Language::CodeJava },
+        { ".class", QSourceHighlite::QSourceHighliter::Language::CodeJava},
+        { ".cs", QSourceHighlite::QSourceHighliter::Language::CodeCSharp },
+        { ".go", QSourceHighlite::QSourceHighliter::Language::CodeGo },
+        { ".sql", QSourceHighlite::QSourceHighliter::Language::CodeSQL },
+        { ".json", QSourceHighlite::QSourceHighliter::Language::CodeJSON },
+        { ".xml", QSourceHighlite::QSourceHighliter::Language::CodeXML },
+        { ".html", QSourceHighlite::QSourceHighliter::Language::CodeXML },
+        { ".css", QSourceHighlite::QSourceHighliter::Language::CodeCSS },
+        { ".ts", QSourceHighlite::QSourceHighliter::Language::CodeTypeScript },
+        { ".yaml", QSourceHighlite::QSourceHighliter::Language::CodeYAML },
+        { ".ini", QSourceHighlite::QSourceHighliter::Language::CodeINI },
+        { ".vex", QSourceHighlite::QSourceHighliter::Language::CodeVex },
+        { ".s", QSourceHighlite::QSourceHighliter::Language::CodeAsm },
+        { ".lua", QSourceHighlite::QSourceHighliter::Language::CodeLua },
+    };
+
+    QString extension = fileName.right(fileName.length() - fileName.lastIndexOf("."));
+
+    auto it = extToLanguageMap.find(extension);
+    if (it != extToLanguageMap.end()) {
+        if(!m_highliter){
+            m_highliter = new QSourceHighlite::QSourceHighliter(m_mw->textEdit->document());
+        }
+        m_highliter->setCurrentLanguage(it->second);
+    } else if (fileName.startsWith("#! /usr/bin/python")) {
+        m_highliter->setCurrentLanguage(QSourceHighlite::QSourceHighliter::Language::CodePython);
+    } else if (fileName.startsWith("#! /bin/bash")) {
+        m_highliter->setCurrentLanguage(QSourceHighlite::QSourceHighliter::Language::CodeBash);
+    } else if(m_highliter){
+        qDebug() << "1";
+        m_defaultFormat.setForeground(Qt::black);  // Adjust color as needed
+        ui->textEdit->setCurrentCharFormat(m_defaultFormat);
+        qDebug() << "2";
+
+    }
+}
+
 void Notes::openClicked(Ui::MainWindow *ui, QWidget *parent){
     QString fileName = QFileDialog::getOpenFileName(parent, "Otvori novu datoteku");
     if(QString::compare(fileName, "")){//bez provere je izbacivao gresku kada se korisnik predomisli i zatvori prozor za odabir datoteke
         QFile file(fileName);
-        currentFile = fileName;
+        m_currentFile = fileName;
 
         if(!file.open(QIODevice::ReadOnly | QFile::Text)){
             return;
         }
 
-        parent->setWindowTitle(fileName);
+        parent->setWindowTitle(fileName.right(fileName.length() - fileName.lastIndexOf("/")-1));
         QTextStream in(&file);
         QString text = in.readAll();
 
+        changeLanguage(fileName, ui);
+
+        if(m_fileContentUnchanged){
+            delete m_fileContentUnchanged;
+        }
+        m_fileContentUnchanged = new QString(text);
+
         ui->textEdit->setText(text);
+
         file.close();
     }
 }
 
 void Notes::saveClicked(Ui::MainWindow *ui, QWidget *parent){
 
-    if (currentFile.isEmpty()) {
+    if (m_currentFile.isEmpty()) {
         QString fileName = QFileDialog::getSaveFileName(parent, "Sacuvaj.");//mislim da treci argument ove f je moze primiti put direktorijuma u kome ce se otvoriti to cudo, treba napraviti geter za hubPath da se ovde prosledi
         QFile file(fileName);
 
@@ -61,15 +136,16 @@ void Notes::saveClicked(Ui::MainWindow *ui, QWidget *parent){
             return;
         }
 
-        currentFile = fileName;
-        parent->setWindowTitle(fileName);
+        m_currentFile = fileName;
+        parent->setWindowTitle(fileName.right(fileName.length() - fileName.lastIndexOf("/")-1));
 
         QTextStream out(&file);
         QString text = ui->textEdit->toPlainText();
         out << text;
+
         file.close();
     } else {
-        QFile file(currentFile);
+        QFile file(m_currentFile);
 
         if (!file.open(QFile::WriteOnly | QFile::Text)) {
             return;
@@ -78,8 +154,15 @@ void Notes::saveClicked(Ui::MainWindow *ui, QWidget *parent){
         QTextStream out(&file);
         QString text = ui->textEdit->toPlainText();
         out << text;
+        if(m_fileContentUnchanged){
+            delete m_fileContentUnchanged;
+        }
+        m_fileContentUnchanged = new QString(text);
         file.close();
     }
+    parent->setWindowTitle(m_currentFile.right(m_currentFile.length() - m_currentFile.lastIndexOf("/")-1));
+    changeLanguage(m_currentFile, ui);
+    //nesto mi se cini da ovo ne radi, ako je to tacno treba jelte popraviti
 }
 
 void Notes::copyClicked(Ui::MainWindow *ui){
@@ -97,4 +180,16 @@ void Notes::undoClicked(Ui::MainWindow *ui){
 }
 void Notes::redoClicked(Ui::MainWindow *ui){
     ui->textEdit->redo();
+}
+
+void Notes::notesContentChanged(QWidget* parent, Ui::MainWindow* ui){
+
+    if(QString::compare(m_currentFile, "")){
+        if(QString::compare(ui->textEdit->toPlainText(), *m_fileContentUnchanged)){
+            parent->setWindowTitle(m_currentFile.right(m_currentFile.length() - m_currentFile.lastIndexOf("/")-1) + "*");//TODO ovde moze jos jedan if da se tajtl ne menja ako je vec ovakav (bolje tri ifa nego dva ifa i promena naslova u to sto vec jeste)
+        }else{
+            parent->setWindowTitle(m_currentFile.right(m_currentFile.length() - m_currentFile.lastIndexOf("/")-1));
+        }
+    }
+
 }

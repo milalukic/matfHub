@@ -99,7 +99,7 @@ void FileManager::fileViewDoubleClicked(const QModelIndex &index)
             auto fileExtension = clickedFilePath.last(clickedFilePath.length() - lastDot);
             if(".txt" == fileExtension || ".json" == fileExtension){
                 m_mainWindow->ui->tabWidgetMatfHub->setCurrentIndex(2); //ovo je tvrdo kodirano, bilo bi lepo izvuci indeks iz imena ili makar definisati enum
-                m_mainWindow->notes->openFile(clickedFilePath, m_mainWindow->ui, m_mainWindow);
+                m_mainWindow->m_notes->openFile(clickedFilePath, m_mainWindow->ui, m_mainWindow);
             }else{
                 QDesktopServices::openUrl(fileModel->fileInfo(index).absoluteFilePath());
             }

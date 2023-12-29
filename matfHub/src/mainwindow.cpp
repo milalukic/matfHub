@@ -55,8 +55,20 @@ MainWindow::MainWindow(QWidget *parent)
     // Kalendar
     calendar = new class Calendar(ui);
 
-    // Notes
-    notes = new class Notes();
+
+    // Notes klasa
+    m_notes = new class Notes(ui);
+    QString sPath = ""; //ovde kasnije dodati path i gurnuti ga u setRootPath
+
+    // Ctrl+S shortcut za cuvanje datoteke u notesu
+    QShortcut *saveShortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_S), this);
+    connect(saveShortcut, &QShortcut::activated, this, &MainWindow::on_saveNotesButton_clicked);
+    // Ctrl+O za otvaranje datoteke u notesu
+    QShortcut *openShortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_O), this);
+    connect(openShortcut, &QShortcut::activated, this, &MainWindow::on_openFileNotesButton_clicked);
+    // Ctrl+N za novu datoteku u notesu
+    QShortcut *newShortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_N), this);
+    connect(newShortcut, &QShortcut::activated, this, &MainWindow::on_newFileNotesButton_clicked);
 
     ui->dirView->setModel(m_fileManager->dirModel);
     ui->dirView->hideColumn(1);
@@ -111,8 +123,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pbMatrixMultiply, &QPushButton::clicked, this, &MainWindow::calculateMatrixMultiply);
     connect(ui->pbMatrixDiagonal, &QPushButton::clicked, this, &MainWindow::calculateMatrixDiag);
 
-
-
     //connect(ui->listFileView, &QPushButton::clicked, this, &MainWindow::on_fileView_doubleClicked);
 
     //kalk
@@ -144,6 +154,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pbBox, &QPushButton::clicked, this, &MainWindow::statPlotBox);
 
     connect(ui->pbHistorySave, &QPushButton::clicked, this, &MainWindow::historySave);
+
+    connect(ui->textEdit, &QTextEdit::textChanged, this, [this](){
+        m_notes->notesContentChanged(this, ui);
+    });
 
 }
 
@@ -228,46 +242,59 @@ MainWindow::~MainWindow()
 
 
 // Funkcionalnosti Notes toolbara
+
+// Nova Datoteka
 void MainWindow::on_newFileNotesButton_clicked()
 {
-    notes->newClicked(ui);
+    m_notes->newClicked(ui, this);
 }
 
+// Otvori Datoteku
 void MainWindow::on_openFileNotesButton_clicked()
 {
-    notes->openClicked(ui, this);
+    if(ui->tabWidgetMatfHub->currentIndex() == 2){
+        m_notes->openClicked(ui, this);
+    }
 }
 
-
+// Sacuvaj Datoteku (Save As ako nije prethodno cuvana, Save ako jeste.)
 void MainWindow::on_saveNotesButton_clicked()//save/save as? trenutno najlaksa opcija da se sacuva izmena jednog fajla u drugi je ctrl+a ctrl+c ctrl+n ctrl+v ctrl+s (takodje bilo bi kul da se prva tri dugmeta aktiviraju i na ctrl+n ctrl+s i ctrl+o
 {
-    notes->saveClicked(ui, this);
+    if(ui->tabWidgetMatfHub->currentIndex() == 2){
+        m_notes->saveClicked(ui, this);
+    }
 }
 
+// Kopiranje teksta
 void MainWindow::on_copyNotesButton_clicked()
 {
-    notes->copyClicked(ui);
+    m_notes->copyClicked(ui);
 }
 
+// Nalepljivanje teksta
 void MainWindow::on_pasteNotesButton_clicked()
 {
-    notes->pasteClicked(ui);
+    m_notes->pasteClicked(ui);
 }
 
+// Isecanje teksta
 void MainWindow::on_cutNotesButton_clicked()
 {
-    notes->cutClicked(ui);
+    m_notes->cutClicked(ui);
 }
 
+// Korak unazad
 void MainWindow::on_undoNotesButton_clicked()
 {
-    notes->undoClicked(ui);
+    m_notes->undoClicked(ui);
 }
 
+// Korak unapred
 void MainWindow::on_redoNotesButton_clicked()
 {
-    notes->redoClicked(ui);
+    m_notes->redoClicked(ui);
 }
+
 
 
 // funkc fMenadzera
@@ -894,7 +921,7 @@ void MainWindow::on_calendarWidget_clicked(const QDate &date)
     calendar->dateChanged(ui, date);
 }
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_addToCalendarButton_clicked()
 {
     calendar->taskAdded(ui);
 }
@@ -907,12 +934,12 @@ void MainWindow::plotSin(){
 
 }
 
-void MainWindow::on_pushButton_2_clicked()
+void MainWindow::on_removeItemButton_clicked()
 {
     calendar->removeTask(ui);
 }
 
-void MainWindow::on_pushButton_3_clicked()
+void MainWindow::on_removeAllButton_clicked()
 {
     calendar->removeAll(ui);
 
@@ -1147,3 +1174,4 @@ void MainWindow::historySave(){
     history->saveHistory();
     std::cout << "History saved!" << std::endl;
 }
+

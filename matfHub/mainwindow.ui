@@ -36,7 +36,7 @@
        <enum>Qt::DefaultContextMenu</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="FileManagerTab">
        <attribute name="title">
@@ -1964,7 +1964,7 @@
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <layout class="QHBoxLayout" name="kalkulatorLayout">
           <item>
            <widget class="QPushButton" name="pbChangeRegular">
             <property name="text">
@@ -1998,9 +1998,9 @@
         <item>
          <widget class="QStackedWidget" name="stackedWidget">
           <property name="currentIndex">
-           <number>1</number>
+           <number>3</number>
           </property>
-          <widget class="QWidget" name="page">
+          <widget class="QWidget" name="parserPAge">
            <layout class="QVBoxLayout" name="verticalLayout_4">
             <item>
              <widget class="QLineEdit" name="leParser"/>
@@ -2014,21 +2014,21 @@
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="page_2">
+          <widget class="QWidget" name="matrixPage">
            <layout class="QHBoxLayout" name="horizontalLayout_15">
             <item>
-             <layout class="QVBoxLayout" name="verticalLayout_9" stretch="0,0">
+             <layout class="QVBoxLayout" name="inputMatrixLayout" stretch="0,0">
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_13">
+               <layout class="QHBoxLayout" name="inputMatricesLayout">
                 <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_12">
+                 <layout class="QHBoxLayout" name="M1DimensionLayout">
                   <item>
                    <layout class="QFormLayout" name="formLayout">
                     <item row="1" column="1">
                      <widget class="QLineEdit" name="leMatrixDim12"/>
                     </item>
                     <item row="1" column="0">
-                     <widget class="QLabel" name="label_6">
+                     <widget class="QLabel" name="lbM1cols">
                       <property name="text">
                        <string>Columns:</string>
                       </property>
@@ -2038,7 +2038,7 @@
                      <widget class="QLineEdit" name="leMatrixDim11"/>
                     </item>
                     <item row="0" column="0">
-                     <widget class="QLabel" name="label_5">
+                     <widget class="QLabel" name="lbM1rows">
                       <property name="text">
                        <string>Rows:</string>
                       </property>
@@ -2085,9 +2085,9 @@
                  </layout>
                 </item>
                 <item>
-                 <layout class="QFormLayout" name="formLayout_2">
+                 <layout class="QFormLayout" name="M2DimensionLayout">
                   <item row="0" column="0">
-                   <widget class="QLabel" name="label_7">
+                   <widget class="QLabel" name="lbM2rows">
                     <property name="text">
                      <string>Rows:</string>
                     </property>
@@ -2097,7 +2097,7 @@
                    <widget class="QLineEdit" name="leMatrixDim21"/>
                   </item>
                   <item row="1" column="0">
-                   <widget class="QLabel" name="label_8">
+                   <widget class="QLabel" name="lbM2cols">
                     <property name="text">
                      <string>Columns:</string>
                     </property>
@@ -2147,9 +2147,9 @@
                </layout>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_14">
+               <layout class="QHBoxLayout" name="inputMatrixOperationLayout">
                 <item>
-                 <layout class="QGridLayout" name="gridLayout_2">
+                 <layout class="QGridLayout" name="binaryMAtrixOperationLayout">
                   <item row="0" column="0">
                    <widget class="QPushButton" name="pbMatrixAdd">
                     <property name="text">
@@ -2181,7 +2181,7 @@
                  </layout>
                 </item>
                 <item>
-                 <layout class="QGridLayout" name="gridLayout">
+                 <layout class="QGridLayout" name="unaryMAtrixOperationsLAyout">
                   <item row="0" column="0">
                    <widget class="QPushButton" name="pbMatrixTranspose">
                     <property name="text">
@@ -2217,7 +2217,7 @@
              </layout>
             </item>
             <item>
-             <layout class="QVBoxLayout" name="verticalLayout_3">
+             <layout class="QVBoxLayout" name="savedMatrixLayout">
               <item>
                <widget class="QScrollArea" name="scrollAreaSavedM">
                 <property name="widgetResizable">
@@ -2228,8 +2228,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>187</width>
-                   <height>384</height>
+                   <width>147</width>
+                   <height>387</height>
                   </rect>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -2251,14 +2251,14 @@
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="page_3">
+          <widget class="QWidget" name="plotPage">
            <layout class="QHBoxLayout" name="horizontalLayout_3">
             <item>
-             <layout class="QVBoxLayout" name="verticalLayout_5">
+             <layout class="QVBoxLayout" name="plotLinSpaceLayout">
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_4">
+               <layout class="QHBoxLayout" name="lboundLayout">
                 <item>
-                 <widget class="QLabel" name="label">
+                 <widget class="QLabel" name="lbLinspaceLB">
                   <property name="text">
                    <string>Lower bound:</string>
                   </property>
@@ -2274,9 +2274,9 @@
                </layout>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_5">
+               <layout class="QHBoxLayout" name="uboundLayout">
                 <item>
-                 <widget class="QLabel" name="label_3">
+                 <widget class="QLabel" name="lbLinspaceUB">
                   <property name="text">
                    <string>Upper bound:</string>
                   </property>
@@ -2292,9 +2292,9 @@
                </layout>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_6">
+               <layout class="QHBoxLayout" name="numdotsLayout">
                 <item>
-                 <widget class="QLabel" name="label_4">
+                 <widget class="QLabel" name="lbLinspaceS">
                   <property name="text">
                    <string>Num of dots:</string>
                   </property>
@@ -2332,9 +2332,9 @@
              </spacer>
             </item>
             <item>
-             <layout class="QFormLayout" name="formLayout_3">
+             <layout class="QFormLayout" name="funcInputLayout">
               <item row="0" column="0">
-               <widget class="QLabel" name="labelState">
+               <widget class="QLabel" name="lbState">
                 <property name="text">
                  <string>Current state:</string>
                 </property>
@@ -2362,7 +2362,7 @@
                </widget>
               </item>
               <item row="1" column="1">
-               <spacer name="verticalSpacer">
+               <spacer name="fInSpacer">
                 <property name="orientation">
                  <enum>Qt::Vertical</enum>
                 </property>
@@ -2390,7 +2390,7 @@
              </spacer>
             </item>
             <item>
-             <layout class="QGridLayout" name="gridLayout_3">
+             <layout class="QGridLayout" name="plotPbLayout">
               <item row="1" column="2">
                <widget class="QPushButton" name="pbExp">
                 <property name="text">
@@ -2472,10 +2472,10 @@
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="page_4">
+          <widget class="QWidget" name="statisticsPage">
            <layout class="QVBoxLayout" name="verticalLayout_6">
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_7">
+             <layout class="QHBoxLayout" name="inputLayout">
               <item>
                <widget class="QLabel" name="label_9">
                 <property name="text">
@@ -2489,9 +2489,9 @@
              </layout>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_8">
+             <layout class="QHBoxLayout" name="namesLayout">
               <item>
-               <widget class="QLabel" name="label_10">
+               <widget class="QLabel" name="lbNames">
                 <property name="text">
                  <string>Names:</string>
                 </property>
@@ -2503,7 +2503,7 @@
              </layout>
             </item>
             <item>
-             <layout class="QGridLayout" name="gridLayout_4">
+             <layout class="QGridLayout" name="statPbLayout">
               <item row="0" column="2">
                <widget class="QPushButton" name="pbVariance">
                 <property name="text">
@@ -2582,133 +2582,186 @@
        </layout>
       </widget>
       <widget class="QWidget" name="NotesTab">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <attribute name="title">
         <string>Notes</string>
        </attribute>
-       <widget class="QWidget" name="verticalLayoutWidget">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>60</y>
-          <width>691</width>
-          <height>471</height>
-         </rect>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout">
-         <item>
-          <widget class="QTextEdit" name="textEdit"/>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QWidget" name="horizontalLayoutWidget">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>20</y>
-          <width>691</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <layout class="QHBoxLayout" name="toolbarLayout">
-         <item>
-          <widget class="QPushButton" name="newFileNotesButton">
-           <property name="styleSheet">
-            <string notr="true"/>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="resources.qrc">
-             <normaloff>:/icons/icons/new.png</normaloff>:/icons/icons/new.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="saveNotesButton">
-           <property name="styleSheet">
-            <string notr="true"/>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="resources.qrc">
-             <normaloff>:/icons/icons/save.png</normaloff>:/icons/icons/save.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="openFileNotesButton">
-           <property name="styleSheet">
-            <string notr="true"/>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="resources.qrc">
-             <normaloff>:/icons/icons/open.jpg</normaloff>:/icons/icons/open.jpg</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="copyNotesButton">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="resources.qrc">
-             <normaloff>:/icons/icons/copy.png</normaloff>:/icons/icons/copy.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="pasteNotesButton">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="resources.qrc">
-             <normaloff>:/icons/icons/paste.png</normaloff>:/icons/icons/paste.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="cutNotesButton">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="resources.qrc">
-             <normaloff>:/icons/icons/cut.png</normaloff>:/icons/icons/cut.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="undoNotesButton">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="resources.qrc">
-             <normaloff>:/icons/icons/undo.png</normaloff>:/icons/icons/undo.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="redoNotesButton">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="resources.qrc">
-             <normaloff>:/icons/icons/redo.png</normaloff>:/icons/icons/redo.png</iconset>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <layout class="QVBoxLayout" name="notesLayout">
+          <item>
+           <layout class="QHBoxLayout" name="toolbarLayout">
+            <item>
+             <widget class="QPushButton" name="newFileNotesButton">
+              <property name="minimumSize">
+               <size>
+                <width>64</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="resources.qrc">
+                <normaloff>:/icons/icons/new.png</normaloff>:/icons/icons/new.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="saveNotesButton">
+              <property name="minimumSize">
+               <size>
+                <width>64</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="resources.qrc">
+                <normaloff>:/icons/icons/save.png</normaloff>:/icons/icons/save.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="openFileNotesButton">
+              <property name="minimumSize">
+               <size>
+                <width>64</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="resources.qrc">
+                <normaloff>:/icons/icons/open.jpg</normaloff>:/icons/icons/open.jpg</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="copyNotesButton">
+              <property name="minimumSize">
+               <size>
+                <width>64</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="resources.qrc">
+                <normaloff>:/icons/icons/copy.png</normaloff>:/icons/icons/copy.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pasteNotesButton">
+              <property name="minimumSize">
+               <size>
+                <width>64</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="resources.qrc">
+                <normaloff>:/icons/icons/paste.png</normaloff>:/icons/icons/paste.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="cutNotesButton">
+              <property name="minimumSize">
+               <size>
+                <width>64</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="resources.qrc">
+                <normaloff>:/icons/icons/cut.png</normaloff>:/icons/icons/cut.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="undoNotesButton">
+              <property name="minimumSize">
+               <size>
+                <width>64</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="resources.qrc">
+                <normaloff>:/icons/icons/undo.png</normaloff>:/icons/icons/undo.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="redoNotesButton">
+              <property name="minimumSize">
+               <size>
+                <width>64</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="resources.qrc">
+                <normaloff>:/icons/icons/redo.png</normaloff>:/icons/icons/redo.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="notesSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QTextEdit" name="textEdit"/>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="RasporedTab">
        <attribute name="title">
@@ -2888,7 +2941,7 @@
        <attribute name="title">
         <string>Kalendar</string>
        </attribute>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="addToCalendarButton">
         <property name="geometry">
          <rect>
           <x>940</x>
@@ -2938,7 +2991,7 @@
          </date>
         </property>
        </widget>
-       <widget class="QTextEdit" name="textEdit_3">
+       <widget class="QTextEdit" name="newItemEdit">
         <property name="geometry">
          <rect>
           <x>660</x>
@@ -2948,7 +3001,7 @@
          </rect>
         </property>
        </widget>
-       <widget class="QPushButton" name="pushButton_2">
+       <widget class="QPushButton" name="removeItemButton">
         <property name="geometry">
          <rect>
           <x>660</x>
@@ -2961,7 +3014,7 @@
          <string>Ukloni</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="pushButton_3">
+       <widget class="QPushButton" name="removeAllButton">
         <property name="geometry">
          <rect>
           <x>750</x>
@@ -2974,7 +3027,7 @@
          <string>Ukloni sve</string>
         </property>
        </widget>
-       <widget class="QLabel" name="novaStavkaLabel">
+       <widget class="QLabel" name="newItemLabel">
         <property name="geometry">
          <rect>
           <x>660</x>
@@ -2997,7 +3050,7 @@
          </rect>
         </property>
        </widget>
-       <widget class="QLabel" name="label_10">
+       <widget class="QLabel" name="planerLabel">
         <property name="geometry">
          <rect>
           <x>660</x>
@@ -3037,7 +3090,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1315</width>
+     <width>1156</width>
      <height>22</height>
     </rect>
    </property>

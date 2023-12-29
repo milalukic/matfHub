@@ -8,8 +8,6 @@ set(CMAKE_AUTORCC ON)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-#bez ovoga ne prolazi mi na laptopu bild, ako neko ima problem sa ovime javite da resimo kako treba posto mislim da je ovo vise kvik fiks samo da radi
-set(CMAKE_CXX_FLAGS "-Wl,--copy-dt-needed-entries")
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Network Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Network Core)
@@ -39,7 +37,9 @@ file(GLOB PROJECT_SOURCES
         "matfHub/src/*.cpp"
         "matfHub/include/*.hpp"
         "matfHub/include/*.h"
-	    "matfHub/*.ui"
+	"matfHub/*.ui"
+	"matfHub/QSourceHighlite/*.cpp"
+	"matfHub/QSourceHighlite/*.h"
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
