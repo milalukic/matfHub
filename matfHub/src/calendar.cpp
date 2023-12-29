@@ -9,6 +9,9 @@
 #include <QDateEdit>
 #include <QDate>
 
+#define __FILENAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
+#define DEBUG (qDebug() << __FILENAME__ << ":" << __LINE__ << ":\t")
+
 Calendar::Calendar(Ui::MainWindow* ui) {
     initializeMap(ui);
     ui->calendarWidget->setSelectedDate(selectedDate);
@@ -142,6 +145,7 @@ void Calendar::initializeMap(Ui::MainWindow *ui){
     }
 
     QByteArray jsonDataSchedule = schedulePath.readAll();
+    //DEBUG << jsonDataSchedule;
     schedulePath.close();
 
     QJsonDocument jsonDocSchedule = QJsonDocument::fromJson(jsonDataSchedule);
@@ -150,11 +154,20 @@ void Calendar::initializeMap(Ui::MainWindow *ui){
     }
 
     QJsonArray coursesArray = jsonDocSchedule.array();
+    //DEBUG << coursesArray;
 
+    int i = 0;
     for (const auto& courseData : coursesArray) {
-        QJsonObject courseObject = jsonDocSchedule.object();
+        //DEBUG << i++;
+        //DEBUG << "courseData:";
+        //DEBUG << courseData;
+        QJsonObject courseObject = courseData.toObject();
+        //DEBUG << "courseObject";
+        //DEBUG << courseObject;
 
         QString desc = courseObject["description"].toString();
+        //DEBUG << "desc:";
+        //DEBUG << desc;
         int d = courseObject["day"].toInt();
 
         QDate today = QDate::currentDate();
@@ -164,6 +177,5 @@ void Calendar::initializeMap(Ui::MainWindow *ui){
             addCourse(next_d, desc);
             next_d = next_d.addDays(7);
         }
-        }
     }
-
+}
