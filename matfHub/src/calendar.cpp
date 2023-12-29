@@ -174,24 +174,26 @@ void Calendar::initializeMap(){
 
         QString desc = courseObject["description"].toString();
 
-        int start = courseObject["start"].toInt() - 8;
+        int start = courseObject["start"].toInt();// - 8; za ovim nema potrebe jer je ovo vec uradjeno u skrejperu
         int dur = courseObject["duration"].toInt();
         QString teacher = courseObject["teacher"].toString();
         QString classroom = courseObject["classroom"].toString();
 
-        int d = courseObject["day"].toInt()+1;
+        int d = courseObject["day"].toInt()+1; // ovo je problem
 
-        if(start<8){
-            start+=12;
-        }
+//        if(start<8){
+//            start+=12;    takodje ni ovo nije potrebno
+//        }
 
         QString itemStr = QString::number(start) + ":15 - " + QString::number(start+dur) + ":00 " + desc + "\n" + teacher + " " + classroom;
 
-        if(day_to_class[d].empty()){
+        if(day_to_class[d].empty()){ //ovo je problem
             day_to_class[d] = {};
         }
         day_to_class[d].append(itemStr);
-    }
+    }//treba ti nacin da znas koji je dan kliknut, zatim da dohvatis njegov index [1-28/29/30/31] i da ga onda popuni
+    //ovo ovako implementirano moze da popunjava samo dane sa indeksima od 1 do 7 sto je prva nedelja u svakom mesecu
+    // i jos na to ako prvi dan igorm slucaja nije ponedelja, popunjavace ga pogresno
 
 }
 
