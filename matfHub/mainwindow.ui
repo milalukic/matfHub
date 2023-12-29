@@ -507,7 +507,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="go-previous"/>
+         <iconset theme="go-previous">
+          <normaloff>.</normaloff>.</iconset>
         </property>
        </widget>
        <widget class="QPushButton" name="forwardButton">
@@ -968,7 +969,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="go-next"/>
+         <iconset theme="go-next">
+          <normaloff>.</normaloff>.</iconset>
         </property>
         <property name="autoDefault">
          <bool>false</bool>
@@ -1445,7 +1447,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="go-home"/>
+         <iconset theme="go-home">
+          <normaloff>.</normaloff>.</iconset>
         </property>
        </widget>
        <widget class="QLineEdit" name="currentFilePath">
@@ -1913,7 +1916,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="go-up"/>
+         <iconset theme="go-up">
+          <normaloff>.</normaloff>.</iconset>
         </property>
        </widget>
        <widget class="QPushButton" name="newFolderButton">
@@ -1929,7 +1933,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="folder-new"/>
+         <iconset theme="folder-new">
+          <normaloff>.</normaloff>.</iconset>
         </property>
        </widget>
       </widget>
@@ -1966,7 +1971,7 @@
         <item>
          <widget class="QStackedWidget" name="stackedWidget">
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="page">
            <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -2198,133 +2203,186 @@
        </layout>
       </widget>
       <widget class="QWidget" name="NotesTab">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <attribute name="title">
         <string>Notes</string>
        </attribute>
-       <widget class="QWidget" name="verticalLayoutWidget">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>60</y>
-          <width>691</width>
-          <height>471</height>
-         </rect>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout">
-         <item>
-          <widget class="QTextEdit" name="textEdit"/>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QWidget" name="horizontalLayoutWidget">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>20</y>
-          <width>691</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <layout class="QHBoxLayout" name="toolbarLayout">
-         <item>
-          <widget class="QPushButton" name="newFileToolbarButton">
-           <property name="styleSheet">
-            <string notr="true"/>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="resources.qrc">
-             <normaloff>:/icons/icons/new.png</normaloff>:/icons/icons/new.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="saveToolbarButton">
-           <property name="styleSheet">
-            <string notr="true"/>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="resources.qrc">
-             <normaloff>:/icons/icons/save.png</normaloff>:/icons/icons/save.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="openFileToolbarButton">
-           <property name="styleSheet">
-            <string notr="true"/>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="resources.qrc">
-             <normaloff>:/icons/icons/open.jpg</normaloff>:/icons/icons/open.jpg</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="copyToolbarButton">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="resources.qrc">
-             <normaloff>:/icons/icons/copy.png</normaloff>:/icons/icons/copy.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="pasteToolbarButton">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="resources.qrc">
-             <normaloff>:/icons/icons/paste.png</normaloff>:/icons/icons/paste.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="cutToolbarButton">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="resources.qrc">
-             <normaloff>:/icons/icons/cut.png</normaloff>:/icons/icons/cut.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="undoToolbarButton">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="resources.qrc">
-             <normaloff>:/icons/icons/undo.png</normaloff>:/icons/icons/undo.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="redoToolbarButton">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="resources.qrc">
-             <normaloff>:/icons/icons/redo.png</normaloff>:/icons/icons/redo.png</iconset>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <layout class="QVBoxLayout" name="notesLayout">
+          <item>
+           <layout class="QHBoxLayout" name="toolbarLayout">
+            <item>
+             <widget class="QPushButton" name="newFileToolbarButton">
+              <property name="minimumSize">
+               <size>
+                <width>64</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="resources.qrc">
+                <normaloff>:/icons/icons/new.png</normaloff>:/icons/icons/new.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="saveToolbarButton">
+              <property name="minimumSize">
+               <size>
+                <width>64</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="resources.qrc">
+                <normaloff>:/icons/icons/save.png</normaloff>:/icons/icons/save.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="openFileToolbarButton">
+              <property name="minimumSize">
+               <size>
+                <width>64</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="resources.qrc">
+                <normaloff>:/icons/icons/open.jpg</normaloff>:/icons/icons/open.jpg</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="copyToolbarButton">
+              <property name="minimumSize">
+               <size>
+                <width>64</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="resources.qrc">
+                <normaloff>:/icons/icons/copy.png</normaloff>:/icons/icons/copy.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pasteToolbarButton">
+              <property name="minimumSize">
+               <size>
+                <width>64</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="resources.qrc">
+                <normaloff>:/icons/icons/paste.png</normaloff>:/icons/icons/paste.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="cutToolbarButton">
+              <property name="minimumSize">
+               <size>
+                <width>64</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="resources.qrc">
+                <normaloff>:/icons/icons/cut.png</normaloff>:/icons/icons/cut.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="undoToolbarButton">
+              <property name="minimumSize">
+               <size>
+                <width>64</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="resources.qrc">
+                <normaloff>:/icons/icons/undo.png</normaloff>:/icons/icons/undo.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="redoToolbarButton">
+              <property name="minimumSize">
+               <size>
+                <width>64</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="resources.qrc">
+                <normaloff>:/icons/icons/redo.png</normaloff>:/icons/icons/redo.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QTextEdit" name="textEdit"/>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="RasporedTab">
        <attribute name="title">
@@ -2516,7 +2574,7 @@
      <x>0</x>
      <y>0</y>
      <width>1315</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
