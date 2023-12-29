@@ -18,9 +18,7 @@ Schedule::Schedule(){
 }
 
 void Schedule::changeModule(Ui::MainWindow *ui, int index){
-//    if(index == 0) {
-//        return;
-//    }
+
     clearTable(ui);
     selectedCourses.clear();
     selectedModule = modules[index];

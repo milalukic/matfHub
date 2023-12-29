@@ -38,6 +38,13 @@ MainWindow::MainWindow(QWidget *parent)
     notes = new class Notes();
     QString sPath = ""; //ovde kasnije dodati path i gurnuti ga u setRootPath
 
+    //Ucitavanje rasporeda
+    QString schedulePath = "../matfHub/raspored.json";
+    QFile scheduleFile(schedulePath);
+    if (scheduleFile.exists() && scheduleFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        schedule->loadSchedule(ui);
+        scheduleFile.close();
+    }
     ui->dirView->setModel(m_fileManager->dirModel);
     ui->dirView->hideColumn(1);
     ui->dirView->hideColumn(2);
@@ -239,12 +246,6 @@ void MainWindow::on_actionExit_triggered()
 
 
 //raspored stvari
-
-
-void MainWindow::on_tabWidgetMatfHub_tabBarClicked(int index)
-{
-    schedule->loadSchedule(ui);
-}
 
 
 void MainWindow::on_smerBox_activated(int index)

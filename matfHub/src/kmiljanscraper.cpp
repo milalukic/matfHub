@@ -14,39 +14,6 @@ KmiljanScraper::KmiljanScraper(){
     baseLink = "http://poincare.matf.bg.ac.rs/~miljan.knezevic/raspored/sve/";
 };
 
-//std::string KmiljanScraper::loadHtmlFromFile(const std::string& filePath) {
-//    std::ifstream file(filePath);
-//    if (file.is_open()) {
-//        std::string content((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
-//        file.close();
-//        return content;
-//        std::cout << "Html ucitan iz fajla" << std::endl;
-//    }
-//    return "";
-//}
-
-//void KmiljanScraper::saveHtmlToFile(const std::string& filePath, const std::string& content) {
-//    std::ofstream file(filePath);
-//    if (file.is_open()) {
-//        file << content;
-//        file.close();
-//        std::cout << "Html sacuvan u fajl" << std::endl;
-//    }
-//}
-
-//std::string KmiljanScraper::getHtmlContent() {
-//    std::string filePath = "../matfHub/raspored.html";
-//    std::string htmlContent = loadHtmlFromFile(filePath);
-//    if (htmlContent.empty()) {
-//        MaybeHtml maybeHtml = requestHandler.getMaybeHtml(baseLink);
-//        if (maybeHtml.has_value()) {
-//            htmlContent = maybeHtml.value();
-//            saveHtmlToFile(filePath, htmlContent);
-//        }
-//    }
-//    return htmlContent;
-//}
-
 std::unordered_map<std::string, std::string> KmiljanScraper::getRooms(std::string baseHtml){
     std::unordered_map<std::string, std::string> roomUrlMap;
     QRegularExpression regex("value=\"(room_\\d+\\.html)\">([^<]+)</OPTION");
@@ -121,13 +88,7 @@ Course KmiljanScraper::tdToCourse(QString tdHtml, int day, int start){
                 modules.insert(kv.second);
             }
         }
-//        if (sg.contains("O")){
-//            modules.insert("Racunarstvo");
-//            modules.insert("Teorijska");
-//            modules.insert("Primenjena");
-//            modules.insert("Akturska");
-//            modules.insert("Profesor");
-//        }
+
     }
     for(auto& g : groups){
         int year = g[0]-'0';
@@ -155,7 +116,7 @@ QStringList splitByTd(QString text){
             lines << text.mid(startPos, endPos - startPos);
             startPos = endPos;
         } else {
-            lines << text.mid(startPos); // Add the remaining part to the list
+            lines << text.mid(startPos);
             break;
         }
     }
@@ -192,7 +153,6 @@ QString  convertCyrillicToLatin(const QString& input) {
 
 CourseSet KmiljanScraper::tableToCourses(QString tableHtml, std::string classroom){
     CourseSet courses;
-//    QStringList lines = tableHtml.split(QRegularExpression("[\r\n]"), Qt::SkipEmptyParts);
     tableHtml = tableHtml.replace(QRegularExpression("[\n\r]"), "");
     tableHtml = tableHtml.simplified();
     QStringList lines = splitByTd(tableHtml);

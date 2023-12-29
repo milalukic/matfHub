@@ -57,12 +57,10 @@ void Generator::find(StrMap<StrMap<CourseSet>> courseTypeTermMap) {
                std::accumulate(rhs.begin(), rhs.end(), 0,
                    [](int sum, const Course& course) { return sum + course.start; });
     });
-    std::cout << "Schedules found: " << schedules.size() << std::endl;
 }
 
 void Generator::displaySchedule(QTableWidget* tableWidget, int brojRasporeda) {
 
-    std::cout << schedules.size() << " " << brojRasporeda << std::endl;
 
     tableWidget->clearContents();
     if (!schedules.empty()) {
@@ -108,7 +106,6 @@ void Generator::_find(StrMap<StrMap<CourseSet>>& courseTypeTermMap, std::vector<
                     placedList.push_back(term);
                     if(placedList.size() == stop) {
                         schedules.push_back(placedList);
-//                        std::cout << placedList[0].start + 8 << " " << placedList[0].end + 8 << " " << placedList[0].day << std::endl;
                     }
                     else {
                         _find(courseTypeTermMap, placedList, i + 1, stop, alreadySearched);
@@ -197,7 +194,7 @@ void Generator::saveCoursesToJson(const QString& filePath) {
         file.close();
         std::cout << "Raspored sacuvan" << std::endl;
     } else {
-        qDebug() << "Greska u ispisu";
+        std::cerr << "Greska u ispisu" << std::endl;
     }
 }
 
@@ -252,10 +249,10 @@ std::vector<Course> Generator::loadCoursesFromJson(const QString& filePath) {
             subgrps.insert(subgroup.toString().toStdString());
         }
 
-        Course nc(desc, d, t, s, dur, type, grps, clsrm, mods, yrs, subgrps);
-        std::cout << nc.description << " "  <<  nc.classroom << " " << nc.day << " " << nc.start << " "  << nc.duration << " " << nc.course_type <<std::endl;
-        courses.push_back(nc);
+        Course newCourse(desc, d, t, s, dur, type, grps, clsrm, mods, yrs, subgrps);
+        courses.push_back(newCourse);
     }
+
 
     return courses;
 }
