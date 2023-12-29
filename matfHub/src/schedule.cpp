@@ -3,6 +3,7 @@
 #include "../include/schedule.h"
 #include "../include/schedulegenerator.h"
 #include "../include/course.h"
+#include "../include/config.hpp"
 
 #include <QObject>
 #include <QCheckBox>
@@ -15,6 +16,7 @@
 
 Schedule::Schedule(){
     kmiljanScraper = std::make_unique<KmiljanScraper>();
+    filePath = Config::getConfig()->getConfigPath() + "/raspored.json";
 }
 
 void Schedule::changeModule(Ui::MainWindow *ui, int index){
@@ -32,12 +34,13 @@ void Schedule::changeModule(Ui::MainWindow *ui, int index){
         QCheckBox *checkBox = new QCheckBox(QString::fromStdString(course));
         scrollLayout->addWidget(checkBox);
         QObject::connect(checkBox, &QCheckBox::clicked, [=](bool checked) {
+            ui->rasporedStartButton->setFocus();
             if (checked) {
                 selectedCourses.insert(course);
-                std::cerr << "Selected " << course << std::endl;
+//                std::cerr << "Selected " << course << std::endl;
             } else {
                 selectedCourses.erase(course);
-                std::cerr << "Deselected " << course << std::endl;
+//                std::cerr << "Deselected " << course << std::endl;
             }
         });
     }
@@ -46,6 +49,9 @@ void Schedule::changeModule(Ui::MainWindow *ui, int index){
 };
 
 void Schedule::clearTable(Ui::MainWindow *ui) {
+    ui->scheduleTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->scheduleTable->setFocusPolicy(Qt::NoFocus);
+    ui->scheduleTable->setSelectionMode(QAbstractItemView::NoSelection);
     for(int r = 0; r < ui->scheduleTable->rowCount(); r++){
         for(int c = 0; c < ui->scheduleTable->columnCount(); c++){
             ui->scheduleTable->setSpan(r, c, 1, 1);
@@ -136,7 +142,6 @@ void Schedule::prevSchedule(Ui::MainWindow *ui){
 
 
 void Schedule::saveSchedule(Ui::MainWindow *ui){
-    const QString& filePath = "../matfHub/raspored.json";
     m_gen.saveCoursesToJson(filePath);
 
 }
@@ -144,7 +149,6 @@ void Schedule::saveSchedule(Ui::MainWindow *ui){
 void Schedule::loadSchedule(Ui::MainWindow *ui){
     clearTable(ui);
     Generator tmp_gen;
-    const QString& filePath = "../matfHub/raspored.json";
     std::vector<Course> load = tmp_gen.loadCoursesFromJson(filePath);
     tmp_gen.schedules.push_back(load);
     int n = tmp_gen.schedules.size() - 1;

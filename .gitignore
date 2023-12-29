@@ -105,3 +105,8 @@ CMakeLists.txt.user*
 *.exe
 *.out
 *.app
+
+# Testing
+test.cpp
+proba.cpp
+build*

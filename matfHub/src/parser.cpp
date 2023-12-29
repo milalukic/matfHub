@@ -1,260 +1,253 @@
 #include "../include/parser.hpp"
 #include "../include/parserEnum.hpp"
 #include <cstring>
-#include <math.h> 
+#include <cmath> 
 
 //TODO refactor code
 
-//TODO fix
-#define PI 3.14159265358979323846 
+#define PI 3.14159265358979323846
 
-//constructors
-    //constructor
-Parser::Parser()
-{
+Parser::Parser(){
+    vars = new double[NUMVARS];
     int i;
-    exp_ptr = NULL;
+    expressionPtr = nullptr;
     for (i = 0; i < NUMVARS; i++)
         vars[i] = 0.0;
-    errormsg[0] = '\0';
+    errorMessage[0] = '\0';
 }
-    //destructor
+
 Parser::~Parser(){
+    delete[] vars; vars = nullptr;
     std::cout << "Unisten: parser" << std::endl;
 }
 
-double Parser::eval_exp(char *exp)
-{
-    errormsg[0] = '\0';
+auto Parser::evalExpression(char *exp) -> double { 
+    errorMessage[0] = '\0';
     double result;
-    exp_ptr = exp;
-    get_token();
+    expressionPtr = exp;
+    getToken();
     if (!*token) 
     {
-        strcpy(errormsg, "No Expression Present"); // no expression present
+        strcpy(errorMessage, "No Expression Present"); // no expression present
         return (double)0;
     }
-    eval_exp1(result);
+    evalToken(result);
     if (*token) // last token must be null
-        strcpy(errormsg, "Syntax Error");
+        strcpy(errorMessage, "Syntax Error");
     return result;
 }
 
-void Parser::eval_exp1(double &result)
-{
+void Parser::evalToken(double &result){
     int slot;
-    char temp_token[80];
-    if (tok_type == VARIABLE) 
+    char tmpToken[80];
+    if (tokenType == VARIABLE)
     {
         // save old token
-        char *t_ptr = exp_ptr;
-        strcpy(temp_token, token);
+        char *tmpPtr = expressionPtr;
+        strcpy(tmpToken, token);
         // compute the index of the variable
         slot = *token - 'A';
-        get_token();
+        getToken();
         if (*token != '=') 
         {
-            exp_ptr = t_ptr; // return current token
-            strcpy(token, temp_token); // restore old token
-            tok_type = VARIABLE;
+            expressionPtr = tmpPtr; // return current token
+            strcpy(token, tmpToken); // restore old token
+            tokenType = VARIABLE;
         }
         else {
-            get_token(); // get next part of exp
-            eval_exp2(result);
+            getToken(); // get next part of exp
+            evalAdd(result);
             vars[slot] = result;
             return;
         }
     }
-    eval_exp2(result);
+    evalAdd(result);
 }
-// Add or subtract two terms.
-void Parser::eval_exp2(double &result)
-{
+// Zbir
+void Parser::evalAdd(double &result){
     char op;
     double temp;
-    eval_exp3(result);
+    evalMultiply(result);
     while ((op = *token) == '+' || op == '-')
     {
-        get_token();
-        eval_exp3(temp);
-        switch (op) 
-        {
-        case '-':
-            result = result - temp;
-            break;
-        case '+':
-            result = result + temp;
-            break;
-        }
+        getToken();
+        evalMultiply(temp);
+        checkOperator(result, op, temp);
     }
 }
-// Multiply or divide two factors.
-void Parser::eval_exp3(double &result)
-{
+// Mnozenje
+void Parser::evalMultiply(double &result){
     char op;
     double temp;
-    eval_exp4(result);
+    evalPow(result);
     while ((op = *token) == '*' || op == '/') 
     {
-        get_token();
-        eval_exp4(temp);
-        switch (op) 
-        {
-        case '*':
-            result = result * temp;
-            break;
-        case '/':
-            result = result / temp;
-            break;
-        }
+        getToken();
+        evalPow(temp);
+        checkOperator(result, op, temp);
     }
 }
-// Process an exponent.
-void Parser::eval_exp4(double &result)
-{
+// Eksponent
+void Parser::evalPow(double &result){
     double temp;
-    eval_exp5(result);
+    evalUnar(result);
     while (*token == '^')
     {
-        get_token();
-        eval_exp5(temp);
+        getToken();
+        evalUnar(temp);
         result = pow(result, temp);
     }
 }
-// Evaluate a unary + or -.
-void Parser::eval_exp5(double &result)
-{
+// Unarni operatori
+void Parser::evalUnar(double &result){
     char op;
     op = 0;
-    if ((tok_type == DELIMITER && *token == '+') || *token == '-')
+    if ((tokenType == DELIMITER && *token == '+') || *token == '-')
     {
         op = *token;
-        get_token();
+        getToken();
     }
-    eval_exp6(result);
+    evalParantheses(result);
     if (op == '-')
         result = -result;
 }
-// Process a function, a parenthesized expression, a value or a variable
-void Parser::eval_exp6(double &result)
-{
-    bool isfunc = (tok_type == FUNCTION);
-    char temp_token[80];
+// Fja, zagrade, promenljiva
+void Parser::evalParantheses(double &result){
+    bool isfunc = (tokenType == FUNCTION);
+    char tmpToken[80];
     if (isfunc)
     {
-        strcpy(temp_token, token);
-        get_token();
+        strcpy(tmpToken, token);
+        getToken();
     } 
-    if ((*token == '(')) 
+    if (*token == '(')
     {
-        get_token();
-        eval_exp2(result);
+        getToken();
+        evalAdd(result);
         if (*token != ')')
-            strcpy(errormsg, "Unbalanced Parentheses");
+            strcpy(errorMessage, "Unbalanced Parentheses");
         if (isfunc)
-        {
-            if (!strcmp(temp_token, "SIN"))
-                result = sin(PI / 180 * result);
-            else if (!strcmp(temp_token, "COS"))
-                result = cos(PI / 180 * result);
-            else if (!strcmp(temp_token, "TAN"))
-                result = tan(PI / 180 * result);
-            else if (!strcmp(temp_token, "ASIN"))
-                result = 180 / PI*asin(result);
-            else if (!strcmp(temp_token, "ACOS"))
-                result = 180 / PI*acos(result);
-            else if (!strcmp(temp_token, "ATAN"))
-                result = 180 / PI*atan(result);
-            else if (!strcmp(temp_token, "SINH"))
-                result = sinh(result);
-            else if (!strcmp(temp_token, "COSH"))
-                result = cosh(result);
-            else if (!strcmp(temp_token, "TANH"))
-                result = tanh(result);
-            else if (!strcmp(temp_token, "ASINH"))
-                result = asinh(result);
-            else if (!strcmp(temp_token, "ACOSH"))
-                result = acosh(result);
-            else if (!strcmp(temp_token, "ATANH"))
-                result = atanh(result);
-            else if (!strcmp(temp_token, "LN"))
-                result = log(result);
-            else if (!strcmp(temp_token, "LOG"))
-                result = log10(result);
-            else if (!strcmp(temp_token, "EXP"))
-                result = exp(result);
-            else if (!strcmp(temp_token, "SQRT"))
-                result = sqrt(result);
-            else if (!strcmp(temp_token, "SQR"))
-                result = result*result;
-            else if (!strcmp(temp_token, "ROUND"))
-                result = round(result);
-            else if (!strcmp(temp_token, "INT"))
-                result = floor(result);
-            //TODO make it work
-            // else if (!strcmp(temp_token, "PI"))
-            //     result = PI;
-            else
-                strcpy(errormsg, "Unknown Function");
-        }
-        get_token();
+            evalFunc(result, tmpToken);
+        getToken();
     }
     else
-        switch (tok_type)
+        switch (tokenType)
         {
         case VARIABLE:
             result = vars[*token - 'A'];
-            get_token();
+            getToken();
             return;
         case NUMBER:
             result = atof(token);
-            get_token();
+            getToken();
             return;
         default:
-            strcpy(errormsg, "Syntax Error");
+            strcpy(errorMessage, "Syntax Error");
         }
 }
 
-void Parser::get_token()
-{
+void Parser::evalFunc(double &result, char* token){
+
+    if (!strcmp(token, "SIN"))
+        //PI / 180 * result
+        result = sin(result);
+    else if (!strcmp(token, "COS"))
+        result = cos(result);
+    else if (!strcmp(token, "TAN"))
+        result = tan(result);
+    else if (!strcmp(token, "ASIN"))
+        result = asin(result);
+    else if (!strcmp(token, "ACOS"))
+        result = acos(result);
+    else if (!strcmp(token, "ATAN"))
+        result = atan(result);
+    else if (!strcmp(token, "SINH"))
+        result = sinh(result);
+    else if (!strcmp(token, "COSH"))
+        result = cosh(result);
+    else if (!strcmp(token, "TANH"))
+        result = tanh(result);
+    else if (!strcmp(token, "ASINH"))
+        result = asinh(result);
+    else if (!strcmp(token, "ACOSH"))
+        result = acosh(result);
+    else if (!strcmp(token, "ATANH"))
+        result = atanh(result);
+    else if (!strcmp(token, "LN"))
+        result = log(result);
+    else if (!strcmp(token, "LOG"))
+        result = log10(result);
+    else if (!strcmp(token, "EXP"))
+        result = exp(result);
+    else if (!strcmp(token, "SQRT"))
+        result = sqrt(result);
+    else if (!strcmp(token, "SQR"))
+        result = result*result;
+    else if (!strcmp(token, "INT"))
+        result = floor(result);
+    else if (!strcmp(token, "ABS"))
+        result = abs(result);
+    else if (!strcmp(token, "INT"))
+        result = floor(result);
+    else if (!strcmp(token, "PI"))
+        result = PI;
+    else
+        strcpy(errorMessage, "Unknown Function");
+}
+
+void Parser::getToken(){
     char *temp;
-    tok_type = 0;
+    tokenType = 0;
     temp = token;
     *temp = '\0';
-    if (!*exp_ptr)  // at end of expression
+    if (!*expressionPtr)  // at end of expression
         return;
-    while (isspace(*exp_ptr))  // skip over white space
-        ++exp_ptr; 
-    if (strchr("+-*/%^=()", *exp_ptr)) 
+    while (isspace(*expressionPtr))  // skip over white space
+        ++expressionPtr;
+    if (strchr("+-*/%^=()", *expressionPtr))
     {
-        tok_type = DELIMITER;
-        *temp++ = *exp_ptr++;  // advance to next char
+        tokenType = DELIMITER;
+        *temp++ = *expressionPtr++;  // advance to next char
     }
-    else if (isalpha(*exp_ptr)) 
+    else if (isalpha(*expressionPtr))
     {
-        while (!strchr(" +-/*%^=()\t\r", *exp_ptr) && (*exp_ptr))
-            *temp++ = toupper(*exp_ptr++);
-        while (isspace(*exp_ptr))  // skip over white space
-            ++exp_ptr;
-        tok_type = (*exp_ptr == '(') ? FUNCTION : VARIABLE;
+        while (!strchr(" +-/*%^=()\t\r", *expressionPtr) && (*expressionPtr))
+            *temp++ = toupper(*expressionPtr++);
+        while (isspace(*expressionPtr))  // skip over white space
+            ++expressionPtr;
+        tokenType = (*expressionPtr == '(') ? FUNCTION : VARIABLE;
     }
-    else if (isdigit(*exp_ptr) || *exp_ptr == '.')
+    else if (isdigit(*expressionPtr) || *expressionPtr == '.')
     {
-        while (!strchr(" +-/*%^=()\t\r", *exp_ptr) && (*exp_ptr))
-            *temp++ = toupper(*exp_ptr++);
-        tok_type = NUMBER;
+        while (!strchr(" +-/*%^=()\t\r", *expressionPtr) && (*expressionPtr))
+            *temp++ = toupper(*expressionPtr++);
+        tokenType = NUMBER;
     }
     *temp = '\0';
-    if ((tok_type == VARIABLE) && (token[1]))
-        strcpy(errormsg, "Only first letter of variables is considered");
+    if ((tokenType == VARIABLE) && (token[1]))
+        strcpy(errorMessage, "Only first letter of variables is considered");
 }
 
-void calculate(){
+void Parser::checkOperator(double &result, char op, double temp){
+
+    switch (op)
+    {
+    case '+':
+        result = result + temp;
+        break;
+    case '-':
+        result = result - temp;
+        break;
+    case '*':
+        result = result * temp;
+        break;
+    case '/':
+        result = result / temp;
+        break;
+    }
 
 }
 
-// std::ostream &operator<<(std::ostream &out, const Parser &value){
-//     return << out << 
-// }
+
 
 

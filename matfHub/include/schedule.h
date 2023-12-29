@@ -2,6 +2,7 @@
 #define SCHEDULE_H
 
 #include "../ui_mainwindow.h"
+#include "config.hpp"
 #include "helpers.h"
 #include "course.h"
 #include "schedulegenerator.h"
@@ -32,6 +33,7 @@ private:
     std::vector<std::string> modules;
     std::unordered_set<std::string> selectedCourses;
     std::string selectedModule;
+    QString filePath;
 
 //    State defaultTableState;
 };

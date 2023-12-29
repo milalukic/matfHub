@@ -1,62 +1,78 @@
-//#ifndef MATRIX_HPP
+#ifndef MATRIX_HPP
 
-//#define MATRIX_HPP
+#define MATRIX_HPP
 
-//#include <iostream>
-//#include <vector>
-//#include <armadillo>
+#include <iostream>
+#include <vector>
 
-//class Matrix{
+#include <QString>
 
-//public:
-////konstruktori
-//    Matrix(unsigned dimension1 = 1, unsigned dimension2 = 1, std::string matrixName = "matrix name");
-//    //destruktor
-//    ~Matrix();
+#include <armadillo>
 
-//    //get
-//    unsigned dimension1() const;
-//    unsigned dimension2() const;
-//    std::string matrixName() const;
-//    arma::mat data() const;
+class Matrix{
 
-//    //set
-//    void dimension1(unsigned u);
-//    void dimension2(unsigned u);
-//    void matrixName(std::string name);
-//    void data(arma::mat Matrix);
+public:
+//konstruktori
+    Matrix(const unsigned rows = 1, const unsigned columns = 1);
+    Matrix(const unsigned rows, const unsigned columns, const QString data);
+    Matrix(const Matrix &other);
+    //destruktor
+    ~Matrix();
 
-//    //functions
-//    Matrix *transpose();
-//    Matrix *inverse();
-//    Matrix *ones();
-//    Matrix *diag();
+    //get
+    std::pair<unsigned, unsigned> getShape();
+    QString toString();
 
-//    //operators
-//    Matrix *operator + (const Matrix &other) const;
-//    Matrix *operator + (const double &number) const;
-//    Matrix *operator - (const Matrix &other) const;
-//    Matrix *operator - (const double &number) const;
-//    Matrix *operator *(const Matrix &other) const;
-//    Matrix *operator /(const Matrix &other) const;
-//    Matrix *operator ++();
-//    Matrix *operator ++(int);
-//    Matrix *operator --();
-//    Matrix *operator --(int);
-//    Matrix *operator-() const;
+    static Matrix* getSaved(unsigned int index);
 
-//    bool operator == (const Matrix &other) const;
-//    bool operator != (const Matrix &other) const;
+    //getters
+    unsigned rows() const;
+    unsigned columns() const;
+    arma::mat data() const;
+
+    //setters
+    void rows(unsigned u);
+    void columns(unsigned u);
+    void data(arma::mat &newData);
+
+    void setData(QString data);
+    void setValue(double value, unsigned i, unsigned j);
+    void reshapeMatrix(unsigned col, unsigned row);
+
+
+    //set
+    unsigned saveMatrix();
+    std::pair<unsigned, unsigned> loadLeft(unsigned index);
+    std::pair<unsigned, unsigned> loadRight(unsigned index);
+
+    //functions
+
+    Matrix *transpose();
+    Matrix *inverse();
+    Matrix *ones();
+    Matrix *eye();
+    Matrix *diag();
+
+    //operators
+    Matrix *operator + (const Matrix &other) const;
+    Matrix *operator - (const Matrix &other) const;
+    Matrix *operator * (const Matrix &other) const;
+
+
+    Matrix &operator = (const Matrix &other);
 
     
-//private:
-//    unsigned _dimension1;
-//    unsigned _dimension2;
-//    std::string _matrixName;
-//    arma::mat *_data;
-//};
+private:
 
-//std::ostream &operator<<(std::ostream &out, const Matrix *value);
-//std::istream &operator>>(std::istream &in, Matrix &value);
+    unsigned m_rows;
+    unsigned m_columns;
+    arma::mat* m_data;
 
-//#endif //MATRIX_HPP
+    //TODO this...
+    static std::vector<Matrix*> m_savedMatrices;
+
+};
+
+std::ostream &operator<<(std::ostream &out, const Matrix *value);
+
+#endif //MATRIX_HPP

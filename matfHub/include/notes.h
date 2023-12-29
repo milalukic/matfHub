@@ -3,19 +3,30 @@
 
 #include <QString>
 #include <QFileDialog>
+#include <QSyntaxHighlighter>
 
 #include "../ui_mainwindow.h"
 
+#include "../QSourceHighlite/qsourcehighliter.h"
 
 class Notes
 {
+private:
+
+    Ui::MainWindow* m_mw;
+    QSourceHighlite::QSourceHighliter* m_highliter;
+    QTextCharFormat m_defaultFormat;
+    QString* m_fileContentUnchanged;
+
+    void changeLanguage(QString fileName, Ui::MainWindow *ui);
+
 public:
-    Notes();
-    QString currentFile = "";
+    Notes(Ui::MainWindow* mw);
+    QString m_currentFile = "";
 
     void openFile(QString filePath, Ui::MainWindow *ui, QWidget *parent);
 
-    void newClicked(Ui::MainWindow *ui);
+    void newClicked(Ui::MainWindow *ui, QWidget *parent);
     void openClicked(Ui::MainWindow *ui, QWidget *parent);
     void saveClicked(Ui::MainWindow *ui, QWidget *parent);
 
@@ -25,6 +36,8 @@ public:
 
     void undoClicked(Ui::MainWindow *ui);
     void redoClicked(Ui::MainWindow *ui);
+
+    void notesContentChanged(QWidget* parent, Ui::MainWindow *ui);
 };
 
 #endif // NOTES_H
