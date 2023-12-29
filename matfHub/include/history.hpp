@@ -1,40 +1,40 @@
-#ifndef HISTORY_H
-#define HISTORY_H
+// #ifndef HISTORY_H
+// #define HISTORY_H
 
-#include <iostream>
-#include <vector>
-#include "./matrix.hpp"
+// #include <iostream>
+// #include <vector>
+// #include "./matrix.hpp"
 
-class History
-{
-public:
-    ~History();
+// class History
+// {
+// public:
+//     ~History();
 
-    static History* getHistory();
-    //
-    void writeHistory(std::string title, std::string line);
-    std::string lastLine();
-    void editLastLine(std::string line);
+//     static History* getHistory();
+//     //
+//     void writeHistory(std::string title, std::string line);
+//     std::string lastLine();
+//     void editLastLine(std::string line);
     
-    void addMatrix(Matrix *m);
-    void saveHistory();
+//     void addMatrix(Matrix *m);
+//     void saveHistory();
 
-    //
-    std::vector<std::string> history() const;
+//     //
+//     std::vector<std::string> history() const;
 
-    void history(std::vector<std::string> &newHistory);
+//     void history(std::vector<std::string> &newHistory);
 
-    //static?
-    const std::string EOC = "--------------------\n";
+//     //static?
+//     const std::string EOC = "--------------------\n";
 
-private:
-    History(std::vector<std::string>h = std::vector<std::string>());
-    static History* historyPtr;
+// private:
+//     History(std::vector<std::string>h = std::vector<std::string>());
+//     static History* historyPtr;
 
-    std::vector<Matrix*> _savedMatrices;
+//     std::vector<Matrix*> _savedMatrices;
 
-    std::vector<std::string> _history;
-};
+//     std::vector<std::string> _history;
+// };
 
 
-#endif // HISTORY_H
+// #endif // HISTORY_H

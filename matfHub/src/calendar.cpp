@@ -10,7 +10,7 @@
 #include <QDate>
 
 Calendar::Calendar(Ui::MainWindow* ui) {
-    initializeMap();
+    initializeMap(ui);
     ui->calendarWidget->setSelectedDate(selectedDate);
     ui->calendarWidget->setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
     ui->calendarWidget->setFirstDayOfWeek(Qt::DayOfWeek::Monday);
@@ -99,8 +99,18 @@ void Calendar::saveHistory(){
     file.close();
 }
 
-// Inicijalizuje mapu sa prethodnom istorijom
-void Calendar::initializeMap(){
+void Calendar::addCourse(QDate next_d, QString desc){
+        if(date_to_note[next_d].empty()){
+            QList<QString> note = {desc};
+            date_to_note.insert(next_d, note);
+
+        }else {
+            date_to_note[next_d].append(desc);
+        }
+
+}
+
+void Calendar::initializeMap(Ui::MainWindow *ui){
     QFile jsonFile(Config::getConfig()->getConfigPath() + "/map.txt");
 
     if (!jsonFile.open(QIODevice::ReadOnly)) {
@@ -123,4 +133,37 @@ void Calendar::initializeMap(){
         QList<QString> note = it.value().toString().split("\n");
         date_to_note.insert(date, note);
     }
-}
+
+
+    QFile schedulePath(Config::getConfig()->getConfigPath() + "/raspored.json");
+
+    if (!schedulePath.open(QIODevice::ReadOnly)) {
+        return;
+    }
+
+    QByteArray jsonDataSchedule = schedulePath.readAll();
+    schedulePath.close();
+
+    QJsonDocument jsonDocSchedule = QJsonDocument::fromJson(jsonDataSchedule);
+    if (jsonDocSchedule.isNull()) {
+        return;
+    }
+
+    QJsonArray coursesArray = jsonDocSchedule.array();
+
+    for (const auto& courseData : coursesArray) {
+        QJsonObject courseObject = jsonDocSchedule.object();
+
+        QString desc = courseObject["description"].toString();
+        int d = courseObject["day"].toInt();
+
+        QDate today = QDate::currentDate();
+        QDate next_d = today.addDays(7+d-today.dayOfWeek());
+
+        while(next_d < ui->calendarWidget->maximumDate()){
+            addCourse(next_d, desc);
+            next_d = next_d.addDays(7);
+        }
+        }
+    }
+

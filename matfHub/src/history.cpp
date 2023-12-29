@@ -1,73 +1,73 @@
-#include "../include/history.hpp"
+// #include "../include/history.hpp"
 
-#include <fstream>
-#include <QFile>
-
-
-History* History::historyPtr = nullptr;
-
-History::History(std::vector<std::string>h){
-
-}
-History::~History(){
-    std::cout << "History unisten" << std::endl;
-}
-
-History* History::getHistory(){
-    if(historyPtr == nullptr){
-        historyPtr = new History();
-    }
-    return historyPtr;
-}
-
-//friendly?
-void History::writeHistory(std::string title, std::string line){
-    title += "\n";
-    line += "\n";
-
-    this->_history.push_back(title);
-    this->_history.push_back(line);
-    this->_history.push_back(this->EOC);
-}
+// #include <fstream>
+// #include <QFile>
 
 
-std::string History::lastLine(){
-    auto history = this->history();
-    int numOfLastLine = history.size()-1;
-    return history[numOfLastLine];
-}
+// History* History::historyPtr = nullptr;
 
-void History::editLastLine(std::string line){
-    if(this->history().size() == 0){
-        this->writeHistory(" ", " ");
-    }
-    auto history = this->history();
-    int numOfLastLine = history.size()-1;
-    history[numOfLastLine] = line;
-    this->history(history);
-}
+// History::History(std::vector<std::string>h){
 
-void History::addMatrix(Matrix *m){
+// }
+// History::~History(){
+//     std::cout << "History unisten" << std::endl;
+// }
 
-    this->_savedMatrices.push_back(m);
-}
+// History* History::getHistory(){
+//     if(historyPtr == nullptr){
+//         historyPtr = new History();
+//     }
+//     return historyPtr;
+// }
 
-void History::saveHistory(){
-    QFile file("../hist.txt");
-    file.open(QIODevice::WriteOnly);
-    auto history = this->history();
-    for(auto const &x : history){
-        file.write(x.c_str());
-    }
-}
+// //friendly?
+// void History::writeHistory(std::string title, std::string line){
+//     title += "\n";
+//     line += "\n";
 
-//get
-std::vector<std::string> History::history() const{
-    return this->_history;
-}
+//     this->_history.push_back(title);
+//     this->_history.push_back(line);
+//     this->_history.push_back(this->EOC);
+// }
 
-//set
-void History::history(std::vector<std::string> &newHistory){
-    this->_history = newHistory;
-}
+
+// std::string History::lastLine(){
+//     auto history = this->history();
+//     int numOfLastLine = history.size()-1;
+//     return history[numOfLastLine];
+// }
+
+// void History::editLastLine(std::string line){
+//     if(this->history().size() == 0){
+//         this->writeHistory(" ", " ");
+//     }
+//     auto history = this->history();
+//     int numOfLastLine = history.size()-1;
+//     history[numOfLastLine] = line;
+//     this->history(history);
+// }
+
+// void History::addMatrix(Matrix *m){
+
+//     this->_savedMatrices.push_back(m);
+// }
+
+// void History::saveHistory(){
+//     QFile file("../hist.txt");
+//     file.open(QIODevice::WriteOnly);
+//     auto history = this->history();
+//     for(auto const &x : history){
+//         file.write(x.c_str());
+//     }
+// }
+
+// //get
+// std::vector<std::string> History::history() const{
+//     return this->_history;
+// }
+
+// //set
+// void History::history(std::vector<std::string> &newHistory){
+//     this->_history = newHistory;
+// }
 

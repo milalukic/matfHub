@@ -77,65 +77,65 @@ private slots:
 
     //calculator things
 
-    void changeStackedWidgetPage();
+    // void changeStackedWidgetPage();
 
-        //calc functions
-    void writeToHistoryTB(History* history);
-            //regular
-    void calculateRegular();
-            //matrix
-    void showMatrix(Matrix *m);
+    //     //calc functions
+    // void writeToHistoryTB(History* history);
+    //         //regular
+    // void calculateRegular();
+    //         //matrix
+    // void showMatrix(Matrix *m);
 
-    QStringList matrixStringToStringList(QString str);
-    void reshapeMatrix(unsigned dim1, unsigned dim2, unsigned pos, QStringList content);
-    void reshapeMatrix(unsigned dim1, unsigned dim2, unsigned pos);
-    void reshapeMatrix1();
-    void reshapeMatrix2();
-    QString readM1Data();
-    QString readM2Data();
+    // QStringList matrixStringToStringList(QString str);
+    // void reshapeMatrix(unsigned dim1, unsigned dim2, unsigned pos, QStringList content);
+    // void reshapeMatrix(unsigned dim1, unsigned dim2, unsigned pos);
+    // void reshapeMatrix1();
+    // void reshapeMatrix2();
+    // QString readM1Data();
+    // QString readM2Data();
 
-    void calculateMatrixAdd();
-    void calculateMatrixSubtract();
-    void calculateMatrixMultiply();
-    void calculateMatrixDiag();
+    // void calculateMatrixAdd();
+    // void calculateMatrixSubtract();
+    // void calculateMatrixMultiply();
+    // void calculateMatrixDiag();
 
-    void calculateMatrixTranspose();
-    void calculateMatrixInverse();
-    void calculateMatrixEye();
-    void calculateMatrixOne();
+    // void calculateMatrixTranspose();
+    // void calculateMatrixInverse();
+    // void calculateMatrixEye();
+    // void calculateMatrixOne();
 
-    void saveMatrix();
-    void loadMatrix(unsigned int pos, QStringList strLst, unsigned d1, unsigned d2);
+    // void saveMatrix();
+    // void loadMatrix(unsigned int pos, QStringList strLst, unsigned d1, unsigned d2);
 
-        //plotting
-    void plot();
-    void plotSin();
-    void plotCos();
-    void plotTan();
-    void plotLn();
-    void plotLog();
-    void plotExp();
-    void plotAbs();
-    void plotNeg();
-    void plotSquare();
-    void plotRoot();
-    void plotParse();
+    //     //plotting
+    // void plot();
+    // void plotSin();
+    // void plotCos();
+    // void plotTan();
+    // void plotLn();
+    // void plotLog();
+    // void plotExp();
+    // void plotAbs();
+    // void plotNeg();
+    // void plotSquare();
+    // void plotRoot();
+    // void plotParse();
 
-    void plotLinspace();
-    void savePlotting();
+    // void plotLinspace();
+    // void savePlotting();
 
-    //Staistics
-    void statCalcMean();
-    void statCalcVariance();
-    void statCalcStd();
-    void statCalcMedian();
-    void statCalcMode();
-    void statPlotHist();
-    void statPlotBar();
-    void statPlotBox();
+    // //Staistics
+    // void statCalcMean();
+    // void statCalcVariance();
+    // void statCalcStd();
+    // void statCalcMedian();
+    // void statCalcMode();
+    // void statPlotHist();
+    // void statPlotBar();
+    // void statPlotBox();
 
 
-    void historySave();
+    // void historySave();
 
     //kmiljanify
     void on_smerBox_activated(int index);
@@ -173,18 +173,18 @@ private:
 
     void setUpFileView(/*enum tipPogleda*/);//funkcija prima enum neki tipa i onda pravi pogled na osnovu enuma i podesava ga, kao sto smo u mejnu radili do sada, zatim brise dete od ui->fileViewLayout i daje mu novo dete, ovo koje je napravio
 
-    Parser *parser;
-    Parser *parserPlot;
-    Matrix *m1;
-    Matrix *m2;
-    Matrix *m3;
-    Plotter *plt;
-    Statistics *stat;
-    History *history;
+    // Parser *parser;
+    // Parser *parserPlot;
+    // Matrix *m1;
+    // Matrix *m2;
+    // Matrix *m3;
+    // Plotter *plt;
+    // Statistics *stat;
+    // History *history;
 
-    int countSelected(const QListView* view);
-    QModelIndex getSelectedIndex(const QListView* view);
-    QModelIndexList getSelectedIndices(const QListView* view);
+    // int countSelected(const QListView* view);
+    // QModelIndex getSelectedIndex(const QListView* view);
+    // QModelIndexList getSelectedIndices(const QListView* view);
 
 };
 #endif // MAINWINDOW_HPP

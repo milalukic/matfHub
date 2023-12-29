@@ -19,7 +19,10 @@ public:
     void removeTask(Ui::MainWindow *ui);
     void removeAll(Ui::MainWindow *ui);
     void saveHistory();
-    void initializeMap();
+    // Inicijalizuje mapu sa prethodnom istorijom
+    void initializeMap(Ui::MainWindow *ui);
+    void addCourse(QDate next_d, QString desc);
+
 };
 
 #endif // CALENDAR_H
