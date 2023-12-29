@@ -864,7 +864,7 @@ void MainWindow::calculateMatrixEye(){
 
     m3 = m1->eye();
 
-    history->writeHistory("Dijagonala matrica:", m3->toString().toStdString());
+    history->writeHistory("Identicka matrica:", m3->toString().toStdString());
     writeToHistoryTB(history);
 }
 
@@ -872,7 +872,7 @@ void MainWindow::calculateMatrixOne(){
 
     m3 = m1->ones();
 
-    history->writeHistory("Jedinice matrica:", m3->toString().toStdString());
+    history->writeHistory("Jedinicna matrica:", m3->toString().toStdString());
     writeToHistoryTB(history);
 }
 

@@ -36,7 +36,7 @@
        <enum>Qt::DefaultContextMenu</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="FileManagerTab">
        <attribute name="title">
@@ -493,8 +493,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset theme="go-previous">
-              <normaloff>.</normaloff>.</iconset>
+             <iconset theme="go-previous"/>
             </property>
            </widget>
           </item>
@@ -946,8 +945,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset theme="go-up">
-              <normaloff>.</normaloff>.</iconset>
+             <iconset theme="go-up"/>
             </property>
            </widget>
           </item>
@@ -1399,8 +1397,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset theme="go-home">
-              <normaloff>.</normaloff>.</iconset>
+             <iconset theme="go-home"/>
             </property>
            </widget>
           </item>
@@ -1855,8 +1852,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset theme="go-next">
-              <normaloff>.</normaloff>.</iconset>
+             <iconset theme="go-next"/>
             </property>
             <property name="autoDefault">
              <bool>false</bool>
@@ -1872,8 +1868,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset theme="folder-new">
-              <normaloff>.</normaloff>.</iconset>
+             <iconset theme="folder-new"/>
             </property>
            </widget>
           </item>
@@ -1933,28 +1928,28 @@
           <item>
            <widget class="QPushButton" name="pbChangeRegular">
             <property name="text">
-             <string>Regular calculator</string>
+             <string>Kalkulator</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="pbChangeMatrix">
             <property name="text">
-             <string>Matrix calculator</string>
+             <string>Matrični Kalkulator</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="pbChangePlot">
             <property name="text">
-             <string>Plotting calculator</string>
+             <string>Kalkulator za Iscrtavanje</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="pbChangeStat">
             <property name="text">
-             <string>Statistics</string>
+             <string>Statistika</string>
             </property>
            </widget>
           </item>
@@ -1973,7 +1968,7 @@
             <item>
              <widget class="QPushButton" name="pbParser">
               <property name="text">
-               <string>Calculate</string>
+               <string>Izračunaj</string>
               </property>
              </widget>
             </item>
@@ -1995,7 +1990,7 @@
                     <item row="1" column="0">
                      <widget class="QLabel" name="lbM1cols">
                       <property name="text">
-                       <string>Columns:</string>
+                       <string>Kolone:</string>
                       </property>
                      </widget>
                     </item>
@@ -2005,7 +2000,7 @@
                     <item row="0" column="0">
                      <widget class="QLabel" name="lbM1rows">
                       <property name="text">
-                       <string>Rows:</string>
+                       <string>Redovi:</string>
                       </property>
                      </widget>
                     </item>
@@ -2018,7 +2013,7 @@
                        </size>
                       </property>
                       <property name="text">
-                       <string>Load matrix</string>
+                       <string>Učitaj Matricu</string>
                       </property>
                      </widget>
                     </item>
@@ -2054,7 +2049,7 @@
                   <item row="0" column="0">
                    <widget class="QLabel" name="lbM2rows">
                     <property name="text">
-                     <string>Rows:</string>
+                     <string>Redovi:</string>
                     </property>
                    </widget>
                   </item>
@@ -2064,7 +2059,7 @@
                   <item row="1" column="0">
                    <widget class="QLabel" name="lbM2cols">
                     <property name="text">
-                     <string>Columns:</string>
+                     <string>Kolone:</string>
                     </property>
                    </widget>
                   </item>
@@ -2080,7 +2075,7 @@
                      </size>
                     </property>
                     <property name="text">
-                     <string>Load matrix</string>
+                     <string>Učitaj Matricu</string>
                     </property>
                    </widget>
                   </item>
@@ -2103,7 +2098,7 @@
                      <x>0</x>
                      <y>0</y>
                      <width>348</width>
-                     <height>348</height>
+                     <height>350</height>
                     </rect>
                    </property>
                   </widget>
@@ -2132,7 +2127,7 @@
                   <item row="1" column="1">
                    <widget class="QPushButton" name="pbMatrixDiagonal">
                     <property name="text">
-                     <string>Diagonal</string>
+                     <string>Dijagonalna Matrica</string>
                     </property>
                    </widget>
                   </item>
@@ -2150,28 +2145,28 @@
                   <item row="0" column="0">
                    <widget class="QPushButton" name="pbMatrixTranspose">
                     <property name="text">
-                     <string>Transpose</string>
+                     <string>Transponuj</string>
                     </property>
                    </widget>
                   </item>
                   <item row="0" column="1">
                    <widget class="QPushButton" name="pbMatrixInverse">
                     <property name="text">
-                     <string>Inverse</string>
+                     <string>Invertuj</string>
                     </property>
                    </widget>
                   </item>
                   <item row="1" column="0">
                    <widget class="QPushButton" name="pbMatrixEye">
                     <property name="text">
-                     <string>Eye</string>
+                     <string>Identička Matrica</string>
                     </property>
                    </widget>
                   </item>
                   <item row="1" column="1">
                    <widget class="QPushButton" name="pbMatrixOne">
                     <property name="text">
-                     <string>One</string>
+                     <string>Jedinična Matrica</string>
                     </property>
                    </widget>
                   </item>
@@ -2193,8 +2188,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>20</width>
-                   <height>20</height>
+                   <width>128</width>
+                   <height>385</height>
                   </rect>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -2208,7 +2203,7 @@
               <item>
                <widget class="QPushButton" name="pbSaveMatrix">
                 <property name="text">
-                 <string>Ucitaj rezultat u listu</string>
+                 <string>Učitaj rezultat u listu</string>
                 </property>
                </widget>
               </item>
@@ -2225,7 +2220,7 @@
                 <item>
                  <widget class="QLabel" name="lbLinspaceLB">
                   <property name="text">
-                   <string>Lower bound:</string>
+                   <string>Donja granica:</string>
                   </property>
                  </widget>
                 </item>
@@ -2243,7 +2238,7 @@
                 <item>
                  <widget class="QLabel" name="lbLinspaceUB">
                   <property name="text">
-                   <string>Upper bound:</string>
+                   <string>Gornja granica:</string>
                   </property>
                  </widget>
                 </item>
@@ -2261,7 +2256,7 @@
                 <item>
                  <widget class="QLabel" name="lbLinspaceS">
                   <property name="text">
-                   <string>Num of dots:</string>
+                   <string>Broj tačaka:</string>
                   </property>
                  </widget>
                 </item>
@@ -2301,7 +2296,7 @@
               <item row="0" column="0">
                <widget class="QLabel" name="lbState">
                 <property name="text">
-                 <string>Current state:</string>
+                 <string>Trenutno stanje:</string>
                 </property>
                </widget>
               </item>
@@ -2315,14 +2310,14 @@
               <item row="3" column="0">
                <widget class="QPushButton" name="pbPlotParse">
                 <property name="text">
-                 <string>Parse</string>
+                 <string>Parsiraj</string>
                 </property>
                </widget>
               </item>
               <item row="3" column="1">
                <widget class="QPushButton" name="pbPlotSave">
                 <property name="text">
-                 <string>Save</string>
+                 <string>Sačuvaj</string>
                 </property>
                </widget>
               </item>
@@ -2401,14 +2396,14 @@
               <item row="2" column="2">
                <widget class="QPushButton" name="pbSquare">
                 <property name="text">
-                 <string>Square</string>
+                 <string>Kvadrat</string>
                 </property>
                </widget>
               </item>
               <item row="5" column="0" colspan="3">
                <widget class="QPushButton" name="pbPlot">
                 <property name="text">
-                 <string>Plot</string>
+                 <string>Iscrtaj</string>
                 </property>
                </widget>
               </item>
@@ -2429,7 +2424,7 @@
               <item row="3" column="1">
                <widget class="QPushButton" name="pbRoot">
                 <property name="text">
-                 <string>Root</string>
+                 <string>Koren</string>
                 </property>
                </widget>
               </item>
@@ -2444,7 +2439,7 @@
               <item>
                <widget class="QLabel" name="label_9">
                 <property name="text">
-                 <string>Input:</string>
+                 <string>Ulaz:</string>
                 </property>
                </widget>
               </item>
@@ -2458,7 +2453,7 @@
               <item>
                <widget class="QLabel" name="lbNames">
                 <property name="text">
-                 <string>Names:</string>
+                 <string>Imena</string>
                 </property>
                </widget>
               </item>
@@ -2472,28 +2467,28 @@
               <item row="0" column="2">
                <widget class="QPushButton" name="pbVariance">
                 <property name="text">
-                 <string>Variance</string>
+                 <string>Varijansa</string>
                 </property>
                </widget>
               </item>
               <item row="0" column="0">
                <widget class="QPushButton" name="pbMean">
                 <property name="text">
-                 <string>Mean</string>
+                 <string>Srednja Vrednost</string>
                 </property>
                </widget>
               </item>
               <item row="0" column="1">
                <widget class="QPushButton" name="pbMedian">
                 <property name="text">
-                 <string>Median</string>
+                 <string>Medijana</string>
                 </property>
                </widget>
               </item>
               <item row="0" column="3">
                <widget class="QPushButton" name="pbMode">
                 <property name="text">
-                 <string>Mode</string>
+                 <string>Modus</string>
                 </property>
                </widget>
               </item>
@@ -2514,7 +2509,7 @@
               <item row="0" column="4">
                <widget class="QPushButton" name="pbStd">
                 <property name="text">
-                 <string>Standard deviation</string>
+                 <string>Standardno Odstupanje</string>
                 </property>
                </widget>
               </item>
@@ -2747,7 +2742,7 @@
              <x>0</x>
              <y>0</y>
              <width>258</width>
-             <height>577</height>
+             <height>588</height>
             </rect>
            </property>
           </widget>
@@ -3055,7 +3050,7 @@
      <x>0</x>
      <y>0</y>
      <width>1258</width>
-     <height>22</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
