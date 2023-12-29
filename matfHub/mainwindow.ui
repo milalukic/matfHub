@@ -1963,9 +1963,9 @@
         <item>
          <widget class="QStackedWidget" name="stackedWidget">
           <property name="currentIndex">
-           <number>3</number>
+           <number>0</number>
           </property>
-          <widget class="QWidget" name="parserPAge">
+          <widget class="QWidget" name="parserPage">
            <layout class="QVBoxLayout" name="verticalLayout_4">
             <item>
              <widget class="QLineEdit" name="leParser"/>
@@ -2193,8 +2193,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>98</width>
-                   <height>28</height>
+                   <width>20</width>
+                   <height>20</height>
                   </rect>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_7">
