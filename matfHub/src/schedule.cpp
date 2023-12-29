@@ -48,6 +48,7 @@ void Schedule::changeModule(Ui::MainWindow *ui, int index){
 void Schedule::clearTable(Ui::MainWindow *ui) {
     for(int r = 0; r < ui->scheduleTable->rowCount(); r++){
         for(int c = 0; c < ui->scheduleTable->columnCount(); c++){
+            ui->scheduleTable->setSpan(r, c, 1, 1);
             auto item = ui->scheduleTable->takeItem(r, c);
             delete item;
         }
@@ -111,6 +112,7 @@ void Schedule::scrapeSchedule(Ui::MainWindow *ui){
 }
 
 void Schedule::nextSchedule(Ui::MainWindow *ui){
+    clearTable(ui);
     brojRasporeda++;
 
     if(brojRasporeda == m_gen.schedules.size()){
@@ -121,6 +123,7 @@ void Schedule::nextSchedule(Ui::MainWindow *ui){
 }
 
 void Schedule::prevSchedule(Ui::MainWindow *ui){
+    clearTable(ui);
     brojRasporeda--;
 
     if(brojRasporeda == -1){

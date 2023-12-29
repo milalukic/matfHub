@@ -60,11 +60,8 @@ void Generator::find(StrMap<StrMap<CourseSet>> courseTypeTermMap) {
 }
 
 void Generator::displaySchedule(QTableWidget* tableWidget, int brojRasporeda) {
-
-
     tableWidget->clearContents();
     if (!schedules.empty()) {
-
         std::vector<Course>& schedule = schedules[brojRasporeda];
 
         for (auto& course : schedule) {
@@ -72,16 +69,19 @@ void Generator::displaySchedule(QTableWidget* tableWidget, int brojRasporeda) {
             int start = course.start;
             int end = course.end;
 
-            for (int i = start; i < end; ++i) {
-                QTableWidgetItem* subItem = new QTableWidgetItem(QString::fromStdString(course.description + '\n' + course.course_type +
-                                                                                        '\n' + course.classroom));
-                tableWidget->setItem(day, i, subItem);
-            }
+            QTableWidgetItem* subItem = new QTableWidgetItem(QString::fromStdString(course.description + '\n' + course.course_type +
+                                                                                    '\n' + course.classroom));
+            subItem->setTextAlignment(Qt::AlignCenter);
+            subItem->setFlags(subItem->flags() & ~Qt::ItemIsEditable);
+            int columnSpan = end - start;
+            tableWidget->setSpan(day, start, 1, columnSpan);
+            tableWidget->setItem(day, start, subItem);
         }
 
         saved = schedule;
     }
 }
+
 
 void Generator::_find(StrMap<StrMap<CourseSet>>& courseTypeTermMap, std::vector<Course>& placedList, int i, int stop,
                       std::unordered_set<std::string> alreadySearched) {
