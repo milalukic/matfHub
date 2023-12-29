@@ -55,7 +55,7 @@ TEST_CASE("Statistics", "[class]"){
         std::vector<double> input = {1};
         stat->xData(input);
 
-        auto output = stat->mean();
+        auto output = stat->variance();
 
         REQUIRE(std::isnan(output));
     }
@@ -63,10 +63,10 @@ TEST_CASE("Statistics", "[class]"){
     SECTION("method variance returns the variance of the data, if the data is valid"){
         Statistics *stat = Statistics::getStatistics();
         std::vector<double> input = {1, 2, 3};
-        const double expectedOutput = 2;
+        const double expectedOutput = 1;
         stat->xData(input);
 
-        auto output = stat->mean();
+        auto output = stat->variance();
 
         REQUIRE(expectedOutput == output);
     }
