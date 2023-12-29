@@ -59,8 +59,16 @@ void Generator::find(StrMap<StrMap<CourseSet>> courseTypeTermMap) {
     });
 }
 
+QColor getPastelColor(QString str) {
+    uint hash = qHash(str);
+    int r = (hash & 0xFF) % 100 + 100;
+    int g = ((hash >> 8) & 0xFF) % 100 + 100;
+    int b = ((hash >> 16) & 0xFF) % 100 + 100;
+    return QColor(r, g, b);
+}
+
 void Generator::displaySchedule(QTableWidget* tableWidget, int brojRasporeda) {
-    tableWidget->clearContents();
+//    tableWidget->clearContents();
     if (!schedules.empty()) {
         std::vector<Course>& schedule = schedules[brojRasporeda];
 
@@ -68,9 +76,10 @@ void Generator::displaySchedule(QTableWidget* tableWidget, int brojRasporeda) {
             int day = course.day;
             int start = course.start;
             int end = course.end;
-
             QTableWidgetItem* subItem = new QTableWidgetItem(QString::fromStdString(course.description + '\n' + course.course_type +
+                                                                                    '\n' + course.teacher +
                                                                                     '\n' + course.classroom));
+            subItem->setBackground(QBrush(getPastelColor(QString::fromStdString(course.description))));
             subItem->setTextAlignment(Qt::AlignCenter);
             subItem->setFlags(subItem->flags() & ~Qt::ItemIsEditable);
             int columnSpan = end - start;

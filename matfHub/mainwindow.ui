@@ -2403,10 +2403,13 @@
           <item>
            <widget class="QTableWidget" name="scheduleTable">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
+            <attribute name="horizontalHeaderDefaultSectionSize">
+             <number>74</number>
+            </attribute>
             <attribute name="verticalHeaderDefaultSectionSize">
-             <number>110</number>
+             <number>127</number>
             </attribute>
             <row>
              <property name="text">
@@ -2435,70 +2438,73 @@
             </row>
             <column>
              <property name="text">
-              <string>8:15-9:00</string>
+              <string>8:15</string>
              </property>
             </column>
             <column>
              <property name="text">
-              <string>9:15-10:00</string>
+              <string>9:15</string>
              </property>
             </column>
             <column>
              <property name="text">
-              <string>10:15-11:00</string>
+              <string>10:15</string>
              </property>
             </column>
             <column>
              <property name="text">
-              <string>11:15-12:00</string>
+              <string>11:15</string>
              </property>
             </column>
             <column>
              <property name="text">
-              <string>12:15-13:00</string>
+              <string>12:15</string>
              </property>
             </column>
             <column>
              <property name="text">
-              <string>13:15-14:00</string>
+              <string>13:15</string>
              </property>
             </column>
             <column>
              <property name="text">
-              <string>14:15-15:00</string>
+              <string>14:15</string>
              </property>
             </column>
             <column>
              <property name="text">
-              <string>15:15-16:00</string>
+              <string>15:15</string>
              </property>
             </column>
             <column>
              <property name="text">
-              <string>16:15-17:00</string>
+              <string>16:15</string>
              </property>
             </column>
             <column>
              <property name="text">
-              <string>17:15-18:00</string>
+              <string>17:15</string>
              </property>
             </column>
             <column>
              <property name="text">
-              <string>18:15-19:00</string>
+              <string>18:15</string>
              </property>
             </column>
             <column>
              <property name="text">
-              <string>19:15-20:00</string>
+              <string>19:15</string>
              </property>
             </column>
             <column>
              <property name="text">
-              <string>20:15-21:00</string>
+              <string>20:15</string>
              </property>
             </column>
             <item row="3" column="1">
+             <property name="text">
+              <string/>
+             </property>
              <property name="flags">
               <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
              </property>
@@ -2509,6 +2515,9 @@
         </item>
         <item row="4" column="1">
          <widget class="QPushButton" name="SacuvajButton">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="text">
            <string>Sacuvaj</string>
           </property>
@@ -2521,6 +2530,9 @@
           </property>
           <item>
            <widget class="QPushButton" name="prethodniButton">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="text">
              <string>◄</string>
             </property>
@@ -2528,6 +2540,9 @@
           </item>
           <item>
            <widget class="QPushButton" name="sledeciButton">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="text">
              <string>►</string>
             </property>

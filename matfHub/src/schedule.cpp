@@ -56,11 +56,11 @@ void Schedule::clearTable(Ui::MainWindow *ui) {
 }
 
 void Schedule::findSchedule(Ui::MainWindow *ui){
+    clearTable(ui);
     brojRasporeda = 0;
     while(!m_gen.schedules.empty()){
         m_gen.schedules.erase(m_gen.schedules.begin());
     }
-    clearTable(ui);
     QString oldText = ui->rasporedStartButton->text();
     ui->rasporedStartButton->setText("...");
     StrMap<StrMap<CourseSet>> reducedMap;
@@ -109,6 +109,7 @@ void Schedule::scrapeSchedule(Ui::MainWindow *ui){
     ui->SacuvajButton->setEnabled(true);
     ui->sledeciButton->setEnabled(true);
     ui->prethodniButton->setEnabled(true);
+    ui->scrapeButton->setEnabled(false);
 }
 
 void Schedule::nextSchedule(Ui::MainWindow *ui){
@@ -141,6 +142,7 @@ void Schedule::saveSchedule(Ui::MainWindow *ui){
 }
 
 void Schedule::loadSchedule(Ui::MainWindow *ui){
+    clearTable(ui);
     Generator tmp_gen;
     const QString& filePath = "../matfHub/raspored.json";
     std::vector<Course> load = tmp_gen.loadCoursesFromJson(filePath);
