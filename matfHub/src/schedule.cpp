@@ -109,6 +109,7 @@ void Schedule::scrapeSchedule(Ui::MainWindow *ui){
     ui->examArea->setEnabled(true);
     ui->SacuvajButton->setEnabled(true);
     ui->sledeciButton->setEnabled(true);
+    ui->prethodniButton->setEnabled(true);
 }
 
 void Schedule::nextSchedule(Ui::MainWindow *ui){
@@ -139,9 +140,11 @@ void Schedule::saveSchedule(Ui::MainWindow *ui){
 }
 
 void Schedule::loadSchedule(Ui::MainWindow *ui){
+    Generator tmp_gen;
     const QString& filePath = "../matfHub/raspored.json";
-    std::vector<Course> load = m_gen.loadCoursesFromJson(filePath);
-    m_gen.schedules.push_back(load);
-    m_gen.displaySchedule(ui->scheduleTable,0); //FIX: bitmapa??
-    m_gen.schedules.pop_back();
+    std::vector<Course> load = tmp_gen.loadCoursesFromJson(filePath);
+    tmp_gen.schedules.push_back(load);
+    int n = tmp_gen.schedules.size() - 1;
+    tmp_gen.displaySchedule(ui->scheduleTable,n);
+    tmp_gen.schedules.pop_back();
 }

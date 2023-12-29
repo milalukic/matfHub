@@ -24,6 +24,8 @@ public:
     Generator();
     std::vector<std::vector<Course>> schedules;
     std::vector<Course> saved;
+    void place(const Course& term);
+    void remove(const Course& term);
     bool scheduleFilter(const std::vector<Course>& schedule);
     void find(StrMap<StrMap<CourseSet>> courseTypeTermMap);
     void displaySchedule(QTableWidget* tableWidget, int brojRasporeda);
@@ -34,8 +36,6 @@ private:
     void _find(StrMap<StrMap<CourseSet>>& courseTypeTermMap, std::vector<Course>& placedList, int i, int stop,
                std::unordered_set<std::string> alreadySearched);
     bool conflict(const Course& term);
-    void place(const Course& term);
-    void remove(const Course& term);
 };
 
 #endif // GENERATOR_H
