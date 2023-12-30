@@ -609,13 +609,13 @@ void MainWindow::changeStackedWidgetPage(){
     QString buttonText = buttonSender->text();
     std::cout << buttonText.toStdString() << std::endl;
 
-    if(buttonText == "Regular calculator")
+    if(buttonText == "Kalkulator")
         ui->stackedWidget->setCurrentIndex(0);
-    else if(buttonText == "Matrix calculator")
+    else if(buttonText == "Matrični Kalkulator")
         ui->stackedWidget->setCurrentIndex(1);
-    else if(buttonText == "Plotting calculator")
+    else if(buttonText == "Kalkulator za Iscrtavanje")
         ui->stackedWidget->setCurrentIndex(2);
-    else if(buttonText == "Statistics")
+    else if(buttonText == "Statistika")
         ui->stackedWidget->setCurrentIndex(3);
 }
 
