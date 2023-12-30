@@ -6,7 +6,7 @@
 
 TEST_CASE("Matrix calculator", "[class]"){
 
-    SECTION("Method getShape returns dimensions of matrix"){
+    SECTION("Getter getShape returns dimensions of matrix"){
         Matrix* matrix = new Matrix(3, 5);
 
         auto [x, y] = matrix->getShape();
@@ -24,7 +24,7 @@ TEST_CASE("Matrix calculator", "[class]"){
     	REQUIRE(QString::compare(output, expected));
     }
 
-    SECTION("Methods rows and columns return dimensions of matrix, should be the same as getShape"){
+    SECTION("Getters rows and columns return dimensions of matrix, should be the same as getShape"){
     	Matrix* matrix = new Matrix(3, 5);
     	auto [x, y] = matrix->getShape();
     	
@@ -33,7 +33,28 @@ TEST_CASE("Matrix calculator", "[class]"){
     	bool resultCorrect = (x == x1) && (y = y1);
 
     	REQUIRE(resultCorrect);
+    }
 
+    SECTION("Setter setData sets values of matrix from QString"){
+    	Matrix* matrix = new Matrix(1, 1);
+    	QString dataString = "5";
+
+    	matrix->setData(dataString);
+
+    	REQUIRE(((matrix->data())(0, 0)) == 5);
+    }
+
+    SECTION("Method reshapeMatrix reshapes the matrix and sets its dimensions"){
+    	Matrix* matrix = new Matrix(1, 2);
+    	matrix->setValue(5, 0, 0);
+
+    	matrix->reshapeMatrix(2, 1);
+    	auto [x, y] = matrix->getShape();
+    	auto val1 = (matrix->data())(0, 0);
+    	auto val2 = (matrix->data())(0, 1);
+    	bool expected = (x == 1) && (y == 2) && (val1 == 5) && (val2 == 0);
+ 
+    	REQUIRE(expected);
     }
    
 }
