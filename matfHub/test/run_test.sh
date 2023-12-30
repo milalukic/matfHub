@@ -1,9 +1,9 @@
 #!/bin/bash
 
-echo -ne "choose option:\\n\\tstsatistics: stat \\n\\tparser: parse \\n\\tplotter: plot \\n"
+echo -ne "choose option:\\n\\tstsatistics: stat \\n\\tparser: parse \\n\\tplotter: plot \\n\\tmatrix: matrix \\n"
 read OPT
 
-if [[ $OPT != "stat" && $OPT != "parse" && $OPT != "plot" ]]
+if [[ $OPT != "stat" && $OPT != "parse" && $OPT != "plot" && $OPT != "matrix" ]]
 then
     echo "Wrong input"
     echo "Exiting..."
@@ -18,6 +18,10 @@ elif [[ $OPT == "parse" ]]
 then
     echo "Running parser class test"
     ./scripts/run_parser_test.sh
+elif [[ $OPT == "matrix" ]]
+then
+    echo "Running matrix class test"
+    ./scripts/run_matrix_test.sh
 elif [[ $OPT == "plot" ]]
 then
     echo "Running plotter class test"
