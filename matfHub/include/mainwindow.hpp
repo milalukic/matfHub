@@ -71,9 +71,6 @@ private slots:
 
     void fileViewDoubleClicked(const QModelIndex &index);
 
-    void on_actionDark_Mode_triggered();
-    void on_actionLight_Mode_triggered();
-
     void fileViewCustomContextMenuRequested(const QPoint &pos, QAbstractItemView* view);
     void showFileView(QAbstractItemView* view);
 
@@ -159,8 +156,6 @@ private slots:
     void on_removeItemButton_clicked();
 
     void on_removeAllButton_clicked();
-
-    void on_tabWidgetMatfHub_currentChanged(int index);
 
 private:
 

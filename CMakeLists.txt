@@ -28,7 +28,7 @@ if(NOT matplotplusplus_POPULATED)
     add_subdirectory(${matplotplusplus_SOURCE_DIR} ${matplotplusplus_BINARY_DIR} EXCLUDE_FROM_ALL)
 endif()
 
-find_package(Matplot++ REQUIRED)
+#find_package(Matplot++ REQUIRED)
 
 
 ###############################

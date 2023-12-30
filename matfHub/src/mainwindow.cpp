@@ -229,19 +229,19 @@ void MainWindow::showMatrix(Matrix *m){
 
    QString history = ui->tbHistory->toPlainText();
 
-    raspored konektovi
+//raspored konektovi
 
 
 
-   for(int i = 0; i < m->dimension1(); i++) {
-       for(int j = 0; j < m->dimension2(); j++) {
-           history += QString::number(m->data()(i,j));
-           history += " ";
-       }
-       history += '\n';
-   }
-   history += "------------------------\n";
-   ui->tbHistory->setText(history);
+//   for(int i = 0; i < m->dimension1(); i++) {
+//       for(int j = 0; j < m->dimension2(); j++) {
+//           history += QString::number(m->data()(i,j));
+//           history += " ";
+//       }
+//       history += '\n';
+//   }
+//   history += "------------------------\n";
+//   ui->tbHistory->setText(history);
 }
 
 MainWindow::~MainWindow()

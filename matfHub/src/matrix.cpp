@@ -5,7 +5,7 @@
 
 #define DEBUG (qDebug() << __FILE__ << ":" << __LINE__ << ":\t")
 
-// std::vector<Matrix*> Matrix::m_savedMatrices;
+std::vector<Matrix*> Matrix::m_savedMatrices;
 
 
 //konstruktori
