@@ -1,6 +1,6 @@
 #include "../include/filemanager.hpp"
 #include "../include/mainwindow.hpp"
-#include "../ui_mainwindow.h"
+//#include "../ui_mainwindow.h"
 #include "../include/config.hpp"
 #include <list>
 

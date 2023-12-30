@@ -29,7 +29,7 @@ then
 elif [[ $OPT == "fm" ]]
 then
     echo "Running file manager class test"
-    ./fm/script/run_fmanager_test.sh
+    ./script/run_fmanager_test.sh
 fi
 
 # test -d Catch2
