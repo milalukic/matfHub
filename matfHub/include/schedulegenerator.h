@@ -30,7 +30,9 @@ public:
     void find(StrMap<StrMap<CourseSet>> courseTypeTermMap);
     void displaySchedule(QTableWidget* tableWidget, int brojRasporeda);
     void saveCoursesToJson(const QString& filePath);
+    void showPopupWithText(const QString& text);
     std::vector<Course> loadCoursesFromJson(const QString& filePath);
+
 
 private:
     void _find(StrMap<StrMap<CourseSet>>& courseTypeTermMap, std::vector<Course>& placedList, int i, int stop,

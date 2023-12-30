@@ -11,6 +11,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <iostream>
+#include <QMessageBox>
 
 #define ROWS 5
 #define COLUMNS 13
@@ -39,6 +40,16 @@ bool Generator::scheduleFilter(const std::vector<Course>& schedule) {
         }
     }
     return true;
+}
+
+void Generator::showPopupWithText(const QString& text) {
+    QMessageBox msgBox;
+    msgBox.setText(text);
+    msgBox.setWindowTitle("Raspored");
+    //    msgBox.setStyleSheet("QMessageBox { background-color: white; }");
+    msgBox.adjustSize();
+    msgBox.layoutDirection();
+    msgBox.exec();
 }
 
 void Generator::find(StrMap<StrMap<CourseSet>> courseTypeTermMap) {
@@ -88,6 +99,8 @@ void Generator::displaySchedule(QTableWidget* tableWidget, int brojRasporeda) {
         }
 
         saved = schedule;
+    } else {
+        showPopupWithText("Raspored ne postoji!");
     }
 }
 
@@ -201,7 +214,7 @@ void Generator::saveCoursesToJson(const QString& filePath) {
         QTextStream out(&file);
         out << doc.toJson();
         file.close();
-        std::cout << "Raspored sacuvan" << std::endl;
+        showPopupWithText("Raspored sacuvan");
     } else {
         std::cerr << "Greska u ispisu" << std::endl;
     }
