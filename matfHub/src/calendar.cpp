@@ -127,6 +127,20 @@ void Calendar::addCourse(QDate next_d, QString desc){
 }
 
 void Calendar::initializeClassMap(){
+
+    for(auto date: date_to_note.keys()){
+        if(!day_to_class[date.dayOfWeek()].empty()){
+            for(auto course : day_to_class[date.dayOfWeek()]){
+                if(date_to_note[date].contains(course))
+                    date_to_note[date].removeOne(course);
+            }
+        }
+    }
+
+    if(!day_to_class.isEmpty()){
+        day_to_class.clear();
+    }
+
     QFile schedulePath(Config::getConfig()->getConfigPath() + "/raspored.json");
 
     if (!schedulePath.open(QIODevice::ReadOnly)) {
@@ -155,7 +169,14 @@ void Calendar::initializeClassMap(){
         QString classroom = courseObject["classroom"].toString();
 
         int d = courseObject["day"].toInt()+1;
-        QString itemStr = QString::number(start) + ":15 - " + QString::number(start+dur) + ":00 " + desc + ", " + teacher + ", " + classroom;
+
+        QString startStr = "";
+        if(start < 10){
+            startStr = "0";
+        }
+        startStr += QString::number(start);
+
+        QString itemStr = startStr + ":15 - " + QString::number(start+dur) + ":00 " + desc + ", " + teacher + ", " + classroom;
 
         if(day_to_class[d].empty()){ //ovo je problem
             day_to_class[d] = {};
