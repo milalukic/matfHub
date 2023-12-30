@@ -39,6 +39,8 @@ public:
     void setValue(double value, unsigned i, unsigned j);
     void reshapeMatrix(unsigned col, unsigned row);
 
+    static void switchMatrices(Matrix* m1, Matrix* m2);
+
 
     //set
     unsigned saveMatrix();

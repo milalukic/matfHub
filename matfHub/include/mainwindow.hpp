@@ -105,6 +105,7 @@ private slots:
 
     void saveMatrix();
     void loadMatrix(unsigned int pos, QStringList strLst, unsigned d1, unsigned d2);
+    void switchMatrices();
 
         //plotting
     void plot();
