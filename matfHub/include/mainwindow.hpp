@@ -82,8 +82,6 @@ private slots:
     void writeToHistoryTB(History* history);
             //regular
     void calculateRegular();
-            //matrix
-    void showMatrix(Matrix *m);
 
     QStringList matrixStringToStringList(QString str);
     void reshapeMatrix(unsigned dim1, unsigned dim2, unsigned pos, QStringList content);
