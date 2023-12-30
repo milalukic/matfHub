@@ -463,7 +463,7 @@ void MainWindow::actionExitTriggered()
 }
 
 
-void MainWindow::on_actionDark_Mode_triggered()
+void MainWindow::on_actionLight_Mode_triggered()
 {
     QApplication::setStyle(QStyleFactory::create("Fusion"));
 }
@@ -498,6 +498,7 @@ void MainWindow::on_prethodniButton_clicked()
 void MainWindow::on_SacuvajButton_clicked()
 {
     schedule->saveSchedule(ui);
+    calendar->initializeClassMap();
 }
 
 //promena glavnog hab foldera
@@ -925,17 +926,6 @@ void MainWindow::plot(){
 }
 
 
-// Kalendar
-void MainWindow::on_calendarWidget_clicked(const QDate &date)
-{
-    calendar->dateChanged(ui, date);
-}
-
-void MainWindow::on_addToCalendarButton_clicked()
-{
-    calendar->taskAdded(ui);
-}
-
 void MainWindow::plotSin(){
 
     ui->leState->setText("sin(" + ui->leState->text() + ")" );
@@ -944,16 +934,7 @@ void MainWindow::plotSin(){
 
 }
 
-void MainWindow::on_removeItemButton_clicked()
-{
-    calendar->removeTask(ui);
-}
 
-void MainWindow::on_removeAllButton_clicked()
-{
-    calendar->removeAll(ui);
-
-}
 
 void MainWindow::plotCos(){
 
@@ -1186,12 +1167,6 @@ void MainWindow::historySave(){
 }
 
 
-void MainWindow::on_actionLight_Mode_triggered()
-{
-
-    QApplication::setStyle("windows");
-}
-
 void MainWindow::switchMatrices(){
 
     auto [d11, d12] = m1->getShape();
@@ -1206,5 +1181,24 @@ void MainWindow::switchMatrices(){
 
     reshapeMatrix(d21, d22, 1, matrixStringToStringList(m1->toString()));
     reshapeMatrix(d11, d12, 2, matrixStringToStringList(m2->toString()));
+}
+// Kalendar
+void MainWindow::on_calendarWidget_clicked(const QDate &date)
+{
+    calendar->dateChanged(ui, date);
+}
 
+void MainWindow::on_addToCalendarButton_clicked()
+{
+    calendar->taskAdded(ui);
+}
+
+void MainWindow::on_removeItemButton_clicked()
+{
+    calendar->removeTask(ui);
+}
+
+void MainWindow::on_removeAllButton_clicked()
+{
+    calendar->removeAll(ui);
 }

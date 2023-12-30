@@ -72,7 +72,7 @@ auto Statistics::mode() -> double{
     return it->first;
 }
 
-//PLOTTER 
+//PLOTTER
 void Statistics::histogram(){
     auto data = xData();
     matplot::hist(data);

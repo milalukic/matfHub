@@ -218,6 +218,8 @@ void Generator::saveCoursesToJson(const QString& filePath) {
     } else {
         std::cerr << "Greska u ispisu" << std::endl;
     }
+
+
 }
 
 std::vector<Course> Generator::loadCoursesFromJson(const QString& filePath) {

@@ -36,7 +36,8 @@
        <enum>Qt::DefaultContextMenu</enum>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="FileManagerTab">
        <attribute name="title">
@@ -2756,6 +2757,7 @@
              <y>0</y>
              <width>258</width>
              <height>611</height>
+             <height>583</height>
             </rect>
            </property>
           </widget>
