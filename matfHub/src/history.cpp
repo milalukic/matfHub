@@ -1,4 +1,5 @@
 #include "../include/history.hpp"
+#include "../include/config.hpp"
 
 #include <fstream>
 #include <QFile>
@@ -53,7 +54,7 @@ void History::addMatrix(Matrix *m){
 }
 
 void History::saveHistory(){
-    QFile file("../hist.txt");
+    QFile file(Config::getConfig()->getHubPath() + "/hist.txt");
     file.open(QIODevice::WriteOnly);
     auto history = this->history();
     for(auto const &x : history){
