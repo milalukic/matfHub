@@ -15,7 +15,6 @@
 
 #include "notes.h"
 #include "calendar.h"
-
 #include "plotter.hpp"
 #include "matrix.hpp"
 #include "statistics.hpp"
@@ -157,6 +156,8 @@ private slots:
     void on_removeItemButton_clicked();
 
     void on_removeAllButton_clicked();
+
+    void on_actionLight_Mode_triggered();
 
 private:
 

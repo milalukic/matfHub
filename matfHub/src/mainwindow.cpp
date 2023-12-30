@@ -28,6 +28,9 @@
 
 #include <fstream>
 #include <map>
+#include <QPalette>
+#include <QStyleFactory>
+#include <QStyle>
 
 // #include <iostream>
 // #include "../include/notes.h"
@@ -482,7 +485,7 @@ void MainWindow::actionExitTriggered()
 
 void MainWindow::on_actionDark_Mode_triggered()
 {
-    QApplication::setStyle("Fusion");
+    QApplication::setStyle(QStyleFactory::create("Fusion"));
 }
 
 void MainWindow::on_smerBox_activated(int index)
@@ -1199,5 +1202,12 @@ void MainWindow::statPlotBox(){
 void MainWindow::historySave(){
     history->saveHistory();
     std::cout << "History saved!" << std::endl;
+}
+
+
+void MainWindow::on_actionLight_Mode_triggered()
+{
+
+    QApplication::setStyle("windows");
 }
 

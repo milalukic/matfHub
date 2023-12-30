@@ -36,7 +36,7 @@
        <enum>Qt::DefaultContextMenu</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="FileManagerTab">
        <attribute name="title">
@@ -493,7 +493,8 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset theme="go-previous"/>
+             <iconset theme="go-previous">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </widget>
           </item>
@@ -945,7 +946,8 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset theme="go-up"/>
+             <iconset theme="go-up">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </widget>
           </item>
@@ -1397,7 +1399,8 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset theme="go-home"/>
+             <iconset theme="go-home">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </widget>
           </item>
@@ -1852,7 +1855,8 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset theme="go-next"/>
+             <iconset theme="go-next">
+              <normaloff>.</normaloff>.</iconset>
             </property>
             <property name="autoDefault">
              <bool>false</bool>
@@ -1868,7 +1872,8 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset theme="folder-new"/>
+             <iconset theme="folder-new">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </widget>
           </item>
@@ -2098,7 +2103,7 @@
                      <x>0</x>
                      <y>0</y>
                      <width>348</width>
-                     <height>350</height>
+                     <height>348</height>
                     </rect>
                    </property>
                   </widget>
@@ -2188,8 +2193,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>128</width>
-                   <height>385</height>
+                   <width>20</width>
+                   <height>20</height>
                   </rect>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -2742,7 +2747,7 @@
              <x>0</x>
              <y>0</y>
              <width>258</width>
-             <height>588</height>
+             <height>577</height>
             </rect>
            </property>
           </widget>
@@ -3050,7 +3055,7 @@
      <x>0</x>
      <y>0</y>
      <width>1258</width>
-     <height>20</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -3060,7 +3065,9 @@
     <addaction name="separator"/>
     <addaction name="actionExit"/>
     <addaction name="actionChangeHubLocation"/>
+    <addaction name="separator"/>
     <addaction name="actionDark_Mode"/>
+    <addaction name="actionLight_Mode"/>
    </widget>
    <addaction name="menuFile"/>
   </widget>
@@ -3080,6 +3087,11 @@
   <action name="actionDark_Mode">
    <property name="text">
     <string>Dark Mode</string>
+   </property>
+  </action>
+  <action name="actionLight_Mode">
+   <property name="text">
+    <string>Light Mode</string>
    </property>
   </action>
  </widget>
