@@ -3087,17 +3087,17 @@
   <customwidget>
    <class>myListView</class>
    <extends>QListView</extends>
-   <header>../../matfHub/include/views.h</header>
+   <header>../../matfHub/matfHub/include/views.h</header>
   </customwidget>
   <customwidget>
    <class>myGridView</class>
    <extends>QTableView</extends>
-   <header>../../matfHub/include/views.h</header>
+   <header>../../matfHub/matfHub/include/views.h</header>
   </customwidget>
   <customwidget>
    <class>myThumbnailView</class>
    <extends>QListView</extends>
-   <header>../../matfHub/include/views.h</header>
+   <header>../../matfHub/matfHub/include/views.h</header>
   </customwidget>
  </customwidgets>
  <resources>
