@@ -58,6 +58,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         matfHub/include/views.h
         matfHub/src/config.cpp
         matfHub/src/views.cpp
+        matfHub/test/fmanager.test.cpp
     )
 
 

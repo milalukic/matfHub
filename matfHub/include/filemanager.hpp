@@ -1,6 +1,7 @@
 #ifndef FILEMANAGER_H
 #define FILEMANAGER_H
 
+#include <QString>
 #include <QObject>
 #include <QFileSystemModel>
 #include <stack>
