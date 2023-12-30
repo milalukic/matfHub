@@ -481,18 +481,6 @@ void MainWindow::actionExitTriggered()
     QApplication::quit();
 }
 
-
-void MainWindow::on_actionDark_Mode_triggered()
-{
-    QApplication::setStyle("Fusion");
-}
-
-void MainWindow::on_actionLight_Mode_triggered()
-{
-    QApplication::setStyle("WindowsVista");
-
-}
-
 void MainWindow::on_smerBox_activated(int index)
 {
     schedule->changeModule(ui, index);

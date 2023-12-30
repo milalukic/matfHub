@@ -3060,8 +3060,6 @@
     <addaction name="separator"/>
     <addaction name="actionExit"/>
     <addaction name="actionChangeHubLocation"/>
-    <addaction name="actionDark_Mode"/>
-    <addaction name="actionLight_Mode"/>
    </widget>
    <addaction name="menuFile"/>
   </widget>
@@ -3076,16 +3074,6 @@
    </property>
    <property name="toolTip">
     <string>Change Hub Location</string>
-   </property>
-  </action>
-  <action name="actionDark_Mode">
-   <property name="text">
-    <string>Dark Mode</string>
-   </property>
-  </action>
-  <action name="actionLight_Mode">
-   <property name="text">
-    <string>Light Mode</string>
    </property>
   </action>
  </widget>

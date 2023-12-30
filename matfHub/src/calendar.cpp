@@ -167,6 +167,8 @@ void Calendar::initializeClassMap(){
         int dur = courseObject["duration"].toInt();
         QString teacher = courseObject["teacher"].toString();
         QString classroom = courseObject["classroom"].toString();
+        QString courseType = courseObject["course_type"].toString();
+
 
         int d = courseObject["day"].toInt()+1;
 
@@ -176,7 +178,7 @@ void Calendar::initializeClassMap(){
         }
         startStr += QString::number(start);
 
-        QString itemStr = startStr + ":15 - " + QString::number(start+dur) + ":00 " + desc + ", " + teacher + ", " + classroom;
+        QString itemStr = startStr + ":15 - " + QString::number(start+dur) + ":00 " + desc + ", " + teacher + " - " + courseType + ", " + classroom;
 
         if(day_to_class[d].empty()){ //ovo je problem
             day_to_class[d] = {};
