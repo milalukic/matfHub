@@ -97,7 +97,7 @@ void FileManager::fileViewDoubleClicked(const QModelIndex &index)
         auto lastDot = clickedFilePath.lastIndexOf(".");
         if(lastDot != -1){
             auto fileExtension = clickedFilePath.last(clickedFilePath.length() - lastDot);
-            if(".txt" == fileExtension || ".json" == fileExtension){
+            if(".txt" == fileExtension || ".json" == fileExtension || ".cpp" == fileExtension){
                 m_mainWindow->ui->tabWidgetMatfHub->setCurrentIndex(2); //ovo je tvrdo kodirano, bilo bi lepo izvuci indeks iz imena ili makar definisati enum
                 m_mainWindow->m_notes->openFile(clickedFilePath, m_mainWindow->ui, m_mainWindow);
             }else{

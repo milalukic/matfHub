@@ -11,26 +11,28 @@ Notes::Notes(Ui::MainWindow* mw)
     m_fileContentUnchanged = new QString("");
 }
 
-void Notes::openFile(QString filePath, Ui::MainWindow *ui, QWidget *parent) {
+void Notes::openFile(QString fileName, Ui::MainWindow *ui, QWidget *parent) {
 
-    QFile file(filePath);
+    QFile file(fileName);
+    m_currentFile = fileName;
 
     if(!file.open(QIODevice::ReadOnly | QFile::Text)){
         return;
     }
 
-    parent->setWindowTitle(filePath);
+    parent->setWindowTitle(fileName.right(fileName.length() - fileName.lastIndexOf("/")-1));
     QTextStream in(&file);
     QString text = in.readAll();
 
-    ui->textEdit->setText(text);
+    changeLanguage(fileName, ui);
 
     if(m_fileContentUnchanged){
         delete m_fileContentUnchanged;
     }
     m_fileContentUnchanged = new QString(text);
 
-    m_currentFile = filePath;
+    ui->textEdit->setText(text);
+
     file.close();
 
 }
@@ -100,36 +102,16 @@ void Notes::changeLanguage(QString fileName, Ui::MainWindow *ui){
 }
 
 void Notes::openClicked(Ui::MainWindow *ui, QWidget *parent){
-    QString fileName = QFileDialog::getOpenFileName(parent, "Otvori novu datoteku");
+    QString fileName = QFileDialog::getOpenFileName(parent, "Otvori novu datoteku", Config::getConfig()->getHubPath());
     if(QString::compare(fileName, "")){//bez provere je izbacivao gresku kada se korisnik predomisli i zatvori prozor za odabir datoteke
-        QFile file(fileName);
-        m_currentFile = fileName;
-
-        if(!file.open(QIODevice::ReadOnly | QFile::Text)){
-            return;
-        }
-
-        parent->setWindowTitle(fileName.right(fileName.length() - fileName.lastIndexOf("/")-1));
-        QTextStream in(&file);
-        QString text = in.readAll();
-
-        changeLanguage(fileName, ui);
-
-        if(m_fileContentUnchanged){
-            delete m_fileContentUnchanged;
-        }
-        m_fileContentUnchanged = new QString(text);
-
-        ui->textEdit->setText(text);
-
-        file.close();
+        openFile(fileName, ui, parent);
     }
 }
 
 void Notes::saveClicked(Ui::MainWindow *ui, QWidget *parent){
 
     if (m_currentFile.isEmpty()) {
-        QString fileName = QFileDialog::getSaveFileName(parent, "Sacuvaj.");//mislim da treci argument ove f je moze primiti put direktorijuma u kome ce se otvoriti to cudo, treba napraviti geter za hubPath da se ovde prosledi
+        QString fileName = QFileDialog::getSaveFileName(parent, "Sacuvaj.", Config::getConfig()->getHubPath());//mislim da treci argument ove f je moze primiti put direktorijuma u kome ce se otvoriti to cudo, treba napraviti geter za hubPath da se ovde prosledi
         QFile file(fileName);
 
         if (!file.open(QFile::WriteOnly | QFile::Text)) {
