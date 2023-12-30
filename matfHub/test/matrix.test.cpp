@@ -56,5 +56,93 @@ TEST_CASE("Matrix calculator", "[class]"){
  
     	REQUIRE(expected);
     }
+    
+    SECTION("Method getSaved returns saved matrix"){
+    	Matrix* matrix = new Matrix(1, 2);
+    	matrix->setValue(5, 0, 0);
+    	
+    	matrix->saveMatrix();	
+    	auto savedMatrix = matrix->getSaved(0);   	
+    	bool expected = ((savedMatrix->data())(0,0)==5);
+    	
+    	REQUIRE(expected);
+    }
+    
+    SECTION("Method getSaved doesn't return null when there are no saved matrices"){
+    	Matrix* matrix = new Matrix(1, 2);
+    	matrix->setValue(5, 0, 0);
+   	
+    	auto expected = matrix->getSaved(0);
+    	
+    	REQUIRE(expected != nullptr);
+    }
+    
+    SECTION("Method data returns the number in the given row and column"){
+    	Matrix* matrix = new Matrix(1, 2);
+    	matrix->setValue(5, 0, 0);
+    	
+    	bool expected = (matrix->data()(0,0) == 5) && (matrix->data()(0,1) == 0);
+    	
+    	REQUIRE(expected);
+    }
+    
+    SECTION("Method setValue sets the given value in the given row and column"){
+    	Matrix* matrix = new Matrix(1, 2);
+    	matrix->setValue(5, 0, 1);
+    	
+    	bool expected = matrix->data()(0,1) == 5;
+    	
+    	REQUIRE(expected);
+    }
+    
+    SECTION("Method switchMatrices switches the shapes of two matrices"){
+    	Matrix* matrix1 = new Matrix(1, 1);
+    	Matrix* matrix2 = new Matrix(1, 2);
+    	Matrix::switchMatrices(matrix1, matrix2);    	
+    	auto [x1, y1] = matrix1->getShape();
+    	auto [x2, y2] = matrix2->getShape();
+    	
+    	bool expected = (x1 == 1) && (y1 == 2) && (x2 == 1) && (x2 == 1);
+    	
+    	REQUIRE(expected);
+    }
    
+   SECTION("Method switchMatrices switches the data of two matrices"){
+   	Matrix* matrix1 = new Matrix(1, 1);
+    	Matrix* matrix2 = new Matrix(1, 2);
+    	matrix1->setValue(5, 0, 0);
+    	Matrix::switchMatrices(matrix1, matrix2); 
+    	
+    	bool expected = (matrix2->data()(0,0) == 5) && (matrix1->data()(0,0) == 0) && (matrix1->data()(0,1) == 0);
+    	
+    	REQUIRE(expected);
+   }
+   
+   SECTION("Method rows sets the number of rows of a matrix"){
+   	Matrix* matrix = new Matrix(1, 1);
+   	matrix->rows(2);
+   	auto [x, y] = matrix->getShape();
+   	
+   	bool expected = (x == 2) && (y==1);
+   	
+   	REQUIRE(expected);
+   }
+   
+   SECTION("Method columns sets the number of columns of a matrix"){
+   	Matrix* matrix = new Matrix(1, 1);
+   	matrix->columns(2);
+   	auto [x, y] = matrix->getShape();
+   	
+   	bool expected = (x == 1) && (y==2);
+   	
+   	REQUIRE(expected);
+   }
 }
+
+
+
+
+
+
+
+
