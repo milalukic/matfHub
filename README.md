@@ -11,4 +11,9 @@ matfHub je projekat namenjen studentima Matematičkog fakulteta koji u sebi sadr
     - <a href="https://gitlab.com/6ananaana">Ana Vucinic 200/2018</a>
 
 
+- Uputstvo za gradjenje projekta:
+   - pokrenuti `./prebuild.sh`
+   - otovriti repo u QtCreatoru
+   - pritisnuti build dugme
+
 - <a href="https://gitlab.com/matf-bg-ac-rs/course-rs/projects-2023-2024/matfHub/-/wikis/home">Wiki</a>
