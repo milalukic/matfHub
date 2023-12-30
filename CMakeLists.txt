@@ -38,8 +38,8 @@ file(GLOB PROJECT_SOURCES
     "matfHub/include/*.hpp"
     "matfHub/include/*.h"
 	"matfHub/*.ui"
-	"matfHub/QSourceHighlite/*.cpp"
-	"matfHub/QSourceHighlite/*.h"
+        "matfHub/dependencies/*.cpp"
+        "matfHub/dependencies/*.h"
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

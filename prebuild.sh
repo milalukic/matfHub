@@ -23,7 +23,11 @@ if [[ ! -e ${DEPENDENCIES_DIR}/.git ]]; then
 
     # Perform the clone
     git clone https://github.com/Waqar144/QSourceHighlite.git "$DEPENDENCIES_DIR"
-else
-    # Directory is either a Git repository or is empty, consider pulling the latest changes
-    (cd ${DEPENDENCIES_DIR} && git pull)
+    cd ${DEPENDENCIES_DIR}
+    rm -rf .git
+    rm main.cpp
+    rm mainwindow.cpp
+    rm mainwindow.h
+    rm mainwindow.ui
+    
 fi

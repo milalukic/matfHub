@@ -7,7 +7,7 @@
 
 #include "../ui_mainwindow.h"
 
-#include "../QSourceHighlite/qsourcehighliter.h"
+#include "../dependencies/qsourcehighliter.h"
 
 class Notes
 {

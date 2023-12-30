@@ -1,7 +1,7 @@
 #include "../include/notes.h"
 #include "../include/mainwindow.hpp"
 #include "../ui_mainwindow.h"
-#include "../QSourceHighlite/qsourcehighliter.h"
+#include "../dependencies/qsourcehighliter.h"
 
 
 
