@@ -60,6 +60,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         matfHub/src/views.cpp
     )
 
+# Specify the path to your .sh file
+set(MY_SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/prebuild.sh")
+
 
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET matfHub APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
@@ -78,6 +81,13 @@ else()
         )
     endif()
 endif()
+
+# Installing dependencies
+add_custom_target(install_dependencies
+    COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/prebuild.sh"
+    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+    COMMENT "Installing dependencies and setting up directories"
+)
 
 target_link_libraries(
     matfHub PRIVATE Qt${QT_VERSION_MAJOR}::Widgets 
@@ -111,3 +121,5 @@ install(TARGETS matfHub
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(matfHub)
 endif()
+
+add_dependencies(matfHub install_dependencies)
