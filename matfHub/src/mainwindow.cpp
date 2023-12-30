@@ -80,7 +80,7 @@ MainWindow::MainWindow(QWidget *parent)
     QShortcut *newShortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_N), this);
     connect(newShortcut, &QShortcut::activated, this, &MainWindow::on_newFileNotesButton_clicked);
 
-    ui->dirView->setModel(m_fileManager->dirModel);
+    ui->dirView->setModel(m_fileManager->m_dirModel);
     ui->dirView->hideColumn(1);
     ui->dirView->hideColumn(2);
     ui->dirView->setColumnWidth(0, 200);
@@ -506,10 +506,10 @@ void MainWindow::actionChangeHubLocationTriggered()
 {
     QString newHubPath = QFileDialog::getExistingDirectory(this, "Odaberi direktorijum");
     Config::getConfig()->setHubPath(newHubPath);
-    m_fileManager->currPath = newHubPath;
-    m_fileManager->hubPath = newHubPath;
-    ui->currentFilePath->setText(m_fileManager->currPath);
-    ui->detailsFileView->setRootIndex(m_fileManager->fileModel->setRootPath(m_fileManager->currPath));
+    m_fileManager->m_currPath = newHubPath;
+    m_fileManager->m_hubPath = newHubPath;
+    ui->currentFilePath->setText(m_fileManager->m_currPath);
+    ui->detailsFileView->setRootIndex(m_fileManager->m_fileModel->setRootPath(m_fileManager->m_currPath));
 }
 
 
@@ -518,7 +518,7 @@ void MainWindow::actionChangeHubLocationTriggered()
 void MainWindow::fileViewSetPath(const QString path){
     for(int i = 0; i < ui->fileViewLayout->count(); ++i){
         auto view = static_cast<QAbstractItemView*>(ui->fileViewLayout->itemAt(i)->widget());
-        view->setRootIndex(m_fileManager->fileModel->setRootPath(path));
+        view->setRootIndex(m_fileManager->m_fileModel->setRootPath(path));
         if(QTableView* table = dynamic_cast<QTableView*>(view)){
             table->horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);//TODO iz nekog razloga cini mi se da ovo ne radi UVEK ako se prvi put ulazi u neki folder?
         }
@@ -547,7 +547,7 @@ QModelIndexList MainWindow::getSelectedIndices(const QAbstractItemView* view){
 
 void MainWindow::setUpFileView(/*tipPogleda*/){
 
-    ui->currentFilePath->setText(m_fileManager->currPath);
+    ui->currentFilePath->setText(m_fileManager->m_currPath);
 
     connect(ui->detailsFileView, &QTableView::doubleClicked, this, [this](){//TODO koji signal je odgovarajuc? nesto sto odgovara promeni m_currPath i nista drugo? komplikovan nacin bi bio currPath retvoriti u klasu koja pored stringa ima i signal koji se ovde salje pri promeni QStringa ali to me smara trenutno...
         ui->detailsFileView->horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);
@@ -558,8 +558,8 @@ void MainWindow::setUpFileView(/*tipPogleda*/){
         QAbstractItemView* view = static_cast<QAbstractItemView*>(widget);//auto ga vec kastuje u konkretan tip dakle QTableView, QListView itd B) ali kompajler u daljem kodu to ne zna nego je u fazonu ok ovo ce sigurno biti bar QObject tako da ipak mora da se kastuje sto je idiotski ali tako je D: jednom kada naprave funkcionalne procesore koji lenjo izracunavaju i kada ceo svet predje na normalne funkcionalne interpretirane jezike ovo nece biti problem ;)
         //qDebug() << view;//apdejt: i ovaj staticki kast ga kastuje u klasu koja treba da bude, nagadjam jer je AbstractView apstraktna klasa TODO nauci vise o cppu
 
-        view->setModel(m_fileManager->fileModel);
-        view->setRootIndex(m_fileManager->fileModel->setRootPath(m_fileManager->hubPath));
+        view->setModel(m_fileManager->m_fileModel);
+        view->setRootIndex(m_fileManager->m_fileModel->setRootPath(m_fileManager->m_hubPath));
         view->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
         //connect(ui->detailsFileView, &QTableView::doubleClicked, m_fileManager, &FileManager::fileViewDoubleClicked); ovo ne radi a zelim da proradi, TODO istraziti

@@ -10,17 +10,18 @@ class FileManager
 {
 public:
     FileManager(MainWindow* mw);
-
+private:
     // putanje koje se koriste za navigaciju
-    QString oldPath;//TODO private
-    QString appPath;//vrv private
-    QString hubPath;//realno isto private ali mozda geter
-    QString currPath;//brate realno private i sigurno geter
+    QString m_oldPath;//TODO private
+    QString m_appPath;//vrv private
+public:
+    QString m_hubPath;//realno isto private ali mozda geter
+    QString m_currPath;//brate realno private i sigurno geter
 
     //modeli koje prikazujemo u levom i desnom delu prozora
-    QFileSystemModel *dirModel;//private
-    QFileSystemModel *fileModel;//private
-
+    QFileSystemModel* m_dirModel;//private, fali geter mozda seter
+    QFileSystemModel* m_fileModel;//private -||-
+private:
     // pocetne promenljive za sort i reverse sort
     bool m_nameSortCounter = false;//sve ovo isto private
     bool m_dateSortCounter = false;
@@ -31,9 +32,9 @@ public:
     int m_iconSize = 50;//priv
 
     // stekovi u kojima cuvamo istoriju kretanja
-    std::stack<QString> navigationBefore;//def priv
-    std::stack<QString> navigationAfter;//-||-
-
+    std::stack<QString> m_navigationBefore;//def priv
+    std::stack<QString> m_navigationAfter;//-||-
+public:
     // jasno imenovane funkcije fmanagera
     void changeDir(const QString path);
     void createNewFolder();

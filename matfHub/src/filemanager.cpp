@@ -10,25 +10,25 @@ FileManager::FileManager(MainWindow* mw)
     :m_mainWindow(mw)
 {
 
-    appPath = QDir::currentPath();
+    m_appPath = QDir::currentPath();
 
-    hubPath = /*appPath + "/" +*/ Config::getConfig()->getHubPath();
+    m_hubPath = /*appPath + "/" +*/ Config::getConfig()->getHubPath();
 
-    dirModel = new QFileSystemModel();
-    dirModel->setRootPath(hubPath);
-    dirModel->setFilter(QDir::AllDirs | QDir::NoDotAndDotDot);
+    m_dirModel = new QFileSystemModel();
+    m_dirModel->setRootPath(m_hubPath);
+    m_dirModel->setFilter(QDir::AllDirs | QDir::NoDotAndDotDot);
 
-    fileModel = new QFileSystemModel();
-    fileModel->setFilter(QDir::AllEntries | QDir::NoDotAndDotDot | QDir::Hidden);
-    fileModel->setReadOnly(false);
+    m_fileModel = new QFileSystemModel();
+    m_fileModel->setFilter(QDir::AllEntries | QDir::NoDotAndDotDot | QDir::Hidden);
+    m_fileModel->setReadOnly(false);
 
-    currPath = hubPath;
+    m_currPath = m_hubPath;
 }
 
 //pravi novi folder/dokument u trenutnom direktorijumu desnog pogleda
 void FileManager::createNewFolder(){
     QString name = "New Folder";
-    QString newFolderPath = currPath;
+    QString newFolderPath = m_currPath;
     newFolderPath.append("/");
     newFolderPath.append(name);
     int i = 1;
@@ -43,12 +43,12 @@ void FileManager::createNewFolder(){
         newFolderPath = newFolderPath.left(foundSlash+1);
         newFolderPath.append(name);
     }
-    QDir(currPath).mkdir(name);
+    QDir(m_currPath).mkdir(name);
 }
 
 void FileManager::createNewDocument(){
     QString name = "New Document.txt";
-    QString newFilePath = currPath;
+    QString newFilePath = m_currPath;
     newFilePath.append("/");
     newFilePath.append(name);
     int i = 1;
@@ -71,8 +71,8 @@ void FileManager::createNewDocument(){
 
 //prebacuje desni pogled u zadati direktorijum, postavlja oldPath i currPath, na pozivaocu funkcije je da promenu zabelezi u istoriji navigacije
 void FileManager::changeDir(const QString path){
-    oldPath = currPath;
-    currPath = path;
+    m_oldPath = m_currPath;
+    m_currPath = path;
     m_mainWindow->fileViewSetPath(path);
     m_mainWindow->currentFilePathSetPath(path);
 }
@@ -80,20 +80,20 @@ void FileManager::changeDir(const QString path){
 //narednih 7 funkcija necu komentarisati, verujem da je jasno sta rade
 void FileManager::dirViewDoubleClicked(const QModelIndex &index)
 {
-    const QString path = dirModel->fileInfo(index).absoluteFilePath();
+    const QString path = m_dirModel->fileInfo(index).absoluteFilePath();
     changeDir(path);
-    navigationBefore.push(oldPath);
+    m_navigationBefore.push(m_oldPath);
 
 }
 
 void FileManager::fileViewDoubleClicked(const QModelIndex &index)
 {
-    if(fileModel->fileInfo(index).isDir()){
-        changeDir(fileModel->fileInfo(index).absoluteFilePath());
-        navigationBefore.push(oldPath);
+    if(m_fileModel->fileInfo(index).isDir()){
+        changeDir(m_fileModel->fileInfo(index).absoluteFilePath());
+        m_navigationBefore.push(m_oldPath);
 
     }else{
-        QString clickedFilePath = fileModel->fileInfo(index).absoluteFilePath();
+        QString clickedFilePath = m_fileModel->fileInfo(index).absoluteFilePath();
         auto lastDot = clickedFilePath.lastIndexOf(".");
         if(lastDot != -1){
             auto fileExtension = clickedFilePath.last(clickedFilePath.length() - lastDot);
@@ -101,7 +101,7 @@ void FileManager::fileViewDoubleClicked(const QModelIndex &index)
                 m_mainWindow->ui->tabWidgetMatfHub->setCurrentIndex(2); //ovo je tvrdo kodirano, bilo bi lepo izvuci indeks iz imena ili makar definisati enum
                 m_mainWindow->m_notes->openFile(clickedFilePath, m_mainWindow->ui, m_mainWindow);
             }else{
-                QDesktopServices::openUrl(fileModel->fileInfo(index).absoluteFilePath());
+                QDesktopServices::openUrl(m_fileModel->fileInfo(index).absoluteFilePath());
             }
         }
 
@@ -110,37 +110,37 @@ void FileManager::fileViewDoubleClicked(const QModelIndex &index)
 
 void FileManager::backButtonClicked()
 {
-    if (!navigationBefore.empty()){
-        changeDir(navigationBefore.top());
-        navigationBefore.pop();
-        navigationAfter.push(oldPath);
+    if (!m_navigationBefore.empty()){
+        changeDir(m_navigationBefore.top());
+        m_navigationBefore.pop();
+        m_navigationAfter.push(m_oldPath);
     }
 }
 
 void FileManager::forwardButtonClicked()
 {
-    if(!navigationAfter.empty()){
-        changeDir(navigationAfter.top());
-        navigationAfter.pop();
-        navigationBefore.push(oldPath);
+    if(!m_navigationAfter.empty()){
+        changeDir(m_navigationAfter.top());
+        m_navigationAfter.pop();
+        m_navigationBefore.push(m_oldPath);
     }
 }
 
 void FileManager::homeButtonClicked()
 {
-    if(currPath != hubPath){
-        changeDir(hubPath);
-        navigationBefore.push(oldPath);
+    if(m_currPath != m_hubPath){
+        changeDir(m_hubPath);
+        m_navigationBefore.push(m_oldPath);
     }
 }
 
 void FileManager::dotDotButtonClicked()
 {
-    const int lastSlashFound = currPath.lastIndexOf("/");
-    const QString parentDirPath = currPath.left(lastSlashFound);
-    if(parentDirPath != currPath){
+    const int lastSlashFound = m_currPath.lastIndexOf("/");
+    const QString parentDirPath = m_currPath.left(lastSlashFound);
+    if(parentDirPath != m_currPath){
         changeDir(parentDirPath);
-        navigationBefore.push(oldPath);
+        m_navigationBefore.push(m_oldPath);
     }
 }
 
@@ -160,11 +160,11 @@ void FileManager::currentFilePathEditingFinished()
 
     m_mainWindow->currentFilePathSetPath(newPath);//ovo radimo bez obzira na poziv changeDir da bi se obrisale kose crte ako su one jedine dodate
 
-    if(newPath != currPath){
+    if(newPath != m_currPath){
         const QFileInfo inputFpath(newPath);
         if(inputFpath.exists() && inputFpath.isDir()){
             changeDir(newPath);
-            navigationBefore.push(oldPath);
+            m_navigationBefore.push(m_oldPath);
         }
     }
 }
@@ -175,15 +175,15 @@ void FileManager::fileViewCustomContextMenuRequested(const QPoint &pos)
 }
 
 QString FileManager::getNameFromIndex(const QModelIndex index){
-    return fileModel->fileName(index);
+    return m_fileModel->fileName(index);
 }
 
 void FileManager::renameSelectedFile(const QModelIndex index, const QString newName){
-    fileModel->setData(index, newName);
+    m_fileModel->setData(index, newName);
 }
 void FileManager::deleteSelectedFiles(const QModelIndexList indices){
     for(auto index : indices){
-        fileModel->remove(index);
+        m_fileModel->remove(index);
     }
 }
 
@@ -198,10 +198,10 @@ void FileManager::setSortCounters(bool value){
 void FileManager::sortByName(){
     //qDebug() << "Column 0:" << fileModel->headerData(0, Qt::Horizontal, Qt::DisplayRole);
     if (m_nameSortCounter){
-        fileModel->sort(0, Qt::DescendingOrder);
+        m_fileModel->sort(0, Qt::DescendingOrder);
         m_nameSortCounter = false;
     }else{
-        fileModel->sort(0, Qt::AscendingOrder);
+        m_fileModel->sort(0, Qt::AscendingOrder);
         setSortCounters(false);
         m_nameSortCounter = true;
     }
@@ -210,10 +210,10 @@ void FileManager::sortByName(){
 void FileManager::sortByDate(){
     //qDebug() << "Column 3:" << fileModel->headerData(3, Qt::Horizontal, Qt::DisplayRole);
     if (m_dateSortCounter){
-        fileModel->sort(3, Qt::DescendingOrder);
+        m_fileModel->sort(3, Qt::DescendingOrder);
         m_dateSortCounter = false;
     }else{
-        fileModel->sort(3, Qt::AscendingOrder);
+        m_fileModel->sort(3, Qt::AscendingOrder);
         setSortCounters(false);
         m_dateSortCounter = true;
     }
@@ -222,10 +222,10 @@ void FileManager::sortByDate(){
 void FileManager::sortBySize(){
     //qDebug() << "Column 1:" << fileModel->headerData(1, Qt::Horizontal, Qt::DisplayRole);
     if (m_sizeSortCounter){
-        fileModel->sort(1, Qt::DescendingOrder);
+        m_fileModel->sort(1, Qt::DescendingOrder);
         m_sizeSortCounter = false;
     }else{
-        fileModel->sort(1, Qt::AscendingOrder);
+        m_fileModel->sort(1, Qt::AscendingOrder);
         setSortCounters(false);
         m_sizeSortCounter = true;
     }
@@ -234,10 +234,10 @@ void FileManager::sortBySize(){
 void FileManager::sortByType(){
     //qDebug() << "Column 2:" << fileModel->headerData(2, Qt::Horizontal, Qt::DisplayRole);
     if (m_typeSortCounter){
-        fileModel->sort(2, Qt::DescendingOrder);
+        m_fileModel->sort(2, Qt::DescendingOrder);
         m_typeSortCounter = false;
     }else{
-        fileModel->sort(2, Qt::AscendingOrder);
+        m_fileModel->sort(2, Qt::AscendingOrder);
         setSortCounters(false);
         m_typeSortCounter = true;
     }
