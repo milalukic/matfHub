@@ -32,7 +32,7 @@ Matrix::~Matrix(){
     //getteri
 //TODO kontra?
 std::pair<unsigned, unsigned> Matrix::getShape(){
-    return {this->columns(), this->rows()};
+    return {this->rows(), this->columns()};
 }
 
 QString Matrix::toString(){
@@ -119,6 +119,30 @@ void Matrix::reshapeMatrix(unsigned col, unsigned row){
     m_rows = row;
 }
 
+void Matrix::switchMatrices(Matrix *m1, Matrix *m2){
+
+    arma::mat data1 = *(m1->m_data);
+    unsigned col1 = m1->m_columns;
+    unsigned row1 = m1->m_rows;
+
+    arma::mat data2 = *(m2->m_data);
+    unsigned col2 = m2->m_columns;
+    unsigned row2 = m2->m_rows;
+
+//    *(m1->m_data) = *(m2->m_data);
+//    m1->m_columns = m2->m_columns;
+//    m1->m_rows = m2->m_rows;
+
+    *(m2->m_data) = data1;
+    m2->m_columns = col1;
+    m2->m_rows = row1;
+
+    *(m1->m_data) = data2;
+    m1->m_columns = col2;
+    m1->m_rows = row2;
+
+}
+
 //methods
 Matrix *Matrix::transpose() {
     Matrix* newMatrix = new Matrix(this->columns(), this->rows());
@@ -185,8 +209,8 @@ Matrix* Matrix::operator - (const Matrix &other) const{
 
 Matrix* Matrix::operator * (const Matrix &other) const{
 
-    Matrix* newMat = new Matrix(this->rows(), this->columns());
-    arma::mat *newData = new arma::mat(this->rows(), this->columns());
+    Matrix* newMat = new Matrix(this->rows(), other.columns());
+    arma::mat *newData = new arma::mat(this->rows(), other.columns());
 
     *newData = this->data() * other.data();
     newMat->data(*newData);

@@ -159,6 +159,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pbHist, &QPushButton::clicked, this, &MainWindow::statPlotHist);
     connect(ui->pbBar, &QPushButton::clicked, this, &MainWindow::statPlotBar);
     connect(ui->pbBox, &QPushButton::clicked, this, &MainWindow::statPlotBox);
+    connect(ui->pbSwitchMatrices, &QPushButton::clicked, this, &MainWindow::switchMatrices);
 
     connect(ui->pbHistorySave, &QPushButton::clicked, this, &MainWindow::historySave);
 
@@ -822,6 +823,7 @@ void MainWindow::calculateMatrixMultiply(){
     }
 
     m3 = *m1 * *m2;
+    DEBUG << m3->toString();
 
     history->writeHistory("Mnozenje matrica:", m3->toString().toStdString());
     writeToHistoryTB(history);
@@ -889,11 +891,11 @@ void MainWindow::saveMatrix(){
     savedM->addWidget(loadLeft);
     savedM->addWidget(loadRight);
     connect(loadLeft, &QPushButton::clicked, this, [this, index](){
-        auto [d1, d2] = m3->loadLeft(index);
+        auto [d2, d1] = m3->loadLeft(index);
         loadMatrix(1, matrixStringToStringList(Matrix::getSaved(index)->toString()), d1, d2);
     });
     connect(loadRight, &QPushButton::clicked, this, [this, index](){
-        auto [d1, d2] = m3->loadRight(index);
+        auto [d2, d1] = m3->loadRight(index);
         loadMatrix(2, matrixStringToStringList(Matrix::getSaved(index)->toString()), d1, d2);
     });
 }
@@ -1201,3 +1203,19 @@ void MainWindow::historySave(){
     std::cout << "History saved!" << std::endl;
 }
 
+void MainWindow::switchMatrices(){
+
+    auto [d11, d12] = m1->getShape();
+    auto [d21, d22] = m2->getShape();
+
+    Matrix::switchMatrices(m1, m2);
+
+    DEBUG << "========================================";
+    qDebug().noquote() << m1->toString();
+    qDebug().noquote() << m2->toString();
+    DEBUG << "========================================";
+
+    reshapeMatrix(d21, d22, 1, matrixStringToStringList(m1->toString()));
+    reshapeMatrix(d11, d12, 2, matrixStringToStringList(m2->toString()));
+
+}

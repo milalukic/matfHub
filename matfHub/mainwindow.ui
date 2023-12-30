@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1258</width>
-    <height>794</height>
+    <width>1357</width>
+    <height>817</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -36,7 +36,7 @@
        <enum>Qt::DefaultContextMenu</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="FileManagerTab">
        <attribute name="title">
@@ -1963,7 +1963,7 @@
         <item>
          <widget class="QStackedWidget" name="stackedWidget">
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="parserPage">
            <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -1995,7 +1995,7 @@
                     <item row="1" column="0">
                      <widget class="QLabel" name="lbM1cols">
                       <property name="text">
-                       <string>Columns:</string>
+                       <string>Broj kolona:</string>
                       </property>
                      </widget>
                     </item>
@@ -2005,7 +2005,7 @@
                     <item row="0" column="0">
                      <widget class="QLabel" name="lbM1rows">
                       <property name="text">
-                       <string>Rows:</string>
+                       <string>Broj redova:</string>
                       </property>
                      </widget>
                     </item>
@@ -2018,7 +2018,7 @@
                        </size>
                       </property>
                       <property name="text">
-                       <string>Load matrix</string>
+                       <string>Ucitaj dimenzije</string>
                       </property>
                      </widget>
                     </item>
@@ -2050,11 +2050,24 @@
                  </layout>
                 </item>
                 <item>
+                 <widget class="QPushButton" name="pbSwitchMatrices">
+                  <property name="maximumSize">
+                   <size>
+                    <width>32</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>🔀</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
                  <layout class="QFormLayout" name="M2DimensionLayout">
                   <item row="0" column="0">
                    <widget class="QLabel" name="lbM2rows">
                     <property name="text">
-                     <string>Rows:</string>
+                     <string>Broj redova:</string>
                     </property>
                    </widget>
                   </item>
@@ -2064,7 +2077,7 @@
                   <item row="1" column="0">
                    <widget class="QLabel" name="lbM2cols">
                     <property name="text">
-                     <string>Columns:</string>
+                     <string>Broj kolona:</string>
                     </property>
                    </widget>
                   </item>
@@ -2080,7 +2093,7 @@
                      </size>
                     </property>
                     <property name="text">
-                     <string>Load matrix</string>
+                     <string>Ucitaj dimenzije</string>
                     </property>
                    </widget>
                   </item>
@@ -2103,7 +2116,7 @@
                      <x>0</x>
                      <y>0</y>
                      <width>348</width>
-                     <height>348</height>
+                     <height>350</height>
                     </rect>
                    </property>
                   </widget>
@@ -2150,28 +2163,28 @@
                   <item row="0" column="0">
                    <widget class="QPushButton" name="pbMatrixTranspose">
                     <property name="text">
-                     <string>Transpose</string>
+                     <string>Transponuj</string>
                     </property>
                    </widget>
                   </item>
                   <item row="0" column="1">
                    <widget class="QPushButton" name="pbMatrixInverse">
                     <property name="text">
-                     <string>Inverse</string>
+                     <string>Inverz</string>
                     </property>
                    </widget>
                   </item>
                   <item row="1" column="0">
                    <widget class="QPushButton" name="pbMatrixEye">
                     <property name="text">
-                     <string>Eye</string>
+                     <string>Jedinicna Matrica</string>
                     </property>
                    </widget>
                   </item>
                   <item row="1" column="1">
                    <widget class="QPushButton" name="pbMatrixOne">
                     <property name="text">
-                     <string>One</string>
+                     <string>Popuni jedinicama</string>
                     </property>
                    </widget>
                   </item>
@@ -2193,8 +2206,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>20</width>
-                   <height>20</height>
+                   <width>147</width>
+                   <height>387</height>
                   </rect>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -2747,7 +2760,7 @@
              <x>0</x>
              <y>0</y>
              <width>258</width>
-             <height>577</height>
+             <height>600</height>
             </rect>
            </property>
           </widget>
@@ -3054,7 +3067,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1258</width>
+     <width>1357</width>
      <height>22</height>
     </rect>
    </property>
