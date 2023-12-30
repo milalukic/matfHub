@@ -1958,7 +1958,7 @@
         <item>
          <widget class="QStackedWidget" name="stackedWidget">
           <property name="currentIndex">
-           <number>0</number>
+           <number>2</number>
           </property>
           <widget class="QWidget" name="parserPage">
            <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -3087,17 +3087,17 @@
   <customwidget>
    <class>myListView</class>
    <extends>QListView</extends>
-   <header>../../matfHub/matfHub/include/views.h</header>
+   <header>../../matfHub/include/views.h</header>
   </customwidget>
   <customwidget>
    <class>myGridView</class>
    <extends>QTableView</extends>
-   <header>../../matfHub/matfHub/include/views.h</header>
+   <header>../../matfHub/include/views.h</header>
   </customwidget>
   <customwidget>
    <class>myThumbnailView</class>
    <extends>QListView</extends>
-   <header>../../matfHub/matfHub/include/views.h</header>
+   <header>../../matfHub/include/views.h</header>
   </customwidget>
  </customwidgets>
  <resources>

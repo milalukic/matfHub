@@ -1,0 +1,7 @@
+[requires]
+armadillo/12.6.4
+
+[generators]
+CMakeDeps
+CMakeToolchain
+
