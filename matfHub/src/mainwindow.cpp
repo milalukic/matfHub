@@ -228,29 +228,8 @@ inline auto negation(double s) -> double{
     return -s;
 }
 
-//TODO delete?
-void MainWindow::showMatrix(Matrix *m){
-
-//    QString history = ui->tbHistory->toPlainText();
-
-    //raspored konektovi
-
-
-
-//    for(int i = 0; i < m->dimension1(); i++) {
-//        for(int j = 0; j < m->dimension2(); j++) {
-//            history += QString::number(m->data()(i,j));
-//            history += " ";
-//        }
-//        history += '\n';
-//    }
-//    history += "------------------------\n";
-//    ui->tbHistory->setText(history);
-}
-
 MainWindow::~MainWindow()
 {
-    //je l ovde ide "close without saving?"?
     calendar->saveHistory();
     delete ui;
 }
@@ -795,7 +774,7 @@ void MainWindow::reshapeMatrix2(){
 void MainWindow::calculateMatrixAdd(){
 
     if(m1->columns() != m2->columns() || m1->rows ()!= m2->rows()){
-        ui->leError->setText("Matrices are not the same size");
+        ui->leError->setText("Matrice razilicih dimenzija");
         return;
     }
 
@@ -808,7 +787,7 @@ void MainWindow::calculateMatrixAdd(){
 void MainWindow::calculateMatrixSubtract(){
 
     if(m1->columns() != m2->columns() || m1->rows ()!= m2->rows()){
-        ui->leError->setText("Matrices are not the same size");
+        ui->leError->setText("Matrice razilicih dimenzija");
         return;
     }
 
@@ -821,7 +800,7 @@ void MainWindow::calculateMatrixSubtract(){
 void MainWindow::calculateMatrixMultiply(){
 
     if(m1->columns() != m2->rows()){
-        ui->leError->setText("First matrix columns not the same as second matrix rows");
+        ui->leError->setText("Matrice pogresnih dimenzija");
         return;
     }
 
@@ -834,7 +813,7 @@ void MainWindow::calculateMatrixMultiply(){
 
 void MainWindow::calculateMatrixDiag(){
     if(m1->rows() != m1->columns()){
-        ui->leError->setText("Matrix is not square");
+        ui->leError->setText("Matrica nije kvadratna");
         return;
     }
 
@@ -855,7 +834,7 @@ void MainWindow::calculateMatrixTranspose(){
 void MainWindow::calculateMatrixInverse(){
 
     if(m1->rows() != m1->columns()){
-        ui->leError->setText("Matrix is not square");
+        ui->leError->setText("Matrica nije kvadratna");
         return;
     }
 
