@@ -2188,8 +2188,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>20</width>
-                   <height>20</height>
+                   <width>98</width>
+                   <height>28</height>
                   </rect>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -3061,6 +3061,7 @@
     <addaction name="actionExit"/>
     <addaction name="actionChangeHubLocation"/>
     <addaction name="actionDark_Mode"/>
+    <addaction name="actionLight_Mode"/>
    </widget>
    <addaction name="menuFile"/>
   </widget>
@@ -3080,6 +3081,11 @@
   <action name="actionDark_Mode">
    <property name="text">
     <string>Dark Mode</string>
+   </property>
+  </action>
+  <action name="actionLight_Mode">
+   <property name="text">
+    <string>Light Mode</string>
    </property>
   </action>
  </widget>

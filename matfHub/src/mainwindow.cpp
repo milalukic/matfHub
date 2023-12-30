@@ -166,6 +166,8 @@ MainWindow::MainWindow(QWidget *parent)
         m_notes->notesContentChanged(this, ui);
     });
 
+    // Za light mode
+    QPalette lightPalette = QApplication::palette();
 }
 
 std::vector<double> cppSplit(const std::string &s) {
@@ -483,6 +485,12 @@ void MainWindow::actionExitTriggered()
 void MainWindow::on_actionDark_Mode_triggered()
 {
     QApplication::setStyle("Fusion");
+}
+
+void MainWindow::on_actionLight_Mode_triggered()
+{
+    QApplication::setStyle("WindowsVista");
+
 }
 
 void MainWindow::on_smerBox_activated(int index)

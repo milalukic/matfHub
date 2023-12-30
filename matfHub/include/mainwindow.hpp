@@ -39,6 +39,7 @@ public:
     Notes* m_notes;
     FileManager* m_fileManager;
     Ui::MainWindow *ui;
+    QPalette lightPalette;
 
     QString currentFilePathGetPath();    
 
@@ -71,6 +72,7 @@ private slots:
     void fileViewDoubleClicked(const QModelIndex &index);
 
     void on_actionDark_Mode_triggered();
+    void on_actionLight_Mode_triggered();
 
     void fileViewCustomContextMenuRequested(const QPoint &pos, QAbstractItemView* view);
     void showFileView(QAbstractItemView* view);
