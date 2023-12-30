@@ -1,14 +1,13 @@
 cmake_minimum_required(VERSION 3.22)
 
+project(Test CXX)
+
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)
- 
-project(Test VERSION 1.0.0)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Core)
 
 # add_library(
 #     plotter
@@ -23,11 +22,6 @@ set(TEST_SOURCES
 	fmanager.test.cpp
 )
 
-set(CPP_SOURCES
-	../src/*.cpp
-	../include/*.hpp
-)
-
 include(FetchContent)
 FetchContent_Declare(matplotplusplus
         GIT_REPOSITORY https://github.com/alandefreitas/matplotplusplus
@@ -39,8 +33,9 @@ if(NOT matplotplusplus_POPULATED)
     add_subdirectory(${matplotplusplus_SOURCE_DIR} ${matplotplusplus_BINARY_DIR} EXCLUDE_FROM_ALL)
 endif()
 
+file(GLOB CPP_SOURCES "../src/*.cpp")
 
-add_executable(tests ${TEST_SOURCES} ${CPP_SOURCES} catch.hpp)
+add_executable(tests ${TEST_SOURCES} ${CPP_SOURCES} ../mainwindow.ui ../catch.hpp)
 target_link_libraries(tests PUBLIC matplot)
 target_link_libraries(tests PRIVATE Qt6::Widgets Qt6::Core)
 
