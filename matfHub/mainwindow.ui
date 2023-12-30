@@ -36,7 +36,7 @@
        <enum>Qt::DefaultContextMenu</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="FileManagerTab">
        <attribute name="title">
@@ -493,8 +493,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset theme="go-previous">
-              <normaloff>.</normaloff>.</iconset>
+             <iconset theme="go-previous"/>
             </property>
            </widget>
           </item>
@@ -946,8 +945,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset theme="go-up">
-              <normaloff>.</normaloff>.</iconset>
+             <iconset theme="go-up"/>
             </property>
            </widget>
           </item>
@@ -1399,8 +1397,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset theme="go-home">
-              <normaloff>.</normaloff>.</iconset>
+             <iconset theme="go-home"/>
             </property>
            </widget>
           </item>
@@ -1855,8 +1852,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset theme="go-next">
-              <normaloff>.</normaloff>.</iconset>
+             <iconset theme="go-next"/>
             </property>
             <property name="autoDefault">
              <bool>false</bool>
@@ -1872,8 +1868,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset theme="folder-new">
-              <normaloff>.</normaloff>.</iconset>
+             <iconset theme="folder-new"/>
             </property>
            </widget>
           </item>
@@ -2747,7 +2742,7 @@
              <x>0</x>
              <y>0</y>
              <width>258</width>
-             <height>577</height>
+             <height>583</height>
             </rect>
            </property>
           </widget>
@@ -3055,7 +3050,7 @@
      <x>0</x>
      <y>0</y>
      <width>1258</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

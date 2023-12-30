@@ -14,6 +14,7 @@
 
 Calendar::Calendar(Ui::MainWindow* ui) {
     initializeMap();
+    initializeClassMap();
     ui->calendarWidget->setSelectedDate(selectedDate);
     ui->calendarWidget->setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
     ui->calendarWidget->setFirstDayOfWeek(Qt::DayOfWeek::Monday);
@@ -125,30 +126,7 @@ void Calendar::addCourse(QDate next_d, QString desc){
 
 }
 
-void Calendar::initializeMap(){
-    QFile jsonFile(Config::getConfig()->getConfigPath() + "/map.txt");
-
-    if (!jsonFile.open(QIODevice::ReadOnly)) {
-        return;
-    }
-
-    QByteArray jsonData = jsonFile.readAll();
-    jsonFile.close();
-
-    QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonData);
-    if (jsonDoc.isNull()) {
-        return;
-    }
-
-    QJsonObject jsonObject = jsonDoc.object();
-
-    for (auto it = jsonObject.begin(); it != jsonObject.end(); ++it) {
-        QString dateString = it.key();
-        QDate date = QDate::fromString(dateString, "yyyy-MM-dd"); // Parse string back to QDate
-        QList<QString> note = it.value().toString().split("\n");
-        date_to_note.insert(date, note);
-    }
-
+void Calendar::initializeClassMap(){
     QFile schedulePath(Config::getConfig()->getConfigPath() + "/raspored.json");
 
     if (!schedulePath.open(QIODevice::ReadOnly)) {
@@ -182,7 +160,33 @@ void Calendar::initializeMap(){
         if(day_to_class[d].empty()){ //ovo je problem
             day_to_class[d] = {};
         }
-        day_to_class[d].append(itemStr);
+        if(!day_to_class[d].contains(itemStr))
+            day_to_class[d].append(itemStr);
+    }
+}
+
+void Calendar::initializeMap(){
+    QFile jsonFile(Config::getConfig()->getConfigPath() + "/map.txt");
+
+    if (!jsonFile.open(QIODevice::ReadOnly)) {
+        return;
+    }
+
+    QByteArray jsonData = jsonFile.readAll();
+    jsonFile.close();
+
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonData);
+    if (jsonDoc.isNull()) {
+        return;
+    }
+
+    QJsonObject jsonObject = jsonDoc.object();
+
+    for (auto it = jsonObject.begin(); it != jsonObject.end(); ++it) {
+        QString dateString = it.key();
+        QDate date = QDate::fromString(dateString, "yyyy-MM-dd"); // Parse string back to QDate
+        QList<QString> note = it.value().toString().split("\n");
+        date_to_note.insert(date, note);
     }
 }
 

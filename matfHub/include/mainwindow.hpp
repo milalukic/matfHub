@@ -158,6 +158,8 @@ private slots:
 
     void on_removeAllButton_clicked();
 
+    void on_tabWidgetMatfHub_currentChanged(int index);
+
 private:
 
     std::stack<QString> navigationBefore;

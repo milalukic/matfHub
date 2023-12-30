@@ -515,6 +515,7 @@ void MainWindow::on_prethodniButton_clicked()
 void MainWindow::on_SacuvajButton_clicked()
 {
     schedule->saveSchedule(ui);
+    calendar->initializeClassMap();
 }
 
 //promena glavnog hab foldera

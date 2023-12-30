@@ -22,6 +22,7 @@ public:
     void saveHistory();
     // Inicijalizuje mapu sa prethodnom istorijom
     void initializeMap();
+    void initializeClassMap();
     void addCourse(QDate next_d, QString desc);
 
 };
