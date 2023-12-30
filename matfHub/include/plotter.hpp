@@ -8,7 +8,7 @@
 #include <cmath>
 #include <numeric>
 #include <algorithm>
-// #include <matplot/matplot.h>
+#include <matplot/matplot.h>
 
 #include <string.h>
 

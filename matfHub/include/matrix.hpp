@@ -7,7 +7,7 @@
 
 #include <QString>
 
-// #include <armadillo>
+#include <armadillo>
 
 class Matrix{
 
