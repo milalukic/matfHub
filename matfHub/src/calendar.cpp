@@ -32,15 +32,19 @@ void Calendar::dateChanged(Ui::MainWindow *ui, QDate date) {
     ui->calendarWidget->setSelectedDate(date);
     ui->listWidget->clear();
 
-    if(!day_to_class[selectedDate.day()].empty()){
-        for(QString it : day_to_class[selectedDate.day()]){
-            QListWidgetItem* item = new QListWidgetItem(it, ui->listWidget);
-            item->setFlags(item->flags() | Qt::ItemIsEditable);
+    if(!day_to_class[selectedDate.dayOfWeek()].empty()){
+        for(QString it : day_to_class[selectedDate.dayOfWeek()]){
+            if(date_to_note[selectedDate].contains(it))
+                continue;
+            else date_to_note[selectedDate].append(it);
         }
     }
+    date_to_note[selectedDate].sort();
     for (auto itemStr : date_to_note[selectedDate]){
-        QListWidgetItem* item = new QListWidgetItem(itemStr, ui->listWidget);
-        item->setFlags(item->flags() | Qt::ItemIsEditable);
+        if(itemStr != ""){
+            QListWidgetItem* item = new QListWidgetItem(itemStr, ui->listWidget);
+            item->setFlags(item->flags() | Qt::ItemIsEditable);
+        }
     }
 }
 
@@ -56,16 +60,11 @@ void Calendar::taskAdded(Ui::MainWindow *ui){
 
     ui->listWidget->clear();
 
-    if(!day_to_class[selectedDate.day()].empty()){
-        for(QString it : day_to_class[selectedDate.day()]){
-            QListWidgetItem* item = new QListWidgetItem(it, ui->listWidget);
+    for (auto itemStr : date_to_note[selectedDate]){
+        if(itemStr != ""){
+            QListWidgetItem* item = new QListWidgetItem(itemStr, ui->listWidget);
             item->setFlags(item->flags() | Qt::ItemIsEditable);
         }
-    }
-
-    for (auto itemStr : date_to_note[selectedDate]){
-        QListWidgetItem* item = new QListWidgetItem(itemStr, ui->listWidget);
-        item->setFlags(item->flags() | Qt::ItemIsEditable);
     }
 
     ui->newItemEdit->clear();
@@ -157,7 +156,6 @@ void Calendar::initializeMap(){
     }
 
     QByteArray jsonDataSchedule = schedulePath.readAll();
-    //DEBUG << jsonDataSchedule;
     schedulePath.close();
 
     QJsonDocument jsonDocSchedule = QJsonDocument::fromJson(jsonDataSchedule);
@@ -166,7 +164,6 @@ void Calendar::initializeMap(){
     }
 
     QJsonArray coursesArray = jsonDocSchedule.array();
-    //DEBUG << coursesArray;
 
     int i = 0;
     for (const auto& courseData : coursesArray) {
@@ -174,26 +171,18 @@ void Calendar::initializeMap(){
 
         QString desc = courseObject["description"].toString();
 
-        int start = courseObject["start"].toInt();// - 8; za ovim nema potrebe jer je ovo vec uradjeno u skrejperu
+        int start = courseObject["start"].toInt();
         int dur = courseObject["duration"].toInt();
         QString teacher = courseObject["teacher"].toString();
         QString classroom = courseObject["classroom"].toString();
 
-        int d = courseObject["day"].toInt()+1; // ovo je problem
-
-//        if(start<8){
-//            start+=12;    takodje ni ovo nije potrebno
-//        }
-
-        QString itemStr = QString::number(start) + ":15 - " + QString::number(start+dur) + ":00 " + desc + "\n" + teacher + " " + classroom;
+        int d = courseObject["day"].toInt()+1;
+        QString itemStr = QString::number(start) + ":15 - " + QString::number(start+dur) + ":00 " + desc + ", " + teacher + ", " + classroom;
 
         if(day_to_class[d].empty()){ //ovo je problem
             day_to_class[d] = {};
         }
         day_to_class[d].append(itemStr);
-    }//treba ti nacin da znas koji je dan kliknut, zatim da dohvatis njegov index [1-28/29/30/31] i da ga onda popuni
-    //ovo ovako implementirano moze da popunjava samo dane sa indeksima od 1 do 7 sto je prva nedelja u svakom mesecu
-    // i jos na to ako prvi dan igorm slucaja nije ponedelja, popunjavace ga pogresno
-
+    }
 }
 
