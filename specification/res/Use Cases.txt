@@ -281,4 +281,53 @@ Dodatne informacije: /
 
 ------------------------------------------------
 
+Naziv: Planiranje obaveza
+
+Kratak opis: Korisnik klikom na tab "kalendar" dobija pristup kalendaru i listi obaveza. Lista obaveza se menja u zavisnosti od izabranog datuma na kalendaru. Stavke u listi obaveza se mogu azurirati, mozemo obrisati pojedinacne stavke ili sve odjednom, a moze se dodati i nova stavka. Ukoliko je neki raspored casova sacuvan (unutar taba “raspored”), klikom na odredjeni datum se ucitava i raspored casova za taj datum.
+
+Akteri: Korisnik aplikacije (kalendara)
+
+Preduslovi: Aplikacija radi i odabran je “kalendar” tab unutar pokrenute aplikacije.
+
+Postuslovi: Liste obaveza pridruzene odgovarajucim datumima su sacuvane na disku. Korisnik ponovnim pokretanjem aplikacije dobija pristup celoj prethodno cuvanoj listi obaveza.
+
+Osnovni tok: 
+1. Korinisk bira kalendar iz glavnog menija
+2. Pred korisnikom se nalazi kalendar i lista obaveza za danasnji dan, kao i polje u koje moze upisati naredne obaveze.
+3. Ukoliko korisnik promeni odabrani datum u kalendaru:
+	3.1. Prelazi se na PODTOK 1.
+4. Korisnik pise tekst sledece obaveze koju zeli da doda u listu obaveza za odabrani dan, podesava datum i vreme kada ta obaveza treba da se obavi.
+5. Korisnik klikce na dugme “Dodaj Stavku u Kalendar”
+	5.1. Stavka se pojavljuje u kalendaru, sortirana u odnosu na preostale stavke po vremenu kada se izvrsava.
+6. Korisnik moze da selektuje stavku u kalendaru:
+	6.1. Ukoliko korisnik klikne na dugme “Ukloni”:
+		6.1.1. Prelazi se na PODTOK 2
+	6.2. Ukoliko korisnik klikne na dugme “Ukloni sve”:
+		6.2.2. Prelazi se na PODTOK 3
+	6.3. Ukoliko korisnik klikne dva puta na stavku:
+		6.3.1. Stavka se moze azurirati
+		6.3.2. Prelazi se na korak 2.
+
+Alternativni tok:
+Neocekivani izlaz iz aplikacije: Ukoliko u bilo kom koraku korisnik iskljuci aplikaciju, aplikacija zavrsava rad, a sve obaveze ostaju sacuvane na disku i vezane za odgovarajuci datum. Slucaj upotrebe se zavrsava.
+
+Podtokovi:
+
+	PODTOK 1: 
+		1. Dohvataju se obaveze za selektovani datum.
+		2. Dohvataju se casovi sacuvani u tabu “raspored”.
+		3. Prelazi se na korak 4.
+	PODTOK 2: 
+		1. Izabrana stavka se trajno uklanja iz kalendara.
+		2. Prelazi se na korak 2.
+        PODTOK 3:
+		1. Sve stavke na izabranom datumu se trajno uklanjaju iz kalendara.
+		2. Prelazi se na korak 2.
+	
+Specijalni zahtevi: /
+
+Dodatne informacije: /
+
+------------------------------------------------
+
 
