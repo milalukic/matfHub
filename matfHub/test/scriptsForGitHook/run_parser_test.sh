@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd matfHub/test/scriptForGitHook
+cd matfHub/test/scriptsForGitHook
 
 test_file=parser.test.cpp
 src_file=../../src/parser.cpp
