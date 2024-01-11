@@ -1,8 +1,10 @@
 #!/bin/bash
 set -e
 
-test_file=matfHub/test/matrix.test.cpp
-src_file=matfHub/src/matrix.cpp
+cd matfhub/test/scriptForGitHook
+
+test_file=matrix.test.cpp
+src_file=../../src/matrix.cpp
 
 echo "Compiling..."
 export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$HOME/Qt/6.6.0/gcc_64/lib/pkgconfig
@@ -13,5 +15,7 @@ echo "Compile successful"
 
 echo "Running test..."
 export LD_LIBRARY_PATH=$HOME/Qt/6.6.0/gcc_64/lib
+
 ./test_matrix.out
+cd ../../..
 echo "Testing finished..."
