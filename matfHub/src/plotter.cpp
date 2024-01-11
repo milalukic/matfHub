@@ -9,6 +9,8 @@ Plotter::~Plotter(){
     std::cout << "Unisten plotter" << std::endl;
 }
 
+
+
 Plotter* Plotter::getPlotter(){
     if(plotPtr == nullptr){
         plotPtr = new Plotter();
