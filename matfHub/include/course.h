@@ -6,7 +6,7 @@
 #include <set>
 
 class Course {
-public:
+public: 
     std::string description;
     int day;
     std::string teacher;
