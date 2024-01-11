@@ -1,0 +1,21 @@
+/home/ryu/matfHub/matfHub/src/../include/plotter.hpp:11:10: error: 'matplot/matplot.h' file not found [clang-diagnostic-error]
+#include <matplot/matplot.h>
+         ^~~~~~~~~~~~~~~~~~~
+/home/ryu/matfHub/matfHub/src/plotter.cpp:6:10: warning: use '= default' to define a trivial default constructor [modernize-use-equals-default]
+Plotter::Plotter(){}
+         ^        ~~
+                  = default;
+/home/ryu/matfHub/matfHub/src/plotter.cpp:12:19: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+Plotter* Plotter::getPlotter(){
+~~~~~~~~          ^
+auto                           -> Plotter*
+/home/ryu/matfHub/matfHub/src/plotter.cpp:68:30: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+std::vector<double> Plotter::xData() const {
+                             ^
+/home/ryu/matfHub/matfHub/src/plotter.cpp:72:30: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+std::vector<double> Plotter::yData() const {
+                             ^
+/home/ryu/matfHub/matfHub/src/plotter.cpp:76:22: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+std::string Plotter::output() const{
+~~~~~~~~~~~          ^
+auto                                -> std::string

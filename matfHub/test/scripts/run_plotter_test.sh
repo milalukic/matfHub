@@ -14,7 +14,7 @@ echo "Switching to build directory"
 cd build
 
 echo "Running CMake..."
-cmake ..
+cmake -DENABLE_COVERAGE=true .. && make
 echo "CMake successfully finished"
 
 echo "Running generated Makefile..."
@@ -23,5 +23,5 @@ echo "Makefile successfully finished..."
 
 echo "Starting test_stat"
 echo "Program running..."
-./test_plot
+./test_plot && make coverage
 echo "Testing finished...\n"
