@@ -16,6 +16,7 @@ Plotter* Plotter::getPlotter(){
     return plotPtr;
 }
 
+
 void Plotter::operator()() const {
 
     std::vector<double> zero(this->xData().size());
