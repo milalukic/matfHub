@@ -3,7 +3,7 @@ set -e
 
 cd matfHub/test/scriptsForGitHook
 
-test_file=matrix.test.cpp
+test_file=../matrix.test.cpp
 src_file=../../src/matrix.cpp
 
 echo "Compiling..."

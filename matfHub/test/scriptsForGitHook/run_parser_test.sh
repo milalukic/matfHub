@@ -2,7 +2,7 @@
 
 cd matfHub/test/scriptsForGitHook
 
-test_file=parser.test.cpp
+test_file=../parser.test.cpp
 src_file=../../src/parser.cpp
 
 echo "Compiling..."
