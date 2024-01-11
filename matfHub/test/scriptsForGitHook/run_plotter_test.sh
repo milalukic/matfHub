@@ -16,7 +16,7 @@ echo "Switching to build directory"
 cd build
 
 echo "Running CMake..."
-cmake ..
+cmake .
 echo "CMake successfully finished"
 
 echo "Running generated Makefile..."
@@ -27,4 +27,5 @@ echo "Starting test_stat"
 echo "Program running..."
 ./test_plot
 echo "Testing finished...\n"
+cd ../../..
 
