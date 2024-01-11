@@ -1,120 +1,136 @@
 
 #include "../include/statistics.hpp"
 
-Statistics* Statistics::statPtr = nullptr;
+Statistics *Statistics::statPtr = nullptr;
 
-//konstruktor
+// konstruktor
 Statistics::Statistics(std::vector<double> const &xData)
-    : _xData(xData){}
-
-//destruktor
-Statistics::~Statistics(){
-    std::cout << "Unisten statistics" << std::endl;
+    : _xData(xData)
+{
 }
 
-Statistics* Statistics::getStatistics(){
-    if(statPtr == nullptr){
-        statPtr = new Statistics();
-    }
-    return statPtr;
+// destruktor
+Statistics::~Statistics()
+{
+  std::cout << "Unisten statistics" << std::endl;
 }
 
-//metode
-auto Statistics::mean() -> double{
-
-    auto data = this->xData();
-
-    return std::accumulate(cbegin(data), cend(data), 0.0) / (data.size());
+Statistics *Statistics::getStatistics()
+{
+  if (statPtr == nullptr) {
+    statPtr = new Statistics();
+  }
+  return statPtr;
 }
 
-auto Statistics::variance() -> double{
+// metode
+auto Statistics::mean() -> double
+{
 
-    auto data = this->xData();
-    auto mean = this->mean();
+  auto data = this->xData();
 
-    std::vector<double> diff(data.size());
-    transform(cbegin(data), cend(data), begin(diff), [mean](auto x){return pow(x-mean,2);});
-    return std::accumulate(cbegin(diff), cend(diff), 0.0) / (data.size() - 1);
+  return std::accumulate(cbegin(data), cend(data), 0.0) / (data.size());
 }
 
-auto Statistics::std() -> double{
-    return std::sqrt(this->variance());
+auto Statistics::variance() -> double
+{
+
+  auto data = this->xData();
+  auto mean = this->mean();
+
+  std::vector<double> diff(data.size());
+  transform(cbegin(data), cend(data), begin(diff),
+            [mean](auto x) { return pow(x - mean, 2); });
+  return std::accumulate(cbegin(diff), cend(diff), 0.0) / (data.size() - 1);
 }
 
-auto Statistics::median() -> double{
-
-    auto data = this->xData();
-    auto n = data.size() / 2;
-
-    nth_element(begin(data), begin(data)+n, end(data));
-    auto med = data[n];
-
-    if(!(data.size() & 1)) {
-        auto maxIt = std::max_element(cbegin(data), cbegin(data)+n);
-        med = (*maxIt + med) / 2.0;
-    }
-
-    return med;
+auto Statistics::std() -> double
+{
+  return std::sqrt(this->variance());
 }
 
-auto Statistics::mode() -> double{
+auto Statistics::median() -> double
+{
 
-    std::map<double, int> occurences;
-    auto data = this->xData();
+  auto data = this->xData();
+  auto n = data.size() / 2;
 
-    for(auto const &x : data)
-        occurences[x]++;
+  nth_element(begin(data), begin(data) + n, end(data));
+  auto med = data[n];
 
-    auto it = std::max_element(cbegin(occurences), cend(occurences), [](const auto &x, const auto &y) {
-        return x.second < y.second;
-    });
+  if (!(data.size() & 1)) {
+    auto maxIt = std::max_element(cbegin(data), cbegin(data) + n);
+    med = (*maxIt + med) / 2.0;
+  }
 
-    return it->first;
+  return med;
 }
 
-//PLOTTER
-void Statistics::histogram(){
-    auto data = xData();
-    matplot::hist(data);
-    matplot::show();
+auto Statistics::mode() -> double
+{
+
+  std::map<double, int> occurences;
+  auto data = this->xData();
+
+  for (auto const &x : data)
+    occurences[x]++;
+
+  auto it = std::max_element(
+      cbegin(occurences), cend(occurences),
+      [](const auto &x, const auto &y) { return x.second < y.second; });
+
+  return it->first;
 }
 
-void Statistics::barplot(){
-
-    auto data = this->xData();
-    auto names = this->textData();
-
-    matplot::bar(data);
-    matplot::gca()->x_axis().ticklabels(names);
-
-    matplot::show();
+// PLOTTER
+void Statistics::histogram()
+{
+  auto data = xData();
+  matplot::hist(data);
+  matplot::show();
 }
 
-void Statistics::boxplot(){
+void Statistics::barplot()
+{
 
-    auto data = this->xData();
-    auto names = this->textData();
-    matplot::boxplot(data, names);
-    matplot::show();
+  auto data = this->xData();
+  auto names = this->textData();
+
+  matplot::bar(data);
+  matplot::gca()->x_axis().ticklabels(names);
+
+  matplot::show();
 }
 
-//getters
+void Statistics::boxplot()
+{
 
-std::vector<double> Statistics::xData() const{
-    return this->_xData;
+  auto data = this->xData();
+  auto names = this->textData();
+  matplot::boxplot(data, names);
+  matplot::show();
 }
 
-std::vector<std::string> Statistics::textData() const{
-    return this->_textData;
+// getters
+
+std::vector<double> Statistics::xData() const
+{
+  return this->_xData;
 }
 
-//setters
-
-void Statistics::xData(const std::vector<double> &newX){
-    this->_xData = newX;
+std::vector<std::string> Statistics::textData() const
+{
+  return this->_textData;
 }
 
-void Statistics::textData(const std::vector<std::string> &newTextData){
-    this->_textData = newTextData;
+// setters
+
+void Statistics::xData(const std::vector<double> &newX)
+{
+  this->_xData = newX;
 }
 
+void Statistics::textData(const std::vector<std::string> &newTextData)
+{
+  this->_textData = newTextData;
+}

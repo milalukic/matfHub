@@ -1,32 +1,31 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#include <QObject>
 #include <QDir>
+#include <QObject>
 
 class MainWindow;
 class Config
 {
 
 private:
-    Config();
-    static Config* configPtr;
-    QString configPath;
-    QString hubPath;
-    //kolor shema
-    //smer
-    //itd
-    void setConfig();
+  Config();
+  static Config *configPtr;
+  QString configPath;
+  QString hubPath;
+  // kolor shema
+  // smer
+  // itd
+  void setConfig();
 
 public:
-    Config(const Config& obj) = delete;
-    Config operator=(const Config& obj) = delete;
+  Config(const Config &obj) = delete;
+  Config operator=(const Config &obj) = delete;
 
-    static Config* getConfig();
-    void setHubPath(QString newPath);
-    QString getHubPath();
-    QString getConfigPath();
-
+  static Config *getConfig();
+  void setHubPath(QString newPath);
+  QString getHubPath();
+  QString getConfigPath();
 };
 
-#endif //CONFIG_H
+#endif // CONFIG_H

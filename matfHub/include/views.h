@@ -2,53 +2,53 @@
 #define VIEWS_H
 
 #include <QAbstractItemView>
+#include <QDebug>
+#include <QKeyEvent>
 #include <QListView>
 #include <QTableView>
-#include <QKeyEvent>
-#include <QDebug>
 
-class myListView : public QListView{
-    Q_OBJECT
+class myListView : public QListView
+{
+  Q_OBJECT
 
 public:
-    myListView(QWidget *parent = nullptr);
+  myListView(QWidget *parent = nullptr);
 
 protected:
-    void keyPressEvent(QKeyEvent *event) override;
+  void keyPressEvent(QKeyEvent *event) override;
 
 private:
-    int sizeList;
+  int sizeList;
 };
 
-
-class myThumbnailView : public QListView{
-    Q_OBJECT
+class myThumbnailView : public QListView
+{
+  Q_OBJECT
 
 public:
-    myThumbnailView(QWidget *parent = nullptr);
+  myThumbnailView(QWidget *parent = nullptr);
 
 protected:
-    void keyPressEvent(QKeyEvent *event) override;
+  void keyPressEvent(QKeyEvent *event) override;
 
 private:
-    int sizeThumbnail;
-    int spacing;
-    int grid;
+  int sizeThumbnail;
+  int spacing;
+  int grid;
 };
 
-
-class myGridView : public QTableView{
-    Q_OBJECT
+class myGridView : public QTableView
+{
+  Q_OBJECT
 
 public:
-    myGridView(QWidget *parent = nullptr);
+  myGridView(QWidget *parent = nullptr);
 
 protected:
-    //void keyPressEvent(QKeyEvent *event) override;
+  // void keyPressEvent(QKeyEvent *event) override;
 
 private:
-    //int sizeGrid;
+  // int sizeGrid;
 };
 
 #endif // VIEWS_H
-

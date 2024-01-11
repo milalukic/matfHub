@@ -3,11 +3,13 @@
 
 #include <exception>
 
-class ScheduleNetworkException : public std::exception {
+class ScheduleNetworkException : public std::exception
+{
 public:
-    const char * what () {
-        return "Greska prilikom dohvatanja podataka sa MATF servera";
-    }
+  const char *what()
+  {
+    return "Greska prilikom dohvatanja podataka sa MATF servera";
+  }
 };
 
 #endif // EXCEPTIONS_H
