@@ -6,7 +6,7 @@ Course::Course(
     const std::string& desc,
     int d,
     const std::string& t,
-    int s,
+    int s, 
     int dur,
     const std::string& type,
     const std::set<std::string>& grps,
