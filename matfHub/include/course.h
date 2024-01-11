@@ -25,7 +25,7 @@ public:
         int d,
         const std::string& t,
         int s,
-        int dur,
+        int dur, 
         const std::string& type,
         const std::set<std::string>& grps,
         std::string& clsrm,
