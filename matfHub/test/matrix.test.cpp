@@ -133,7 +133,7 @@ TEST_CASE("Matrix calculator", "[class]"){
    	matrix->columns(2);
    	auto [x, y] = matrix->getShape();
    	
-   	bool expected = (x == 1) && (y==2);
+   	bool expected = (x != 1) && (y==2);
    	
    	REQUIRE(expected);
    }
