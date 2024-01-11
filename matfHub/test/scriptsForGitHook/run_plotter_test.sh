@@ -28,6 +28,3 @@ echo "Program running..."
 ./test_plot
 echo "Testing finished...\n"
 
-cd ..
-cd ..
-cd ..

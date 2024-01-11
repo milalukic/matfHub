@@ -28,9 +28,6 @@ echo "Program running..."
 ./test_stat
 echo "Testing finished...\n"
 
-cd ..
-cd ..
-cd ..
 
 
 

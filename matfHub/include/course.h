@@ -9,7 +9,7 @@ class Course {
 public: 
     std::string description;
     int day;
-    std::string teacher;
+    std::string teacher; 
     int start;
     int duration;
     int end;
