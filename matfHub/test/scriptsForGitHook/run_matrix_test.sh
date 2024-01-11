@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-cd matfhub/test/scriptForGitHook
+cd matfHub/test/scriptForGitHook
 
 test_file=matrix.test.cpp
 src_file=../../src/matrix.cpp
