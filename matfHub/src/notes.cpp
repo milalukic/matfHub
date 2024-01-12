@@ -8,7 +8,6 @@
 Notes::Notes(Ui::MainWindow* mw)
     :m_mw(mw)
 {
-    m_fileContentUnchanged = new QString("");
 }
 
 void Notes::openFile(QString fileName, Ui::MainWindow *ui, QWidget *parent) {
